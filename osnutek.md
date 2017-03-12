@@ -53,10 +53,12 @@ Jernej Habjan
 		Podatke sva našla na podatki.gov.si : https://podatki.gov.si/dataset/prvic-registrirana-vozila-po-mesecih
 		podatki so zapisani v csv datoteki in imajo manjkajoče vrednosti. Je pa več datotek in sicer vsaka je za svoj mesec.
 		
-		S temi podatki bi lahko pridobila socialno stanje prebivalstva v sloveniji po regijah saj avtomobili predstavljajo znaten znesek v družini.
-		Lahko bova našla kakšne trende s kupovanjem avtomobilov in kdaj je najbolje oglaševati kakšno znamko in komu.
+		S temi podatki bi lahko pridobila socialno stanje prebivalstva v sloveniji po regijah saj avtomobili predstavljajo znaten znesek v družini. Tako bova lahko prikazala kateri predeli Slovenije vsebujejo največji delež registriranih vozil, saj lahko sklepamo, da si večina lastnikov prevozno sredstvo registrira v najbližji poslovalnici.
+		Lahko bova našla kakšne trende s kupovanjem prevoznih sredstev in kdaj je najbolje oglaševati kakšno znamko in komu. 
 		
-		Prav tako bi lahko ugotovila nekaj podatkov o avtomobilih, in sicer kateri avtomobili se najhitreje kvarijo in podobno.
+		S podatki iz https://podatki.gov.si/dataset/rezultati-tehnicnih-pregledov-motornih-vozil bi lahko zgradila sistem, ki
+		bi skupaj z podatki o prvotnih registracijah pomagal voznikom izbor novega vozila glede na potencialne okvare. Uporabila
+		bi tudi ostale atribute, ki jih je dano vozilo pokazalo na prvem tehničnem pregledu. Tudaj bi dodala še izbor cenovnega razreda in ceno samega vzdrževanja vozila.
 		
 		
 		
