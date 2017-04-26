@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+  <title>Trip planner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type="text/css" href="style.css" rel="stylesheet">
+
+  <header class="col-12">
+    <h1>Trip planner</h1>
+  </header>
+
+
+<div class="row">
+
+  <div class="col-6">
+  <div id="map"></div>
+  </div>
+
+  <aside class="col-6">
+
+  <div style="height:450px; width:100%; overflow:auto;"> 
+    <table id="point-table">
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Address</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Distance</th>
+        <th>Time</th>
+        <th></th>
+      </tr>
+    </table>
+
+    
+  </div>
+
+  <fieldset>
+    <legend><b> Add address </b></legend>
+    
+    <p id="total-distance"> Total Distance: 0.0km</p>
+    <p id="total-duration"> Total Duration: 0min</p>
+    
+    after <input id="insert-id" type="number" value=0 min=0 max=0 />
+    <input size=25 id="address" type="text" name="address" autofocus />
+
+    <button id="add" onclick="handleAddressInput();">Add</button>  
+    <button id="sort" onclick="sortEntries()">Sort Path</button>
+
+  </fieldset>
+  </aside>
+</div>
+
+
+<footer class="col-12">
+  Matic Vrtačnik, 63150317<br>
+  <a style="color: white;" href="references.html"> References </a>
+</footer>
+
+<script>
+    function initMap() {
+      directionsService = new google.maps.DirectionsService;
+      directionsDisplay = new google.maps.DirectionsRenderer;
+      geocoder = new google.maps.Geocoder();
+      map = new google.maps.Map(document.getElementById('map'), 
+        { zoom: 9, center: {lat: 46.0661123, lng: 14.4620601} });
+
+      directionsDisplay.setMap(map);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7yGt8l4pdtPqap0Eby1soUByYKqzmZNo&callback=initMap&libraries=geometry"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="script.js"> </script>
+
+
+</html>
