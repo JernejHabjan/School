@@ -244,7 +244,7 @@ function addAddressPoint(address){
  		
     		localStorage.setItem((new Date()).getTime(), JSON.stringify([_address]));
  		
-            addTableEntry(_address, _insertId);
+            addTableEntry(_address);
             displayRoute();	
 
           } else {
