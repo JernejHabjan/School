@@ -1,10 +1,57 @@
 
 var markers = [];
 
-function addAccomondationEntry(rating, address, sourceLat, sourceLng){
+function addMarker(address){
+	geocoder.geocode({'address': address}, function(results, status) {
+    	if (status === 'OK') {
+            var _address = results[0].formatted_address;
+    		var _lat = results[0].geometry.location.lat();
+    		var _lng = results[0].geometry.location.lng();	
+ 			markers.push(new google.maps.Marker({
+ 				position: {lat: _lat, lng: _lng},
+ 				map: map,
+ 				title: _address
+ 			}));
+
+          } else {
+            alert("Unable to find: " + "'" + address + "' (" + status + ")");
+          }
+    });
+}
+
+function setRouteInfo(from, to, id, display){
+	var _travelMode = document.getElementById("travelType").value; 
+		directionsService.route({
+          origin: from, destination: to, optimizeWaypoints: false,
+          travelMode: google.maps.DirectionsTravelMode[_travelMode]
+    	}, function(response, status) {
+          if (status === 'OK') {
+
+          	//display
+            if(display != null && display){
+            	directionsDisplay.setDirections(response);
+            }
+
+            var _table = document.getElementById("acc-table");
+            var _row = _table.rows[id];
+            var _route = response.routes[0];
+
+            var _km = (_route.legs[0].distance.value / 1000.0).toFixed(1);
+        	_row.cells[2].innerHTML = _km + "km";
+
+            var _min = Math.round(_route.legs[0].duration.value / 60);
+            _row.cells[3].innerHTML = convertTime(_min).string;
+
+          } else {
+            alert("Directions error: " + status);
+          }
+    });
+}
+
+function addAccomondationEntry(rating, address, sourceAddress){
 	var _table = document.getElementById("acc-table");
-	var _row = _table.insertRow(_table.rows.length);	
-	updateInsertId();
+	var _rowId = _table.rows.length;
+	var _row = _table.insertRow(_rowId);
 
 	_row.insertCell(0).innerHTML = rating;
 	_row.insertCell(1).innerHTML = address;
@@ -18,7 +65,12 @@ function addAccomondationEntry(rating, address, sourceLat, sourceLng){
 
 		document.getElementById("back_route").style.display = "none";
 		document.getElementById("back_list").style.display = "inline";
+
+		setRouteInfo(sourceAddress, address, _rowId, true);
 	});
+
+	addMarker(address);
+	setRouteInfo(sourceAddress, address, _rowId);
 }
 
 function clearList(){
@@ -27,6 +79,19 @@ function clearList(){
 	for(var i = _table.rows.length; i > 1; --i){
 		_table.deleteRow(i - 1);
 	}
+
+	for(var i = 0; i < markers.length; ++i){
+		markers[i].setMap(null);
+	}markers = [];
+
+	//remove route
+	/*if(directionsDisplay != null){
+		directionsDisplay.setMap(null);
+		directionsDisplay = null;
+	}
+
+    directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(map);*/
 }
 
 function queryList(rowId){
@@ -47,20 +112,45 @@ function queryList(rowId){
             var _address = results[0].formatted_address;
     		var _lat = results[0].geometry.location.lat();
     		var _lng = results[0].geometry.location.lng();
+    		markers.push(new google.maps.Marker({
+ 				position: {lat: _lat, lng: _lng},
+ 				map: map,
+ 				title: _address,
+ 				icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+ 			}));
+
+    		//PREFERENCES
+    		var _allowPets = document.getElementById("allow_pets").checked;
+    		var _requireShower = document.getElementById("require_shower").checked;
+    		var _allowCamping = document.getElementById("allow_camping").checked;
+    		var _requireBreakfast = document.getElementById("require_breakfast").checked;
+    		var _requireLargerRoom = document.getElementById("require_larger_room").checked;
+
+    		console.log(_allowPets);
 
     		//TODO get best 
     		//TODO use _lat/_lng
 
     		//placeholder
-    		addAccomondationEntry(5.0, "Ljubljana", _lat, _lng);
-    		addAccomondationEntry(1.2, "Kranj", _lat, _lng);
-    		addAccomondationEntry(7.6, "Tržič", _lat, _lng);
-    		addAccomondationEntry(6.66, "Zagreb", _lat, _lng);
-    		addAccomondationEntry(5.8, "Celje", _lat, _lng);
+    		addAccomondationEntry(5.0, "Ljubljana", _address);
+    		addAccomondationEntry(1.2, "Kranj", _address);
+    		addAccomondationEntry(7.6, "Tržič", _address);
+    		addAccomondationEntry(6.66, "Zagreb", _address);
+    		addAccomondationEntry(5.8, "Celje", _address);
  		
           } else {
             alert("Unable to find: " + "'" + address + "' (" + status + ")");
           }
     });
+}
+
+
+//TODO groups?
+function showLocationStatistics(){
+
+}
+
+//TODO graphs?
+function showAccomondationStatistics(){
 
 }

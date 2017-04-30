@@ -16,13 +16,6 @@ function setContent(evt, id){
 	//evt.currentTarget.className += " active";
 }
 
-
-function updateInsertId(){
-	var _table = document.getElementById("point-table");
-	document.getElementById("insert-id").max = _table.rows.length - 1;
-	document.getElementById("insert-id").value = _table.rows.length - 1;
-}
-
 function calcTotalDistance(){
 	var table = document.getElementById("point-table");
 
@@ -66,7 +59,6 @@ function setRowListeners(row){
 		localStorage.removeItem(localStorage.key(_index - 1));
 		document.getElementById("point-table").deleteRow(_index);
 		displayRoute();
-		updateInsertId();
 	});
 
 	//move up
@@ -106,17 +98,15 @@ function addTableEntry(address, id){
 	if(address === "")return;
 
 	var _table = document.getElementById("point-table");
-	var _after = document.getElementById("insert-id");
 	var _rowId = id == null ? _table.rows.length : id;
 	var _row = _table.insertRow(_rowId);	
-	updateInsertId();
 
 	var _disabledDate = (_rowId == 1 ? '' : 'disabled');
 	
 	_row.insertCell(0).innerHTML = "<button><</button>";
 	_row.insertCell(1).innerHTML = "<button>></button>";
 	_row.insertCell(ARRIVAL_ID).innerHTML = "<input type='datetime-local' disabled id='arrival_" + _rowId + "' />";
-	_row.insertCell(NIGHTS_ID).innerHTML = _rowId == 1 ? "" : "<input type='number' min=0 value=1 style='width:30px;'/>";
+	_row.insertCell(NIGHTS_ID).innerHTML = /*_rowId == 1 ? "" : */"<input type='number' min=0 value=1 style='width:30px;'/>";
 	_row.insertCell(ADDRESS_ID).innerHTML = address;
 	_row.insertCell(DISTANCE_ID).innerHTML = 0.0 + "km";
 	_row.insertCell(TIME_ID).innerHTML = "0m";
@@ -124,10 +114,12 @@ function addTableEntry(address, id){
 	_row.insertCell(SHOW_ID).innerHTML = "<button class='tabs'>Show</button>";
 	_row.insertCell(REMOVE_ID).innerHTML = "<button>X</button>";
 
-	if(_rowId == 1){
+	//if(_rowId == 1){
 		var _date = new Date().toLocaleString().substring(0, 10).split("/").reverse().join("-");
-		document.getElementById("arrival_1").value = _date + "T12:00";
-		document.getElementById("arrival_1").disabled = false;
+		document.getElementById("arrival_" + _rowId).value = _date + "T12:00";
+
+	if(_rowId == 1){	
+		document.getElementById("arrival_" + _rowId).disabled = false;
 	}
 
 	setRowListeners(_row);
@@ -250,14 +242,7 @@ function addAddressPoint(address){
     		//var _lat = results[0].geometry.location.lat().toFixed(5);
     		//var _lng = results[0].geometry.location.lng().toFixed(5);
  		
- 			var _date = new Date();
- 			var _insertId = parseInt(document.getElementById("insert-id").value) + 1;
-    		localStorage.setItem(_date.getTime(), JSON.stringify([_address]));
-
-    		//if not last then swap items
-    		if(_insertId < localStorage.length){
-    			swapLocalStorageValues(_insertId - 1, localStorage.length - 1);
-    		}
+    		localStorage.setItem((new Date()).getTime(), JSON.stringify([_address]));
  		
             addTableEntry(_address, _insertId);
             displayRoute();	
@@ -265,7 +250,7 @@ function addAddressPoint(address){
           } else {
             alert("Unable to find: " + "'" + address + "' (" + status + ")");
           }
-        });
+    });
 }
 
 function displayRoute(){
@@ -346,12 +331,14 @@ $(document).ready(() => {
 		setContent(null, `route`);
 		document.getElementById("back_route").style.display = "none";
 		displayRoute();
+		clearList();
 	});
 
 	document.getElementById("back_list").addEventListener("click", function(){
 		setContent(null, `list`);
 		document.getElementById("back_list").style.display = "none";
 		document.getElementById("back_route").style.display = "inline";
+		displayRoute();
 	});
 
 });

@@ -21,32 +21,52 @@
 
   <fieldset>
     <legend><b> Add address </b></legend>
-    
-    <p id="total-distance"> Total Distance: 0.0km</p>
-    <p id="total-duration"> Total Duration: 0min</p>
-    
-    after <input id="insert-id" type="number" value=0 min=0 max=0 />
-    <input size=25 id="address" type="text" name="address" autofocus />
 
-    <button id="add" onclick="handleAddressInput();">Add</button> <br>
+    <div style="float:left; position:relative; width:60%; display:inline-block;">     
+      <p id="total-distance"> Total Distance: 0.0km</p>
+      <p id="total-duration"> Total Duration: 0min</p>   
+      <input size=25 id="address" type="text" name="address" autofocus />
+      <button id="add" onclick="handleAddressInput();">Add</button> <br>
+    </div>
+
+    <div style="float:left; position:relative; width:40%; display:inline-block; text-align: left;"> 
+        <div style="text-align:center;"> Preferences </div>
+
+        <input id="allow_pets" type="checkbox"/>
+        <label for="allow_pets">Allow pets</label> <br>
+
+        <input id="require_shower" type="checkbox"/>
+        <label for="require_shower">Require shower</label> <br>
+
+        <input id="allow_camping" type="checkbox"/>
+        <label for="allow_camping">Allow camping locations</label> <br>
+
+        <input id="require_breakfast" type="checkbox"/>
+        <label for="require_breakfast">Require breakfast</label> <br>
+
+        <input id="require_larger_room" type="checkbox"/>
+        <label for="require_larger_room">Require larger room</label> <br>
+
+    </div>
+
   </fieldset>
+
 
   <div class="tab" style="float:left;" >
     <button id="defaultTab" class="tabs" onclick="setContent(event, 'route')">Route</button>
-    <button class="tabs" onclick="setContent(event, 'preferences')">Preferences</button>
 
-  </div>
-
-  <div style="float:right; padding-right:1%;">
-      <button id="back_route" style="display: none;">&larr; Back to route</button>
-      <button id="back_list" style="display: none;">&larr; Back to list</button>
-
-      <select id="travelType" onchange="displayRoute();">
+    <select id="travelType" onchange="displayRoute(); setContent(null, `route`);">
         <option value="WALKING">Walking</option>
         <!-- <option value="BICYCLING">Bicycling</option> -->
         <option value="DRIVING">Driving</option>
         <!--<option value="TRANSIT">Transit</option>-->
       </select>
+
+  </div>
+
+  <div style="float:right; padding-right:1%;">
+      <button id="back_route" style="display: none;">&larr; Back to route</button>
+      <button id="back_list" style="display: none;">&larr; Back to list</button>    
   </div>
 
   <div style="height:400px; width:100%; overflow:auto;" id="address_view"> 
@@ -68,16 +88,9 @@
     </div>
 
 
-    <div id="preferences" class="content">
-      <h1> PREFERENCES </h1>
-
-      <input type="checkbox"/>Dovol
-
-    </div>
-
-
     <div id="list" class="content">
         <h1> LIST </h1>
+        <button onclick="showLocationStatistics()">Show statistics</button>
 
         <table id="acc-table">
           <tr>
@@ -93,9 +106,10 @@
 
     <div id="description" class="content">
         <h1> DESCRIPTION </h1>
+        <button onclick="showAccomondationStatistics()">Show statistics</button><br>
 
-        <img src="https://s-media-cache-ak0.pinimg.com/736x/39/f6/e0/39f6e0639465c7e01eaa79e26ada2a48.jpg" width=80%/>
-        <p id="acc_description">
+        <img id="acc_img" src="https://s-media-cache-ak0.pinimg.com/736x/39/f6/e0/39f6e0639465c7e01eaa79e26ada2a48.jpg" width=80%/>
+        <p id="acc_description" style="text-align: justify; width: 96%;">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed mattis lorem, eu consectetur neque. Sed ut venenatis orci, vel ultricies mauris. Nunc nec diam quis risus ornare mattis. Cras euismod pharetra justo et vulputate. Nunc viverra faucibus tellus, quis lacinia odio bibendum in. Quisque imperdiet odio id odio gravida condimentum. Nullam posuere aliquet tellus iaculis tempus. Praesent auctor dolor nec mattis lacinia. Sed quam lorem, convallis id ultrices ac, elementum sed nunc.
 
             Morbi vestibulum lacinia porttitor. Etiam venenatis vel odio et sagittis. Ut hendrerit metus est, ac commodo lectus ullamcorper a. In nec egestas lectus, non placerat mauris. Nunc finibus at justo non convallis. Duis in eros eu massa finibus fringilla non a urna. Suspendisse egestas in metus eget mattis. Quisque id elementum tellus. Nunc mollis pretium justo, id congue felis rutrum at. Maecenas blandit maximus semper. Donec nisi purus, elementum a aliquam vitae, tristique nec libero. Nam ut tempor tellus. Nulla a ultrices velit. Aenean luctus semper commodo.
