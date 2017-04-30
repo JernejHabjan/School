@@ -19,23 +19,6 @@
 
   <aside class="col-6">
 
-  <div style="height:450px; width:100%; overflow:auto;"> 
-    <table id="point-table">
-      <tr>
-        <th></th>
-        <th></th>
-        <th>Address</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Distance</th>
-        <th>Time</th>
-        <th></th>
-      </tr>
-    </table>
-
-    
-  </div>
-
   <fieldset>
     <legend><b> Add address </b></legend>
     
@@ -45,17 +28,95 @@
     after <input id="insert-id" type="number" value=0 min=0 max=0 />
     <input size=25 id="address" type="text" name="address" autofocus />
 
-    <button id="add" onclick="handleAddressInput();">Add</button>  
-    <button id="sort" onclick="sortEntries()">Sort Path</button>
-
+    <button id="add" onclick="handleAddressInput();">Add</button> <br>
   </fieldset>
+
+  <div class="tab" style="float:left;" >
+    <button id="defaultTab" class="tabs" onclick="setContent(event, 'route')">Route</button>
+    <button class="tabs" onclick="setContent(event, 'preferences')">Preferences</button>
+
+  </div>
+
+  <div style="float:right; padding-right:1%;">
+      <button id="back_route" style="display: none;">&larr; Back to route</button>
+      <button id="back_list" style="display: none;">&larr; Back to list</button>
+
+      <select id="travelType" onchange="displayRoute();">
+        <option value="WALKING">Walking</option>
+        <!-- <option value="BICYCLING">Bicycling</option> -->
+        <option value="DRIVING">Driving</option>
+        <!--<option value="TRANSIT">Transit</option>-->
+      </select>
+  </div>
+
+  <div style="height:400px; width:100%; overflow:auto;" id="address_view"> 
+
+    <div id="route" class="content"> 
+      <table id="point-table">
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Arrival</th>
+          <th>Nights</th>
+          <th>Address</th>
+          <th>Distance</th>
+          <th>Time</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </table>
+    </div>
+
+
+    <div id="preferences" class="content">
+      <h1> PREFERENCES </h1>
+
+      <input type="checkbox"/>Dovol
+
+    </div>
+
+
+    <div id="list" class="content">
+        <h1> LIST </h1>
+
+        <table id="acc-table">
+          <tr>
+            <th>Rating</th>
+            <th>Address</th>
+            <th>Distance</th>
+            <th>Time</th>
+            <th><th>
+          </tr>
+        </table>
+
+    </div>
+
+    <div id="description" class="content">
+        <h1> DESCRIPTION </h1>
+
+        <img src="https://s-media-cache-ak0.pinimg.com/736x/39/f6/e0/39f6e0639465c7e01eaa79e26ada2a48.jpg" width=80%/>
+        <p id="acc_description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed mattis lorem, eu consectetur neque. Sed ut venenatis orci, vel ultricies mauris. Nunc nec diam quis risus ornare mattis. Cras euismod pharetra justo et vulputate. Nunc viverra faucibus tellus, quis lacinia odio bibendum in. Quisque imperdiet odio id odio gravida condimentum. Nullam posuere aliquet tellus iaculis tempus. Praesent auctor dolor nec mattis lacinia. Sed quam lorem, convallis id ultrices ac, elementum sed nunc.
+
+            Morbi vestibulum lacinia porttitor. Etiam venenatis vel odio et sagittis. Ut hendrerit metus est, ac commodo lectus ullamcorper a. In nec egestas lectus, non placerat mauris. Nunc finibus at justo non convallis. Duis in eros eu massa finibus fringilla non a urna. Suspendisse egestas in metus eget mattis. Quisque id elementum tellus. Nunc mollis pretium justo, id congue felis rutrum at. Maecenas blandit maximus semper. Donec nisi purus, elementum a aliquam vitae, tristique nec libero. Nam ut tempor tellus. Nulla a ultrices velit. Aenean luctus semper commodo.
+
+            Nulla nec sapien lacinia erat tempus laoreet. Nulla consequat sagittis enim, quis condimentum eros. Morbi accumsan dolor et ante dignissim, non finibus orci maximus. Integer fringilla eros quis massa lobortis iaculis. Nam sit amet leo ut massa molestie hendrerit ut quis arcu. Proin finibus, lectus quis auctor viverra, enim ex aliquet sapien, id aliquam purus odio ac ligula. Praesent vel pulvinar eros, eget ultrices lectus. Quisque feugiat commodo odio. Duis dictum tempus turpis et mollis. Etiam id vulputate ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam porttitor suscipit fermentum. Sed vehicula libero nunc, commodo porttitor orci molestie et. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc consequat luctus dui, eget consectetur dolor eleifend vel. Quisque sit amet mollis nulla, ut finibus nibh.
+        </p>
+
+    </div>
+
+
+    
+  </div>
+
+  
   </aside>
 </div>
 
 
 <footer class="col-12">
   Matic Vrtačnik, 63150317<br>
-  <a style="color: white;" href="references.html"> References </a>
+  Jernej Habjan, 63150106
 </footer>
 
 <script>
@@ -71,6 +132,8 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7yGt8l4pdtPqap0Eby1soUByYKqzmZNo&callback=initMap&libraries=geometry"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="globals.js"> </script>
+<script src="query.js"> </script>
 <script src="script.js"> </script>
 
 
