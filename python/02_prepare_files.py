@@ -2,15 +2,14 @@ import os
 from os.path import isdir, join, exists
 import goslate  # py -3 -m pip install goslate
 # for nltk run 0_1init.py file
-from nltk import wordpunct_tokenize, defaultdict
+from nltk import wordpunct_tokenize
 from nltk.corpus import stopwords
 from nltk.sentiment.util import *
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import numpy as np
 
 
 def getCompoundScore(text):
-    def detectLanguage(text):
+    def detect_language(text):
         languages_ratios = {}
         tokens = wordpunct_tokenize(text)
         words = [word.lower() for word in tokens]
@@ -24,7 +23,7 @@ def getCompoundScore(text):
 
     ##CODE##
     vader = SentimentIntensityAnalyzer()
-    language = detectLanguage(text)
+    language = detect_language(text)
     if language != "english":  ### translating foreign comments
         gs = goslate.Goslate()
         try:
@@ -56,7 +55,7 @@ def prepare_files():
                              "review_scores_location", "review_scores_rating", "review_scores_value",
                              "reviews_per_month", "room_type", "security_deposit", "space", "square_feet", "summary",
                              "transit"]
-    ATTRIB_ARRAY_REVIEWS = ["id", "comments"]
+    ATTRIB_ARRAY_REVIEWS = ["id", "date", "comments"]
     ATTRIB_ARRAY_CALENDAR = ["listing_id", "date", "available", "price"]
 
     DESC_ATTRIBS_LISTINGS = ["description", "host_about", "name", "neighborhood_overview", "notes", "space", "summary",
@@ -64,16 +63,13 @@ def prepare_files():
     DESC_ATTRIBS_REVIEWS = ["comments"]
 
     PATH = os.path.dirname(os.path.realpath(__file__)) + "\\..\\..\\src\\City_Data"
-    WRITE_PATH = os.path.dirname(os.path.realpath(__file__)) + "\\..\\..\\src\\City_Data_Attributes"
+    WRITE_PATH = os.path.dirname(os.path.realpath(__file__)) + "\\..\\src\\City_Data_Attributes"
 
     CITIES = [f for f in os.listdir(PATH) if isdir(join(PATH, f))]
-    FILES = ["reviews.csv", "listings.csv", "calendar.csv"]
-    FILES = ["reviews.csv", "listings.csv"]
+    FILES = ["calendar.csv", "listings.csv", "reviews.csv"]
     CITIES = ["Ashenville"]
 
     for city_name in CITIES:
-
-        comments_dict = defaultdict(list)
 
         # 1. READ CITY
         for file in FILES:
@@ -82,20 +78,21 @@ def prepare_files():
                 print(
                     "File: " + read_file + " Not Found! - Move Your Data To Apropriate Location.")
                 exit(1)
-
+            # opening read file
             with open(read_file, encoding="utf8") as f:
-                reader = csv.reader(f)  ##READ CSV
-
+                reader = csv.reader(f)
                 write_filename = WRITE_PATH + "\\" + city_name + "\\" + file
+
                 print(write_filename)
+                # creating path
                 if not os.path.exists(os.path.dirname(write_filename)):
                     try:
                         os.makedirs(os.path.dirname(write_filename))
                     except OSError as exc:  # Guard against race condition
                         print("ERROR CREATING DIR")
 
+                # getting apropriate attrib array
                 ATTRIB_ARR = []
-                arr_LISTINGS = {}
                 if file == "listings.csv":
                     ATTRIB_ARR = ATTRIB_ARRAY_LISTINGS
                 elif file == "reviews.csv":
@@ -103,87 +100,33 @@ def prepare_files():
                 elif file == "calendar.csv":
                     ATTRIB_ARR = ATTRIB_ARRAY_CALENDAR
 
+                # opening write file
+                arr_LISTINGS = {}
                 with open(write_filename, mode='w+', encoding="utf8", newline='') as f:
                     writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
+                    # loop through rows in read file
                     for row_count, row in enumerate(reader):
+                        # getting attribute indices to pull data from writer
                         if row_count == 0:  ##mormo dobit indekse
                             for atrib in ATTRIB_ARR:
-
                                 for i, element in enumerate(row):
-
-                                    if (atrib == element):
+                                    if atrib == element:
                                         arr_LISTINGS[atrib] = i
 
+                        # combining apropriate attributes and textmining data
                         vrstica = []
-
                         for atrib in arr_LISTINGS:
                             temp_row = row[arr_LISTINGS[atrib]]
-
                             ##TEXTMINE - writes compound score in attributes that are description
-                            if file == "reviews.csv" and atrib in DESC_ATTRIBS_REVIEWS and row_count > 0:
-                                text = temp_row
-                                temp_row = getCompoundScore(text)
-                                comments_dict[row[0]].append(temp_row)
-                                # print(comments_dict)
-
-                            elif file == "listings.csv" and atrib in DESC_ATTRIBS_LISTINGS and row_count > 0:
-                                text = temp_row
-                                temp_row = getCompoundScore(text)
+                            if file == ("reviews.csv" or "listings.csv") and atrib in DESC_ATTRIBS_REVIEWS or \
+                                                    atrib in DESC_ATTRIBS_LISTINGS and row_count > 0:
+                                temp_row = getCompoundScore(temp_row)
                             ##END TEXTMINE
 
                             vrstica.append(temp_row)
 
-                        if file == "listings.csv":
-                            # dodamo izračunan atribut -> povprečna vrednost komentarjev uteženi z številom komentarjev - the more the better
-                            if len(comments_dict):
-                                if row_count == 0:  # dodamo header
-                                    vrstica.append("avg_comment_score")
-                                else:
-                                    id = row[0]
-                                    if id in comments_dict.keys():
-                                        ####TODO -zaenkrat samo mean--- treba utežit s številom komentarjev
-                                        vrstica.append(np.mean(comments_dict[id]))
-                                    else:
-                                        vrstica.append(0)
-                            else:
-                                print(
-                                    "Error! - Not calculated comments score. Run reviews.csv before listings.csv to fill comments_dict.")
-                                exit(1)
-                        if file != "reviews.csv":
-                            writer.writerow(vrstica)
-
+                        # write whole row in file
+                        writer.writerow(vrstica)
 
 prepare_files()
-
-"""
-creating objects and reading file in dictionary test
-"""
-
-class City:
-    PATH = os.path.dirname(os.path.realpath(__file__)) + "\\..\\..\\src\\City_Data_Attributes"
-    location = (0.0, 0.0)
-    city_name = ""
-    file = "listings.csv"  ##vedno bo pol samo ta???!?!?!??!
-    entries_X = {}
-
-    def __init__(self, city_name):
-        self.city_name = city_name
-        self.read_entries()
-
-    def read_entries(self):
-        # read city file and map it in dict with key for id
-        read_file = self.PATH + "\\" + self.city_name + "\\" + self.file
-        if not exists(read_file):
-            print(
-                "File: " + read_file + " Not Found! - Move Your Data To Apropriate Location.")
-            exit(1)
-
-        with open(read_file, encoding="utf8") as f:
-            reader = csv.reader(f)  ##READ CSV
-            for row_count, row in enumerate(reader):
-                self.entries_X[row[0]] = row[1:]
-
-                # TODO
-
-# city = City("Ashenville")
