@@ -2,6 +2,10 @@ import csv
 import os
 from os.path import isdir, join, exists
 
+def toFloat(value):
+	try: return float(value)
+	except: return 0
+
 class City:
 	def __init__(self, city_name):
 		self.PATH = "..\\src\\City_Data_Attributes"
@@ -25,10 +29,21 @@ class City:
 			name_id = columns.index("property_type")
 			lat_id = columns.index("latitude")
 			lng_id = columns.index("longitude")
+			description_id = columns.index("description")
+
+			score_id = columns.index("review_scores_rating")
+			reader = sorted(reader, key=lambda x: toFloat(x[score_id]), reverse=True)
 			
 			for row_count, row in enumerate(reader[1:]):
 				self.entries_X[row[0]] = row[1:]
-				print(row[name_id], row[lat_id], row[lng_id], sep=",")
+				print(
+					row[name_id], 
+					row[lat_id], 
+					row[lng_id], 
+					row[description_id], 
+					toFloat(row[score_id]), 
+					sep=","
+				)
 				#break
 
 								

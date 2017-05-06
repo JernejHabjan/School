@@ -48,11 +48,13 @@ function addAccomondations(cityName){
 				var type = rowData[0];
 				var lat = parseFloat(rowData[1]);
 				var lng = parseFloat(rowData[2]);
+				var desc = rowData[3];
+				var score = parseFloat(rowData[4]);
 				
-				addAccomondationEntry(cityName, lat, lng, type, 5.0);
+				addAccomondationEntry(cityName, lat, lng, type, score, desc);
 				
 				//TODO remove -> PROBLEM: location service OVER_QUERY_LIMIT
-				if(i > 5)break;
+				//if(i > 5)break;
 			}                        
 		}
 	})
@@ -90,10 +92,11 @@ function setRouteInfo(origin, latTo, lngTo, id, display){
     });
 }
 
-function addAccomondationEntry(cityName, lat, lng, type, rating){
+function addAccomondationEntry(cityName, lat, lng, type, rating, description){
 	var _table = document.getElementById("acc-table");
 	var _rowId = _table.rows.length;
 	var _row = _table.insertRow(_rowId);
+
 
 	_row.insertCell(0).innerHTML = rating;
 	_row.insertCell(1).innerHTML = cityName + " " + type;
@@ -108,11 +111,23 @@ function addAccomondationEntry(cityName, lat, lng, type, rating){
 		document.getElementById("back_route").style.display = "none";
 		document.getElementById("back_list").style.display = "inline";
 
+		document.getElementById("acc_description").innerHTML = description;
+
 		setRouteInfo(cityName, lat, lng, _rowId, true);
 	});
 
 	addLatLngMarker(cityName + " " + type, lat, lng);
-	setRouteInfo(cityName, lat, lng, _rowId);
+	//setRouteInfo(cityName, lat, lng, _rowId);
+}
+
+function removeRoute(){
+	if(directionsDisplay != null){
+		directionsDisplay.setMap(null);
+		directionsDisplay = null;
+	}
+
+    directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(map);
 }
 
 function clearList(){
@@ -127,13 +142,7 @@ function clearList(){
 	}markers = [];
 
 	//remove route
-	/*if(directionsDisplay != null){
-		directionsDisplay.setMap(null);
-		directionsDisplay = null;
-	}
-
-    directionsDisplay = new google.maps.DirectionsRenderer;
-    directionsDisplay.setMap(map);*/
+	//removeRoute();
 }
 
 function queryList(rowId){
