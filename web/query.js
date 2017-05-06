@@ -19,10 +19,52 @@ function addMarker(address){
     });
 }
 
-function setRouteInfo(from, to, id, display){
+function addLatLngMarker(title, latitude, longitude){
+	markers.push(new google.maps.Marker({
+		position: {lat: latitude, lng: longitude},
+		map: map,
+		title: title
+	}));
+}
+
+function addAccomondations(cityName){
+	//PREFERENCES
+	var _allowPets = document.getElementById("allow_pets").checked;
+	var _requireShower = document.getElementById("require_shower").checked;
+	var _allowCamping = document.getElementById("allow_camping").checked;
+	var _requireBreakfast = document.getElementById("require_breakfast").checked;
+	var _requireLargerRoom = document.getElementById("require_larger_room").checked;
+	
+	$.ajax({
+		type: "GET",
+		url: "../python/query.php",
+		data: "pets=" + _allowPets, //TODO all preferences
+		success: function(data){
+			var rows = data.split("\n")
+			for(var i = 0; i < rows.length; ++i){
+				var rowData = rows[i].split(",");
+				console.log(rowData);
+				
+				var type = rowData[0];
+				var lat = parseFloat(rowData[1]);
+				var lng = parseFloat(rowData[2]);
+				
+				addAccomondationEntry(cityName, lat, lng, type, 5.0);
+				
+				//TODO remove -> PROBLEM: location service OVER_QUERY_LIMIT
+				if(i > 5)break;
+			}                        
+		}
+	})
+	
+}
+
+function setRouteInfo(origin, latTo, lngTo, id, display){
 	var _travelMode = document.getElementById("travelType").value; 
 		directionsService.route({
-          origin: from, destination: to, optimizeWaypoints: false,
+          origin: origin, 
+		  destination: new google.maps.LatLng(latTo, lngTo),
+		  optimizeWaypoints: false,
           travelMode: google.maps.DirectionsTravelMode[_travelMode]
     	}, function(response, status) {
           if (status === 'OK') {
@@ -48,13 +90,13 @@ function setRouteInfo(from, to, id, display){
     });
 }
 
-function addAccomondationEntry(rating, address, sourceAddress){
+function addAccomondationEntry(cityName, lat, lng, type, rating){
 	var _table = document.getElementById("acc-table");
 	var _rowId = _table.rows.length;
 	var _row = _table.insertRow(_rowId);
 
 	_row.insertCell(0).innerHTML = rating;
-	_row.insertCell(1).innerHTML = address;
+	_row.insertCell(1).innerHTML = cityName + " " + type;
 	_row.insertCell(2).innerHTML = 0.0 + "km";
 	_row.insertCell(3).innerHTML = "0m";
 	_row.insertCell(4).innerHTML = "<button class='tabs'>Show</button>";
@@ -66,11 +108,11 @@ function addAccomondationEntry(rating, address, sourceAddress){
 		document.getElementById("back_route").style.display = "none";
 		document.getElementById("back_list").style.display = "inline";
 
-		setRouteInfo(sourceAddress, address, _rowId, true);
+		setRouteInfo(cityName, lat, lng, _rowId, true);
 	});
 
-	addMarker(address);
-	setRouteInfo(sourceAddress, address, _rowId);
+	addLatLngMarker(cityName + " " + type, lat, lng);
+	setRouteInfo(cityName, lat, lng, _rowId);
 }
 
 function clearList(){
@@ -97,14 +139,13 @@ function clearList(){
 function queryList(rowId){
 	var _table = document.getElementById("point-table");
 	var _row = _table.rows[rowId];
-	var address = _row.cells[ADDRESS_ID].innerHTML;
+	var address = "Asheville"; //_row.cells[ADDRESS_ID].innerHTML;
 
 	clearList();
 	
 	//console.log(_row.cells[ARRIVAL_ID].innerHTML);
 	console.log(document.getElementById("arrival_" + rowId).value);
-
-
+	
 	geocoder.geocode({'address': address}, function(results, status) {
     	if (status === 'OK') {
     		map.setCenter(results[0].geometry.location);
@@ -118,25 +159,9 @@ function queryList(rowId){
  				title: _address,
  				icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
  			}));
-
-    		//PREFERENCES
-    		var _allowPets = document.getElementById("allow_pets").checked;
-    		var _requireShower = document.getElementById("require_shower").checked;
-    		var _allowCamping = document.getElementById("allow_camping").checked;
-    		var _requireBreakfast = document.getElementById("require_breakfast").checked;
-    		var _requireLargerRoom = document.getElementById("require_larger_room").checked;
-
-    		console.log(_allowPets);
-
-    		//TODO get best 
-    		//TODO use _lat/_lng
-
-    		//placeholder
-    		addAccomondationEntry(5.0, "Ljubljana", _address);
-    		addAccomondationEntry(1.2, "Kranj", _address);
-    		addAccomondationEntry(7.6, "Tržič", _address);
-    		addAccomondationEntry(6.66, "Zagreb", _address);
-    		addAccomondationEntry(5.8, "Celje", _address);
+			
+			//TODO check if city exists	
+			addAccomondations("Asheville");
  		
           } else {
             alert("Unable to find: " + "'" + address + "' (" + status + ")");
