@@ -55,7 +55,7 @@
   <div class="tab" style="float:left;" >
     <button id="defaultTab" class="tabs" onclick="setContent(event, 'route')">Route</button>
 
-    <select id="travelType" onchange="displayRoute(); setContent(null, `route`);">
+    <select id="travelType" onchange="displayRoute(); setContent(null, `route`); clearList();">
         <option value="WALKING">Walking</option>
         <!-- <option value="BICYCLING">Bicycling</option> -->
         <option value="DRIVING">Driving</option>
