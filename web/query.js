@@ -26,14 +26,24 @@ function addAccomondations(cityName, cityLat, cityLng){
 	var _allowCamping = document.getElementById("allow_camping").checked;
 	var _requireBreakfast = document.getElementById("require_breakfast").checked;
 	var _requireLargerRoom = document.getElementById("require_larger_room").checked;
+
+	var _args = 
+		"city=" + cityName + "&" +
+		"pets=" + _allowPets + "&" +
+		"shower=" + _requireShower + "&" +
+		"camping=" + _allowCamping + "&" +
+		"breakfast=" + _requireBreakfast + "&" +
+		"large_room=" + _requireLargerRoom;
 	
 	$.ajax({
 		type: "GET",
 		url: "../python/query.php",
-		data: "pets=" + _allowPets, //TODO all preferences
+		data: _args,
 		success: function(data){
 			var rows = data.split("\n")
-			for(var i = 0; i < rows.length; ++i){
+
+			//remove last = NaN random value ?? (rows.length - 1)
+			for(var i = 0; i < rows.length - 1; ++i){
 				var rowData = rows[i].split(",");
 				console.log(rowData);
 				
@@ -111,6 +121,10 @@ function addAccomondationEntry(cityName, lat, lng, distance, type, rating, descr
 		document.getElementById("acc_description").innerHTML = description;
 
 		setRouteInfo(cityName, lat, lng, _rowId, true);
+
+		//not working async
+		//map.setCenter(new google.maps.LatLng(lat, lng));
+        //map.setZoom(25);
 	});
 
 	addMarker(cityName + " " + type, lat, lng);
@@ -159,16 +173,18 @@ function queryList(rowId){
             var _address = results[0].formatted_address;
     		var _lat = results[0].geometry.location.lat();
     		var _lng = results[0].geometry.location.lng();
-    		markers.push(new google.maps.Marker({
+    		
+			
+			//TODO check if city exists	
+			addAccomondations("Asheville", _lat, _lng);
+ 		
+			markers.push(new google.maps.Marker({
  				position: {lat: _lat, lng: _lng},
  				map: map,
  				title: _address,
  				icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
  			}));
-			
-			//TODO check if city exists	
-			addAccomondations("Asheville", _lat, _lng);
- 		
+
           } else {
             alert("Unable to find: " + "'" + address + "' (" + status + ")");
           }

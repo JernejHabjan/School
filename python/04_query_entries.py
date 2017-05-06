@@ -1,5 +1,6 @@
 import csv
 import os
+import sys
 from os.path import isdir, join, exists
 
 def toFloat(value):
@@ -33,6 +34,16 @@ class City:
 
 			score_id = columns.index("review_scores_rating")
 			reader = sorted(reader, key=lambda x: toFloat(x[score_id]), reverse=True)
+
+			# arguments
+			#print(sys.argv)
+			allow_pets = True if (sys.argv[2] if len(sys.argv) > 2 else "true") == "true" else False
+			require_shower = True if (sys.argv[3] if len(sys.argv) > 3 else "true") == "true" else False
+			allow_camping = True if (sys.argv[4] if len(sys.argv) > 4 else "true") == "true" else False
+			require_breakfast = True if (sys.argv[5] if len(sys.argv) > 5 else "true") == "true" else False
+			require_large_room = True if (sys.argv[6] if len(sys.argv) > 6 else "true") == "true" else False
+
+			#print(allow_pets)
 			
 			for row_count, row in enumerate(reader[1:]):
 				self.entries_X[row[0]] = row[1:]
@@ -48,11 +59,10 @@ class City:
 
 								
 def send_files(city_name):
-    city = City(city_name)	
-	#print(city.city_name)
-    ##todo with city
+    city = City(city_name)
 
 
 #TODO pass arguments
-send_files("Asheville")
+city_name = sys.argv[1] if len(sys.argv) > 1 else "Asheville" 
+send_files(city_name)
 #print("OK")
