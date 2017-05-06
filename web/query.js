@@ -1,25 +1,17 @@
 
 var markers = [];
 
-function addMarker(address){
-	geocoder.geocode({'address': address}, function(results, status) {
-    	if (status === 'OK') {
-            var _address = results[0].formatted_address;
-    		var _lat = results[0].geometry.location.lat();
-    		var _lng = results[0].geometry.location.lng();	
- 			markers.push(new google.maps.Marker({
- 				position: {lat: _lat, lng: _lng},
- 				map: map,
- 				title: _address
- 			}));
+function calcDistance(lat1, lng1, lat2, lng2){
+	var _point1 = new google.maps.LatLng(lat1, lng1);
+	var _point2 = new google.maps.LatLng(lat2, lng2);
 
-          } else {
-            alert("Unable to find: " + "'" + address + "' (" + status + ")");
-          }
-    });
+	var _distanceInM = google.maps.geometry.spherical.
+		computeDistanceBetween(_point1, _point2);
+
+	return (_distanceInM / 1000.0).toFixed(1);
 }
 
-function addLatLngMarker(title, latitude, longitude){
+function addMarker(title, latitude, longitude){
 	markers.push(new google.maps.Marker({
 		position: {lat: latitude, lng: longitude},
 		map: map,
@@ -27,7 +19,7 @@ function addLatLngMarker(title, latitude, longitude){
 	}));
 }
 
-function addAccomondations(cityName){
+function addAccomondations(cityName, cityLat, cityLng){
 	//PREFERENCES
 	var _allowPets = document.getElementById("allow_pets").checked;
 	var _requireShower = document.getElementById("require_shower").checked;
@@ -50,8 +42,10 @@ function addAccomondations(cityName){
 				var lng = parseFloat(rowData[2]);
 				var desc = rowData[3];
 				var score = parseFloat(rowData[4]);
+
+				var distance = calcDistance(cityLat, cityLng, lat, lng);
 				
-				addAccomondationEntry(cityName, lat, lng, type, score, desc);
+				addAccomondationEntry(cityName, lat, lng, distance, type, score, desc);
 				
 				//TODO remove -> PROBLEM: location service OVER_QUERY_LIMIT
 				//if(i > 5)break;
@@ -92,16 +86,19 @@ function setRouteInfo(origin, latTo, lngTo, id, display){
     });
 }
 
-function addAccomondationEntry(cityName, lat, lng, type, rating, description){
+function addAccomondationEntry(cityName, lat, lng, distance, type, rating, description){
 	var _table = document.getElementById("acc-table");
 	var _rowId = _table.rows.length;
 	var _row = _table.insertRow(_rowId);
 
+	var _travelMode = document.getElementById("travelType").value; 
+	var _min = Math.round(_travelMode == "WALKING" ? 
+		(distance * 15.0) : (distance * 2.5));
 
 	_row.insertCell(0).innerHTML = rating;
 	_row.insertCell(1).innerHTML = cityName + " " + type;
-	_row.insertCell(2).innerHTML = 0.0 + "km";
-	_row.insertCell(3).innerHTML = "0m";
+	_row.insertCell(2).innerHTML = distance + "km";
+	_row.insertCell(3).innerHTML = convertTime(_min).string;
 	_row.insertCell(4).innerHTML = "<button class='tabs'>Show</button>";
 
 	_row.cells[4].addEventListener("click", function(){
@@ -116,7 +113,7 @@ function addAccomondationEntry(cityName, lat, lng, type, rating, description){
 		setRouteInfo(cityName, lat, lng, _rowId, true);
 	});
 
-	addLatLngMarker(cityName + " " + type, lat, lng);
+	addMarker(cityName + " " + type, lat, lng);
 	//setRouteInfo(cityName, lat, lng, _rowId);
 }
 
@@ -170,7 +167,7 @@ function queryList(rowId){
  			}));
 			
 			//TODO check if city exists	
-			addAccomondations("Asheville");
+			addAccomondations("Asheville", _lat, _lng);
  		
           } else {
             alert("Unable to find: " + "'" + address + "' (" + status + ")");
