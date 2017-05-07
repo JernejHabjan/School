@@ -70,16 +70,15 @@ def getCompoundScore(text):
     # {'neg': 0.0, 'neu': 0.759, 'pos': 0.241, 'compound': 0.9549}
     return score["compound"]
 
-
 def reformat_attributes(comments_dict, vrstica, header):
     # this function reformats text-like attributes in numeric
     for atrib_name, weight in atribs_weights.items():
 
         if id not in comments_dict.keys() and atrib_name == "comments_scores_though_time":
             continue
-        #print(atrib_name)
+        # print(atrib_name)
 
-        if (atrib_name == "comment_comp_score"):
+        if atrib_name == "comment_comp_score":
             continue
 
         value = vrstica[header.index(atrib_name)]
@@ -151,6 +150,25 @@ def reformat_attributes(comments_dict, vrstica, header):
                 value = 0
 
         vrstica[header.index(atrib_name)] = value
+
+
+    """ REFORMAT OTHER ATTRIBUTES """
+
+    # host_response_rate
+    try:
+        vrstica[header.index("host_response_rate")] = 1 / int(vrstica[header.index("host_response_rate")].strip("%"))
+    except:
+        vrstica[header.index("host_response_rate")] = 0
+    # instant_bookable
+    vrstica[header.index("instant_bookable")] = 1 if vrstica[header.index("instant_bookable")] == "t" else 0
+
+    money_atribs = ["cleaning_fee", "extra_people", "price", "security_deposit"]
+    for atrib in money_atribs:
+        try:
+            value = float(vrstica[header.index(atrib)].strip("$"))
+        except:
+            value = -1
+        vrstica[header.index(atrib)] = value
 
 
 def getFinalScore(vrstica, header, comment_comp_score):
@@ -281,7 +299,7 @@ def prepare_files():
                                     vrstica.append("comments_scores_though_time")
                                     vrstica.append("SCORE")
 
-                                    #print(vrstica)
+                                    # print(vrstica)
                                     header = vrstica
                                 else:
                                     id = row[0]
@@ -291,7 +309,6 @@ def prepare_files():
                                     comments_scores_through_time = 0
                                     SCORE = 0
 
-
                                     ## APPEND DESCRIPTION TEXT
                                     vrstica.append(getCompoundScore(vrstica[header.index("description")]))
 
@@ -300,7 +317,7 @@ def prepare_files():
                                         dates = array(comments_dict[id])[:, 0]
                                         comp_scores = array(array(comments_dict[id])[:, 1]).astype(float)
 
-                                        #print(comp_scores)
+                                        # print(comp_scores)
 
                                         ##sort
                                         dates, comp_scores = zip(*sorted(zip(dates, comp_scores)))
@@ -312,7 +329,7 @@ def prepare_files():
                                         for comp_score in comp_scores:
                                             final_scores.append(
                                                 getFinalScore(vrstica, header, comp_score))
-                                        #print(final_scores)
+                                        # print(final_scores)
 
                                         """ 1 MEAN """
                                         avg_comment_score = mean(final_scores)  ##mean comp scora
@@ -330,8 +347,11 @@ def prepare_files():
                                         comments_scores_5 = {}
                                         for i in range(len(date_array)):
                                             date_array[i] = dt.datetime.strftime(date_array[i], '%Y-%m-%d')
-                                            comments_scores_5[date_array[i]] = mean(chunks_arrays[i])
-                                        #print(comments_scores_5)
+                                            if len(chunks_arrays[i]) == 0:
+                                                comments_scores_5[date_array[i]] = 0
+                                            else:
+                                                comments_scores_5[date_array[i]] = mean(chunks_arrays[i])
+                                        # print(comments_scores_5)
 
                                         """3 SCORE THROUGH TIME """
                                         """ MOGOČE PREVEČ POUDARJENI NOVI KOMENTARJI ??? mogoče * (i/10) ??"""
@@ -344,8 +364,8 @@ def prepare_files():
                                             # vecji kot je I, bližje je zdajšnemu scoru in večji vpliv ima
                                             comments_scores_through_time += (score - last_score) * i
                                             last_score = score
-                                            i+=1
-                                        #print(comments_scores_through_time)
+                                            i += 1
+                                        # print(comments_scores_through_time)
 
 
                                         """ SCORE"""
