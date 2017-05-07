@@ -1,11 +1,16 @@
 import os
+from itertools import count
 from os.path import isdir, join, exists
 import goslate  # py -3 -m pip install goslate
 # for nltk run 0_1init.py file
-from nltk import wordpunct_tokenize
+from nltk import wordpunct_tokenize, defaultdict, OrderedDict
 from nltk.corpus import stopwords
 from nltk.sentiment.util import *
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from numpy import mean, array, array_split
+import datetime as dt
+
+from win32timezone import now
 
 
 def getCompoundScore(text):
@@ -54,11 +59,11 @@ def prepare_files():
                              "review_scores_checkin", "review_scores_cleanliness", "review_scores_communication",
                              "review_scores_location", "review_scores_rating", "review_scores_value",
                              "reviews_per_month", "room_type", "security_deposit", "space", "square_feet", "summary",
-                             "transit"]
+                             "transit", "picture_url", "thumbnail_url"]
     ATTRIB_ARRAY_REVIEWS = ["id", "date", "comments"]
     ATTRIB_ARRAY_CALENDAR = ["listing_id", "date", "available", "price"]
 
-    DESC_ATTRIBS_LISTINGS = ["description", "host_about", "name", "neighborhood_overview", "notes", "space", "summary",
+    DESC_ATTRIBS_LISTINGS = ["description", "host_about", "neighborhood_overview", "notes", "space", "summary",
                              "transit"]
     DESC_ATTRIBS_REVIEWS = ["comments"]
 
@@ -66,10 +71,14 @@ def prepare_files():
     WRITE_PATH = os.path.dirname(os.path.realpath(__file__)) + "\\..\\src\\City_Data_Attributes"
 
     CITIES = [f for f in os.listdir(PATH) if isdir(join(PATH, f))]
-    FILES = ["calendar.csv", "listings.csv", "reviews.csv"]
+    FILES = ["reviews.csv", "listings.csv", "calendar.csv"]
     CITIES = ["Ashenville"]
 
+    header = []
+
     for city_name in CITIES:
+
+        comments_dict = defaultdict(list)
 
         # 1. READ CITY
         for file in FILES:
@@ -119,14 +128,197 @@ def prepare_files():
                         for atrib in arr_LISTINGS:
                             temp_row = row[arr_LISTINGS[atrib]]
                             ##TEXTMINE - writes compound score in attributes that are description
-                            if file == ("reviews.csv" or "listings.csv") and atrib in DESC_ATTRIBS_REVIEWS or \
-                                                    atrib in DESC_ATTRIBS_LISTINGS and row_count > 0:
+                            if file == "reviews.csv":
+                                if atrib in DESC_ATTRIBS_REVIEWS and row_count > 0:  # compound score
+
+                                    comp_score = getCompoundScore(temp_row)
+                                    comments_dict[row[0]].append(
+                                        [row[arr_LISTINGS["date"]],
+                                         comp_score])  # appends to id -> date and comp. score
+
+                                    temp_row = comp_score
+
+                            elif file == "listings.csv" and atrib in DESC_ATTRIBS_LISTINGS and row_count > 0:
+
                                 temp_row = getCompoundScore(temp_row)
-                            ##END TEXTMINE
 
                             vrstica.append(temp_row)
 
+                        if file == "listings.csv":
+                            # dodamo izračunan atribut -> povprečna vrednost komentarjev uteženi z številom komentarjev - the more the better
+                            if len(comments_dict):
+                                if row_count == 0:  # dodamo header
+                                    vrstica.append("avg_comment_score")
+                                    vrstica.append("comments_scores_5")
+                                    vrstica.append("comments_scores_though_time")
+                                    vrstica.append("SCORE")
+                                    print(vrstica)
+                                    header = vrstica
+                                else:
+                                    id = row[0]
+
+                                    avg_comment_score = 0
+                                    comments_scores_5 = {}
+                                    comments_scores_through_time = 0
+                                    SCORE = 0
+
+                                    if id in comments_dict.keys():
+
+                                        # print(comments_dict)
+                                        dates = array(comments_dict[id])[:, 0]
+                                        comp_scores = array(array(comments_dict[id])[:, 1]).astype(float)
+
+                                        ##sort
+                                        dates, comp_scores = zip(*sorted(zip(dates, comp_scores)))
+
+                                        ## 1 MEAN
+                                        avg_comment_score = mean(comp_scores)  ##mean comp scora
+
+                                        ## 2 FIVE DATES AND SCORES score through time 5 -> for graph
+                                        dni = 5
+
+                                        date_array = []
+                                        for i in range(dni):
+                                            index = int((len(dates) - 1) * (i / (dni - 1)))
+                                            date_array.append(dt.datetime.strptime(dates[index], '%Y-%m-%d').date())
+
+                                        chunks_arrays = array_split(array(comp_scores), dni)
+
+                                        comments_scores_5 = {}
+                                        for i in range(len(date_array)):
+                                            date_array[i] = dt.datetime.strftime(date_array[i], '%Y-%m-%d')
+                                            comments_scores_5[date_array[i]] = mean(chunks_arrays[i])
+
+                                        ## 3 SCORE THROUGH TIME
+
+                                        """ MOGOČE PREVEČ POUDARJENI NOVI KOMENTARJI ??? mogoče * (i/10) ??"""
+                                        comments_scores_through_time = 0
+                                        last_score = 0
+                                        for i in range(len(comp_scores)):
+                                            # vecji kot je I, bližje je zdajšnemu scoru in večji vpliv ima
+                                            comments_scores_through_time += (comp_scores[i] - last_score) * i
+                                            last_score = comp_scores[i]
+
+                                    vrstica.append(avg_comment_score)
+                                    vrstica.append(comments_scores_5)
+                                    vrstica.append(comments_scores_through_time)
+
+                                    ## 4 SCORE
+
+                                    atribs_weights = {"cancellation_policy": 0.1,
+                                                      "description": 0.4,
+                                                      "host_about": 0.3,
+                                                      "host_acceptance_rate": 0.7,
+                                                      "host_identity_verified": 0.1,
+                                                      "host_response_time": 0.2,
+                                                      "host_since": 0.1,
+                                                      "host_total_listings_count": 0.5,
+                                                      "host_verifications": 0.6,
+                                                      "is_location_exact": 0.3,
+                                                      "neighborhood_overview": 1.5,
+                                                      "notes": 0.5,
+                                                      "number_of_reviews": 1.5,
+                                                      "review_scores_accuracy": 0.9,
+                                                      "review_scores_checkin": 0.9,
+                                                      "review_scores_cleanliness": 0.9,
+                                                      "review_scores_communication": 0.7,
+                                                      "review_scores_location": 0.7,
+                                                      "review_scores_rating": 1.2,
+                                                      "review_scores_value": 1.2,
+                                                      "space": 0.4,
+                                                      "summary": 0.5,
+                                                      "transit": 0.8,
+                                                      "comments_scores_though_time": 3.0
+                                                      }
+
+                                    for atrib_name, weight in atribs_weights.items():
+                                        if id not in comments_dict.keys() and atrib_name == "comments_scores_though_time":
+                                            continue
+                                        # print(atrib_name)
+                                        value = vrstica[header.index(atrib_name)]
+
+                                        if atrib_name == "cancellation_policy":
+                                            atribs = ["strict", "moderate", "flexible"]
+                                            try:
+                                                value = atribs.index(value) / (len(atribs) - 1)
+                                            except:
+                                                value = 0
+
+                                        elif atrib_name == "host_acceptance_rate":
+                                            try:
+                                                value = 1 / int(value.strip("%"))
+                                            except:
+                                                value = 0
+
+                                        elif atrib_name == "host_response_time":
+                                            atribs = ["N/A", "a few days or more", "within a day",
+                                                      "within a few hours", "within an hour"]
+                                            try:
+                                                value = atribs.index(value) / (len(atribs) - 1)
+                                            except:
+                                                value = 0
+
+                                        elif atrib_name == "host_since":
+                                            datetime_object = dt.datetime.strptime(value, "%Y-%m-%d")
+                                            value = 1 / (
+                                                now().replace(tzinfo=None) - datetime_object).days  ##decimalke
+
+                                        elif atrib_name == "host_verifications":
+                                            atribs = ['email', 'phone', 'reviews', 'google', 'jumio', 'facebook',
+                                                      'kba', 'amex', 'linkedin', 'manual_offline']
+                                            value = len(value) / len(atribs)
+
+                                        elif atrib_name in ["is_location_exact", "host_identity_verified"]:
+                                            value = 1 if value == "t" else 0
+
+                                        elif atrib_name in ["review_scores_accuracy", "review_scores_checkin",
+                                                            "review_scores_cleanliness", "review_scores_communication",
+                                                            "review_scores_location", "review_scores_value"]:
+                                            try:
+                                                value = float(value) / 10
+                                            except:
+                                                value = 0
+
+                                        elif atrib_name == "review_scores_rating":
+                                            try:
+                                                value = float(value) / 100
+                                            except:
+                                                value = 0
+
+                                        elif atrib_name == "host_total_listings_count":  ##TODO
+                                            try:
+                                                value = float(value) / 100
+                                            except:
+                                                value = 0
+
+                                        elif atrib_name == "host_verifications":  ## TODO
+                                            try:
+                                                value = float(value) / 100
+                                            except:
+                                                value = 0
+
+                                        elif atrib_name == "number_of_reviews":  ## TODO
+                                            try:
+                                                value = float(value) / 1000
+                                            except:
+                                                value = 0
+
+
+                                        vrstica[header.index(atrib_name)] = value
+                                        try:
+                                            SCORE += float(value) * weight
+                                        except:
+                                            pass
+                                            # print(vrstica)
+
+                                    vrstica.append(SCORE)
+                            else:
+                                print("""Error! - Not calculated comments score. 
+                                        Run reviews.csv before listings.csv to fill comments_dict.""")
+                                exit(1)
+
                         # write whole row in file
                         writer.writerow(vrstica)
+
 
 prepare_files()
