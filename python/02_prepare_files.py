@@ -279,8 +279,7 @@ def prepare_files():
                                     vrstica.append("avg_comment_score")
                                     vrstica.append("comments_scores_5")
                                     vrstica.append("comments_scores_though_time")
-
-                                    # vrstica.append("SCORE")
+                                    vrstica.append("SCORE")
 
                                     #print(vrstica)
                                     header = vrstica
@@ -290,6 +289,8 @@ def prepare_files():
                                     avg_comment_score = 0
                                     comments_scores_5 = {}
                                     comments_scores_through_time = 0
+                                    SCORE = 0
+
 
                                     ## APPEND DESCRIPTION TEXT
                                     vrstica.append(getCompoundScore(vrstica[header.index("description")]))
@@ -345,9 +346,15 @@ def prepare_files():
                                             last_score = score
                                             i+=1
                                         #print(comments_scores_through_time)
-                                    vrstica.append(str(avg_comment_score))
-                                    vrstica.append(str(comments_scores_5))
-                                    vrstica.append(str(comments_scores_through_time))
+
+
+                                        """ SCORE"""
+                                        SCORE = list(comments_scores_5.values())[-1]
+
+                                    vrstica.append(avg_comment_score)
+                                    vrstica.append(comments_scores_5)
+                                    vrstica.append(comments_scores_through_time)
+                                    vrstica.append(SCORE)
 
 
                             else:
