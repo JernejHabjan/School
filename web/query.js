@@ -22,18 +22,18 @@ function addMarker(title, latitude, longitude){
 function addAccomondations(cityName, cityLat, cityLng){
 	//PREFERENCES
 	var _allowPets = document.getElementById("allow_pets").checked;
-	var _requireShower = document.getElementById("require_shower").checked;
-	var _allowCamping = document.getElementById("allow_camping").checked;
+	var _requireHeating = document.getElementById("require_heating").checked;
+	var _requireHouse = document.getElementById("require_house").checked;
 	var _requireBreakfast = document.getElementById("require_breakfast").checked;
-	var _requireLargerRoom = document.getElementById("require_larger_room").checked;
+	var _requireFamilyFriendly = document.getElementById("require_family").checked;
 
 	var _args = 
 		"city=" + cityName + "&" +
 		"pets=" + _allowPets + "&" +
-		"shower=" + _requireShower + "&" +
-		"camping=" + _allowCamping + "&" +
+		"heating=" + _requireHeating + "&" +
+		"house=" + _requireHouse + "&" +
 		"breakfast=" + _requireBreakfast + "&" +
-		"large_room=" + _requireLargerRoom;
+		"family=" + _requireFamilyFriendly;
 	
 	$.ajax({
 		type: "GET",
@@ -41,6 +41,8 @@ function addAccomondations(cityName, cityLat, cityLng){
 		data: _args,
 		success: function(data){
 			var rows = data.split("\n")
+
+			document.getElementById("list_title").innerHTML = "LIST - " + (rows.length - 1) + " entries";
 
 			//remove last = NaN random value ?? (rows.length - 1)
 			for(var i = 0; i < rows.length - 1; ++i){

@@ -27,35 +27,67 @@ class City:
 			
 			columns = reader[0]
 			#print(columns, "<br><br>")
-			name_id = columns.index("property_type")
+			type_id = columns.index("property_type")
 			lat_id = columns.index("latitude")
 			lng_id = columns.index("longitude")
 			description_id = columns.index("description")
+			score_id = columns.index("SCORE")
+			amenities_id = columns.index("amenities")
 
-			score_id = columns.index("review_scores_rating")
+			#MOSTLY EMPTY VALUES
+			#room_size_id = columns.index("square_feet")
+
 			reader = sorted(reader, key=lambda x: toFloat(x[score_id]), reverse=True)
 
 			# arguments
 			#print(sys.argv)
 			allow_pets = True if (sys.argv[2] if len(sys.argv) > 2 else "true") == "true" else False
-			require_shower = True if (sys.argv[3] if len(sys.argv) > 3 else "true") == "true" else False
-			allow_camping = True if (sys.argv[4] if len(sys.argv) > 4 else "true") == "true" else False
+			require_heating = True if (sys.argv[3] if len(sys.argv) > 3 else "true") == "true" else False
+			require_house = True if (sys.argv[4] if len(sys.argv) > 4 else "true") == "true" else False
 			require_breakfast = True if (sys.argv[5] if len(sys.argv) > 5 else "true") == "true" else False
-			require_large_room = True if (sys.argv[6] if len(sys.argv) > 6 else "true") == "true" else False
+			require_family_friendly = True if (sys.argv[6] if len(sys.argv) > 6 else "true") == "true" else False
 
 			#print(allow_pets)
 			
 			for row_count, row in enumerate(reader[1:]):
 				self.entries_X[row[0]] = row[1:]
-				print(
-					row[name_id], 
-					row[lat_id], 
-					row[lng_id], 
-					row[description_id], 
-					toFloat(row[score_id]), 
-					sep=","
-				)
-				#break
+
+				amenities = row[amenities_id].split(",")
+
+				has_pets = False
+				has_breakfast = False
+				has_heating = False
+				is_family_friendly = False
+
+				for a in amenities:
+					if "Pets live" in a or "Pets Allowed" in a:
+						has_pets = True
+					elif "Breakfast" in a:
+						has_breakfast = True
+					elif "Heating" in a:
+						has_heating = True
+					elif "Family" in a:
+						is_family_friendly = True
+
+
+				valid_pets = allow_pets or (not has_pets)
+				valid_heating = (not require_heating) or has_heating
+				valid_breakfast = (not require_breakfast) or has_breakfast
+				valid_house = (not require_house) or row[type_id] == "House"
+				valid_family = (not require_family_friendly) or is_family_friendly
+
+				valid = valid_pets and valid_heating and valid_breakfast and valid_house and valid_family
+
+				if valid:
+					print(
+						row[type_id], 
+						row[lat_id], 
+						row[lng_id], 
+						row[description_id], 
+						"%.2f" % round(toFloat(row[score_id]), 2),
+						amenities,
+						sep=","
+					)
 
 								
 def send_files(city_name):

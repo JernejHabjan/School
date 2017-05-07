@@ -35,17 +35,17 @@
         <input id="allow_pets" type="checkbox"/>
         <label for="allow_pets">Allow pets</label> <br>
 
-        <input id="require_shower" type="checkbox"/>
-        <label for="require_shower">Require shower</label> <br>
+        <input id="require_heating" type="checkbox"/>
+        <label for="require_heating">Require heating</label> <br>
 
-        <input id="allow_camping" type="checkbox"/>
-        <label for="allow_camping">Allow camping locations</label> <br>
+        <input id="require_house" type="checkbox"/>
+        <label for="require_house">Require house</label> <br>
 
         <input id="require_breakfast" type="checkbox"/>
         <label for="require_breakfast">Require breakfast</label> <br>
 
-        <input id="require_larger_room" type="checkbox"/>
-        <label for="require_larger_room">Require larger room</label> <br>
+        <input id="require_family" type="checkbox"/>
+        <label for="require_family">Require family friendly</label> <br>
 
     </div>
 
@@ -88,14 +88,14 @@
     </div>
 
 
-    <div id="list" class="content">
-        <h1> LIST </h1>
+    <div id="list" class="content" style="display:none;">
+        <h1 id="list_title"> LIST </h1>
         <button onclick="showLocationStatistics()">Show statistics</button>
 
         <table id="acc-table">
           <tr>
             <th>Rating</th>
-            <th>Address</th>
+            <th>Name</th>
             <th>Distance</th>
             <th>Time</th>
             <th><th>
@@ -104,7 +104,7 @@
 
     </div>
 
-    <div id="description" class="content">
+    <div id="description" class="content" style="display:none;">
         <h1> DESCRIPTION </h1>
         <button onclick="showAccomondationStatistics()">Show statistics</button><br>
 
