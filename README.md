@@ -7,20 +7,25 @@ Delo sva si razdelila na 2 večji področji.
 
 
 
-### 2.1 Prikazovalnik na spletu:
-Prvo je prikazovalnik na spletu. Na njem lahko vnesemo 
-točke, kjer hočemo potovati. Skozi mesta ki bomo potovali se bodo pa pokazala mesta, kjer lahko najamemo
-prebivališče. Lahko obkljukamo preference, ki omejijo rezultate iskanja prebivališča.
-Lahko vnesemo tudi okvirno ceno.
+### 2.1 Prikazovalnik na spletu (index.html, style.css, script.js, query.js):
+Prvo je prikazovalnik na spletu. Na njem lahko vnesemo točke, kjer hočemo potovati in tako dobimo razdalje ter čas potovanja po zaporednih lokacijah. Na voljo so nam časi in razdalje za hojo in vožnjo z avtomobilom. Za vsako posamezno točko lahko prikažemo prebivališča, ki ustrezajo našim preferencam, ki si jih lahko izberemo iz menija, in tako prikažemo omejene rezultate.
 
-Trenutne perference:
+Trenutne preference:
 ```
 Allow pets
-Require shower
-Allow camping locations
+Require heating
+Require house
 Require breakfast
-Require larger room
+Require family friendly
 ```
+
+Ob spremembi preferenc ali izbiri točke zanimanja, se prikaže graf distribucije ocen vseh prebivališč 
+na seznamu. Ta je načeloma podobna normalni. Vse informacije o prebivališču predhodno pretvorimo v pravilno obliko za končno uporabo (branje in prikaz na spletni strani). Več o pretvorbi v točki 2.2. S pomočjo spletnega strežnika kličemo preko skripte python/query.php skripto za branje podatkov iz najbližjega mesta (datoteka 04_query_entries.py), ki so shranjeni v direktoriju "src/mesto/" (v tej fazi imamo za testiranje samo eno mesto). Od tu dobimo atribute potrebne za
+prikaz informacij o prenočišču(slike, opis, koordinate, tip hiše, score), iz njih pa v skripti pogledamo tudi, če prebivališče ustreza našim preferencam. Vnos prikažemo v HTML tabeli.
+
+Od tu vidimo približne razdalje in čas potovanja od središča izbranega mesta do določenega Airbnb prebivališča. Na zemljevidu pa se pojavijo oznake vsakega prenočišča, na katere lahko kliknemo za več informacij. Označba se obarva zeleno, če je prebivališče na tej lokaciji pridobilo točke kvalitete (score). V nasprotnem primeru, če je te izgubilo, potem se ta obarva z rdečo barvo. Tako ponekod lahko opazimo skupine prenočišč, ki so se izboljšale.
+
+S klikom na gumb "Show" prikažemo kratek opis in sliko posameznega prebivališča. Pokaže se nam tudi graf, ki prikazuje spremembo točk kvalitete skozi čas. Po tem lahko tudi vidimo ali so se te drastično zvišale ali spustile skozi čas. Načeloma te ostajajo v nekem majhnem območju, so pa tudi izjeme.
 
 
 ### 2.2 Obdelava datotek:

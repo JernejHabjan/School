@@ -44,10 +44,10 @@ class City:
 			# arguments
 			#print(sys.argv)
 			allow_pets = True if (sys.argv[2] if len(sys.argv) > 2 else "true") == "true" else False
-			require_heating = True if (sys.argv[3] if len(sys.argv) > 3 else "true") == "true" else False
-			require_house = True if (sys.argv[4] if len(sys.argv) > 4 else "true") == "true" else False
-			require_breakfast = True if (sys.argv[5] if len(sys.argv) > 5 else "true") == "true" else False
-			require_family_friendly = True if (sys.argv[6] if len(sys.argv) > 6 else "true") == "true" else False
+			require_heating = True if (sys.argv[3] if len(sys.argv) > 3 else "false") == "true" else False
+			require_house = True if (sys.argv[4] if len(sys.argv) > 4 else "false") == "true" else False
+			require_breakfast = True if (sys.argv[5] if len(sys.argv) > 5 else "false") == "true" else False
+			require_family_friendly = True if (sys.argv[6] if len(sys.argv) > 6 else "false") == "true" else False
 
 			#print(allow_pets)
 			
