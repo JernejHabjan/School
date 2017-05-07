@@ -11,7 +11,7 @@ class City:
 	def __init__(self, city_name):
 		self.PATH = "..\\src\\City_Data_Attributes"
 		self.location = (0.0, 0.0)
-		self.entries_X = dict()
+		#self.entries_X = dict()
 		self.file = "listings.csv"
 		self.city_name = city_name
 		self.read_entries()
@@ -24,7 +24,7 @@ class City:
 			
 		with open(read_file, encoding="utf8") as f:
 			reader = list(csv.reader(f))  ##READ CSV
-			
+
 			columns = reader[0]
 			#print(columns, "<br><br>")
 			type_id = columns.index("property_type")
@@ -38,10 +38,8 @@ class City:
 			score_over_time_id = columns.index("comments_scores_5")
 			score_change_id = columns.index("comments_scores_though_time")
 
-			#MOSTLY EMPTY VALUES
-			#room_size_id = columns.index("square_feet")
 
-			reader = sorted(reader, key=lambda x: toFloat(x[score_id]), reverse=True)
+			reader = sorted(reader[1:], key=lambda x: toFloat(x[score_id]), reverse=True)
 
 			# arguments
 			#print(sys.argv)
@@ -53,47 +51,50 @@ class City:
 
 			#print(allow_pets)
 			
-			for row_count, row in enumerate(reader[1:]):
-				self.entries_X[row[0]] = row[1:]
-
-				amenities = row[amenities_id].split(",")
-
+			for i, row in enumerate(reader):
 				has_pets = False
 				has_breakfast = False
 				has_heating = False
 				is_family_friendly = False
 
+				amenities = row[amenities_id].split(",")
 				for a in amenities:
 					if "Pets live" in a or "Pets Allowed" in a:
 						has_pets = True
-					elif "Breakfast" in a:
+					if "Breakfast" in a:
 						has_breakfast = True
-					elif "Heating" in a:
+					if "Heating" in a:
 						has_heating = True
-					elif "Family" in a:
+					if "Family" in a:
 						is_family_friendly = True
 
 
+				#print(row[score_id])
+
 				valid_pets = allow_pets or (not has_pets)
-				valid_heating = (not require_heating) or has_heating
-				valid_breakfast = (not require_breakfast) or has_breakfast
+				valid_heating = (not require_heating) or has_heating			
 				valid_house = (not require_house) or row[type_id] == "House"
+				valid_breakfast = (not require_breakfast) or has_breakfast
 				valid_family = (not require_family_friendly) or is_family_friendly
 
 				valid = valid_pets and valid_heating and valid_breakfast and valid_house and valid_family
+				score = round(toFloat(row[score_id]), 1)
 
-				if valid:
+				description = row[description_id]
+				description = (description[:47] + "...") if len(description) > 50 else description
+
+				if valid and score:
 					print(
 						row[type_id], 
 						row[lat_id], 
 						row[lng_id], 
-						row[description_id], 
-						"%.2f" % round(toFloat(row[score_id]), 2),
+						description, 
+						"%.1f" % score,
 						row[picture_id],
 						row[thumbnail_id],
 						row[score_over_time_id],
 						row[score_change_id],
-						sep="$$$"
+						sep="$$"
 					)
 
 								

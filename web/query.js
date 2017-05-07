@@ -1,5 +1,6 @@
 
 var markers = [];
+var selectedLocation = 0;
 
 function calcDistance(lat1, lng1, lat2, lng2){
 	var _point1 = new google.maps.LatLng(lat1, lng1);
@@ -11,7 +12,7 @@ function calcDistance(lat1, lng1, lat2, lng2){
 	return (_distanceInM / 1000.0).toFixed(1);
 }
 
-function addMarker(title, latitude, longitude, scoreChange){
+function addMarker(title, latitude, longitude, scoreChange, showButton){
 	icon = scoreChange == null ? 
 		'https://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png' : 
 		"https://mt.google.com/vt/icon?psize=30&font=fonts/arialuni_t.ttf&color=ff304C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=48&text=%E2%80%A2";
@@ -20,12 +21,18 @@ function addMarker(title, latitude, longitude, scoreChange){
 		icon = 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png';
 	}
 
-	markers.push(new google.maps.Marker({
+	var marker = new google.maps.Marker({
 		position: {lat: latitude, lng: longitude},
 		map: map,
 		title: title,
 		icon: icon
-	}));
+	});
+
+	marker.addListener("click", function(){
+		showButton.click();
+	});
+
+	markers.push(marker);
 }
 
 function addAccomondations(cityName, cityLat, cityLng){
@@ -53,11 +60,13 @@ function addAccomondations(cityName, cityLat, cityLng){
 			var hashmap = {};
 
 			document.getElementById("list_title").innerHTML = "LIST - " + (rows.length - 2) + " entries";
-			console.log("Query returned " + (rows.length - 2) + " entries!");
+			//console.log("Query returned " + (rows.length - 2) + " entries!");
+
+			//console.log(rows);
 
 			//remove last = NaN random value ?? (rows.length - 1)
-			for(var i = 1; i < rows.length - 1; ++i){
-				var rowData = rows[i].split("$$$");
+			for(var i = 0; i < rows.length - 1; ++i){
+				var rowData = rows[i].split("$$");
 				//console.log(rowData);
 				
 				var type = rowData[0];
@@ -83,7 +92,7 @@ function addAccomondations(cityName, cityLat, cityLng){
 					scores.push(pair[1]);
 				}
 
-				//console.log(scoreOverTime);
+				//console.log(i + ". " + score);
 
 				var distance = calcDistance(cityLat, cityLng, lat, lng);
 				
@@ -104,7 +113,7 @@ function addAccomondations(cityName, cityLat, cityLng){
 			var scoreValues = [];
 
 			for(var key in hashmap){
-				scoreKeys.push(key + "f");
+				scoreKeys.push(key);
 				scoreValues.push(hashmap[key]);
 			}
 
@@ -120,8 +129,7 @@ function addAccomondations(cityName, cityLat, cityLng){
 				yaxis: { title: "Count" }
 			};
 
-			Plotly.newPlot('rating_distribution', [data], layout);	
-
+			Plotly.newPlot('rating_distribution', [data], layout);
 		}
 	})
 	
@@ -207,7 +215,7 @@ function addAccomondationEntry(
         //map.setZoom(25);
 	});
 
-	addMarker(cityName + " " + type, lat, lng, scoreChange);
+	addMarker(cityName + " " + type, lat, lng, scoreChange, _row.cells[5]);
 	//setRouteInfo(cityName, lat, lng, _rowId);
 }
 
@@ -232,6 +240,8 @@ function clearList(){
 		markers[i].setMap(null);
 	}markers = [];
 
+
+	selectedLocation = 0;
 	//remove route
 	//removeRoute();
 }
@@ -242,9 +252,10 @@ function queryList(rowId){
 	var address = "Asheville"; //_row.cells[ADDRESS_ID].innerHTML;
 
 	clearList();
-	
+	selectedLocation = rowId;
+
 	//console.log(_row.cells[ARRIVAL_ID].innerHTML);
-	console.log(document.getElementById("arrival_" + rowId).value);
+	//console.log(document.getElementById("arrival_" + rowId).value);
 	
 	geocoder.geocode({'address': address}, function(results, status) {
     	if (status === 'OK') {
@@ -271,6 +282,11 @@ function queryList(rowId){
     });
 }
 
+function reloadQueryList(){
+	if(selectedLocation > 0){
+		queryList(selectedLocation);
+	}	
+}
 
 //TODO groups?
 function showLocationStatistics(){

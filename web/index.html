@@ -32,19 +32,19 @@
     <div style="float:left; position:relative; width:40%; display:inline-block; text-align: left;"> 
         <div style="text-align:center;"> Preferences </div>
 
-        <input id="allow_pets" type="checkbox"/>
+        <input id="allow_pets" type="checkbox" checked onclick="reloadQueryList();"/>
         <label for="allow_pets">Allow pets</label> <br>
 
-        <input id="require_heating" type="checkbox"/>
+        <input id="require_heating" type="checkbox" onclick="reloadQueryList();"/>
         <label for="require_heating">Require heating</label> <br>
 
-        <input id="require_house" type="checkbox"/>
+        <input id="require_house" type="checkbox" onclick="reloadQueryList();"/>
         <label for="require_house">Require house</label> <br>
 
-        <input id="require_breakfast" type="checkbox"/>
+        <input id="require_breakfast" type="checkbox" onclick="reloadQueryList();"/>
         <label for="require_breakfast">Require breakfast</label> <br>
 
-        <input id="require_family" type="checkbox"/>
+        <input id="require_family" type="checkbox" onclick="reloadQueryList();"/>
         <label for="require_family">Require family friendly</label> <br>
 
     </div>
@@ -56,9 +56,10 @@
     <button id="defaultTab" class="tabs" onclick="setContent(event, 'route')">Route</button>
 
     <select id="travelType" onchange="displayRoute(); setContent(null, `route`); clearList();">
+        <option value="DRIVING">Driving</option>
         <option value="WALKING">Walking</option>
         <!-- <option value="BICYCLING">Bicycling</option> -->
-        <option value="DRIVING">Driving</option>
+        
         <!--<option value="TRANSIT">Transit</option>-->
       </select>
 
