@@ -33,6 +33,10 @@ class City:
 			description_id = columns.index("description")
 			score_id = columns.index("SCORE")
 			amenities_id = columns.index("amenities")
+			picture_id = columns.index("picture_url")
+			thumbnail_id = columns.index("thumbnail_url")
+			score_over_time_id = columns.index("comments_scores_5")
+			score_change_id = columns.index("comments_scores_though_time")
 
 			#MOSTLY EMPTY VALUES
 			#room_size_id = columns.index("square_feet")
@@ -85,8 +89,11 @@ class City:
 						row[lng_id], 
 						row[description_id], 
 						"%.2f" % round(toFloat(row[score_id]), 2),
-						amenities,
-						sep=","
+						row[picture_id],
+						row[thumbnail_id],
+						row[score_over_time_id],
+						row[score_change_id],
+						sep="$$$"
 					)
 
 								

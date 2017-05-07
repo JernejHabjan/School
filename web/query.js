@@ -11,11 +11,20 @@ function calcDistance(lat1, lng1, lat2, lng2){
 	return (_distanceInM / 1000.0).toFixed(1);
 }
 
-function addMarker(title, latitude, longitude){
+function addMarker(title, latitude, longitude, scoreChange){
+	icon = scoreChange == null ? 
+		'https://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png' : 
+		"https://mt.google.com/vt/icon?psize=30&font=fonts/arialuni_t.ttf&color=ff304C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=48&text=%E2%80%A2";
+
+	if(scoreChange < 0.0){
+		icon = 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png';
+	}
+
 	markers.push(new google.maps.Marker({
 		position: {lat: latitude, lng: longitude},
 		map: map,
-		title: title
+		title: title,
+		icon: icon
 	}));
 }
 
@@ -41,27 +50,78 @@ function addAccomondations(cityName, cityLat, cityLng){
 		data: _args,
 		success: function(data){
 			var rows = data.split("\n")
+			var hashmap = {};
 
-			document.getElementById("list_title").innerHTML = "LIST - " + (rows.length - 1) + " entries";
+			document.getElementById("list_title").innerHTML = "LIST - " + (rows.length - 2) + " entries";
+			console.log("Query returned " + (rows.length - 2) + " entries!");
 
 			//remove last = NaN random value ?? (rows.length - 1)
-			for(var i = 0; i < rows.length - 1; ++i){
-				var rowData = rows[i].split(",");
-				console.log(rowData);
+			for(var i = 1; i < rows.length - 1; ++i){
+				var rowData = rows[i].split("$$$");
+				//console.log(rowData);
 				
 				var type = rowData[0];
 				var lat = parseFloat(rowData[1]);
 				var lng = parseFloat(rowData[2]);
 				var desc = rowData[3];
 				var score = parseFloat(rowData[4]);
+				var image = rowData[5];
+				var thumbnail = rowData[6];
+				var scoreOverTime = rowData[7];
+				var scoreChange = parseFloat(rowData[8]);
+
+				scoreOverTime =  scoreOverTime.length < 2 ? "" : 
+					scoreOverTime.substring(1, scoreOverTime.length - 1);
+
+				valuePairs = scoreOverTime.split(", ");
+				var times = [];
+				var scores = [];
+
+				for(var j = 0; j < valuePairs.length; ++j){
+					var pair = valuePairs[j].split(": ");
+					times.push(pair[0]);
+					scores.push(pair[1]);
+				}
+
+				//console.log(scoreOverTime);
 
 				var distance = calcDistance(cityLat, cityLng, lat, lng);
 				
-				addAccomondationEntry(cityName, lat, lng, distance, type, score, desc);
+				addAccomondationEntry(cityName, lat, lng, distance, type, score, desc, image, thumbnail,
+					times, scores, scoreChange);
+
+				if(score in hashmap){
+					hashmap[score] += 1;
+				}else{
+					hashmap[score] = 1;
+				}
 				
 				//TODO remove -> PROBLEM: location service OVER_QUERY_LIMIT
 				//if(i > 5)break;
-			}                        
+			}
+
+			var scoreKeys = [];
+			var scoreValues = [];
+
+			for(var key in hashmap){
+				scoreKeys.push(key + "f");
+				scoreValues.push(hashmap[key]);
+			}
+
+			var data = {	
+			    x: scoreKeys,
+			    y: scoreValues,
+			    type: 'bar'
+			};
+
+			var layout = {
+				title: "Rating Distribution",
+				xaxis: { title: "Score" },
+				yaxis: { title: "Count" }
+			};
+
+			Plotly.newPlot('rating_distribution', [data], layout);	
+
 		}
 	})
 	
@@ -98,7 +158,10 @@ function setRouteInfo(origin, latTo, lngTo, id, display){
     });
 }
 
-function addAccomondationEntry(cityName, lat, lng, distance, type, rating, description){
+function addAccomondationEntry(
+	cityName, lat, lng, distance, type, rating, description, image, thumbnail,
+	times, scores, scoreChange)
+{
 	var _table = document.getElementById("acc-table");
 	var _rowId = _table.rows.length;
 	var _row = _table.insertRow(_rowId);
@@ -111,9 +174,10 @@ function addAccomondationEntry(cityName, lat, lng, distance, type, rating, descr
 	_row.insertCell(1).innerHTML = cityName + " " + type;
 	_row.insertCell(2).innerHTML = distance + "km";
 	_row.insertCell(3).innerHTML = convertTime(_min).string;
-	_row.insertCell(4).innerHTML = "<button class='tabs'>Show</button>";
+	_row.insertCell(4).innerHTML = "<img src='" + thumbnail + "' style='height:50px;'/>";
+	_row.insertCell(5).innerHTML = "<button class='tabs'>Show</button>";
 
-	_row.cells[4].addEventListener("click", function(){
+	_row.cells[5].addEventListener("click", function(){
 		var _index = this.parentElement.rowIndex;
 		setContent(null, 'description');
 
@@ -122,34 +186,28 @@ function addAccomondationEntry(cityName, lat, lng, distance, type, rating, descr
 
 		document.getElementById("acc_description").innerHTML = description;
 
+		document.getElementById("acc_img").src = "";
+		document.getElementById("acc_img").src = image;
+
 		setRouteInfo(cityName, lat, lng, _rowId, true);
 
-		//TODO add rating over time
 
-		_years = [];
-		for(var i = 2000; i < 2015; ++i){
-			_years.push(i);
-		}
+		var _score = { x: times, y: scores, type: 'scatter' };
 
-		_ratings = [];
-		for(var i = 0; i < 15; ++i){
-			_ratings.push(3.0 + Math.random() * 2.0 - 1.0);
-		}
-
-		var _score = {
-		  x: _years, 
-		  y: _ratings, 
-		  type: 'scatter'
+		var layout = {
+			title: "Score Over Time",
+			xaxis: { title: "Time" },
+			yaxis: { title: "Score" }
 		};
 
-		Plotly.newPlot('graph', [_score]);
+		Plotly.newPlot('rating_over_time', [_score], layout);
 
 		//not working async
 		//map.setCenter(new google.maps.LatLng(lat, lng));
         //map.setZoom(25);
 	});
 
-	addMarker(cityName + " " + type, lat, lng);
+	addMarker(cityName + " " + type, lat, lng, scoreChange);
 	//setRouteInfo(cityName, lat, lng, _rowId);
 }
 
