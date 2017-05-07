@@ -122,6 +122,26 @@ function addAccomondationEntry(cityName, lat, lng, distance, type, rating, descr
 
 		setRouteInfo(cityName, lat, lng, _rowId, true);
 
+		//TODO add rating over time
+
+		_years = [];
+		for(var i = 2000; i < 2015; ++i){
+			_years.push(i);
+		}
+
+		_ratings = [];
+		for(var i = 0; i < 15; ++i){
+			_ratings.push(3.0 + Math.random() * 2.0 - 1.0);
+		}
+
+		var _score = {
+		  x: _years, 
+		  y: _ratings, 
+		  type: 'scatter'
+		};
+
+		Plotly.newPlot('graph', [_score]);
+
 		//not working async
 		//map.setCenter(new google.maps.LatLng(lat, lng));
         //map.setZoom(25);
