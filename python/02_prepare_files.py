@@ -72,7 +72,7 @@ def prepare_files():
 
     CITIES = [f for f in os.listdir(PATH) if isdir(join(PATH, f))]
     FILES = ["reviews.csv", "listings.csv", "calendar.csv"]
-    CITIES = ["Ashenville"]
+    CITIES = ["Asheville"]
 
     header = []
 
