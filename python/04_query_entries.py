@@ -43,6 +43,7 @@ class City:
 
 			# arguments
 			#print(sys.argv)
+			#print("LEN: " , len(sys.argv))
 			allow_pets = True if (sys.argv[2] if len(sys.argv) > 2 else "true") == "true" else False
 			require_heating = True if (sys.argv[3] if len(sys.argv) > 3 else "false") == "true" else False
 			require_house = True if (sys.argv[4] if len(sys.argv) > 4 else "false") == "true" else False
