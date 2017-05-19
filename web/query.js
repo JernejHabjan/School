@@ -56,24 +56,23 @@ function addAccomondations(cityName, cityLat, cityLng){
 		url: "../python/query.php",
 		data: _args,
 		success: function(data){
-			var rows = data.split("\n")
+			//console.log(data);
+			var rows = data.split("\n");
 			var hashmap = {};
 
-			document.getElementById("list_title").innerHTML = "LIST - " + (rows.length - 2) + " entries";
-			//console.log("Query returned " + (rows.length - 2) + " entries!");
+			//console.log(rows.length);
 
-			//console.log(rows);
-
-			//remove last = NaN random value ?? (rows.length - 1)
+			var _validEntries = 0;
 			for(var i = 0; i < rows.length - 1; ++i){
 				var rowData = rows[i].split("$$");
+				if(rowData.length < 9)continue;
 				//console.log(rowData);
 				
-				var type = rowData[0];
-				var lat = parseFloat(rowData[1]);
-				var lng = parseFloat(rowData[2]);
-				var desc = rowData[3];
-				var score = parseFloat(rowData[4]);
+				var score = parseFloat(rowData[0]);
+				var type = rowData[1];
+				var lat = parseFloat(rowData[2]);
+				var lng = parseFloat(rowData[3]);
+				var desc = rowData[4];		
 				var image = rowData[5];
 				var thumbnail = rowData[6];
 				var scoreOverTime = rowData[7];
@@ -107,7 +106,11 @@ function addAccomondations(cityName, cityLat, cityLng){
 				
 				//TODO remove -> PROBLEM: location service OVER_QUERY_LIMIT
 				//if(i > 5)break;
+
+				_validEntries += 1;
 			}
+
+			document.getElementById("list_title").innerHTML = "LIST - " + _validEntries + " entries";
 
 			var scoreKeys = [];
 			var scoreValues = [];
