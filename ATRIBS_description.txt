@@ -34,7 +34,7 @@ name                            |string                                  |
 neighborhood_overview           |float									 |compound score                           
 notes                           |float									 |compound score                             
 number_of_reviews               |float									 |float(value) / 1000                               
-price                           |float	                     			 |            
+price                           |float	                     			 |per night
 property_type                   |string                                  |
 review_scores_accuracy          |float                                   |
 review_scores_checkin           |float                                   |

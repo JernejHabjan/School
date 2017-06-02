@@ -70,6 +70,7 @@ def getCompoundScore(text):
     # {'neg': 0.0, 'neu': 0.759, 'pos': 0.241, 'compound': 0.9549}
     return score["compound"]
 
+
 def reformat_attributes(comments_dict, vrstica, header):
     # this function reformats text-like attributes in numeric
     for atrib_name, weight in atribs_weights.items():
@@ -151,7 +152,6 @@ def reformat_attributes(comments_dict, vrstica, header):
 
         vrstica[header.index(atrib_name)] = value
 
-
     """ REFORMAT OTHER ATTRIBUTES """
 
     # host_response_rate
@@ -189,6 +189,28 @@ def getFinalScore(vrstica, header, comment_comp_score):
     return SCORE
 
 
+def to_break(bool, row_count, filename):
+    if bool == False:
+        return False
+
+    if filename == "reviews.csv":
+
+        if row_count > 2000:
+            return True
+
+
+    elif (filename == "listings.csv"):
+        if row_count > 100:
+            return True
+
+
+    elif filename == "calendar.csv":
+        if row_count > 2000:
+            return True
+
+    return False
+
+
 def prepare_files():
     # 1. read csv
     # 2. remove attributes
@@ -217,7 +239,7 @@ def prepare_files():
 
     CITIES = [f for f in os.listdir(PATH) if isdir(join(PATH, f))]
     FILES = ["reviews.csv", "listings.csv", "calendar.csv"]
-    CITIES = ["Asheville"]
+    #CITIES = ["Asheville"]
 
     header = []
 
@@ -261,6 +283,9 @@ def prepare_files():
 
                     # loop through rows in read file
                     for row_count, row in enumerate(reader):
+                        if (to_break(True, row_count, file)):
+                            break
+
                         # getting attribute indices to pull data from writer
                         if row_count == 0:  ##mormo dobit indekse
                             for atrib in ATTRIB_ARR:
