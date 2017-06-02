@@ -39,6 +39,7 @@ Portland, Oregon
 San Diego, California  
 San Francisco, California  
 Santa Cruz County, California  
+Seattle, Washington
 Washington, D.C., District of Columbia  
 ```
 		

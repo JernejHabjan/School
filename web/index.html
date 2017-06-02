@@ -32,21 +32,33 @@
     <div style="float:left; position:relative; width:40%; display:inline-block; text-align: left;"> 
         <div style="text-align:center;"> Preferences </div>
 
-        <input id="allow_pets" type="checkbox" checked onclick="reloadQueryList();"/>
-        <label for="allow_pets">Allow pets</label> <br>
+        <div style= "height: 120px; overflow-y: scroll;">
 
-        <input id="require_heating" type="checkbox" onclick="reloadQueryList();"/>
-        <label for="require_heating">Require heating</label> <br>
+          <input id="allow_pets" type="checkbox" checked onclick="reloadQueryList();"/>
+          <label for="allow_pets">Allow pets</label> <br>
 
-        <input id="require_house" type="checkbox" onclick="reloadQueryList();"/>
-        <label for="require_house">Require house</label> <br>
+          <input id="require_heating" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_heating">Require heating</label> <br>
 
-        <input id="require_breakfast" type="checkbox" onclick="reloadQueryList();"/>
-        <label for="require_breakfast">Require breakfast</label> <br>
+          <input id="require_house" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_house">Require house</label> <br>
 
-        <input id="require_family" type="checkbox" onclick="reloadQueryList();"/>
-        <label for="require_family">Require family friendly</label> <br>
+          <input id="require_breakfast" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_breakfast">Require breakfast</label> <br>
 
+          <input id="require_family" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_family">Require family friendly</label> <br>
+
+          <input id="require_1" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_1">Require placeholder1</label> <br>
+
+          <input id="require_2" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_2">Require placeholder2</label> <br>
+
+          <input id="require_3" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_3">Require placeholder3</label> <br>
+
+          </div>
     </div>
 
   </fieldset>
@@ -77,8 +89,6 @@
         <tr>
           <th></th>
           <th></th>
-          <th>Arrival</th>
-          <th>Nights</th>
           <th>Address</th>
           <th>Distance</th>
           <th>Time</th>

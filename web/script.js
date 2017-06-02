@@ -105,8 +105,6 @@ function addTableEntry(address, id){
 	
 	_row.insertCell(0).innerHTML = "<button><</button>";
 	_row.insertCell(1).innerHTML = "<button>></button>";
-	_row.insertCell(ARRIVAL_ID).innerHTML = "<input type='datetime-local' disabled id='arrival_" + _rowId + "' />";
-	_row.insertCell(NIGHTS_ID).innerHTML = /*_rowId == 1 ? "" : */"<input type='number' min=0 value=1 style='width:30px;'/>";
 	_row.insertCell(ADDRESS_ID).innerHTML = address;
 	_row.insertCell(DISTANCE_ID).innerHTML = 0.0 + "km";
 	_row.insertCell(TIME_ID).innerHTML = "0m";
@@ -114,16 +112,8 @@ function addTableEntry(address, id){
 	_row.insertCell(SHOW_ID).innerHTML = "<button class='tabs'>Show</button>";
 	_row.insertCell(REMOVE_ID).innerHTML = "<button>X</button>";
 
-	//if(_rowId == 1){
-		var _date = new Date().toLocaleString().substring(0, 10).split("/").reverse().join("-");
-		document.getElementById("arrival_" + _rowId).value = _date + "T12:00";
-
-	if(_rowId == 1){	
-		document.getElementById("arrival_" + _rowId).disabled = false;
-	}
 
 	setRowListeners(_row);
-
 	_row.draggable = true;
 
 	_row.ondragover = function(event) {
@@ -222,7 +212,7 @@ function updateDistanceAndTime(response){
 		"Total Duration: " + convertTime(_totalDuration).string;
 }
 
-function updateArrivals(response){
+/*function updateArrivals(response){
 	var _table = document.getElementById("point-table");
 	var route = response.routes[0];
 
@@ -231,7 +221,7 @@ function updateArrivals(response){
 
 
     }
-}
+}*/
 
 function addAddressPoint(address){
 	geocoder.geocode({'address': address}, function(results, status) {
@@ -284,7 +274,7 @@ function displayRoute(){
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
             updateDistanceAndTime(response);
-            updateArrivals(response);
+            //updateArrivals(response);
           } else {
             alert("Directions error: " + status);
 

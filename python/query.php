@@ -98,7 +98,7 @@ if($rows){
 	}
 
 }else{
-	echo("Failed to open file '".$path."'");
+	//echo("Failed to open file '".$path."'");
 }
 
 //echo("test");

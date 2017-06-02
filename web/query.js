@@ -9,7 +9,7 @@ function calcDistance(lat1, lng1, lat2, lng2){
 	var _distanceInM = google.maps.geometry.spherical.
 		computeDistanceBetween(_point1, _point2);
 
-	return (_distanceInM / 1000.0).toFixed(1);
+	return parseFloat((_distanceInM / 1000.0).toFixed(1));
 }
 
 function addMarker(title, latitude, longitude, scoreChange, showButton){
@@ -110,7 +110,7 @@ function addAccomondations(cityName, cityLat, cityLng){
 				_validEntries += 1;
 			}
 
-			document.getElementById("list_title").innerHTML = "LIST - " + _validEntries + " entries";
+			document.getElementById("list_title").innerHTML = cityName + " - " + _validEntries + " entries";
 
 			var scoreKeys = [];
 			var scoreValues = [];
@@ -204,13 +204,7 @@ function addAccomondationEntry(
 
 
 		var _score = { x: times, y: scores, type: 'scatter' };
-
-		var layout = {
-			title: "Score Over Time",
-			xaxis: { title: "Time" },
-			yaxis: { title: "Score" }
-		};
-
+		var layout = {title: "Score Over Time", xaxis: { title: "Time" }, yaxis: { title: "Score" } };
 		Plotly.newPlot('rating_over_time', [_score], layout);
 
 		//not working async
@@ -249,10 +243,46 @@ function clearList(){
 	//removeRoute();
 }
 
+function getClosestCity(lat, lng){
+	var cities = [
+		{	name: "Asheville", 			lat: 35.5388506, 	lng: -82.7058334	},
+		{	name: "Austin", 			lat: 30.3076859, 	lng: -97.8938299	},
+		{	name: "Boston", 			lat: 42.3134791, 	lng: -71.1271964	},
+		{	name: "Chicago", 			lat: 41.8339037, 	lng: -87.8722374	},
+		{	name: "Denver", 			lat: 39.739167, 	lng: -104.985278	},
+		{	name: "Los_Angeles", 		lat: 34.0207504, 	lng: -118.6919112	},
+		{	name: "Nashville", 			lat: 36.186836, 	lng: -86.9253278	},
+		{	name: "New_Orleans", 		lat: 30.0217736, 	lng: -89.9525101	},
+		{	name: "New_York", 			lat: 40.7058253, 	lng: -74.1180855	},
+		{	name: "Oakland", 			lat: 37.7920764, 	lng: -122.2988336	},
+		{	name: "Portland", 			lat: 45.5425353, 	lng: -122.7244614	},
+		{	name: "San_Diego", 			lat: 32.824763, 	lng: -117.2352459	},
+		{	name: "San_Francisco", 		lat: 37.7577627, 	lng: -122.4726193	},
+		{	name: "Santa_Cruz_County", 	lat: 37.0686171, 	lng: -122.0895003	},
+		{	name: "Seattle", 			lat: 47.6149425, 	lng: -122.4059452	},
+		{	name: "Washington", 		lat: 38.8994613, 	lng: -77.084606		}
+	];
+
+	var closestCity = cities[0].name;
+	var closestDistance = calcDistance(lat, lng, cities[0].lat, cities[0].lng);
+
+	for(var i = 1; i < cities.length; ++i){
+		var city = cities[i];
+		var cityDistance = calcDistance(lat, lng, city.lat, city.lng);
+		if(cityDistance < closestDistance){
+			closestDistance = cityDistance;
+			closestCity = city.name;
+		}
+	}
+
+	return closestCity;
+}
+
 function queryList(rowId){
 	var _table = document.getElementById("point-table");
 	var _row = _table.rows[rowId];
-	var address = "Asheville"; //_row.cells[ADDRESS_ID].innerHTML;
+	var address = _row.cells[ADDRESS_ID].innerHTML;
+	//console.log(address);
 
 	clearList();
 	selectedLocation = rowId;
@@ -267,10 +297,11 @@ function queryList(rowId){
             var _address = results[0].formatted_address;
     		var _lat = results[0].geometry.location.lat();
     		var _lng = results[0].geometry.location.lng();
-    		
-			
-			//TODO check if city exists	
-			addAccomondations("Asheville", _lat, _lng);
+
+
+			var closestCity = getClosestCity(_lat, _lng);
+			console.log("CLOSEST CITY: " + closestCity);
+			addAccomondations(closestCity, _lat, _lng);
  		
 			markers.push(new google.maps.Marker({
  				position: {lat: _lat, lng: _lng},
@@ -278,6 +309,8 @@ function queryList(rowId){
  				title: _address,
  				icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
  			}));
+
+ 			map.setZoom(13);
 
           } else {
             alert("Unable to find: " + "'" + address + "' (" + status + ")");
