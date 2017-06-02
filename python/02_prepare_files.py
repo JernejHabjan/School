@@ -36,7 +36,7 @@ atribs_weights = {"cancellation_policy": 0.1,
                   "space": 0.4,
                   "summary": 0.5,
                   "transit": 0.8,
-                  "comment_comp_score": 3.0
+                  "comment_comp_score": 2.0  # prej je imelo prevelik poudarek
                   }
 
 
@@ -93,7 +93,7 @@ def reformat_attributes(comments_dict, vrstica, header):
 
         elif atrib_name == "host_acceptance_rate":
             try:
-                value = 1 / int(value.strip("%"))
+                value = 1 / (int(value.strip("%"))/10)
             except:
                 value = 0
 
@@ -107,8 +107,8 @@ def reformat_attributes(comments_dict, vrstica, header):
 
         elif atrib_name == "host_since":
             datetime_object = dt.datetime.strptime(value, "%Y-%m-%d")
-            value = 1 / (
-                now().replace(tzinfo=None) - datetime_object).days  ##decimalke
+            value = 1 - 1 / ((
+                now().replace(tzinfo=None) - datetime_object).days/100)  ##decimalke
 
         elif atrib_name == "host_verifications":
             atribs = ['email', 'phone', 'reviews', 'google', 'jumio', 'facebook',
@@ -116,6 +116,7 @@ def reformat_attributes(comments_dict, vrstica, header):
             value = len(value) / len(atribs)
 
         elif atrib_name in ["is_location_exact", "host_identity_verified"]:
+
             value = 1 if value == "t" else 0
 
         elif atrib_name in ["review_scores_accuracy", "review_scores_checkin",
@@ -156,7 +157,7 @@ def reformat_attributes(comments_dict, vrstica, header):
 
     # host_response_rate
     try:
-        vrstica[header.index("host_response_rate")] = 1 / int(vrstica[header.index("host_response_rate")].strip("%"))
+        vrstica[header.index("host_response_rate")] = 1 / (int(vrstica[header.index("host_response_rate")].strip("%"))*10)
     except:
         vrstica[header.index("host_response_rate")] = 0
     # instant_bookable
@@ -189,23 +190,21 @@ def getFinalScore(vrstica, header, comment_comp_score):
     return SCORE
 
 
-def to_break(bool, row_count, filename):
-    if bool == False:
+def to_break(bool, count_writes, filename, row_count):
+    if not bool:
         return False
 
     if filename == "reviews.csv":
 
-        if row_count > 2000:
+        if count_writes >= 4000:
             return True
-
 
     elif (filename == "listings.csv"):
-        if row_count > 100:
+        if count_writes >= 200 or row_count > 500:
             return True
 
-
     elif filename == "calendar.csv":
-        if row_count > 2000:
+        if count_writes >= 0:
             return True
 
     return False
@@ -215,6 +214,8 @@ def prepare_files():
     # 1. read csv
     # 2. remove attributes
     # 3. translate descriptions into compound score
+
+    TO_BREAK = True
 
     ATTRIB_ARRAY_LISTINGS = ["id", "accommodates", "amenities", "bathrooms", "bed_type", "bedrooms", "beds",
                              "cancellation_policy", "cleaning_fee", "description", "extra_people", "first_review",
@@ -239,7 +240,7 @@ def prepare_files():
 
     CITIES = [f for f in os.listdir(PATH) if isdir(join(PATH, f))]
     FILES = ["reviews.csv", "listings.csv", "calendar.csv"]
-    #CITIES = ["Asheville"]
+    CITIES = ["Asheville"]
 
     header = []
 
@@ -282,8 +283,11 @@ def prepare_files():
                     writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
                     # loop through rows in read file
+                    count_writes = 0
                     for row_count, row in enumerate(reader):
-                        if (to_break(True, row_count, file)):
+                        if(row_count % 10000 == 0 and row_count != 0):
+                            print(row_count)
+                        if to_break(TO_BREAK, count_writes, file, row_count):
                             break
 
                         # getting attribute indices to pull data from writer
@@ -399,7 +403,10 @@ def prepare_files():
                                     vrstica.append(avg_comment_score)
                                     vrstica.append(comments_scores_5)
                                     vrstica.append(comments_scores_through_time)
-                                    vrstica.append(SCORE)
+                                    vrstica.append(round(SCORE, 1))
+                                    if SCORE == 0:
+                                        # print("zero")
+                                        continue
 
 
                             else:
@@ -408,7 +415,10 @@ def prepare_files():
                                 exit(1)
 
                         # write whole row in file
-                        writer.writerow(vrstica)
+
+                        if (file == "listings.csv"):
+                            writer.writerow(vrstica)
+                        count_writes += 1
 
 
 prepare_files()
