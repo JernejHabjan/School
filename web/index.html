@@ -22,14 +22,14 @@
   <fieldset>
     <legend><b> Add address </b></legend>
 
-    <div style="float:left; position:relative; width:60%; display:inline-block;">     
+    <div style="float:left; position:relative; width:55%; display:inline-block;">     
       <p id="total-distance"> Total Distance: 0.0km</p>
       <p id="total-duration"> Total Duration: 0min</p>   
       <input size=25 id="address" type="text" name="address" autofocus />
       <button id="add" onclick="handleAddressInput();">Add</button> <br>
     </div>
 
-    <div style="float:left; position:relative; width:40%; display:inline-block; text-align: left;"> 
+    <div style="float:left; position:relative; width:45%; display:inline-block; text-align: left;"> 
         <div style="text-align:center;"> Preferences </div>
 
         <div style= "height: 120px; overflow-y: scroll;">
@@ -82,7 +82,7 @@
       <button id="back_list" style="display: none;">&larr; Back to list</button>    
   </div>
 
-  <div style="height:400px; width:100%; overflow:auto;" id="address_view"> 
+  <div style="height:400px; width:100%; overflow-y:scroll;" id="address_view"> 
 
     <div id="route" class="content"> 
       <table id="point-table">
@@ -99,11 +99,11 @@
     </div>
 
 
-    <div id="list" class="content" style="display:none;">
+    <div id="list" class="content" style="display:none; text-align: center;">
         <h1 id="list_title"> LIST </h1>
         <!--<button onclick="showLocationStatistics()">Show statistics</button>-->
 
-        <div id="rating_distribution" style="width:90%;">
+        <div id="rating_distribution" style="width:99%;">
         </div>
 
         <table id="acc-table">
@@ -119,11 +119,11 @@
 
     </div>
 
-    <div id="description" class="content" style="display:none;">
+    <div id="description" class="content" style="display:none; text-align: center;">
         <h1> DESCRIPTION </h1>
 
         <!--<button onclick="showAccomondationStatistics()">Show statistics</button><br>-->
-        <div id="rating_over_time" style="width:90%;">
+        <div id="rating_over_time" style="width:99%;">
         </div>
 
         <img id="acc_img" src="https://s-media-cache-ak0.pinimg.com/736x/39/f6/e0/39f6e0639465c7e01eaa79e26ada2a48.jpg" 
