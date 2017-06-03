@@ -110,7 +110,8 @@ function addAccomondations(cityName, cityLat, cityLng){
 				for(var j = 0; j < valuePairs.length; ++j){
 					var pair = valuePairs[j].split(": ");
 					times.push(pair[0]);
-					scores.push(pair[1]);
+					var floatScore = Number(parseFloat(pair[1]).toFixed(1));
+					scores.push(floatScore > 10.0 ? 10.0 : floatScore);
 				}
 
 				//TODO change to scoreChange attribute?
@@ -212,8 +213,11 @@ function addAccomondationEntry(
 
 		setRouteInfo(cityName, lat, lng, _rowId, true);
 
+		var scoreMin = Math.min.apply(null, scores);
+		var scoreMax = Math.max.apply(null, scores);
 		var _score = { x: times, y: scores, type: 'scatter' };
-		var layout = {title: "Score Over Time", xaxis: { title: "Time" }, yaxis: { title: "Score" } };
+		var layout = {title: "Score Over Time", xaxis: { title: "Time" }, 
+			yaxis: { title: "Score", range:[scoreMin - 2.0, scoreMax + 2.0] } };
 		Plotly.newPlot('rating_over_time', [_score], layout);
 
 		var rowCells = document.getElementById("acc-table").rows[_index].cells;
