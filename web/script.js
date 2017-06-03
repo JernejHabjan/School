@@ -299,6 +299,19 @@ function handleAddressInput(){
 	addAddressPoint(_address);
 }
 
+function updatePriceRange(event){
+	var maxPrice = document.getElementById("maxPrice").value;
+	var minPrice = document.getElementById("minPrice").value;
+	
+	if(event.target.id == "minPrice"){
+		document.getElementById("maxPrice").min = minPrice < 10 ? 10 : minPrice;
+		document.getElementById("maxPriceA").min = minPrice < 10 ? 10 : minPrice;
+	}else if(event.target.id == "maxPrice"){
+		document.getElementById("minPrice").max = maxPrice > 990 ? 990 : maxPrice;
+		document.getElementById("minPriceA").max = maxPrice > 990 ? 990 : maxPrice;
+	}		
+}
+
 $(document).ready(() => {
 	//localStorage.clear();
 
@@ -328,7 +341,7 @@ $(document).ready(() => {
 		setContent(null, `list`);
 		document.getElementById("back_list").style.display = "none";
 		document.getElementById("back_route").style.display = "inline";
-		displayRoute();
+		//displayRoute();
 	});
 
 });

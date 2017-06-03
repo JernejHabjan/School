@@ -22,17 +22,20 @@
   <fieldset>
     <legend><b> Add address </b></legend>
 
-    <div style="float:left; position:relative; width:55%; display:inline-block;">     
+    <div style="float:left; position:relative; width:50%; display:inline-block;">     
       <p id="total-distance"> Total Distance: 0.0km</p>
       <p id="total-duration"> Total Duration: 0min</p>   
       <input size=25 id="address" type="text" name="address" autofocus />
       <button id="add" onclick="handleAddressInput();">Add</button> <br>
     </div>
 
-    <div style="float:left; position:relative; width:45%; display:inline-block; text-align: left;"> 
+    <div style="float:left; position:relative; width:50%; display:inline-block; text-align: left;"> 
         <div style="text-align:center;"> Preferences </div>
 
         <div style= "height: 120px; overflow-y: scroll;">
+
+          <input id="top10" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="top10">Show top 10</label> <br>
 
           <input id="allow_pets" type="checkbox" checked onclick="reloadQueryList();"/>
           <label for="allow_pets">Allow pets</label> <br>
@@ -49,16 +52,45 @@
           <input id="require_family" type="checkbox" onclick="reloadQueryList();"/>
           <label for="require_family">Require family friendly</label> <br>
 
-          <input id="require_1" type="checkbox" onclick="reloadQueryList();"/>
-          <label for="require_1">Require placeholder1</label> <br>
+          <input id="require_cable_tv" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_cable_tv">Require cable TV</label> <br>
 
-          <input id="require_2" type="checkbox" onclick="reloadQueryList();"/>
-          <label for="require_2">Require placeholder2</label> <br>
+          <input id="require_wireless" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_wireless">Require wireless internet</label> <br>
 
-          <input id="require_3" type="checkbox" onclick="reloadQueryList();"/>
-          <label for="require_3">Require placeholder3</label> <br>
+          <input id="require_air_conditioning" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_air_conditioning">Require air conditioning</label> <br>
+
+          <input id="require_free_parking" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_free_parking">Require free parking</label> <br>
+
+          <input id="require_kitchen" type="checkbox" onclick="reloadQueryList();"/>
+          <label for="require_kitchen">Require kitchen</label> <br>
+
+        </div>
+
+        <div style="padding-top: 10px;">
+          <div style="float:left; position:relative; width:35%; display: inline-block;">
+            <label for="minPrice" style="display:block; padding-bottom: 6px; padding-top: 2px;"> Min price($) </label>
+            <label for="maxPrice"> Max price($) </label>
+          </div>
+          <div style="float:left; position:relative; width:65%; display:inline-block;">
+
+            <input type="range" id="minPrice" name="minPrice" min="0" max="990" value="0" onchange="reloadQueryList();" 
+              for="minPriceA" oninput="minPriceA.value = minPrice.value; updatePriceRange(event);" /> 
+            <input type="number" id="minPriceA" name="minPriceA" min="0" max="990" value="0" onchange="reloadQueryList();" 
+              for="minPrice" oninput="minPrice.value = minPriceA.value; updatePriceRange(event);" style="width:50px"/>
+            <br>
+
+            <input type="range" id="maxPrice" name="maxPrice" min="10" max="1000" value="1000" onchange="reloadQueryList();" 
+              for="maxPriceA" oninput="maxPriceA.value = maxPrice.value; updatePriceRange(event);" /> 
+            <input type="number" id="maxPriceA" name="maxPriceA" min="10" max="1000" value="1000" onchange="reloadQueryList();" 
+              for="maxPrice" oninput="maxPrice.value = maxPriceA.value; updatePriceRange(event);" style="width:50px"/>              
+            <br>
 
           </div>
+        </div>
+
     </div>
 
   </fieldset>
@@ -110,6 +142,7 @@
           <tr>
             <th>Rating</th>
             <th>Name</th>
+            <th>Price</th>
             <th>Distance</th>
             <th>Time</th>
             <th></th>

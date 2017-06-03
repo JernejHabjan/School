@@ -17,7 +17,9 @@ function addMarker(title, latitude, longitude, scoreChange, showButton){
 		'https://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png' : 
 		"https://mt.google.com/vt/icon?psize=30&font=fonts/arialuni_t.ttf&color=ff304C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=48&text=%E2%80%A2";
 
-	if(scoreChange < 0.0){
+	if(scoreChange == 0.0){
+		icon = 'https://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-blue.png';
+	}else if(scoreChange < 0.0){
 		icon = 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png';
 	}
 
@@ -42,6 +44,14 @@ function addAccomondations(cityName, cityLat, cityLng){
 	var _requireHouse = document.getElementById("require_house").checked;
 	var _requireBreakfast = document.getElementById("require_breakfast").checked;
 	var _requireFamilyFriendly = document.getElementById("require_family").checked;
+	var _requireCableTV = document.getElementById("require_cable_tv").checked;
+	var _requireWireless = document.getElementById("require_wireless").checked;
+	var _requireAirConditioning = document.getElementById("require_air_conditioning").checked;
+	var _requireFreeParking = document.getElementById("require_free_parking").checked;
+	var _requireKitchen = document.getElementById("require_kitchen").checked;
+	var _minPrice = document.getElementById("minPrice").value;
+	var _maxPrice = document.getElementById("maxPrice").value;
+	var _top10 = document.getElementById("top10").checked;
 
 	var _args = 
 		"city=" + cityName + "&" +
@@ -49,7 +59,15 @@ function addAccomondations(cityName, cityLat, cityLng){
 		"heating=" + _requireHeating + "&" +
 		"house=" + _requireHouse + "&" +
 		"breakfast=" + _requireBreakfast + "&" +
-		"family=" + _requireFamilyFriendly;
+		"family=" + _requireFamilyFriendly + "&" +
+		"cableTV=" + _requireCableTV + "&" +
+		"wireless=" + _requireWireless + "&" +
+		"airConditioning=" + _requireAirConditioning + "&" +
+		"freeParking=" + _requireFreeParking + "&" +
+		"kitchen=" + _requireKitchen + "&" +
+		"minPrice=" + _minPrice + "&" +
+		"maxPrice=" + _maxPrice + "&" +
+		"top=" + _top10;
 	
 	$.ajax({
 		type: "GET",
@@ -58,25 +76,29 @@ function addAccomondations(cityName, cityLat, cityLng){
 		success: function(data){
 			//console.log(data);
 			var rows = data.split("\n");
-			var hashmap = {};
-
 			//console.log(rows.length);
 
-			var _validEntries = 0;
+			//var maxPrice = 0.0;
+			var _validEntries = 0;	
+			var hashmap = {};
+
 			for(var i = 0; i < rows.length - 1; ++i){
 				var rowData = rows[i].split("$$");
-				if(rowData.length < 9)continue;
+				if(rowData.length < 10)continue;
 				//console.log(rowData);
 				
 				var score = parseFloat(rowData[0]);
-				var type = rowData[1];
-				var lat = parseFloat(rowData[2]);
-				var lng = parseFloat(rowData[3]);
-				var desc = rowData[4];		
-				var image = rowData[5];
-				var thumbnail = rowData[6];
-				var scoreOverTime = rowData[7];
-				var scoreChange = parseFloat(rowData[8]);
+				var price = parseFloat(rowData[1]);
+				var type = rowData[2];
+				var lat = parseFloat(rowData[3]);
+				var lng = parseFloat(rowData[4]);
+				var desc = rowData[5];		
+				var image = rowData[6];
+				var thumbnail = rowData[7];
+				var scoreOverTime = rowData[8];
+				var scoreChange = parseFloat(rowData[9]);
+
+				//console.log(score);
 
 				scoreOverTime =  scoreOverTime.length < 2 ? "" : 
 					scoreOverTime.substring(1, scoreOverTime.length - 1);
@@ -91,21 +113,19 @@ function addAccomondations(cityName, cityLat, cityLng){
 					scores.push(pair[1]);
 				}
 
-				//console.log(i + ". " + score);
+				//TODO change to scoreChange attribute?
+				scoreChange = scores[scores.length - 1] - scores[scores.length - 2];
 
 				var distance = calcDistance(cityLat, cityLng, lat, lng);
 				
 				addAccomondationEntry(cityName, lat, lng, distance, type, score, desc, image, thumbnail,
-					times, scores, scoreChange);
+					times, scores, scoreChange, price);
 
 				if(score in hashmap){
 					hashmap[score] += 1;
-				}else{
+				}else{ 
 					hashmap[score] = 1;
-				}
-				
-				//TODO remove -> PROBLEM: location service OVER_QUERY_LIMIT
-				//if(i > 5)break;
+				}				
 
 				_validEntries += 1;
 			}
@@ -114,24 +134,13 @@ function addAccomondations(cityName, cityLat, cityLng){
 
 			var scoreKeys = [];
 			var scoreValues = [];
-
 			for(var key in hashmap){
 				scoreKeys.push(key);
 				scoreValues.push(hashmap[key]);
 			}
 
-			var data = {	
-			    x: scoreKeys,
-			    y: scoreValues,
-			    type: 'bar'
-			};
-
-			var layout = {
-				title: "Rating Distribution",
-				xaxis: { title: "Score" },
-				yaxis: { title: "Count" }
-			};
-
+			var data = {x: scoreKeys, y: scoreValues, type: 'bar'};
+			var layout = { title: "Rating Distribution", xaxis: { title: "Score" }, yaxis: { title: "Count" } };
 			Plotly.newPlot('rating_distribution', [data], layout);
 		}
 	})
@@ -158,10 +167,10 @@ function setRouteInfo(origin, latTo, lngTo, id, display){
             var _route = response.routes[0];
 
             var _km = (_route.legs[0].distance.value / 1000.0).toFixed(1);
-        	_row.cells[2].innerHTML = _km + "km";
+        	_row.cells[3].innerHTML = _km + "km";
 
             var _min = Math.round(_route.legs[0].duration.value / 60);
-            _row.cells[3].innerHTML = convertTime(_min).string;
+            _row.cells[4].innerHTML = convertTime(_min).string;
 
           } else {
             alert("Directions error: " + status);
@@ -170,8 +179,8 @@ function setRouteInfo(origin, latTo, lngTo, id, display){
 }
 
 function addAccomondationEntry(
-	cityName, lat, lng, distance, type, rating, description, image, thumbnail,
-	times, scores, scoreChange)
+	cityName, lat, lng, distance, type, score, description, image, thumbnail,
+	times, scores, scoreChange, price)
 {
 	var _table = document.getElementById("acc-table");
 	var _rowId = _table.rows.length;
@@ -181,14 +190,15 @@ function addAccomondationEntry(
 	var _min = Math.round(_travelMode == "WALKING" ? 
 		(distance * 15.0) : (distance * 2.5));
 
-	_row.insertCell(0).innerHTML = rating;
+	_row.insertCell(0).innerHTML = score;
 	_row.insertCell(1).innerHTML = cityName + " " + type;
-	_row.insertCell(2).innerHTML = distance + "km";
-	_row.insertCell(3).innerHTML = convertTime(_min).string;
-	_row.insertCell(4).innerHTML = "<img src='" + thumbnail + "' style='height:50px;'/>";
-	_row.insertCell(5).innerHTML = "<button class='tabs'>Show</button>";
+	_row.insertCell(2).innerHTML = price + "$";
+	_row.insertCell(3).innerHTML = distance + "km";
+	_row.insertCell(4).innerHTML = convertTime(_min).string;
+	_row.insertCell(5).innerHTML = "<img src='" + thumbnail + "' style='height:50px;'/>";
+	_row.insertCell(6).innerHTML = "<button class='tabs'>Show</button>";
 
-	_row.cells[5].addEventListener("click", function(){
+	_row.cells[6].addEventListener("click", function(){
 		var _index = this.parentElement.rowIndex;
 		setContent(null, 'description');
 
@@ -212,7 +222,7 @@ function addAccomondationEntry(
         //map.setZoom(25);
 	});
 
-	addMarker(cityName + " " + type, lat, lng, scoreChange, _row.cells[5]);
+	addMarker(cityName + " " + type, lat, lng, scoreChange, _row.cells[6]);
 	//setRouteInfo(cityName, lat, lng, _rowId);
 }
 
@@ -300,7 +310,7 @@ function queryList(rowId){
 
 
 			var closestCity = getClosestCity(_lat, _lng);
-			console.log("CLOSEST CITY: " + closestCity);
+			//console.log("CLOSEST CITY: " + closestCity);
 			addAccomondations(closestCity, _lat, _lng);
  		
 			markers.push(new google.maps.Marker({
@@ -322,14 +332,4 @@ function reloadQueryList(){
 	if(selectedLocation > 0){
 		queryList(selectedLocation);
 	}	
-}
-
-//TODO groups?
-function showLocationStatistics(){
-
-}
-
-//TODO graphs?
-function showAccomondationStatistics(){
-
 }

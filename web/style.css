@@ -23,6 +23,10 @@ body {
   background-color: #F7F7F7;
 }
 
+input[type=range]{
+  vertical-align: middle;
+}
+
 fieldset{
   border-radius: 5px;
   margin-bottom: 10px;
@@ -96,7 +100,7 @@ div.tab button:active{
 
 #map {
   border-radius: 10px;
-  height: 600px;
+  height: 675px;
   width: 100%;
 }
 
