@@ -20,7 +20,7 @@ host_acceptance_rate            |float                                   |
 host_identity_verified          |float                                   |1 = yes, 0 = no
 host_response_rate              |float                          		 |     
 host_response_time              |float                                   |how soon -> the greater the number, the sooner. Possible:["N/A", "a few days or more", "within a day", "within a few hours", "within an hour"]
-host_since                      |float                 					 |value = 1 / (now().replace(tzinfo=None) - datetime_object).days  ##decimalke              
+host_since                      |float                 					 |value = 1 - 1 / (now().replace(tzinfo=None) - datetime_object).days  ##decimalke
 host_total_listings_count       |float                      			 |float(value) / 100          
 host_verifications              |float									 |how many vertifications of possible ('email', 'phone', 'reviews', 'google', 'jumio', 'facebook', 'kba', 'amex', 'linkedin', 'manual_offline')                               
 instant_bookable                |float                                   |1 = yes, 0 = no
