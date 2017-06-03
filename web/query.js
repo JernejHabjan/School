@@ -212,10 +212,16 @@ function addAccomondationEntry(
 
 		setRouteInfo(cityName, lat, lng, _rowId, true);
 
-
 		var _score = { x: times, y: scores, type: 'scatter' };
 		var layout = {title: "Score Over Time", xaxis: { title: "Time" }, yaxis: { title: "Score" } };
 		Plotly.newPlot('rating_over_time', [_score], layout);
+
+		var rowCells = document.getElementById("acc-table").rows[_index].cells;
+		document.getElementById("description_name").innerHTML = "Name: " + rowCells[1].innerHTML;
+		document.getElementById("description_score").innerHTML = "Score: " + rowCells[0].innerHTML;
+		document.getElementById("description_price").innerHTML = "Price/night: " + rowCells[2].innerHTML;
+		document.getElementById("description_distance").innerHTML = "Distance: " + rowCells[3].innerHTML;
+		document.getElementById("description_time").innerHTML = "Travel time: " + rowCells[4].innerHTML;
 
 		//not working async
 		//map.setCenter(new google.maps.LatLng(lat, lng));
