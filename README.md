@@ -10,7 +10,9 @@ Ena izmed najbolj znanih portalov za rezervacijo je Airbnb, kjer lahko rezervira
 S kolegom sva si zamislila pomočnika, ki bi pomagal pri tej izbiri.
 
 S pomočnikom lahko izberemo pot na zemljevidu, ki mogoče traja več dni da pridemo na cilj. V nekaterih mestih na tej poti
-lahko izberemo prenočišča z Airbnb ki nam ugajajo. Ta prenočišča so ocenjena z neko oceno, ki jo je izračunal sistem.
+lahko izberemo prenočišča z Airbnb ki nam ugajajo. Ta prenočišča so ocenjena z neko oceno, ki jo je izračunal sistem in nas vodijo, katera prenočišča so "boljša" od drugih.
+Boljša v smislu višje ocene na podlagi atributov in uteži.
+
 
 ### 1.2 Podatki:
 Podatke sva pridobila s spletne strani [http://insideairbnb.com/get-the-data.html] kjer sva izbrala mesta v ZDA:
@@ -41,16 +43,16 @@ neighbourhoods.geojson
 reviews.csv
 ```
 Uporabila sva datoteki reviews.csv, ki vsebujejo vse komentarje o vseh prebivališčih v posameznem mestu
-in datoteko listings.csv, ki vsebuje skoraj vse atribute, ki so povezani s prebivališčem.
-
+in datoteko listings.csv, ki vsebuje skoraj vse atribute, ki so povezani s prebivališčem. Datoteki o okolici nisva 
+uporabila, saj niso imele veliko koristnih informacij, datoteko calendar.csv bi pa lahko uporabila za točno določitev 
+prebivališča na določen dan, ampak na koncu nisva.
 
 ### 2.1 Obdelava datotek:
 Datoteki reviews.csv in listings.csv sva predobdelala v pythonu.
 Najpomembnejši izhodni atribut te predobdelave je atribut SCORE, ki pove končno oceno prebivališča v določenem mestu,
-ki je izračunan z vrsto atributi in utežmi.
+ki je izračunan z vrsto atributov in uteži.
 
-Atribute je bilo potrebno generalizirati, da so bili skozi vsa mesta enaki in niso manjkali. Potrebno je bilo tudi 
-zbrisati vse nepotrebne atribute, ki pri delu ne koristijo.
+Atribute je bilo potrebno generalizirati, da so bili skozi vsa mesta enaki in niso manjkali. Prav tako je bilo potrebno nekatere zbrisati, ki pri delu niso koristili.
 
 Ostale atribute je bilo potrebno reformatirati da so primerni za kalkulacijo. Nekatere atribute je bilo potrebno
 spreminiti v številske atribute, da je bil potem iz njih možen izračun končne ocene SCORE
@@ -109,30 +111,32 @@ Ocene so izračunane iz več atributov, pri katerih je vsak atribut utežen z ne
 nimava končnega atributa, nad katerim bi lahko zgradila model za boljšo določitev uteži.
 
 ```
-"cancellation_policy":         0.1,
-"description_score":           0.4,
-"host_about":                  0.3, 
-"host_acceptance_rate":        0.7,
-"host_identity_verified":      0.1,
-"host_response_time":          0.2,
-"host_since":                  0.1,
-"host_total_listings_count":   0.5,
-"host_verifications":          0.6,
-"is_location_exact":           0.3,
-"neighborhood_overview":       1.5,
-"notes":                       0.5,
-"number_of_reviews":           1.5,
-"review_scores_accuracy":      0.9,
-"review_scores_checkin":       0.9,
-"review_scores_cleanliness":   0.9,
-"review_scores_communication": 0.7,
-"review_scores_location":      0.7,
-"review_scores_rating":        1.2,
-"review_scores_value":         1.2,
-"space":                       0.4,
-"summary":                     0.5,
-"transit":                     0.8,
-"comment_comp_score":          2.0         
+"cancellation_policy":         0.1 - strogost prekinitve
+"description_score":           0.4 - [C] opis
+"host_about":                  0.3 - [C] opis oddajalca
+"host_acceptance_rate":        0.7 - sprejemanje
+"host_identity_verified":      0.1 - vertifikacija oddajatelja
+"host_response_time":          0.2 - hitrost odpisa
+"host_since":                  0.1 - pričetek oddajanja
+"host_total_listings_count":   0.5 - število vseh oddaj
+"host_verifications":          0.6 - procent vertifikacij
+"is_location_exact":           0.3 - natančnost okolice
+"neighborhood_overview":       1.5 - [C] okolica
+"notes":                       0.5 - [C] zapiski
+"number_of_reviews":           1.5 - število kritik
+"review_scores_accuracy":      0.9 - ocena natančnosti
+"review_scores_checkin":       0.9 - ocena prijave
+"review_scores_cleanliness":   0.9 - ocena čistoče
+"review_scores_communication": 0.7 - ocena komunikacije
+"review_scores_location":      0.7 - ocena lokacije
+"review_scores_rating":        1.2 - ocena kritike
+"review_scores_value":         1.2 - vrednost kritike
+"space":                       0.4 - [C] opis prostora
+"summary":                     0.5 - [C] povzetek
+"transit":                     0.8 - [C] prevoz
+"comment_comp_score":          2.0 - [C] povprečna sentimentalna vsebina komentarjev    
+
+[C] - compound score - izračunana s Sentimental analyzer VADER
 ```
 
 Atribute SCORE, comments_scores_5, avg_comment_score sva morala tudi normalizirati.
@@ -204,12 +208,15 @@ Uporabimo spletne tehnologije Javascripta in PHPja (direktorij "web"). Za dodaja
 Končen rezultat je funkcionalna aplikacija, kjer lahko stranka hitro določi prebivališča na večdnevni poti. Ta
 prebivališča pa so ocenjena z neko predobdelano oceno na podlagi atributov in komentarjev.
 
-
+\
+\
+Pregled atributov summary in transit:\
 S sentimentalno analizo sta bila izračunana tudi atributa summary in transit, vendar ima transit zelo slabe ocene v primerjavi s summary in ostalimi tekstovnimi atributi.
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/summary_transit_neg.png "Distribuciji atributov summary in transit")  
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/summary_transit_neg.png "Pregled atributov summary in transit")  
 Prevoz je stvar na katero lastniki nimajo vpliva, zato je ne morejo tekstovno olepšati, je pa zelo pomembna pri najemanju stanovanja.
+\
 
-Vplivi na končno oceno:
+Vplivi na končno oceno:\
 Na spodnjih dveh grafih se dobro vidi, kako močno konča ocena razdeli slabše okolice od boljših in manj zaupljive oddajalce od bolj zauplivih.
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/SCORE_vplivi.png "Vpliv okolice in zaupljivost oddajalca do končne ocene")  
 
@@ -217,22 +224,25 @@ Na spodnjih dveh grafih se dobro vidi, kako močno konča ocena razdeli slabše 
 
 Distribucija ocen komentarjev:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/avg_comment_score_distribution.png "Distribucija ocen komentarjev")  
+Komentarji so po večini pozitivni, z manjšino pod oceno 4, kar je pričakovano, saj si stranke dobro pregledajo prenočišče, preden ga vzamejo in že v naprej
+približno vedo, kaj pričakovati.
 
 
+\
 Distribucija ocen komentarjev skozi čas:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/comments_scores_through_time_distribution.png "Distribucija ocen komentarjev skozi čas")  
-Pri veliki večini prebivališč se ocena komentarjev ne spreminja, pri nekaj pa raste ali pada, zato moramo biti pozorni na take.
-
-
+Pri veliki večini prebivališč se ocena komentarjev ne spreminja, pri nekaj pa raste ali pada, zato moramo biti pozorni prav na te.
 
 #### 3.2 Zanimive ugotovitve
-Zgleda lahko prenočimo kar v jami ali v hišici na drevesu:
+Zgleda lahko prenočimo kar v jami ali v hišici na drevesu:\
+Distribucija tipa prenočišč
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/property_type.png "Frekvence tipa prenočišč v San Francisco")  
 
-
+\
 ScatterPlot cen varnostnih sefov in ocen okolice:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/security_deposit_neigbourhood.png "ScatterPlot cen varnostnih sefov in ocen okolice")  
 Ta graf me preseneča, saj več varnostnih sefov oddajajo stanovanja, ki so v boljši okolici, kar bi pomenilo da je okolica varnejša.
+Pričakoval bi, da bo v okolici, ki je slabše ocenjena več strahu o kraji, zato bi tam pričakoval več varnostnih sefov, vendar ni tako.
 
 
 

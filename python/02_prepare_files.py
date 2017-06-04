@@ -200,11 +200,11 @@ def to_break(bool, count_writes, filename, row_count):
         return False
 
     if filename == "reviews.csv":
-        if count_writes >= 4000:
+        if count_writes >= 20000:
             return True
 
     elif filename == "listings.csv":
-        if count_writes >= 200 or row_count > 500:
+        if count_writes >= 200 or row_count > 5000:
             return True
 
     elif filename == "calendar.csv":
@@ -441,7 +441,7 @@ def prepare_files(DO_NORMAL_RUN=True):
     # 2. remove attributes
     # 3. translate descriptions into compound score
 
-    TO_BREAK = False
+    TO_BREAK = True
 
     ATTRIB_ARRAY_LISTINGS = ["id", "accommodates", "amenities", "bathrooms", "bed_type", "bedrooms", "beds",
                              "cancellation_policy", "cleaning_fee", "description", "extra_people", "first_review",
@@ -466,7 +466,7 @@ def prepare_files(DO_NORMAL_RUN=True):
 
     CITIES = [f for f in os.listdir(PATH) if isdir(join(PATH, f))]
     FILES = ["reviews.csv", "listings.csv", "calendar.csv"]
-    # CITIES = ["Asheville"]
+    CITIES = ["New_York"]
 
 
     for city_name in CITIES:
