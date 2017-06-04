@@ -1,14 +1,6 @@
-# Seminarska naloga pri podatkovnem rudarjenju  - Priporočilni sistem za izbiro prenočišč
+# Priporočilni sistem za izbiro prenočišč
 **Matic Vrtačnik  
 Jernej Habjan**  
-
-
-## 1. Opis problema in podatkov	
-Izbrani imava dve množici podatkov in sicer Airbnb večdnevna izbira prenočišč in prvič registrirana vozila po mesecih.
-Prva množica podatkov nama je ljubša kot duga in sva si domislila uporabno aplikacijo ki bi jo lahko razvila s pomočjo teh
-podatkov, ampak ni v skladu z navodili, saj na spletni strani Kaggle.com ne spada pod rubriko "competition".
-	
-Spodaj sta opisa idej obeh množic podatkov ampak delala bova samo z eno.
 
 ### 1.1 Airbnb večdnevna izbira prenočišč:
 Ko potujemo za dlje časa se moramo vnaprej pozanimati kje so bencinske črpalke, kje so trgovine in znamenitosti, ki nas zanimajo. Prav tako potrebujemo rezervirati prenočišča. Ampak kako narediti to?
@@ -17,14 +9,11 @@ Ena izmed najbolj znanih portalov za rezervacijo je Airbnb, kjer lahko rezervira
 		
 S kolegom sva si zamislila pomočnika, ki bi pomagal pri tej izbiri.
 
-Ko bi izbirali pot na zemljevidu, ki bi trajala več dni da pridemo na cilj bi se na njem pokazala prenočišča iz Airbnb in povezave na to stran za rezervacijo. Rezervacije bi lahko uporabnik prilagodil sam glede na to koliko luksuzna prenočišča potrebuje in koliko hoče za potovanje največ plačati.
+S pomočnikom lahko izberemo pot na zemljevidu, ki mogoče traja več dni da pridemo na cilj. V nekaterih mestih na tej poti
+lahko izberemo prenočišča z Airbnb ki nam ugajajo. Ta prenočišča so ocenjena z neko oceno, ki jo je izračunal sistem.
 
-Podatki:
-Na kaggle.com sva videla nabor podatkov z airbnb in sicer iz mesta Seattle: https://www.kaggle.com/airbnb/seattle
-Podatki so v csv datotekah z manjkajočimi vrednostmi. Vsebujejo tudi opise stanovanja, in povezave do slik, ki jih 
-ne bova uporabljala.
-
-S spletne strani http://insideairbnb.com/get-the-data.html bi razširila podatke še za več mest ZDA: 
+### 1.2 Podatki:
+Podatke sva pridobila s spletne strani [http://insideairbnb.com/get-the-data.html] kjer sva izbrala mesta v ZDA:
 ```
 Asheville, North Carolina  
 Austin, Texas  
@@ -43,30 +32,43 @@ Santa Cruz County, California
 Seattle, Washington
 Washington, D.C., District of Columbia  
 ```
-		
-Tako da bi popotnik resnično lahko potoval po velikem delu države in imel izpis vseh prenočišč na poti.
-		
-
-
-Delo sva si razdelila na 2 večji področji.
+Vsako mesto pa je imelo naslednje datoteke:
+```
+calendar.csv
+listings.csv
+neighbourhoods.csv
+neighbourhoods.geojson
+reviews.csv
+```
+Uporabila sva datoteki reviews.csv, ki vsebujejo vse komentarje o vseh prebivališčih v posameznem mestu
+in datoteko listings.csv, ki vsebuje skoraj vse atribute, ki so povezani s prebivališčem.
 
 
 ### 2.1 Obdelava datotek:
-Prvo področje pa je priprava datotek za obdelavo v pythonu. 
+Datoteki reviews.csv in listings.csv sva predobdelala v pythonu.
+Najpomembnejši izhodni atribut te predobdelave je atribut SCORE, ki pove končno oceno prebivališča v določenem mestu,
+ki je izračunan z vrsto atributi in utežmi.
 
 Atribute je bilo potrebno generalizirati, da so bili skozi vsa mesta enaki in niso manjkali. Potrebno je bilo tudi 
 zbrisati vse nepotrebne atribute, ki pri delu ne koristijo.
 
-Ostale atribute je bilo potrebno reformatirati da so primerni za kalkulacijo. Nekatere tekstovne atribute se je
-spremenilo v mero, ki predstavlja sentimentalno vsebino tega atributa (npr. atribut "transit"). Tako atributi
-zasedejo veliko manj prostora, prav tako se pa da z njimi računati končno oceno prebivališča.
+Ostale atribute je bilo potrebno reformatirati da so primerni za kalkulacijo. Nekatere atribute je bilo potrebno
+spreminiti v številske atribute, da je bil potem iz njih možen izračun končne ocene SCORE
 
-Prav tako je bilo potrebno prevesti komentarje in opise, ki so bili postavljeni v jeziku ki ni angleščina, saj
-mera, ki vrača točke sentimentalne vsebine, zna prepoznavati samo angleška besedila. Za to je uporabljena 
-knjižnica goslate.
+#### 2.1.1 Sentimentalna analiza VADER
 
-Za sentimentalno analizo je uporablen sentimenal analyzer VADER iz nltk knjižnice. Ko analiziramo besedilo, vrne
-naslednje mere:
+Celotno datoteko reviews.csv sva spremenila v mero, ki predstavlja sentimentalno vsebino tega atributa.
+Prav tako sva spremenila v mero ostale smislene tekstovne atribute kot so "transit", "summary" ipd.
+Tako atributi zasedejo veliko manj prostora, prav tako se pa da z njimi računati končno oceno prebivališča.
+
+Računanje sentimentalne vsebine:
+
+VADER-Sentiment-Analysis iz nltk knjižnice
+VADER (Valence Aware Dictionary and sEntiment Reasoner) je leksikon in orodje za simentalno analizo ki temelji na pravilih, ki je posebej pripravljen za razpoznavanje čustev, izraženih v družabnih medijih
+
+
+
+Ko analiziramo besedilo, vrne naslednje mere:
 ```
 neg - procent negativno označenih besed
 neu - procent nevtralno označenih besed
@@ -75,52 +77,36 @@ compound - agregirana ocena
 ```
 Compound ocena je normalizirana ocena vsot in te vsote so vsote hevristik in sentimentalne intenzitete.
 
-!!!!!!!!!TODO
-Kako se izračuna agregirana ocena - compound score:
-
-
+Podrobnejši opis izračuna agregirane ocene - compound score:
+```
 compound = normalize(sum_s), kjer je normalize:
 
 def normalize(score, alpha=15):
-    """
-    Normalize the score to be between -1 and 1 using an alpha that
-    approximates the max expected value
-    """
     norm_score = score/math.sqrt((score*score) + alpha)
     return norm_score
-
-Kaj je alpha:
-
-Je hyper-parameter  ????????????
-
-Kaj pa je sum_s
-As for the sum_s, it is a sum of the sentiment arguments ???
-Sentiment arguments are computed with polarity_scores function
-Looking at the polarity_scores function, what it's doing is to iterate through the whole SentiText
- lexicon and checks with the rule-based sentiment_valence() function to assign the valence score to the sentiment
-
+```  
+sum_s je vsota sentimentnih argumentov, izračunanih s funkcijo ki razpozna čustva na podlagi pravil.
 
 Compound score ni izpeljanka iz [pos, neg, neu] vektorja
 
-
-!!!!
-
-
-
+#### 2.1.1 Izračunani atributi
 Dodanih je nekaj izračunanih atributov:
 ```
-avg_comment_score -mediana compound ocene vseh komentarjev za to prebivališče
-comments_scores_5 -5 datumov in median ocen enakomerno razdeljeni med 
-                   komentarjemi. 
-                  -Za prikaz grafa naraščanja ali padanja ocene
-comments_scores_though_time - ocena padanja ali naraščanja ocene prebivališča
-                              skozi čas
+avg_comment_score
+comments_scores_5
+comments_scores_though_time
 ```
 
+avg_comment_score - mediana compound ocene vseh komentarjev za to prebivališče
 
-Ocene so izračunane iz več atributov, pri katerih je vsak atribut utežen z neko utežjo, ki je ročno določena.
-To je stvar jo je treba še izpopolniti, saj je sedaj mogoče dana prevelika teža napačnim atributom,
-mogoče so preveč izpostavljeni novejši komentarji ipd.
+comments_scores_5 - 5 datumov in median ocen enakomerno razdeljeni med komentarjemi. 
+ Za prikaz grafa naraščanja ali padanja ocene
+ 
+comments_scores_though_time - ocena padanja ali naraščanja ocene prebivališča skozi čas
+
+
+Ocene so izračunane iz več atributov, pri katerih je vsak atribut utežen z neko utežjo, ki je ročno določena, saj
+nimava končnega atributa, nad katerim bi lahko zgradila model za boljšo določitev uteži.
 
 ```
 "cancellation_policy":         0.1,
@@ -149,16 +135,11 @@ mogoče so preveč izpostavljeni novejši komentarji ipd.
 "comment_comp_score":          2.0         
 ```
 
+Atribute SCORE, comments_scores_5, avg_comment_score sva morala tudi normalizirati.
 
-
-!!!!!!!!!!!!!! TODO
-
-normaliziral sem SCORE, comments_scores_5, avg_comment_score tako da sem poiskal maksimalno in minimalno
-oceno v tem mestu in to oceno normaliziral glede na min in max TODOOOOO FIXI
-
-
-!!!!!!!!!!!!!!
-
+Obdelava vseh datotek po vseh mestih je trajala približno 1 dan da se je python skripta končala, čeprav sem zagnal
+na več ločenih nitih. Trajalo je toliko časa, ker sentimentalna analiza dolgo traja in zaradi števila zapisov (naprimer 
+mesto New York ima več kot 1.2 milijona komentarjev)
 
 ### 2.2 Prikazovalnik na spletu (direktorij web):
 
@@ -220,17 +201,38 @@ Uporabimo spletne tehnologije Javascripta in PHPja (direktorij "web"). Za dodaja
 
 ## 3. Zakjučno poročilo o opravljenem delu
 
-
-######### TODO GRAFI GREJO TLE
-
-__SCORE_DISTRIB_GROUP_BY_ROOM_TYPE --- density????????????????????????
-
-__score_price_color-neighbourhood_overview ----- manjši kot je score in price,,, slabše je ocenjen neigbourhood
+Končen rezultat je funkcionalna aplikacija, kjer lahko stranka hitro določi prebivališča na večdnevni poti. Ta
+prebivališča pa so ocenjena z neko predobdelano oceno na podlagi atributov in komentarjev.
 
 
-__simple_houses --- distribucija prebivališč- --- simple!!!
+S sentimentalno analizo sta bila izračunana tudi atributa summary in transit, vendar ima transit zelo slabe ocene v primerjavi s summary in ostalimi tekstovnimi atributi.
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/summary_transit_neg.png "Distribuciji atributov summary in transit")  
+Prevoz je stvar na katero lastniki nimajo vpliva, zato je ne morejo tekstovno olepšati, je pa zelo pomembna pri najemanju stanovanja.
+
+Vplivi na končno oceno:
+Na spodnjih dveh grafih se dobro vidi, kako močno konča ocena razdeli slabše okolice od boljših in manj zaupljive oddajalce od bolj zauplivih.
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/SCORE_vplivi.png "Vpliv okolice in zaupljivost oddajalca do končne ocene")  
+
+### 3.1 Distribucije
+
+Distribucija ocen komentarjev:
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/avg_comment_score_distribution.png "Distribucija ocen komentarjev")  
 
 
+Distribucija ocen komentarjev skozi čas:
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/comments_scores_through_time_distribution.png "Distribucija ocen komentarjev skozi čas")  
+Pri veliki večini prebivališč se ocena komentarjev ne spreminja, pri nekaj pa raste ali pada, zato moramo biti pozorni na take.
+
+
+
+#### 3.2 Zanimive ugotovitve
+Zgleda lahko prenočimo kar v jami ali v hišici na drevesu:
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/property_type.png "Frekvence tipa prenočišč v San Francisco")  
+
+
+ScatterPlot cen varnostnih sefov in ocen okolice:
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/security_deposit_neigbourhood.png "ScatterPlot cen varnostnih sefov in ocen okolice")  
+Ta graf me preseneča, saj več varnostnih sefov oddajajo stanovanja, ki so v boljši okolici, kar bi pomenilo da je okolica varnejša.
 
 
 
