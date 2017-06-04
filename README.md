@@ -55,7 +55,7 @@ ki je izračunan z vrsto atributov in uteži.
 Atribute je bilo potrebno generalizirati, da so bili skozi vsa mesta enaki in niso manjkali. Prav tako je bilo potrebno nekatere zbrisati, ki pri delu niso koristili.
 
 Ostale atribute je bilo potrebno reformatirati da so primerni za kalkulacijo. Nekatere atribute je bilo potrebno
-spreminiti v številske atribute, da je bil potem iz njih možen izračun končne ocene SCORE
+spremeniti v številske atribute, da je bil potem iz njih možen izračun končne ocene SCORE
 
 #### 2.1.1 Sentimentalna analiza VADER
 
@@ -201,60 +201,60 @@ Uporabimo spletne tehnologije Javascripta in PHPja (direktorij "web"). Za dodaja
 ## 3. Zaključno poročilo o opravljenem delu
 
 Končen rezultat je funkcionalna aplikacija, kjer lahko stranka hitro določi prebivališča na večdnevni poti. Ta
-prebivališča pa so ocenjena z neko predobdelano oceno na podlagi atributov in komentarjev.
+prebivališča pa so ocenjena z neko predobdelano oceno na podlagi atributov in komentarjev. Poleg aplikacije pa sva ustvarila tudi nekaj zanimivih grafov.
 
 
 \
-Pregled atributov summary in transit:\
+##### Pregled atributov summary in transit:\
 S sentimentalno analizo sta bila izračunana tudi atributa summary in transit, vendar ima transit zelo slabe ocene v primerjavi s summary in ostalimi tekstovnimi atributi.
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/summary_transit_neg.png "Pregled atributov summary in transit")  
 Prevoz je stvar na katero lastniki nimajo vpliva, zato je ne morejo tekstovno olepšati, je pa zelo pomembna pri najemanju stanovanja.
 
 
 
-Vplivi na končno oceno:\
+##### Vplivi na končno oceno:\
 Na spodnjih dveh grafih se dobro vidi, kako močno konča ocena razdeli slabše okolice od boljših in manj zaupljive oddajalce od bolj zauplivih. V zgornjem grafu se vidi da je mera zaupanja višja pri boljše ocenjenih prenočiščih. Spodnji pa prikazuje porazdelitev ocene glede na to ali so gostitelji verificirani uporabniki ali ne (0 = ne, 1 = da).
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/SCORE_vplivi.png "Vpliv okolice in zaupljivost oddajalca do končne ocene")  
 
 ### 3.1 Distribucije
 
-Distribucija ocen komentarjev:
+#####  Distribucija ocen komentarjev:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/avg_comment_score_distribution.png "Distribucija ocen komentarjev")  
 Komentarji so po večini pozitivni, z manjšino pod oceno 4, kar je pričakovano, saj si stranke dobro pregledajo prenočišče, preden ga vzamejo in že v naprej
 približno vedo, kaj pričakovati.
 
 
 \
-Distribucija ocen komentarjev skozi čas:
+##### Distribucija ocen komentarjev skozi čas:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/comments_scores_through_time_distribution.png "Distribucija ocen komentarjev skozi čas")  
 Pri veliki večini prebivališč se ocena komentarjev ne spreminja, pri nekaj pa raste ali pada, zato mora biti stranka pozorna prav na to.
 To je prikazano na spletnem prikazovalniku s tremi različnimi barvami (modra - enako, rdeča - pada, zelena - narašča)
 
 #### 3.2 Zanimive ugotovitve
-Zgleda lahko prenočimo kar v jami ali v hišici na drevesu:\
-Distribucija tipa prenočišč
+Izgleda, da lahko prenočimo kar v jami ali v hišici na drevesu:\
+##### Distribucija tipa prenočišč
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/property_type.png "Frekvence tipa prenočišč v San Francisco")  
 Z grafa je jasno vidno da je stanovanj največ, sledijo jim hiše, imamo pa tudi nekatera nenavadna prebivališča kot so grad, jama, hišica na drevesu.
 Prav tako je zanimivo da imajo ta prebivališča na Airbnb prav posebno kategorijo prebivališča in jih ne kategorizira preprosto pod "other".
 
 
 \
-Graf cen varnostnih sefov in ocen okolice:
+##### Graf cen varnostnih sefov in ocen okolice:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/security_deposit_neigbourhood.png "Graf cen varnostnih sefov in ocen okolice")  
 Ta graf me preseneča, saj več varnostnih sefov oddajajo stanovanja, ki so v boljši okolici, kar bi pomenilo da je okolica varnejša.
 Pričakoval bi, da bo v okolici, ki je slabše ocenjena več strahu o kraji, zato bi tam pričakoval več varnostnih sefov, vendar ni tako.
 
 \
-Graf odvisnosti cene od končne ocene prenočišča za vsa mesta:
+##### Graf odvisnosti cene od končne ocene prenočišča za vsa mesta:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/price_score_scatter.png "Graf ocene v odvisnosti od cene prenočišča")
-Na tem grafu lahko opazimo, da imajo najslabšo oceno poceni prenočišča. S ceno prenočišča pa se dviguje tudi spodnja meja ocene, ampak ta z večjo ceno nimajo vseeno najboljših ocen, ampak si te lastijo cenejša prenočišča. Najverjetneje zato, ker tisti, ki dajo prenočišču oceno na dražje gledajo bolj pedantno in tako znižajo oceno za vsako podrobnost. Zaradi pomembnosti transporta okoli prenočišča pa tukaj lahko vpliva tudi lokacija, saj so lahko dražja prebivališča tudi bolj odmaknjena od središča mesta in s tem možnostim prevoza.
+Na tem grafu lahko opazimo, da imajo najslabšo oceno poceni prenočišča. S ceno prenočišča pa se dviguje tudi spodnja meja ocene, ampak ta z večjo ceno nimajo vseeno najboljših ocen, saj si te lastijo cenejša prenočišča. Najverjetneje zato, ker tisti, ki dajo prenočišču oceno na dražje gledajo bolj pedantno in tako znižajo oceno za vsako podrobnost. Zaradi pomembnosti transporta okoli prenočišča pa tukaj lahko vpliva tudi lokacija, saj so lahko dražja prebivališča tudi bolj odmaknjena od središča mesta in s tem možnostim prevoza.
 
 \
-Grafi odvisnosti ocene od nekaterih bolj vplivnih preferenc: 
+##### Grafi odvisnosti ocene od nekaterih bolj vplivnih preferenc: 
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_score.png "Grafi odvisnosti ocene od preferenc")
 Opazimo, da preference nasplošno nimajo bistvenega vpliva na oceno prenočišča, pri nekaterih pa vseeno opazimo spremembe pri ocenah. Pri zajtrku lahko opazimo, da je večina za malenkost zamaknjena proti boljši oceni, ampak ne precej. Kabeljska televizija nima večjega vpliva. Klimatska naprava je zanima preferenca, saj večje število vnosov, ki so bolje in pa tudi slabše ocenjeni. Tista, ki je nimajo so nekako v mediani. Na koncu so še tista prenočišča z vsemi izbranimi preferencami. Pri teh lahko vidimo, da se omejijo na neko spodnjo mejo in nobena od njih ne spada med najslabše. Prav tako opazimo, da jih večina sili proti boljšim ocenam.
 
 \
-Grafi odvisnosti cene od nekaterih bolj vplivnih preferenc: 
+##### Grafi odvisnosti cene od nekaterih bolj vplivnih preferenc: 
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_price.png "Grafi odvisnosti cene od preferenc")
 Grafi cen so zanimivi, ker opazimo, da pripravljen zajtrk sploh nima bistvene povezave z višjimi cenami. Mogoče prav nasprotno, saj so prenočišča z zajtrkom ena od cenejših! Kabeljska televizija je tudi zanimiva preferenca, ker pokaže da imajo prenočišča nad neko cenovno mejo po večini na voljo gledanje takega tipa televizijskih programov. Podobno je tudi s klimatsko napravo, saj jo ima večina dražjih prebivališč. Zanimiva so tudi ta z vsemi možnimi preferencami, saj podobno kot pri oceni, ne vplivajo tukaj na ceno in se nahajajo v bolj cenovno ugodnih skupinah.
