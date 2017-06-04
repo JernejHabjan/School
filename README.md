@@ -245,6 +245,11 @@ ScatterPlot cen varnostnih sefov in ocen okolice:
 Ta graf me preseneča, saj več varnostnih sefov oddajajo stanovanja, ki so v boljši okolici, kar bi pomenilo da je okolica varnejša.
 Pričakoval bi, da bo v okolici, ki je slabše ocenjena več strahu o kraji, zato bi tam pričakoval več varnostnih sefov, vendar ni tako.
 
+\
+ScatterPlot odvisnosti cene od končne ocene prenočišča za vsa mesta:
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/price_score_scatter.png "ScatterPlot ocene v odvisnosti od cene prenočišča")
+Na tem grafu lahko opazimo, da imajo najslabšo oceno poceni prenočišča. S ceno prenočišča pa se dviguje tudi spodnja meja ocene, ampak ta z večjo ceno nimajo vseeno najboljših ocen, ampak si te lastijo cenejša prenočišča. Najverjetneje zato, ker tisti, ki dajo prenočišču oceno na dražje gledajo bolj pedantno in tako znižajo oceno za vsako podrobnost. Zaradi pomembnosti transporta okoli prenočišča pa tukaj lahko vpliva tudi lokacija, saj so lahko dražja prebivališča tudi bolj odmaknjena od središča mesta in s tem možnostim prevoza.
+
 
 
 
