@@ -240,22 +240,22 @@ Distribucija tipa prenočišč
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/property_type.png "Frekvence tipa prenočišč v San Francisco")  
 
 \
-ScatterPlot cen varnostnih sefov in ocen okolice:
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/security_deposit_neigbourhood.png "ScatterPlot cen varnostnih sefov in ocen okolice")  
+Graf cen varnostnih sefov in ocen okolice:
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/security_deposit_neigbourhood.png "Graf cen varnostnih sefov in ocen okolice")  
 Ta graf me preseneča, saj več varnostnih sefov oddajajo stanovanja, ki so v boljši okolici, kar bi pomenilo da je okolica varnejša.
 Pričakoval bi, da bo v okolici, ki je slabše ocenjena več strahu o kraji, zato bi tam pričakoval več varnostnih sefov, vendar ni tako.
 
 \
-ScatterPlot odvisnosti cene od končne ocene prenočišča za vsa mesta:
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/price_score_scatter.png "ScatterPlot ocene v odvisnosti od cene prenočišča")
+Graf odvisnosti cene od končne ocene prenočišča za vsa mesta:
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/price_score_scatter.png "Graf ocene v odvisnosti od cene prenočišča")
 Na tem grafu lahko opazimo, da imajo najslabšo oceno poceni prenočišča. S ceno prenočišča pa se dviguje tudi spodnja meja ocene, ampak ta z večjo ceno nimajo vseeno najboljših ocen, ampak si te lastijo cenejša prenočišča. Najverjetneje zato, ker tisti, ki dajo prenočišču oceno na dražje gledajo bolj pedantno in tako znižajo oceno za vsako podrobnost. Zaradi pomembnosti transporta okoli prenočišča pa tukaj lahko vpliva tudi lokacija, saj so lahko dražja prebivališča tudi bolj odmaknjena od središča mesta in s tem možnostim prevoza.
 
 \
-ScatterPloti odvisnosti ocene od nekaterih bolj vplivnih preferenc: 
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_score.png "ScatterPloti odvisnosti ocene od preferenc")
+Grafi odvisnosti ocene od nekaterih bolj vplivnih preferenc: 
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_score.png "Grafi odvisnosti ocene od preferenc")
 Opazimo, da preference nasplošno nimajo bistvenega vpliva na oceno prenočišča, pri nekaterih pa vseeno opazimo spremembe pri ocenah. Pri zajtrku lahko opazimo, da je večina za malenkost zamaknjena proti boljši oceni, ampak ne precej. Kabeljska televizija nima večjega vpliva. Klimatska naprava je zanima preferenca, saj večje število vnosov, ki so bolje in pa tudi slabše ocenjeni. Tista, ki je nimajo so nekako v mediani. Na koncu so še tista prenočišča z vsemi izbranimi preferencami. Pri teh lahko vidimo, da se omejijo na neko spodnjo mejo in nobena od njih ne spada med najslabše. Prav tako opazimo, da jih večina sili proti boljšim ocenam.
 
 \
-ScatterPloti odvisnosti cene od nekaterih bolj vplivnih preferenc: 
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_price.png "ScatterPloti odvisnosti cene od preferenc")
+Grafi odvisnosti cene od nekaterih bolj vplivnih preferenc: 
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_price.png "Grafi odvisnosti cene od preferenc")
 Grafi cen so zanimivi, ker opazimo, da pripravljen zajtrk sploh nima bistvene povezave z višjimi cenami. Mogoče prav nasprotno, saj so prenočišča z zajtrkom ena od cenejših! Kabeljska televizija je tudi zanimiva preferenca, ker pokaže da imajo prenočišča nad neko cenovno mejo po večini na voljo gledanje takega tipa televizijskih programov. Podobno je tudi s klimatsko napravo, saj jo ima večina dražjih prebivališč. Zanimiva so tudi ta z vsemi možnimi preferencami, saj podobno kot pri oceni, ne vplivajo tukaj na ceno in se nahajajo v bolj cenovno ugodnih skupinah.
