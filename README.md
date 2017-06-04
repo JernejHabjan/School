@@ -169,11 +169,11 @@ Sprednji del celotne aplikacije je spletna stran, ki nam omogoča načrtovanje i
 
 
 #### Pregled in filtriranje prenočišč
-Ob pritisku na gumb "Show" izbrani točki izleta se nam pokažejo vsa Airbnb prenočišča v njeni bližini, ki ustrezajo našim trenutno izbranim preferencam, urejena po oceni prebivališča (opisano zgoraj v 2.1 obdelava datotek - med 0 in 10). Če podatkov za izbrano mesto slučajno nimamo, se bodo prikazala prenočišča, ki so geografsko najbližje želeni potovalni destinaciji (in seveda ustrezajo našim preferencam). Nad seznam prebivališč narišemo še porazdelitev ocen, ki je načeloma normalna.  
+Ob pritisku na gumb "Show" izbrani točki izleta se nam pokažejo vsa Airbnb prenočišča v njeni bližini, ki ustrezajo našim trenutno izbranim preferencam, urejena po oceni prebivališča (opisano zgoraj v 2.1 obdelava datotek - med 0 in 10). Če podatkov za izbrano mesto slučajno nimamo, se bodo prikazala prenočišča, ki so geografsko najbližje željeni potovalni destinaciji (in seveda ustrezajo našim preferencam). Nad seznam prebivališč narišemo še porazdelitev ocen, ki je načeloma normalna.  
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/distribution.png "Distribution")  
 
 Na zemljevid ob tem pogledu označimo vsa prenočišča z barvo odvisno od zadnje spremembe ocene. Torej, če ocena trenutno pada, je oznaka rdeče, če narašča, zelena, v primeru pa, da se ocena več časa ni spremenila, pa modro. Tukaj morda lahko opazimo majhne skupine, kjer se je ocena ali poslabšala ali pa poboljšala.  
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/groups.png "Groups")  
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/groups.png =600x400 "Groups")  
 
 Med pogledom seznama lahko preference spremenimo in tako se nam ob vsaki spremembi seznam osveži. Ker je prenočišč veliko je smiselno imeti vklopljeno preferenco "Show top 10", ki pokaže samo 10 najboljših prenočišč v okolici in nam tako zelo zoža izbiro. Na voljo so nam pa tudi preference, ki nam lahko olajšajo ali pocenijo potovanje.  
 
@@ -194,15 +194,15 @@ Min price (Spodnja meja cene na noč)
 Max price (Zgornja meja cene na noč)
 ```
 
-Tukaj največ prebivališč odstranita preferenci "Require breakfast" in "Require cable TV", saj večinonoma ne ponujajo že pripravljenega zajtrka, ampak kuhinjo, kjer si ga lahko skuhamo sami.  
+Tukaj največ prebivališč odstranita preferenci "Require breakfast" in "Require cable TV", saj večinonoma ne ponujajo že pripravljenega zajtrka, ampak kuhinjo, kjer si ga lahko skuhamo sami. Kabeljske televizije pa tudi nimajo vsi, ampak je po večini prenočišč na voljo vsaj navadna televizija.
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/gui_top10_listings.png "Filtriran seznam prenočišč")  
 
 
 #### Pregled opisa prenočišča
-Na seznamu prebivališč lahko kliknemo na gumb "Show", ki prikaže dodatne informacije o prenočišču. Na vrhu vidimo povzetek iz prejšnje strani (ime, oceno, ceno/noč, razdaljo od centra mesta, čas potovanje iz centra mesta), pod njim pa graf ocene skozi čas (5 različnih datumov). Tukaj načeloma opazimo, da se ocene niso preveč spreminjale, ampak ponekod pa so tudi se. Iz redkejših primerov spremb ocene lahko sklepamo, da ocena morda ni stabilna. Opazimo lahko tudi trend ali ocena trenutko pada ali narašča (označeno s posebno barvo na zemljevidu - opisano pod pregledom in filtriranjem zgoraj).  
+Na seznamu prebivališč lahko kliknemo na gumb "Show", ki prikaže dodatne informacije o prenočišču. Na vrhu vidimo povzetek iz prejšnje strani (ime, oceno, ceno/noč, razdaljo od centra mesta, čas potovanje iz centra mesta), pod njim pa graf ocene skozi čas (5 različnih datumov). Tukaj načeloma opazimo, da se ocene skozi čas niso preveč spreminjale, ampak ponekod pa so tudi se. Iz redkejših primerov spremb ocene lahko sklepamo, da ocena morda ni stabilna. Opazimo lahko tudi trend ali ocena trenutko pada ali narašča (označeno s posebno barvo na zemljevidu - opisano pod pregledom in filtriranjem zgoraj).  
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/score_over_time.png "Score over time")
 
-Pod grafom pa vidimo še sliko, ki jo je priložil ponudnik in pa kratek opis prenočišča. Če je to slikano od zunaj, lahko s pomočjo zemljevidov in funkcionalnosti Googlovega cestnega pogleda pogledamo kako se izgled prenočišča primerja s sliko (mogoče preveč zastarel pogled). Če pa se je ta v parih letih precej spremenila, pa lahko vidimo vsaj približno okolico, kjer bi se mogoče odločili prenočiti.  
+Pod grafom pa vidimo še sliko, ki jo je priložil ponudnik in pa kratek opis prenočišča. Če je to slikano od zunaj, lahko s pomočjo zemljevidov in funkcionalnosti Googlovega cestnega pogleda pogledamo kako se izgled prenočišča primerja s sliko, a je ta mogoče preveč zastarel. Če pa se je stavba v parih letih precej spremenila, pa lahko vidimo vsaj približno okolico, kjer bi se mogoče odločili prenočiti.  
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/gui_description.png "Opis prenočišča")  
 
 
@@ -215,7 +215,7 @@ Pod grafom pa vidimo še sliko, ki jo je priložil ponudnik in pa kratek opis pr
 
 
 #### Implementacija
-Uporabimo spletne tehnologije Javascripta in PHPja (direktorij "web"). Za dodajanje točk izleta uporabimo Googlov API za določanje koordinat na zemljevidu in risanje samega zemljevida. Za risanje poti pa njihovo navigacijsko strežbo. Ob pritisku gumba za prikaz seznama prenočišč najprej geografsko izračunamo, katero mesto izmed tistih, ki so na voljo, je najbližje izbrani lokaciji in nato pošljemo v PHP skripto podatke o preferencah, kjer preberemo v direktoriju "src/City_Data_Attributes/mesto/" ("mesto" v direktoriju predstavlja ime najbližjega mesta, ki ga imamo med podatki) atribute potrebne za lociranje posameznega prenočišča na zemljevidu in pa vse podatke, ki jih pozneje pokažemo v aplikaciji, vključno z naslovoma majhne in velike slike prenočišča (datoteka "python/query.php"). 
+Uporabimo spletne tehnologije Javascripta in PHPja (direktorij "web"). Za dodajanje točk izleta uporabimo Googlov API za določanje koordinat na zemljevidu in risanje samega zemljevida. Za risanje poti pa njihovo navigacijsko strežbo. Ob pritisku gumba za prikaz seznama prenočišč najprej po geografski legi izračunamo, katero mesto izmed tistih, ki so na voljo, je najbližje izbrani lokaciji in nato pošljemo v PHP skripto podatke o preferencah, kjer preberemo v direktoriju "src/City_Data_Attributes/mesto/" ("mesto" v direktoriju predstavlja ime najbližjega mesta, ki ga imamo med podatki) atribute potrebne za lociranje posameznega prenočišča na zemljevidu in pa vse podatke, ki jih pozneje pokažemo v aplikaciji, vključno z naslovoma majhne in velike slike prenočišča (datoteka "python/query.php"). 
 
 
 ## 3. Zakjučno poročilo o opravljenem delu
