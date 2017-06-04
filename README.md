@@ -203,7 +203,7 @@ Pod grafom pa vidimo še sliko, ki jo je priložil ponudnik in pa kratek opis pr
 Uporabimo spletne tehnologije Javascripta in PHPja (direktorij "web"). Za dodajanje točk izleta uporabimo Googlov API za določanje koordinat na zemljevidu in risanje samega zemljevida. Za risanje poti pa njihovo navigacijsko strežbo. Ob pritisku gumba za prikaz seznama prenočišč najprej po geografski legi izračunamo, katero mesto izmed tistih, ki so na voljo, je najbližje izbrani lokaciji in nato pošljemo v PHP skripto podatke o preferencah, kjer preberemo v direktoriju "src/City_Data_Attributes/mesto/" ("mesto" v direktoriju predstavlja ime najbližjega mesta, ki ga imamo med podatki) atribute potrebne za lociranje posameznega prenočišča na zemljevidu in pa vse podatke, ki jih pozneje pokažemo v aplikaciji, vključno z naslovoma majhne in velike slike prenočišča (datoteka "python/query.php"). 
 
 
-## 3. Zakjučno poročilo o opravljenem delu
+## 3. Zaključno poročilo o opravljenem delu
 
 Končen rezultat je funkcionalna aplikacija, kjer lahko stranka hitro določi prebivališča na večdnevni poti. Ta
 prebivališča pa so ocenjena z neko predobdelano oceno na podlagi atributov in komentarjev.
@@ -253,9 +253,9 @@ Na tem grafu lahko opazimo, da imajo najslabšo oceno poceni prenočišča. S ce
 \
 ScatterPloti odvisnosti ocene od nekaterih bolj vplivnih preferenc: 
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_score.png "ScatterPloti odvisnosti ocene od preferenc")
-Opazimo, da preference nasplošno nimajo bistvenega vpliva na oceno prenočišča, pri nekaterih pa vseeno opazimo spremembe pri ocenah. Pri zajtrku lahko opazimo, da je večina za malenkost zamaknjena proti boljši oceni, ampak ne precej. Kabeljska televizija nima večjega vpliva. Klimatska naprava je zanima preferenca, saj vsebuje vnose, ki so bolje in pa tudi slabše ocenjeni. Tista, ki je nimajo so nekako v mediani. Na koncu so še tista prenočišča z vsemi izbranimi preferencami. Pri teh lahko vidimo, da se omejijo na neko spodnjo mejo in nobena od njih ne spada med najslabše. Prav tako opazimo, da jih večina sili proti boljšim ocenam.
+Opazimo, da preference nasplošno nimajo bistvenega vpliva na oceno prenočišča, pri nekaterih pa vseeno opazimo spremembe pri ocenah. Pri zajtrku lahko opazimo, da je večina za malenkost zamaknjena proti boljši oceni, ampak ne precej. Kabeljska televizija nima večjega vpliva. Klimatska naprava je zanima preferenca, saj večje število vnosov, ki so bolje in pa tudi slabše ocenjeni. Tista, ki je nimajo so nekako v mediani. Na koncu so še tista prenočišča z vsemi izbranimi preferencami. Pri teh lahko vidimo, da se omejijo na neko spodnjo mejo in nobena od njih ne spada med najslabše. Prav tako opazimo, da jih večina sili proti boljšim ocenam.
 
 \
 ScatterPloti odvisnosti cene od nekaterih bolj vplivnih preferenc: 
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/preferences_scatter_price.png "ScatterPloti odvisnosti cene od preferenc")
-Te grafi so zanimivi, ker opazimo, da pripravljen zajtrk sploh nima bistvenega vpliva na ceno. Mogoče prav nasprotno, saj so prenočišča z zajtrkom ena od cenejših! Kabeljska televizija je tudi zanimiva preferenca, ker pokaže da imajo prenočišča nad neko cenovno mejo po večini na voljo gledanje takega tipa televizijskih programov. Podobno je tudi s klimatsko napravo, saj jo ima večina dražjih prebivališč. Zanimiva so tudi ta z vsemi možnimi preferencami, saj podobno kot pri oceni, ne vplivajo tukaj na ceno in se nahajajo v bolj cenovno ugodnih skupinah.
+Grafi cen so zanimivi, ker opazimo, da pripravljen zajtrk sploh nima bistvene povezave z višjimi cenami. Mogoče prav nasprotno, saj so prenočišča z zajtrkom ena od cenejših! Kabeljska televizija je tudi zanimiva preferenca, ker pokaže da imajo prenočišča nad neko cenovno mejo po večini na voljo gledanje takega tipa televizijskih programov. Podobno je tudi s klimatsko napravo, saj jo ima večina dražjih prebivališč. Zanimiva so tudi ta z vsemi možnimi preferencami, saj podobno kot pri oceni, ne vplivajo tukaj na ceno in se nahajajo v bolj cenovno ugodnih skupinah.
