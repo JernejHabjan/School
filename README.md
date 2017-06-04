@@ -166,7 +166,7 @@ oceno v tem mestu in to oceno normaliziral glede na min in max TODOOOOO FIXI
 
 Drugo je prikazovalnik na spletu. Na njem lahko vnesemo točke, kjer hočemo potovati in tako dobimo razdalje ter čas potovanja po zaporednih lokacijah. Na voljo so nam časi in razdalje za hojo in vožnjo z avtomobilom. Za vsako posamezno točko lahko prikažemo prebivališča, ki ustrezajo našim preferencam, ki si jih lahko izberemo iz menija, in tako prikažemo omejene rezultate.
 
-Preference prebivališča:
+#### Preference prebivališča:
 ```
 Allow pets (Dovolimo živali pri prenošču)
 Require heating (Prenočišče ima gretje)
@@ -200,10 +200,11 @@ S klikom na gumb "Show" prikažemo kratek opis in sliko posameznega prebivališ�
 
 #### Delovanje aplikacije
 
-[Načrtovanje poti (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/planning_route.gif)
-[Urejanje preferenc (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/preferences.gif)
-[Pregled opisa (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/description.gif)
-[Uporaba aplikacije (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/application_usage.gif)
+[Načrtovanje poti izleta (GIF)](https://raw.githubusercontent.com/darkneess10/PR17_MV_JH/master/gif/planning_route.gif)  
+[Urejanje preferenc (GIF)](https://raw.githubusercontent.com/darkneess10/PR17_MV_JH/master/gif/preferences.gif)  
+[Pregled opisa prenočišča (GIF)](https://raw.githubusercontent.com/darkneess10/PR17_MV_JH/master/gif/description.gif)  
+[Uporaba aplikacije (hitra demonstracija) (GIF)](https://raw.githubusercontent.com/darkneess10/PR17_MV_JH/master/gif/application_usage.gif)  
+[Google Street View primerjava s sliko (GIF)](https://raw.githubusercontent.com/darkneess10/PR17_MV_JH/master/gif/street_view.gif)  
 
 
 ## 3. Zakjučno poročilo o opravljenem delu
