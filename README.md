@@ -173,7 +173,7 @@ Ob pritisku na gumb "Show" izbrani točki izleta se nam pokažejo vsa Airbnb pre
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/distribution.png "Distribution")  
 
 Na zemljevid ob tem pogledu označimo vsa prenočišča z barvo odvisno od zadnje spremembe ocene. Torej, če ocena trenutno pada, je oznaka rdeče, če narašča, zelena, v primeru pa, da se ocena več časa ni spremenila, pa modro. Tukaj morda lahko opazimo majhne skupine, kjer se je ocena ali poslabšala ali pa poboljšala.  
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/groups.png =600x400 "Groups")  
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/groups.png "Groups")  
 
 Med pogledom seznama lahko preference spremenimo in tako se nam ob vsaki spremembi seznam osveži. Ker je prenočišč veliko je smiselno imeti vklopljeno preferenco "Show top 10", ki pokaže samo 10 najboljših prenočišč v okolici in nam tako zelo zoža izbiro. Na voljo so nam pa tudi preference, ki nam lahko olajšajo ali pocenijo potovanje.  
 
