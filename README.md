@@ -160,25 +160,29 @@ oceno v tem mestu in to oceno normaliziral glede na min in max TODOOOOO FIXI
 !!!!!!!!!!!!!!
 
 
-### 2.2 Prikazovalnik na spletu (index.html, style.css, script.js, query.js):
+### 2.2 Prikazovalnik na spletu (mapa web):
 
-![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/gui.png "Prikaz")
+![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/gui_route.png "Prikaz poti")
 
 Drugo je prikazovalnik na spletu. Na njem lahko vnesemo točke, kjer hočemo potovati in tako dobimo razdalje ter čas potovanja po zaporednih lokacijah. Na voljo so nam časi in razdalje za hojo in vožnjo z avtomobilom. Za vsako posamezno točko lahko prikažemo prebivališča, ki ustrezajo našim preferencam, ki si jih lahko izberemo iz menija, in tako prikažemo omejene rezultate.
 
-Trenutne preference:
+Preference prebivališča:
 ```
 Allow pets (Dovolimo živali pri prenošču)
 Require heating (Prenočišče ima gretje)
 Require house (Prenočišče je hiša)
 Require breakfast (Gost ponuja zajtrk)
 Require family friendly (Prenočišče je prijazno za družino)
-
-
-TODOOOOOOOOOOOOOOOOOOOOOOOO ----- CHANGE THIS
-
-
+Require cable TV (Prenočišče omogoča gledanje kabeljske televizije)
+Require wireless internet (Prenočišče omogoča povezavo na brezžični internet)
+Require air conditioning (Prenočišče omogoča klimatsko napravo)
+Require free parking (Prenočišče omogoča zastonj parkiranje)
+Require kitchen (Prenočišče omogoča uporabo kuhinje)
+Min price (Spodnja meja cene na noč)
+Max price (Zgornja meja cene na noč)
 ```
+
+
 
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/distribution.png "Distribution")
 
@@ -194,6 +198,12 @@ Od tu vidimo približne razdalje in čas potovanja od središča izbranega mesta
 
 S klikom na gumb "Show" prikažemo kratek opis in sliko posameznega prebivališča. Pokaže se nam tudi graf, ki prikazuje spremembo točk kvalitete skozi čas. Po tem lahko tudi vidimo ali so se te drastično zvišale ali spustile skozi čas. Načeloma te ostajajo v nekem majhnem območju, so pa tudi izjeme.
 
+#### Delovanje aplikacije
+
+[Načrtovanje poti (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/planning_route.gif)
+[Urejanje preferenc (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/preferences.gif)
+[Pregled opisa (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/description.gif)
+[Uporaba aplikacije (GIF)](https://github.com/darkneess10/PR17_MV_JH/blob/master/gif/application_usage.gif)
 
 
 ## 3. Zakjučno poročilo o opravljenem delu
