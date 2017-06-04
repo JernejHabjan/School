@@ -45,7 +45,7 @@ reviews.csv
 Uporabila sva datoteki reviews.csv, ki vsebujejo vse komentarje o vseh prebivališčih v posameznem mestu
 in datoteko listings.csv, ki vsebuje skoraj vse atribute, ki so povezani s prebivališčem. Datoteki o okolici nisva 
 uporabila, saj niso imele veliko koristnih informacij, datoteko calendar.csv bi pa lahko uporabila za točno določitev 
-prebivališča na določen dan, ampak na koncu nisva.
+prebivališča na določen dan, ampak na koncu je nisva.
 
 ### 2.1 Obdelava datotek:
 Datoteki reviews.csv in listings.csv sva predobdelala v pythonu.
@@ -66,7 +66,7 @@ Tako atributi zasedejo veliko manj prostora, prav tako se pa da z njimi računat
 Računanje sentimentalne vsebine:
 
 VADER-Sentiment-Analysis iz nltk knjižnice
-VADER (Valence Aware Dictionary and sEntiment Reasoner) je leksikon in orodje za simentalno analizo ki temelji na pravilih, ki je posebej pripravljen za razpoznavanje čustev, izraženih v družabnih medijih
+VADER (Valence Aware Dictionary and sEntiment Reasoner) je leksikon in orodje za simentalno analizo ki temelji na pravilih, ki je posebej pripravljen za razpoznavanje čustev, izraženih v družabnih medijih.
 
 
 
@@ -94,23 +94,16 @@ Compound score ni izpeljanka iz [pos, neg, neu] vektorja
 #### 2.1.1 Izračunani atributi
 Dodanih je nekaj izračunanih atributov:
 ```
-avg_comment_score
-comments_scores_5
-comments_scores_though_time
-```
-
 avg_comment_score - mediana compound ocene vseh komentarjev za to prebivališče
-
-comments_scores_5 - 5 datumov in median ocen enakomerno razdeljeni med komentarjemi. 
- Za prikaz grafa naraščanja ali padanja ocene
- 
+comments_scores_5 - 5 datumov in median ocen enakomerno razdeljeni med komentarjemi. Za prikaz grafa naraščanja ali padanja ocene
 comments_scores_though_time - ocena padanja ali naraščanja ocene prebivališča skozi čas
-
+```
 
 Ocene so izračunane iz več atributov, pri katerih je vsak atribut utežen z neko utežjo, ki je ročno določena, saj
 nimava končnega atributa, nad katerim bi lahko zgradila model za boljšo določitev uteži.
 
 ```
+       Atribut                 Utež        Opis
 "cancellation_policy":         0.1 - strogost prekinitve
 "description_score":           0.4 - [C] opis
 "host_about":                  0.3 - [C] opis oddajalca
@@ -145,11 +138,13 @@ Obdelava vseh datotek po vseh mestih je trajala približno 1 dan da se je python
 na več ločenih nitih. Trajalo je toliko časa, ker sentimentalna analiza dolgo traja in zaradi števila zapisov (naprimer 
 mesto New York ima več kot 1.2 milijona komentarjev)
 
+Nekateri zapisi so imeli oceno SCORE 0, tako da sva te zapise odstranila, in prikazala samo veljavne.
+
 ### 2.2 Prikazovalnik na spletu (direktorij web):
 
 
 #### Načrtovanje izleta
-Sprednji del celotne aplikacije je spletna stran, ki nam omogoča načrtovanje izleta. Na tej lahko dodajamo mesta ali naslove, skozi katere želimo potovati. Ker je aplikacija mišljena za večdnevna potovanja, te najverjetneje geografsko ne bodo preveč skupaj. Zaradi omejenosti podatkov na Združene Države Amerike, je aplikacija namenjeva potovanju predvsem po zvezdnih državah. Ob urejanju poti lahko menjamo vrsti red postajališč in si tako po želji uredimo pot. Na prikazovalnik zemljevida se nam bo s pomočjo Googlove navigacije pokazala pot po vseh izbranih točkah. Na voljo sta nam načina potovanja z avtomobilom ali peš (pri potovanju s kolesom navigacija ne deluje povsod, zato ta način izpustimo). Ob urejanju poti se nam poleg izbrane lokacije pokaže tudi razdalja in sam čas potovanja od prejšnje do te lokacije.  
+Sprednji del celotne aplikacije je spletna stran, ki nam omogoča načrtovanje izleta. Tu lahko dodajamo mesta ali naslove, skozi katere želimo potovati. Ker je aplikacija mišljena za večdnevna potovanja, te najverjetneje geografsko ne bodo preveč skupaj. Zaradi omejenosti podatkov na Združene Države Amerike, je aplikacija namenjeva potovanju predvsem po zvezdnih državah. Ob urejanju poti lahko menjamo vrsti red postajališč in si tako po želji uredimo pot. Na prikazovalnik zemljevida se nam bo s pomočjo Googlove navigacije pokazala pot po vseh izbranih točkah. Na voljo sta nam načina potovanja z avtomobilom ali peš (pri potovanju s kolesom navigacija ne deluje povsod, zato ta način izpustimo). Ob urejanju poti se nam poleg izbrane lokacije pokaže tudi razdalja in sam čas potovanja od prejšnje do te lokacije.  
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/gui_route.png "Prikaz poti")  
 
 
@@ -208,7 +203,7 @@ Uporabimo spletne tehnologije Javascripta in PHPja (direktorij "web"). Za dodaja
 Končen rezultat je funkcionalna aplikacija, kjer lahko stranka hitro določi prebivališča na večdnevni poti. Ta
 prebivališča pa so ocenjena z neko predobdelano oceno na podlagi atributov in komentarjev.
 
-\
+
 \
 Pregled atributov summary in transit:\
 S sentimentalno analizo sta bila izračunana tudi atributa summary in transit, vendar ima transit zelo slabe ocene v primerjavi s summary in ostalimi tekstovnimi atributi.
@@ -232,12 +227,16 @@ približno vedo, kaj pričakovati.
 \
 Distribucija ocen komentarjev skozi čas:
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/comments_scores_through_time_distribution.png "Distribucija ocen komentarjev skozi čas")  
-Pri veliki večini prebivališč se ocena komentarjev ne spreminja, pri nekaj pa raste ali pada, zato moramo biti pozorni prav na te.
+Pri veliki večini prebivališč se ocena komentarjev ne spreminja, pri nekaj pa raste ali pada, zato mora biti stranka pozorna prav na to.
+To je prikazano na spletnem prikazovalniku s tremi različnimi barvami (modra - enako, rdeča - pada, zelena - narašča)
 
 #### 3.2 Zanimive ugotovitve
 Zgleda lahko prenočimo kar v jami ali v hišici na drevesu:\
 Distribucija tipa prenočišč
 ![Alt text](https://github.com/darkneess10/PR17_MV_JH/blob/master/img/property_type.png "Frekvence tipa prenočišč v San Francisco")  
+Z grafa je jasno vidno da je stanovanj največ, sledijo jim hiše, imamo pa tudi nekatera nenavadna prebivališča kot so grad, jama, hišica na drevesu.
+Prav tako je zanimivo da imajo ta prebivališča na Airbnb prav posebno kategorijo prebivališča in jih ne kategorizira preprosto pod "other".
+
 
 \
 Graf cen varnostnih sefov in ocen okolice:
