@@ -1,0 +1,145 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="si.roglan.EMP_Seminarska.Nakup">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:layout_toStartOf="@+id/datum_odhoda_field"
+        android:text="Destinacije"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView11"
+        android:layout_below="@+id/st_oseb_spinner"
+        android:layout_marginTop="13dp"
+        android:text="Razred odhoda"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/razred_prihoda_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/datum_prihoda_view"
+        android:layout_below="@+id/datum_prihoda"
+        android:text="Razred prihoda"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView5"
+        android:layout_below="@+id/destinacije_spinner"
+        android:text="Datum odhoda"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/datum_prihoda_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView15"
+        android:layout_below="@+id/checkBox"
+        android:text="Datum prihoda"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_below="@+id/datum_odhoda_field"
+        android:text="Število oseb"
+        tools:ignore="RelativeOverlap" />
+
+    <Button
+        android:id="@+id/doloci_potnike_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:text="DOLOČI POTNIKE" />
+
+    <Spinner
+        android:id="@+id/destinacije_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/datum_odhoda_field"
+        android:layout_alignStart="@+id/st_oseb_spinner"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="4dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:entries="@array/mesta_array"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/razred_odhoda_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/st_oseb_spinner"
+        android:layout_alignStart="@+id/st_oseb_spinner"
+        android:layout_below="@+id/textView15"
+        android:background="@android:drawable/btn_dropdown"
+        android:entries="@array/razredi_array"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/razredPrihoda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/razred_odhoda_spinner"
+        android:layout_alignStart="@+id/datum_prihoda"
+        android:layout_below="@+id/razred_prihoda_view"
+        android:background="@android:drawable/btn_dropdown"
+        android:entries="@array/razredi_array"
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:id="@+id/datum_odhoda_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/datum_prihoda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/razred_odhoda_spinner"
+        android:layout_alignStart="@+id/checkBox"
+        android:layout_below="@+id/datum_prihoda_view"
+        android:ems="10"
+        android:inputType="date" />
+
+    <Spinner
+        android:id="@+id/st_oseb_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/datum_odhoda_field"
+        android:layout_alignStart="@+id/checkBox"
+        android:layout_below="@+id/textView11"
+        android:entries="@array/razredi_array" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/razred_odhoda_spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:text="Dvosmerna" />
+
+</RelativeLayout>

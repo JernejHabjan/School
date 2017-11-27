@@ -1,0 +1,129 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="si.roglan.EMP_Seminarska.VnosPotnikov">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/vnos_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:context="si.roglan.EMP_Seminarska.Nakup">
+
+        <EditText
+            android:id="@+id/vnos_ime"
+            android:layout_width="192dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="41dp"
+            android:width="300dp"
+            android:hint="@string/home_vnesite_ime"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textAlignment="viewStart"
+            tools:layout_editor_absoluteX="43dp"
+            tools:layout_editor_absoluteY="144dp" />
+
+        <EditText
+            android:id="@+id/vnos_priimek"
+            android:layout_width="192dp"
+            android:layout_height="40dp"
+            android:layout_alignStart="@+id/vnos_ime"
+            android:layout_below="@+id/textView7"
+            android:width="300dp"
+            android:hint="@string/home_vnesite_priimek"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textAlignment="viewStart"
+            tools:layout_editor_absoluteX="43dp"
+            tools:layout_editor_absoluteY="144dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="24dp"
+            android:layout_toStartOf="@+id/vnos_ime"
+            android:text="@string/ime_home"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView5"
+            android:layout_below="@+id/vnos_ime"
+            android:layout_marginTop="40dp"
+            android:text="@string/priimek_home" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView7"
+            android:layout_below="@+id/vnos_priimek"
+            android:layout_marginTop="35dp"
+            android:text="@string/spol" />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rGroup_spol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView8"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rad_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/spol_moski" />
+
+            <RadioButton
+                android:id="@+id/rad_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/spol_zenska" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView8"
+            android:layout_below="@+id/rGroup_spol"
+            android:layout_marginTop="38dp"
+            android:text="Datum rojstva" />
+
+        <Button
+            android:id="@+id/button_dodaj_potnika"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="52dp"
+            android:text="Dodaj potnika" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/vnos_datum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="117dp"
+        android:ems="10"
+        android:inputType="date" />
+
+</RelativeLayout>
