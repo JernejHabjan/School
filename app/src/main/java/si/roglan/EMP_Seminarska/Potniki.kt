@@ -1,6 +1,5 @@
 package si.roglan.EMP_Seminarska
 
-
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -8,17 +7,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-
-import java.util.ArrayList
+import java.util.*
 
 
 class Potniki : Fragment() {

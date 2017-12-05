@@ -5,9 +5,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -16,6 +18,27 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+
+
+
+
+
+
+//import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment ;
+
+
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +46,8 @@ import java.util.Locale;
 
 
 public class Nakup extends Fragment {
-
+    protected GeoDataClient mGeoDataClient;
+    private GoogleApiClient mGoogleApiClient;
 
     HomeListener activityCommander;
     private RelativeLayout home_container;
@@ -36,7 +60,7 @@ public class Nakup extends Fragment {
     private Spinner razred_prihoda;
     private TextView datum_prihoda_view;
     private TextView razred_prihoda_view;
-
+    private TextView paste_location_view;
 
     public Nakup() {
         // Required empty public constructor
@@ -130,6 +154,67 @@ public class Nakup extends Fragment {
         });
 
 
+
+
+
+
+        /*SupportPlaceAutocompleteFragment  autocompleteFragment = (SupportPlaceAutocompleteFragment )
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+                */
+
+        // Construct a GeoDataClient.
+        mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
+
+        // Construct a PlaceDetectionClient.
+        PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(getActivity(), null);
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(getActivity())
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(getActivity(), null)
+                .build();
+
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+
+
+        paste_location_view =(TextView) view.findViewById(R.id.paste_location_view);
+
+        if(autocompleteFragment != null) {
+
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                public static final String TAG = "bla";
+
+                @Override
+                public void onPlaceSelected(Place place) {
+                    // TODO: Get info about the selected place.
+                    Log.i(TAG, "Place: " + place.getName());
+
+                    String placeDetailsStr = place.getName() + "\n"
+                            + place.getId() + "\n"
+                            + place.getLatLng().toString() + "\n"
+                            + place.getAddress() + "\n"
+                            + place.getAttributions();
+                    paste_location_view.setText(placeDetailsStr);
+                }
+
+                @Override
+                public void onError(Status status) {
+                    // TODO: Handle the error.
+                    Log.i(TAG, "An error occurred: " + status);
+                }
+            });
+        }else{
+            Log.i("blyat", " NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL " );
+        }
+
+
+
+
         return view;
     }
 
@@ -166,6 +251,21 @@ public class Nakup extends Fragment {
 
         return true;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void dolociPotnikeButtonClicked(View view) { //gets called when button is clicked
 

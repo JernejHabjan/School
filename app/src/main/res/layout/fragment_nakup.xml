@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     tools:context="si.roglan.EMP_Seminarska.Nakup">
 
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        />
+
+
+
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
@@ -141,5 +150,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
         android:text="Dvosmerna" />
+
+    <TextView
+        android:id="@+id/paste_location_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView5"
+        android:layout_marginStart="11dp"
+        android:layout_toEndOf="@+id/destinacije_spinner"
+        android:text="TextView" />
 
 </RelativeLayout>

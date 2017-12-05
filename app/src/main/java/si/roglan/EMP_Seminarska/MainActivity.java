@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction;
 
 
-    Nakup nakup = new Nakup();
 
     ArrayList<String> userData = new ArrayList<>();
     ArrayList<String> nakupData = new ArrayList<>();
@@ -48,10 +47,11 @@ public class MainActivity extends AppCompatActivity
 
         //display home fragment
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_container, nakup);
+        fragmentTransaction.replace(R.id.main_container, new TravelsFragment());
         fragmentTransaction.commit();
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle("Nakup");
+            getSupportActionBar().setTitle("Travels");
+
 
     }
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle("Nakup");
+            getSupportActionBar().setTitle("Travels");
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    //                      HANDLING NAVIGATION                                //
+
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -108,14 +110,27 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            Nakup nakup = new Nakup();
+            TravelsFragment travelsFragment = new TravelsFragment();
 
-            fragmentTransaction.replace(R.id.main_container, nakup);
+            fragmentTransaction.replace(R.id.main_container, travelsFragment);
+            fragmentTransaction.commit();
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle("Travels");
+
+        }
+        else if (id == R.id.nav_nakup) {
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_container, new Nakup());
+            fragmentTransaction.addToBackStack("1");
             fragmentTransaction.commit();
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle("Nakup");
 
-        } else if (id == R.id.nav_itm) {
+
+        }
+
+
+        else if (id == R.id.nav_itm) {
             if (nakupData.size() > 0) {
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 Potniki potniki = new Potniki();

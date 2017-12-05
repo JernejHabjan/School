@@ -7,6 +7,10 @@
             android:icon="?attr/homeAsUpIndicator"
             android:title="@string/home" />
         <item
+            android:id="@+id/nav_nakup"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Nakup" />
+        <item
             android:id="@+id/nav_itm"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Potniki" />

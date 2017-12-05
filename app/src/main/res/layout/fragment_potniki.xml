@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/potniki_container"
     android:layout_width="match_parent"
@@ -7,14 +8,59 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="PrevEntryPerson2" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
+                android:layout_weight="1"
+                android:text="PrevEntryPerson1" />
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="PrevEntryPerson2" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
     <Button
         android:id="@+id/kupi_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37dp"
-        android:text="KUPI" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="KUPI"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_dodaj_potnika"
@@ -22,7 +68,13 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Dodaj potnika" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Dodaj potnika"
+        app:layout_constraintBottom_toTopOf="@+id/kupi_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TableLayout
         android:id="@+id/table_1"
@@ -30,7 +82,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
         <TableRow
             android:layout_width="match_parent"
@@ -80,17 +138,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/kupi_button"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="23dp"
-        android:layout_marginStart="16dp"
-        android:text="GetDataFromServer" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:text="GetDataFromServer"
+        app:layout_constraintBottom_toTopOf="@+id/button_dodaj_potnika"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_marginBottom="19dp"
-        android:text="TextView" />
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
