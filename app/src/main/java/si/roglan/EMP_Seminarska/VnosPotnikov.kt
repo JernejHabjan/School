@@ -12,10 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RelativeLayout
-
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Locale
+import java.util.*
 
 
 /**

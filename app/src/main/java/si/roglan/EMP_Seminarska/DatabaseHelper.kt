@@ -3,29 +3,60 @@ package si.roglan.EMP_Seminarska
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
+class DatabaseHelper(context1: Context, DATABASE_NAME: String, context: Context, DATABASE_VERSION: Int) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    //private var sInstance: DatabaseHelper? = null
+
+    /*@Synchronized // TODO ---- FOR MULTITHREAD
+    fun getInstance(context: Context): DatabaseHelper {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = DatabaseHelper(context.applicationContext)
+        }
+        return sInstance as DatabaseHelper
+    }
+    */
+
     private var database: SQLiteDatabase? = null // database object
     private val databaseOpenHelper = this // database helper
-    val allContacts: Cursor
-        get() = database!!.query("contacts", arrayOf("_id", "name"), null, null, null, null, "name")
 
-    override fun onCreate(db: SQLiteDatabase) {
-        database!!.execSQL("create table $TABLE_NAME (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT) ")
+    @Throws(SQLException::class)
+    fun getOneContact(id: Any): Cursor {
+        open()
+        return database!!.query("Persons", null, "PersonID=" + id, null, null, null, null)
     }
 
+    @Throws(SQLException::class)
+    fun getAllContacts(): Cursor {
+        open()
+        return database!!.query("Persons", arrayOf("PersonID", "LastName", "FirstName", "Address", "City"), null, null, null, null, "LastName")
+    }
+
+
+    @Throws(SQLException::class)
+    override fun onCreate(db: SQLiteDatabase) {
+
+        db.execSQL("create table $TABLE_NAME (PersonID INTEGER PRIMARY KEY AUTOINCREMENT, LastName TEXT, FirstName TEXT, Address TEXT, City TEXT) ")
+    }
+
+    @Throws(SQLException::class)
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        database!!.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
         onCreate(db)
     }
 
-    //@Throws(SQLException::class)
+    @Throws(SQLException::class)
     fun open() {
         // create or open a database for reading/writing
         database = databaseOpenHelper.writableDatabase
+        //database = sInstance!!.writableDatabase
     }
 
     override fun close() {
@@ -33,46 +64,40 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
 
-    fun insertContact(name: String, email: String, phone: String, state: String, city: String) {
+    fun insertContact(lastName: String, firstName: String, address: String, city: String) {
         val newContact = ContentValues()
-        newContact.put("name", name)
-        newContact.put("email", email)
-        newContact.put("phone", phone)
-        newContact.put("street", state)
-        newContact.put("city", city)
+        newContact.put("LastName", lastName)
+        newContact.put("FirstName", firstName)
+        newContact.put("Address", address)
+        newContact.put("City", city)
         open() // open the database
-        database!!.insert("contacts", null, newContact)
+        database!!.insert("Persons", null, newContact)
         close() // close the database
     }
 
-    fun updateContact(id: Long, name: String, email: String, phone: String, state: String, city: String) {
+    fun updateContact(id: Long, lastName: String, firstName: String, address: String, city: String) {
         val editContact = ContentValues()
-        editContact.put("name", name)
-        editContact.put("email", email)
-        editContact.put("phone", phone)
-        editContact.put("street", state)
-        editContact.put("city", city)
+        editContact.put("PersonID", id)
+        editContact.put("LastName", lastName)
+        editContact.put("FirstName", firstName)
+        editContact.put("Address", address)
+        editContact.put("City", city)
+
         open() // open the database
-        database!!.update("contacts", editContact, "_id=" + id, null)
+        database!!.update("Persons", editContact, "PersonID=" + id, null)
         close() // close the database
     }
 
     fun deleteContact(id: Long) {
         open() // open the database
-        database!!.delete("contacts", "_id=" + id, null)
+        database!!.delete("Persons", "PersonID=" + id, null)
         close() // close the database
     }
 
     companion object {
-        val DATABASE_NAME = "Example.db"
-        val TABLE_NAME = "Example_table"
-        val COL1 = "ID"
-        val COL2 = "NAME"
+        val TABLE_NAME = "Persons"
     }
-    // get a Cursor containing all information about the contact specified by the given id
-    // public Cursor getOneContact(long id) {
-    //    return database.query("contacts", null, "_id"= + id, null, null, null, null);
-    // }
+
 
 
 }
