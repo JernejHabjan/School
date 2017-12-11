@@ -41,6 +41,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.google.android.gms:play-services-places:11.6.2'
     compile 'com.google.android.gms:play-services-location:11.6.2'
+    compile 'com.google.android.gms:play-services-auth:11.6.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
 }
@@ -52,4 +53,5 @@ apply plugin: 'kotlin-android-extensions'
 repositories {
     mavenCentral()
     google()
+
 }
