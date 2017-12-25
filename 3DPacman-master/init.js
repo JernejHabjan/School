@@ -45,6 +45,7 @@ function start() {
     
     // Next, load and set up the textures we'll be using.
     initTextures();
+    loadFloor();
     loadTeapot();
     
 	
@@ -62,15 +63,6 @@ function start() {
       }
     }, 15);
   
-	
-	
-    // Set up to draw the scene periodically.
-    setInterval(function() {
-      if (texturesLoaded == numberOfTextures) { // only draw scene and animate when textures are loaded.
-        requestAnimationFrame(animate);
-		    handleKeys();
-        drawScene();
-      }
-    }, 15);
+
   }
 }

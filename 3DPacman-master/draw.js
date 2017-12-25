@@ -133,16 +133,26 @@ function animate() {
 
     // rotate the teapot for a small amount
     // teapotAngle += 0.05 * elapsed;
-	
+    
+
 	// update walk animation
 	if (speed != 0) {
+      
+    var xPositionTemp = xPosition - Math.sin(degToRad(yaw)) * speed * elapsed * 5;
+    var zPositionTemp = zPosition - Math.cos(degToRad(yaw)) * speed * elapsed * 5;
+
+    // console.log(trianglePositions);
+
+    if (checkCollision(xPositionTemp, zPositionTemp)) {
       xPosition -= Math.sin(degToRad(yaw)) * speed * elapsed;
       zPosition -= Math.cos(degToRad(yaw)) * speed * elapsed;
 
-      joggingAngle += elapsed * 0.6; // 0.6 "fiddle factor" - makes it feel more realistic :-)
-      yPosition = Math.sin(degToRad(joggingAngle)) / 20 - 0.3
+      // joggingAngle += elapsed * 0.6; // 0.6 "fiddle factor" - makes it feel more realistic :-) 
+      yPosition = Math.sin(degToRad(joggingAngle)) / 20 - 0.3;
     }
-	//update rotation
+    }
+  //update rotation
+    // if (xPosition )
     yaw += yawRate * elapsed;
     pitch += pitchRate * elapsed;
 	
@@ -150,4 +160,37 @@ function animate() {
   }
   lastTime = timeNow;
 }
+
+// collision detection part
+// TODO: gres cez vse trikotnike, preveris ploscine treh trikotnikov znotraj glavnega
+
+// ploscina trikotnika
+function surfaceTriangle(x1, z1, x2, z2, x3, z3) {
+  var a = Math.sqrt(Math.pow((x3 - x2), 2) + Math.pow((z3 - z2), 2));
+  var b = Math.sqrt(Math.pow((x3 - x1), 2) + Math.pow((z3 - z1), 2));
+  var c = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((z2 - z1), 2));
+  // console.log(a, b, c);
+
+  var s = (a + b + c) / 2;
+
+  var surface = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+
+  return surface;
+}
+
+
+// console.log(surfaceTriangle(1, 2, 3, 3, 4, 2));
+
+// TODO: checkCollision ->
+// cez vse trikotnike
+// vzames notranje tri, izracunas za vsakega ploscino
+// sestejes ploscino in primerjas z ploscino glavnega trikotnika
+// ce je enaka (ali manjša?), si znotraj trikotnika
+// ce je vecja, si zunaj tal -> si v zidu
+
+
+
+// function checkCollision(x, y, z) {
+
+// }
 

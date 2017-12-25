@@ -28,8 +28,14 @@ var texturesLoaded = 0;
 // Helper variable for animation
 var lastTime = 0;
 
+// pozicije tock trikotnikov
 
+var trianglePositions = [];
 
+// vsi trikotniki
+var indides = [];
+
+var triangles = [];
 
 // Keyboard handling helper variable for reading the status of keys
 var currentlyPressedKeys = {};
