@@ -10,7 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
@@ -70,14 +72,14 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
 
         // [START build_client]
         // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(context, gso)
         // [END build_client]
 
         // [START customize_button]
         // Set the dimensions of the sign-in button.
         val signInButton = view.findViewById(R.id.sign_in_button)
-        signInButton.setSize(SignInButton.SIZE_STANDARD)
-        signInButton.setColorScheme(SignInButton.COLOR_LIGHT)
+        //signInButton.setSize(SignInButton.SIZE_STANDARD)
+        //signInButton.setColorScheme(SignInButton.COLOR_LIGHT)
         // [END customize_button]
         return view;
     }
@@ -89,7 +91,7 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
         // [START on_start_sign_in]
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        val account = GoogleSignIn.getLastSignedInAccount(this)
+        val account = GoogleSignIn.getLastSignedInAccount(context)
         updateUI(account)
         // [END on_start_sign_in]
     }
@@ -134,23 +136,27 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
 
     // [START signOut]
     private fun signOut() {
+        /*
         mGoogleSignInClient!!.signOut()
                 .addOnCompleteListener(this, OnCompleteListener<Void> {
                     // [START_EXCLUDE]
                     updateUI(null)
                     // [END_EXCLUDE]
                 })
+                */
     }
     // [END signOut]
 
     // [START revokeAccess]
     private fun revokeAccess() {
+        /*
         mGoogleSignInClient!!.revokeAccess()
                 .addOnCompleteListener(this, OnCompleteListener<Void> {
                     // [START_EXCLUDE]
                     updateUI(null)
                     // [END_EXCLUDE]
                 })
+                */
     }
     // [END revokeAccess]
 
