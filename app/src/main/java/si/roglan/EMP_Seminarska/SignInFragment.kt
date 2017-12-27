@@ -49,10 +49,7 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater!!.inflate(R.layout.fragment_avtor, container, false)
-
-
-
+        val view = inflater!!.inflate(R.layout.fragment_sign_in, container, false)
 
         // Views
         mStatusTextView = view!!.findViewById(R.id.status) as TextView?
@@ -62,11 +59,13 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
         view!!.findViewById(R.id.sign_out_button).setOnClickListener(this)
         view!!.findViewById(R.id.disconnect_button).setOnClickListener(this)
 
+        //Log.i("TEST", this.toString())
+
         // [START configure_signin]
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
+                .requestIdToken(getString(R.string.server_client_id)).requestEmail()
                 .build()
         // [END configure_signin]
 
@@ -120,6 +119,7 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
+
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
             updateUI(null)
         }
@@ -136,27 +136,25 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
 
     // [START signOut]
     private fun signOut() {
-        /*
+
         mGoogleSignInClient!!.signOut()
-                .addOnCompleteListener(this, OnCompleteListener<Void> {
+                .addOnCompleteListener({
                     // [START_EXCLUDE]
                     updateUI(null)
                     // [END_EXCLUDE]
                 })
-                */
     }
     // [END signOut]
 
     // [START revokeAccess]
     private fun revokeAccess() {
-        /*
+
         mGoogleSignInClient!!.revokeAccess()
-                .addOnCompleteListener(this, OnCompleteListener<Void> {
+                .addOnCompleteListener({
                     // [START_EXCLUDE]
                     updateUI(null)
                     // [END_EXCLUDE]
                 })
-                */
     }
     // [END revokeAccess]
 
@@ -183,7 +181,6 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
     }
 
     companion object {
-
         private val TAG = "SignInActivity"
         private val RC_SIGN_IN = 9001
     }
