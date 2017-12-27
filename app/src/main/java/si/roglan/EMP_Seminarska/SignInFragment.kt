@@ -4,7 +4,6 @@ package si.roglan.EMP_Seminarska
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,37 +13,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 
 
-/**
- * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
- * profile.
- */
-
-
-/*
-
-    <!-- TODO(user): replace with your real server client ID --> ---- V VALUES - STRINGS JE TO
-    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
-         from https://console.developers.google.com/ -->
-    <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
-
- */
-
-
-class SignInFragment : Fragment(),  View.OnClickListener  {
-
+class SignInFragment : Fragment(), View.OnClickListener {
 
 
     private val TAG = "SignInActivity"
     private val RC_SIGN_IN = 9001
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private var mStatusTextView: TextView? = null
-
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -55,18 +36,26 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
         mStatusTextView = view!!.findViewById(R.id.status) as TextView?
 
         // Button listeners
-        view!!.findViewById(R.id.sign_in_button).setOnClickListener(this)
-        view!!.findViewById(R.id.sign_out_button).setOnClickListener(this)
-        view!!.findViewById(R.id.disconnect_button).setOnClickListener(this)
+        view.findViewById(R.id.sign_in_button).setOnClickListener(this)
+        view.findViewById(R.id.sign_out_button).setOnClickListener(this)
+        view.findViewById(R.id.disconnect_button).setOnClickListener(this)
 
         //Log.i("TEST", this.toString())
 
         // [START configure_signin]
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        /*val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id)).requestEmail()
                 .build()
+        */
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestScopes(Scope(Scopes.PROFILE))
+                .build()
+
+
         // [END configure_signin]
 
         // [START build_client]
@@ -76,15 +65,15 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
 
         // [START customize_button]
         // Set the dimensions of the sign-in button.
-        val signInButton = view.findViewById(R.id.sign_in_button)
+        //val signInButton = view.findViewById(R.id.sign_in_button)
         //signInButton.setSize(SignInButton.SIZE_STANDARD)
         //signInButton.setColorScheme(SignInButton.COLOR_LIGHT)
         // [END customize_button]
-        return view;
+        return view
     }
 
 
-    public override fun onStart() {
+    override fun onStart() {
         super.onStart()
 
         // [START on_start_sign_in]
@@ -96,7 +85,7 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
     }
 
     // [START onActivityResult]
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
@@ -104,6 +93,9 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+            Log.e("bla", "GotMail")
+
             handleSignInResult(task)
         }
     }
@@ -112,15 +104,16 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
     // [START handleSignInResult]
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
+            Log.e("bla", "TRYING GETTING RESULT")
             val account = completedTask.getResult(ApiException::class.java)
-
+            Log.e("bla", "GOT RESULT - UPDATING UI....")
             // Signed in successfully, show authenticated UI.
             updateUI(account)
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
 
-            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
+            Log.e(TAG, "signInResult:failed code=" + e.statusCode)
             updateUI(null)
         }
 
@@ -156,10 +149,32 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
                     // [END_EXCLUDE]
                 })
     }
-    // [END revokeAccess]
 
+    // [END revokeAccess]
+    /*private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success")
+                        val user = mAuth.getCurrentUser()
+                        updateUI(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.exception)
+                        //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                        updateUI(null)
+                    }
+
+                    // ...
+                })
+    }*/
     private fun updateUI(account: GoogleSignInAccount?) {
         if (account != null) {
+
             mStatusTextView!!.text = getString(R.string.signed_in_fmt, account.displayName)
 
             view!!.findViewById(R.id.sign_in_button).visibility = View.GONE
@@ -180,8 +195,5 @@ class SignInFragment : Fragment(),  View.OnClickListener  {
         }
     }
 
-    companion object {
-        private val TAG = "SignInActivity"
-        private val RC_SIGN_IN = 9001
-    }
+
 }

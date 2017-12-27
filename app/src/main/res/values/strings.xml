@@ -122,7 +122,7 @@
 
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
          from https://console.developers.google.com/ -->
-    <string name="server_client_id">609414775132-4sefcqub43u02m3sv5klcld7h72tccbq.apps.googleusercontent.com</string>
+    <string name="server_client_id">331110486379-v66cp8p5ghuu1a6cj5krbuigh316t5gt.apps.googleusercontent.com	</string>
 
 
 </resources>
