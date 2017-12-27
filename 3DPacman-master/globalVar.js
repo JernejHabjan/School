@@ -9,6 +9,12 @@ var teapotVertexNormalBuffer;
 var teapotVertexTextureCoordBuffer;
 var teapotVertexIndexBuffer;
 
+// coin
+var coinVertexPositionBuffer;
+var coinVertexNormalBuffer;
+var coinVertexTextureCoordBuffer;
+var coinVertexIndexBuffer;
+
 // Model-view and projection matrix and model-view matrix stack
 var mvMatrixStack = [];
 var mvMatrix = mat4.create();

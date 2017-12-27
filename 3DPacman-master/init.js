@@ -46,7 +46,9 @@ function start() {
     // Next, load and set up the textures we'll be using.
     initTextures();
     loadFloor();
+    loadCoins();
     loadTeapot();
+    
     
 	
 	

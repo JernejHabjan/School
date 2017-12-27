@@ -54,10 +54,61 @@ function loadTeapot() {
   request.send();
 }
 
+// TODO: pravilno izrisi kovance
+
+// Handle loaded Coins
+//
+function handleLoadedCoins(coinData) {
+  // Pass the normals into WebGL
+  coinVertexNormalBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, coinVertexNormalBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coinData.normals), gl.STATIC_DRAW);
+  coinVertexNormalBuffer.itemSize = 3;
+  coinVertexNormalBuffer.numItems = coinData.normals.length / 3;
+  // console.log(coinData.faces);
+
+  // Pass the texture coordinates into WebGL
+  coinVertexTextureCoordBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, coinVertexTextureCoordBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coinData.uvs), gl.STATIC_DRAW);
+  coinVertexTextureCoordBuffer.itemSize = 2;
+  coinVertexTextureCoordBuffer.numItems = coinData.uvs.length / 2;
+
+  // Pass the vertex positions into WebGL
+  coinVertexPositionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, coinVertexPositionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coinData.vertices), gl.STATIC_DRAW);
+  coinVertexPositionBuffer.itemSize = 3;
+  coinVertexPositionBuffer.numItems = coinData.vertices.length / 3;
+
+  // Pass the indices into WebGL
+  // tukaj v faces 3 cifre predstavljajo en trikotnik
+  // TODO: narediti array teh trikotnikov in podati, ce si znotraj 
+  coinVertexIndexBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, coinVertexIndexBuffer);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(coinData.faces), gl.STATIC_DRAW);
+  coinVertexIndexBuffer.itemSize = 1;
+  coinVertexIndexBuffer.numItems = coinData.faces.length;
+
+  // document.getElementById("loadingtext").textContent = "";
+}
+
+// TODO: vec coinov daj v mapo, potem pa da jih poberas!!!
+
+function loadCoins() {
+  var request = new XMLHttpRequest();
+  request.open("GET", "./assets/probaTRI.json");
+  request.onreadystatechange = function () {
+    if (request.readyState == 4) {
+      handleLoadedCoins(JSON.parse(request.responseText));
+    }
+  }
+  request.send();
+}
 
 
 
-// funkcija za dobivanje tal in gledanje ce si na tleh ali ne
+// funkcija za dobivanje koordinat tal
 
 function getPositions(floorData) {
   // console.log(indides);
@@ -71,7 +122,7 @@ function getPositions(floorData) {
     indides.push(floorData.faces[k]);
   }
 
-
+  // dobimo pozicije trikotnikov
 
   for (var i = 0; i < postitions.length; i++) {
     if (j == 0 || j == 1 || j == 2) {
@@ -88,6 +139,8 @@ function getPositions(floorData) {
   // console.log(trianglePositions);
 
 }
+
+// detekcija kolizij
 
 function checkCollision(xPosition, zPosition) {
   var x1;
@@ -120,6 +173,9 @@ function checkCollision(xPosition, zPosition) {
     var smallP2 = surfaceTriangle(x1, z1, xPosition, zPosition, x3, z3); 
 
     var smallP3 = surfaceTriangle(x1, z1, x2, z2, xPosition, zPosition);
+
+    // izracunas ploscine manjsih trikotnikov in pogledas, ce je vecja od glavnega trikotnika
+    // ce je vecja, pomenio, da si izven tal -> v zidu
 
     var sumSmall = smallP1 + smallP2 + smallP3;
 

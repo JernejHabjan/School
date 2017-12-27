@@ -14,6 +14,10 @@ function drawScene() {
     return;
   }
   
+  if (coinVertexPositionBuffer == null || coinVertexNormalBuffer == null || coinVertexTextureCoordBuffer == null || teapotVertexIndexBuffer == null) {
+    return;
+  }
+
   // Establish the perspective with which we want to view the
   // scene. Our field of view is 45 degrees, with a width/height
   // ratio of 640:480, and we only want to see objects between 0.1 units
@@ -113,6 +117,28 @@ function drawScene() {
 
   // Draw the teapot
   gl.drawElements(gl.TRIANGLES, teapotVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+
+  // TODO: izrisi kovance, iz blenderja moras pravilno exportati
+
+  // coini
+  gl.bindBuffer(gl.ARRAY_BUFFER, coinVertexPositionBuffer);
+  gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, coinVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+  // Set the texture coordinates attribute for the vertices.
+  gl.bindBuffer(gl.ARRAY_BUFFER, coinVertexTextureCoordBuffer);
+  gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, coinVertexTextureCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+  // Set the normals attribute for the vertices.
+  gl.bindBuffer(gl.ARRAY_BUFFER, coinVertexNormalBuffer);
+  gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, coinVertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+  // Set the index for the vertices.
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, coinVertexIndexBuffer);
+  setMatrixUniforms();
+
+  // Draw the coin
+  gl.drawElements(gl.TRIANGLES, coinVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 }
 
 
@@ -143,6 +169,7 @@ function animate() {
 
     // console.log(trianglePositions);
 
+    // pogleda, ce bi sel iz tal -> v zid
     if (checkCollision(xPositionTemp, zPositionTemp)) {
       xPosition -= Math.sin(degToRad(yaw)) * speed * elapsed;
       zPosition -= Math.cos(degToRad(yaw)) * speed * elapsed;
