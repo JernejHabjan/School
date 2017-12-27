@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onBackPressed() {
+
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         if (supportActionBar != null)
             supportActionBar!!.title = "Travels"
@@ -137,6 +138,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
 
+
+        } else if (id == R.id.nav_login) {
+            fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.main_container, SignInFragment())
+            fragmentTransaction.commit()
+            if (supportActionBar != null)
+                supportActionBar!!.title = "Login"
 
         } else if (id == R.id.nav_avtor) {
             fragmentTransaction = supportFragmentManager.beginTransaction()
