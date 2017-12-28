@@ -1,5 +1,6 @@
 package si.roglan.EMP_Seminarska
 
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -13,9 +14,12 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import java.util.*
+import android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION
+import android.text.TextUtils
+
+
 
 
 class MainActivity : AppCompatActivity(),
@@ -47,7 +51,8 @@ class MainActivity : AppCompatActivity(),
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-        setContainerFragment(SignInFragment(), "Uporabnik");
+        //setContainerFragment(TravelsFragment(), "Potovanja")
+        setContainerFragment(SignInFragment(), "Prijava");
     }
 
     override fun onLogin(username: String) {
@@ -55,15 +60,32 @@ class MainActivity : AppCompatActivity(),
             setContainerFragment(TravelsFragment(), "Potovanja")
             Snackbar.make(findViewById(R.id.main_container),
                     "Prijavljeni ste kot '" + username + "'", Snackbar.LENGTH_LONG).show()
+
             m_verifiedAccount = true;
+
+            var drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+            val toolbar = findViewById(R.id.toolbar) as Toolbar
         }
+
+        Log.i("LOGIN", "LOGIN")
     }
 
     override fun onLogout() {
-        //setContainerFragment(SignInFragment(), "Prijava")
-        //m_verifiedAccount = false;
+        var drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
+        if(m_verifiedAccount){
+            val toolbar = findViewById(R.id.toolbar) as Toolbar
+            //toolbar.setNavigationIcon(null) //TODO maybe if we find R.drawable.ic_drawer
 
+            setContainerFragment(SignInFragment(), "Prijava")
+
+            m_verifiedAccount = false;
+        }
+
+        Log.i("LOGOUT", "LOGOUT")
     }
 
 
