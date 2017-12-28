@@ -5,21 +5,30 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import java.util.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, Nakup.HomeListener, VnosPotnikov.VnosPotnikovListener, Potniki.PotnikiListener {
 
+class MainActivity : AppCompatActivity(),
+        NavigationView.OnNavigationItemSelectedListener,
+        Nakup.HomeListener,
+        VnosPotnikov.VnosPotnikovListener,
+        Potniki.PotnikiListener,
+        SignInFragment.LoginListener
+{
     private lateinit var fragmentTransaction: FragmentTransaction
     private var userData = ArrayList<String>()
     private var nakupData = ArrayList<String>()
+    private var m_verifiedAccount = false;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,23 +47,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
+        setContainerFragment(SignInFragment(), "Uporabnik");
+    }
 
-        //display home fragment
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_container, TravelsFragment())
-        fragmentTransaction.commit()
-        if (supportActionBar != null)
-            supportActionBar!!.title = "Travels"
+    override fun onLogin(username: String) {
+        if(!m_verifiedAccount){
+            setContainerFragment(TravelsFragment(), "Potovanja")
+            Snackbar.make(findViewById(R.id.main_container),
+                    "Prijavljeni ste kot '" + username + "'", Snackbar.LENGTH_LONG).show()
+            m_verifiedAccount = true;
+        }
+    }
+
+    override fun onLogout() {
+        //setContainerFragment(SignInFragment(), "Prijava")
+        //m_verifiedAccount = false;
 
 
     }
 
 
-    override fun onBackPressed() {
+    fun setContainerFragment(fragment: Fragment, name: String,
+                             bundle: Bundle? = null, backStackName : String? = null)
+    {
+        fragmentTransaction = supportFragmentManager.beginTransaction()
 
+        if(bundle != null) fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.main_container, fragment)
+        if(backStackName != null) fragmentTransaction.addToBackStack("1")
+
+        fragmentTransaction.commit()
+
+        if (supportActionBar != null)
+            supportActionBar!!.title = name
+    }
+
+
+
+    override fun onBackPressed() {
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         if (supportActionBar != null)
-            supportActionBar!!.title = "Travels"
+            supportActionBar!!.title = "Potovanja"
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
@@ -72,18 +105,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
 
-
-        if (id == R.id.action_settings) {
-
-            fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.main_container, SettingsFragment())
-            fragmentTransaction.addToBackStack("1")
-            fragmentTransaction.commit()
-            if (supportActionBar != null)
-                supportActionBar!!.title = "Nastavitve"
-
+       if(item.itemId == R.id.action_settings){
+            setContainerFragment(SettingsFragment(), "Nastavitve")
             return true
         }
 
@@ -91,123 +115,56 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    //                      HANDLING NAVIGATION                                //
-
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        val id = item.itemId
+        when(item.itemId)
+        {
+            R.id.nav_home -> setContainerFragment(TravelsFragment(), "Potovanja")
+            R.id.nav_nakup -> setContainerFragment(Nakup(), "Nakup", null, "1")
+            R.id.nav_login -> setContainerFragment(SignInFragment(), "Uporabnik")
+            R.id.nav_avtor -> setContainerFragment(AvtorFragment(), "Avtor", null, "1")
+            R.id.nav_itm -> {
+                if (nakupData.size > 0){
+                    if (userData.size > 0) {
+                        val bundle = Bundle()
+                        bundle.putStringArrayList("userData", userData)
+                        setContainerFragment(Potniki(), "Potniki", bundle, "1")
+                    }else{
+                        setContainerFragment(Potniki(), "Potniki", null, "1")
+                    }
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content),
+                            "Vnesite podatke o potovanju v zavihku Nakup", Snackbar.LENGTH_LONG).show()
 
-        if (id == R.id.nav_home) {
-            fragmentTransaction = supportFragmentManager.beginTransaction()
-            val travelsFragment = TravelsFragment()
-
-            fragmentTransaction.replace(R.id.main_container, travelsFragment)
-            fragmentTransaction.commit()
-            if (supportActionBar != null)
-                supportActionBar!!.title = "Travels"
-
-        } else if (id == R.id.nav_nakup) {
-            fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.main_container, Nakup())
-            fragmentTransaction.addToBackStack("1")
-            fragmentTransaction.commit()
-            if (supportActionBar != null)
-                supportActionBar!!.title = "Nakup"
-
-
-        } else if (id == R.id.nav_itm) {
-            if (nakupData.size > 0) {
-                fragmentTransaction = supportFragmentManager.beginTransaction()
-                val potniki = Potniki()
-
-
-                if (userData.size > 0) {
-                    val bundle = Bundle()
-                    bundle.putStringArrayList("userData", userData)
-                    potniki.arguments = bundle
                 }
-
-
-                fragmentTransaction.replace(R.id.main_container, potniki)
-                fragmentTransaction.addToBackStack("1")
-                fragmentTransaction.commit()
-                if (supportActionBar != null)
-                    supportActionBar!!.title = "Potniki"
-            } else {
-                Snackbar.make(findViewById(android.R.id.content), "Vnesite podatke o potovanju v zavihku Nakup", Snackbar.LENGTH_LONG).show()
-
             }
-
-
-        } else if (id == R.id.nav_login) {
-            fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.main_container, SignInFragment())
-            fragmentTransaction.commit()
-            if (supportActionBar != null)
-                supportActionBar!!.title = "Login"
-
-        } else if (id == R.id.nav_avtor) {
-            fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.main_container, AvtorFragment())
-            fragmentTransaction.addToBackStack("1")
-            fragmentTransaction.commit()
-            if (supportActionBar != null)
-                supportActionBar!!.title = "Avtor"
         }
+
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
+
         return true
     }
 
 
     override fun launch_dodaj_potnika() {
-
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-        val vnosPotnikov = VnosPotnikov()
-
-
-        fragmentTransaction.replace(R.id.main_container, vnosPotnikov)
-        fragmentTransaction.addToBackStack("1")
-        fragmentTransaction.commit()
-        if (supportActionBar != null)
-            supportActionBar!!.title = "Vnos potnika"
+        setContainerFragment(VnosPotnikov(), "Vnos potnika", null, "1")
     }
 
     override fun launch_placilo() {
-
-
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-        val placilo = Placilo()
-
         val bundle = Bundle()
         bundle.putStringArrayList("nakupData", nakupData)
         bundle.putStringArrayList("userData", userData)
-        placilo.arguments = bundle
 
-
-        fragmentTransaction.replace(R.id.main_container, placilo)
-        fragmentTransaction.addToBackStack("1")
-        fragmentTransaction.commit()
-        if (supportActionBar != null)
-            supportActionBar!!.title = "Plačilo"
+        setContainerFragment(Placilo(), "Plačilo", bundle, "1")
     }
 
     override fun setPlaciloFragment() {
-        val placilo = Placilo()
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-
         val bundle = Bundle()
         bundle.putStringArrayList("nakupData", nakupData)
         bundle.putStringArrayList("userData", userData)
-        placilo.arguments = bundle
 
-        fragmentTransaction.replace(R.id.main_container, placilo)
-        fragmentTransaction.addToBackStack("1")
-        fragmentTransaction.commit()
-        if (supportActionBar != null)
-            supportActionBar!!.title = "Plačilo"
-
+        setContainerFragment(Placilo(), "Plačilo", bundle, "1")
     }
 
 
@@ -216,43 +173,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun setPotnikiFragment() {
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-        val potniki = Potniki()
-
+        val bundle = Bundle()
         if (userData.size > 0) {
-            val bundle = Bundle()
             bundle.putStringArrayList("userData", userData)
-            potniki.arguments = bundle
         }
 
-        fragmentTransaction.replace(R.id.main_container, potniki)
-        fragmentTransaction.addToBackStack("1")
-        fragmentTransaction.commit()
-        if (supportActionBar != null)
-            supportActionBar!!.title = "Potniki"
+        setContainerFragment(Potniki(), "Potniki", bundle, "1")
     }
 
 
     override fun sendUser(userData: ArrayList<String>) {
         this.userData.addAll(userData)
 
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-        val potniki = Potniki()
         println("Created potniki")
-
-        if (this.userData.size > 0) {
-            val bundle = Bundle()
-            bundle.putStringArrayList("userData", this.userData)
-            potniki.arguments = bundle
-        }
-
-        fragmentTransaction.replace(R.id.main_container, potniki)
-        fragmentTransaction.addToBackStack("1")
-        fragmentTransaction.commit()
-        if (supportActionBar != null)
-            supportActionBar!!.title = "Potniki"
-
+        setPotnikiFragment();
     }
-
 
 }

@@ -22,7 +22,7 @@
     <string name="te_a">Teža</string>
     <string name="spol_zenska">Ženska</string>
     <string name="spol_moski">Moški</string>
-    <string name="avtor_string">Jernej Habjan\n63150106\n\nFakulteta za Računalništvo in Informatiko\nUporabniški vmesniki 5. domača naloga\n2016/2017</string>
+    <string name="avtor_string">Fakulteta za Računalništvo in Informatiko\nElektronsko in mobilno poslovanje\nSeminarska naloga\n2017/2018</string>
     <string name="teza">Teža</string>
     <string name="izracunajte_itm">Izračunajte ITM</string>
     <string name="itm_tezaField">Vnesite težo</string>
