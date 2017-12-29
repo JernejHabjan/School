@@ -93,11 +93,111 @@ function handleLoadedCoins(coinData) {
   // document.getElementById("loadingtext").textContent = "";
 }
 
+// coin class
+
+function Coin(startCoordinatesX, startCoordinatesZ) {
+  this.startCoordX = startCoordinatesX;
+  this.startCoordZ = startCoordinatesZ; 
+  this.angle = 0;
+  this.rotationSpeed = 0.5;
+}
+
+
+Coin.prototype.draw = function() {
+  mvPushMatrix();
+
+
+  // Move to the star's position
+  // mat4.rotate(mvMatrix, degToRad(this.angle), [0.0, 0.0, 1.0]);
+  mat4.translate(mvMatrix, [this.startCoordX, 0.0, this.startCoordZ]);
+
+  // // Rotate back so that the star is facing the viewer
+  mat4.rotate(mvMatrix, degToRad(-this.angle), [0.0, 1.0, 0.0]);
+  // mat4.rotate(mvMatrix, degToRad(-tilt), [1.0, 0.0, 0.0]);
+
+  // mat4.translate(mvMatrix, [this.startCoordX, 0.0, this.startCoordZ]);
+
+  // All coins spin around the Y axis at the same rate
+  mat4.rotate(mvMatrix, degToRad(spin), [0.0, -1.0, 0.0]);
+
+  drawCoin();
+
+  mvPopMatrix();
+}
+
+// vrtenje kovancev
+Coin.prototype.animate = function (elapsedTime) {
+  this.angle += this.rotationSpeed * effectiveFPMS * elapsedTime;
+}
+
+// nafilamo array za vse coine
+function initCoins() {
+  var arr1 = [];
+  var arr2 = [];
+
+  arr1.push([0, 0]);
+  arr1.push([0, 4]);
+  arr1.push([0, 12]);
+  arr1.push([-2, 8]);
+  arr1.push([-2, 16]);
+  arr1.push([-6, 2]);
+  arr1.push([-6, 8]);
+  arr1.push([-6, 12]);
+  arr1.push([-10, 2]);
+  arr1.push([-10, 8]);
+  arr1.push([-10, 12]);
+  arr1.push([-10, 16]);
+  arr1.push([-12, 5]);
+  arr1.push([-16, 2]);
+  arr1.push([-16, 4]);
+  arr1.push([-16, 8]);
+  arr1.push([-16, 12]);
+  arr1.push([-16, 16]);
+
+  
+  
+
+  for (var i in arr1) {
+    var c = arr1[i];
+    var x = Number(c[0]);
+    var z = Number(c[1]);
+
+    // console.log("x: ", x);
+    // console.log("z: ", z);
+
+    if (x != 0) {
+      arr2.push([-x, z]);
+      if (z != 0) {
+        arr2.push([-x, -z]);
+      }
+    }
+  
+    arr2.push([x, z]);
+    if (z != 0) {
+      arr2.push([x, -z]);  
+    }
+    
+  }
+  // console.log(arr1);
+  // console.log(arr2);
+
+  for (var i in arr2) {
+    var c = arr2[i];
+    coins.push(new Coin(c[0], c[1]));
+  }
+
+  // console.log(coins.length);
+}
+
+// TODO: gledas koordinate kovancev zacetne, in ce si dovol blizu ga izbrises in na novo
+// izrises
+
+
 // TODO: vec coinov daj v mapo, potem pa da jih poberas!!!
 
 function loadCoins() {
   var request = new XMLHttpRequest();
-  request.open("GET", "./assets/probaTRI.json");
+  request.open("GET", "./assets/coin43.json");
   request.onreadystatechange = function () {
     if (request.readyState == 4) {
       handleLoadedCoins(JSON.parse(request.responseText));

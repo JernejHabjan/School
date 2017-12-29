@@ -46,9 +46,14 @@ function start() {
     // Next, load and set up the textures we'll be using.
     initTextures();
     loadFloor();
+    // nafilamo vse coine
+    initCoins();
     loadCoins();
     loadTeapot();
     
+    // MUSIC in the background
+    var audio = new Audio('./assets/magnifico.mp3');
+    audio.play();
     
 	
 	

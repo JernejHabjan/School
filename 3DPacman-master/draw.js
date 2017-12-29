@@ -118,9 +118,24 @@ function drawScene() {
   // Draw the teapot
   gl.drawElements(gl.TRIANGLES, teapotVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
+  // rotacija kovancev
+  // mvPushMatrix();
+  // mat4.rotate(mvMatrix, degToRad(rotationCoin), [0, 0, 1]);
 
+  for (var i in coins) {
+    coins[i].draw();
+  }
+
+
+}
+
+function drawCoin() {
   // TODO: izrisi kovance, iz blenderja moras pravilno exportati
 
+  // mvPushMatrix();
+  // mat4.rotate(mvMatrix, degToRad(rotationCoin), [0, 1, 0]);
+
+  gl.bindTexture(gl.TEXTURE_2D, goldTexture);
   // coini
   gl.bindBuffer(gl.ARRAY_BUFFER, coinVertexPositionBuffer);
   gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, coinVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -139,9 +154,9 @@ function drawScene() {
 
   // Draw the coin
   gl.drawElements(gl.TRIANGLES, coinVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+  // mvPopMatrix();
 }
-
-
 
 
 
@@ -154,12 +169,20 @@ function drawScene() {
 //
 function animate() {
   var timeNow = new Date().getTime();
+  var audio = new Audio('./assets/coinSound.mp3');
   if (lastTime != 0) {
     var elapsed = timeNow - lastTime; //calculate delta time
 
-    // rotate the teapot for a small amount
-    // teapotAngle += 0.05 * elapsed;
-    
+    // console.log("coinCounter: ", coinCounter);
+
+    // rotationCoin += (75 * elapsed) / 1000.0;
+
+
+    // TODO: NAREDI, DA SE VSI KOVANCI VRTIJO OKOLI ENE OSI
+    for (var i in coins) {
+      // rotate the cube for a small amount
+      coins[i].animate(elapsed);
+    }
 
 	// update walk animation
 	if (speed != 0) {
@@ -173,10 +196,28 @@ function animate() {
     if (checkCollision(xPositionTemp, zPositionTemp)) {
       xPosition -= Math.sin(degToRad(yaw)) * speed * elapsed;
       zPosition -= Math.cos(degToRad(yaw)) * speed * elapsed;
+      
+      // tu gledamo, ce smo pobrali kovanec
+      for (var i = 0; i < coins.length; i++) {
+        var l = Math.sqrt(Math.pow((xPositionTemp - coins[i].startCoordX), 2) + Math.pow((zPositionTemp - coins[i].startCoordZ), 2));
+        if (l < 0.4) {
+          console.log("stevilo kovancev: ", coinCounter);
+          coins.splice(i, 1);
+          // kovanec je pobran, na novo zrisemo seznam kovancev, z enim manj
+          coinCounter += 1;
+          // coinSound play
+          audio.play();
+          for (var i in coins) {
+            coins[i].draw();
+          }
+        }
+      }
 
       // joggingAngle += elapsed * 0.6; // 0.6 "fiddle factor" - makes it feel more realistic :-) 
       yPosition = Math.sin(degToRad(joggingAngle)) / 20 - 0.3;
     }
+
+
     }
   //update rotation
     // if (xPosition )
@@ -189,7 +230,7 @@ function animate() {
 }
 
 // collision detection part
-// TODO: gres cez vse trikotnike, preveris ploscine treh trikotnikov znotraj glavnega
+// gres cez vse trikotnike, preveris ploscine treh trikotnikov znotraj glavnega
 
 // ploscina trikotnika
 function surfaceTriangle(x1, z1, x2, z2, x3, z3) {
@@ -204,20 +245,4 @@ function surfaceTriangle(x1, z1, x2, z2, x3, z3) {
 
   return surface;
 }
-
-
-// console.log(surfaceTriangle(1, 2, 3, 3, 4, 2));
-
-// TODO: checkCollision ->
-// cez vse trikotnike
-// vzames notranje tri, izracunas za vsakega ploscino
-// sestejes ploscino in primerjas z ploscino glavnega trikotnika
-// ce je enaka (ali manjša?), si znotraj trikotnika
-// ce je vecja, si zunaj tal -> si v zidu
-
-
-
-// function checkCollision(x, y, z) {
-
-// }
 

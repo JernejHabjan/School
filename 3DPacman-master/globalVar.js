@@ -23,6 +23,7 @@ var pMatrix = mat4.create();
 // Variable for storing textures
 var earthTexture;
 var metalTexture;
+var goldTexture;
 
 // Variable that stores  loading state of textures.
 var numberOfTextures = 2;
@@ -42,6 +43,20 @@ var trianglePositions = [];
 var indides = [];
 
 var triangles = [];
+
+// coins
+
+var coins = [];
+var coinCounter = 0;
+var rotationCoin = 0;
+
+// Variables for storing current rotation of cube
+var tilt = 90;
+var spin = 1.5;
+
+// helper variables for animation
+
+var effectiveFPMS = 60 / 1000;
 
 // Keyboard handling helper variable for reading the status of keys
 var currentlyPressedKeys = {};
