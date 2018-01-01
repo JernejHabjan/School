@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,12 +21,15 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import kotlinx.android.synthetic.main.fragment_nakup.*
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
+
+
 
 
 class Nakup : Fragment() {
     private lateinit var mGeoDataClient: GeoDataClient
     private var mGoogleApiClient: GoogleApiClient? = null
-    private lateinit var activityCommander: HomeListener
+    private lateinit var activityCommander: NakupListener
 
     private lateinit var datum_prihoda: EditText
     private lateinit var razred_prihoda: Spinner
@@ -35,11 +39,9 @@ class Nakup : Fragment() {
 
 
 
-
-
     override fun onAttach(context: Context?) {
         try {
-            activityCommander = (context as HomeListener?)!!
+            activityCommander = (context as NakupListener?)!!
         } catch (e: ClassCastException) {
             throw ClassCastException(context.toString())
         }
@@ -105,6 +107,16 @@ class Nakup : Fragment() {
         return view
     }
 
+
+    override fun onStop() {
+        super.onStop()
+
+        mGoogleApiClient!!.stopAutoManage(activity)
+        mGoogleApiClient!!.disconnect()
+    }
+
+
+
     private fun setupAutocompleteFramment(view: View) {
 
 
@@ -114,15 +126,25 @@ class Nakup : Fragment() {
         // Construct a PlaceDetectionClient.
         val mPlaceDetectionClient = Places.getPlaceDetectionClient(activity, null)
 
+        if (mGoogleApiClient == null)
         mGoogleApiClient = GoogleApiClient.Builder(activity)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(activity, null)
                 .build()
+        else
+            mGoogleApiClient!!.connect()
+
+        val autocompleteFragment = SupportPlaceAutocompleteFragment()
+        val fm = fragmentManager
+        val ft = fm.beginTransaction()
+        ft.replace(R.id.fragment_content, autocompleteFragment)
+        ft.commit()
+
 
 
         // Autocomplete fragment - fragment found on Nakup fragment and it's used for quickly selecting places
-        val autocompleteFragment = activity.fragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as PlaceAutocompleteFragment
+        //val autocompleteFragment = activity.fragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as PlaceAutocompleteFragment
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             val TAG = "bla"
@@ -136,7 +158,10 @@ class Nakup : Fragment() {
                         + place.latLng.toString() + "\n"
                         + place.address + "\n"
                         + place.attributions)
-                paste_location_view.text = placeDetailsStr
+                //paste_location_view.text = placeDetailsStr
+
+                autocompleteFragment.setText(placeDetailsStr)
+
             }
 
             override fun onError(status: Status) {
@@ -192,9 +217,9 @@ class Nakup : Fragment() {
         val button_label = (view as Button).text.toString()
 
         val nakup_data = ArrayList<String>()
-        nakup_data.add(destinacije.selectedItem.toString())
+        //nakup_data.add(destinacije.selectedItem.toString())
         nakup_data.add(datum_odhoda.text.toString())
-        nakup_data.add(st_oseb_spinner.selectedItem.toString())
+        //nakup_data.add(st_oseb_spinner.selectedItem.toString())
         nakup_data.add(razred_odhoda.selectedItem.toString())
 
         if (dvosmerna.isChecked) {
@@ -214,7 +239,7 @@ class Nakup : Fragment() {
     }
 
 
-    internal interface HomeListener {
+    internal interface NakupListener {
         fun sendNakupData(userData: ArrayList<String>)
 
         fun setPlaciloFragment()

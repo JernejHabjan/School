@@ -1,6 +1,5 @@
 package si.roglan.EMP_Seminarska
 
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -14,26 +13,26 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import java.util.*
-import android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION
-import android.text.TextUtils
-
-
 
 
 class MainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
-        Nakup.HomeListener,
+        Nakup.NakupListener,
         VnosPotnikov.VnosPotnikovListener,
         Potniki.PotnikiListener,
-        SignInFragment.LoginListener
-{
+        SignInFragment.LoginListener,
+        TravelsFragment.TravelsListener {
+
+
     private lateinit var fragmentTransaction: FragmentTransaction
     private var userData = ArrayList<String>()
     private var nakupData = ArrayList<String>()
-    private var m_verifiedAccount = false;
-
+    private var m_verifiedAccount = false
+    private var m_GID = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,32 +50,35 @@ class MainActivity : AppCompatActivity(),
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-        //setContainerFragment(TravelsFragment(), "Potovanja")
         setContainerFragment(SignInFragment(), "Prijava");
     }
 
-    override fun onLogin(username: String) {
-        if(!m_verifiedAccount){
-            setContainerFragment(TravelsFragment(), "Potovanja")
+    override fun onLogin(account: GoogleSignInAccount) {
+        if (!m_verifiedAccount) {
+            m_GID = account.id.toString()
+            val bundle = Bundle() // send GID to Potovanja fragment on login
+            bundle.putString("GID", m_GID)
+            setContainerFragment(TravelsFragment(), "Potovanja", bundle)
+
             Snackbar.make(findViewById(R.id.main_container),
-                    "Prijavljeni ste kot '" + username + "'", Snackbar.LENGTH_LONG).show()
+                    "Prijavljeni ste kot '" + account.displayName.toString() + "'", Snackbar.LENGTH_LONG).show()
 
-            m_verifiedAccount = true;
 
-            var drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            m_verifiedAccount = true
+
+            val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
             val toolbar = findViewById(R.id.toolbar) as Toolbar
         }
-
         Log.i("LOGIN", "LOGIN")
     }
 
     override fun onLogout() {
-        var drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
+        val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-        if(m_verifiedAccount){
+        if (m_verifiedAccount) {
             val toolbar = findViewById(R.id.toolbar) as Toolbar
             //toolbar.setNavigationIcon(null) //TODO maybe if we find R.drawable.ic_drawer
 
@@ -84,26 +86,23 @@ class MainActivity : AppCompatActivity(),
 
             m_verifiedAccount = false;
         }
-
         Log.i("LOGOUT", "LOGOUT")
     }
 
 
     fun setContainerFragment(fragment: Fragment, name: String,
-                             bundle: Bundle? = null, backStackName : String? = null)
-    {
+                             bundle: Bundle? = null, backStackName: String? = null) {
         fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        if(bundle != null) fragment.arguments = bundle
+        if (bundle != null) fragment.arguments = bundle
         fragmentTransaction.replace(R.id.main_container, fragment)
-        if(backStackName != null) fragmentTransaction.addToBackStack("1")
+        if (backStackName != null) fragmentTransaction.addToBackStack("1")
 
         fragmentTransaction.commit()
 
         if (supportActionBar != null)
             supportActionBar!!.title = name
     }
-
 
 
     override fun onBackPressed() {
@@ -128,7 +127,7 @@ class MainActivity : AppCompatActivity(),
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-       if(item.itemId == R.id.action_settings){
+        if (item.itemId == R.id.action_settings) {
             setContainerFragment(SettingsFragment(), "Nastavitve")
             return true
         }
@@ -139,21 +138,18 @@ class MainActivity : AppCompatActivity(),
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId)
-        {
-            R.id.nav_home -> setContainerFragment(TravelsFragment(), "Potovanja")
+        when (item.itemId) {
+            R.id.nav_home -> { // send login data by bundle to travelsfragment
+                val bundle = Bundle()
+                bundle.putString("GID", m_GID)
+                setContainerFragment(TravelsFragment(), "Potovanja", bundle, "1")
+            }
             R.id.nav_nakup -> setContainerFragment(Nakup(), "Nakup", null, "1")
-            R.id.nav_login -> setContainerFragment(SignInFragment(), "Uporabnik")
+            R.id.nav_login -> setContainerFragment(SignInFragment(), "Uporabnik", null, "1")
             R.id.nav_avtor -> setContainerFragment(AvtorFragment(), "Avtor", null, "1")
             R.id.nav_itm -> {
-                if (nakupData.size > 0){
-                    if (userData.size > 0) {
-                        val bundle = Bundle()
-                        bundle.putStringArrayList("userData", userData)
-                        setContainerFragment(Potniki(), "Potniki", bundle, "1")
-                    }else{
-                        setContainerFragment(Potniki(), "Potniki", null, "1")
-                    }
+                if (nakupData.size > 0) {
+                    setPotnikiFragment()
                 } else {
                     Snackbar.make(findViewById(android.R.id.content),
                             "Vnesite podatke o potovanju v zavihku Nakup", Snackbar.LENGTH_LONG).show()
@@ -169,16 +165,12 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    override fun launch_dodaj_potnika() {
+    override fun setVnosPotnikovFragment() {
         setContainerFragment(VnosPotnikov(), "Vnos potnika", null, "1")
     }
 
     override fun launch_placilo() {
-        val bundle = Bundle()
-        bundle.putStringArrayList("nakupData", nakupData)
-        bundle.putStringArrayList("userData", userData)
-
-        setContainerFragment(Placilo(), "Plačilo", bundle, "1")
+        setPlaciloFragment()
     }
 
     override fun setPlaciloFragment() {
@@ -189,6 +181,9 @@ class MainActivity : AppCompatActivity(),
         setContainerFragment(Placilo(), "Plačilo", bundle, "1")
     }
 
+    override fun setNakupFragment() {
+        setContainerFragment(Nakup(), "Nakup", null, "1")
+    }
 
     override fun sendNakupData(nakupData: ArrayList<String>) {
         this.nakupData = nakupData //da posljemo homefragmentu
@@ -198,7 +193,9 @@ class MainActivity : AppCompatActivity(),
         val bundle = Bundle()
         if (userData.size > 0) {
             bundle.putStringArrayList("userData", userData)
+
         }
+        bundle.putString("GID", m_GID)
 
         setContainerFragment(Potniki(), "Potniki", bundle, "1")
     }
@@ -206,9 +203,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun sendUser(userData: ArrayList<String>) {
         this.userData.addAll(userData)
-
-        println("Created potniki")
-        setPotnikiFragment();
+        setPotnikiFragment()
     }
 
 }

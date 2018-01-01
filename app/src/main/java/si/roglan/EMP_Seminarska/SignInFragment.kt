@@ -4,12 +4,17 @@ package si.roglan.EMP_Seminarska
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,6 +23,7 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
+import org.json.JSONException
 
 
 class SignInFragment : Fragment(), View.OnClickListener {
@@ -26,11 +32,12 @@ class SignInFragment : Fragment(), View.OnClickListener {
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private var mStatusTextView: TextView? = null
 
-//==================================================================================================
+
+    //==================================================================================================
     private lateinit var activityCommander: LoginListener
 
     internal interface LoginListener {
-        fun onLogin(username: String)
+        fun onLogin(account: GoogleSignInAccount)
         fun onLogout()
     }
 
@@ -44,10 +51,9 @@ class SignInFragment : Fragment(), View.OnClickListener {
         super.onAttach(context)
     }
 
-//==================================================================================================
+    //==================================================================================================
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-    {
+                              savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_sign_in, container, false)
         mStatusTextView = view!!.findViewById(R.id.status) as TextView?
 
@@ -128,13 +134,21 @@ class SignInFragment : Fragment(), View.OnClickListener {
     }
 
     private fun updateState(account: GoogleSignInAccount?) {
+
         if (account != null) {
-            activityCommander.onLogin(account.displayName.toString())
+
+            activityCommander.onLogin(account)
 
             mStatusTextView!!.text = getString(R.string.signed_in_fmt, account.displayName)
 
             view!!.findViewById(R.id.sign_in_button).visibility = View.GONE
             view!!.findViewById(R.id.sign_out_and_disconnect).visibility = View.VISIBLE
+
+
+            //write this account to our database if it doensn't exist yet
+            managageDatabaseAccount(account)
+
+
         } else {
             activityCommander.onLogout()
 
@@ -145,6 +159,16 @@ class SignInFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun managageDatabaseAccount(account: GoogleSignInAccount?) {
+        // writes account to database if needed
+
+        val contains = VolleyHelper().doesDatabaseContainGID(activity, account!!.id.toString())
+        if (!contains){
+            VolleyHelper().addUser(activity, account)
+        }
+
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.sign_in_button -> signIn()
@@ -152,5 +176,10 @@ class SignInFragment : Fragment(), View.OnClickListener {
             R.id.disconnect_button -> revokeAccess()
         }
     }
+
+
+
+
+
 
 }

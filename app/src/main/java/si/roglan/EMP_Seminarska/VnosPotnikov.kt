@@ -14,19 +14,21 @@ import android.widget.RadioButton
 import android.widget.RelativeLayout
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class VnosPotnikov : Fragment() {
-    internal lateinit var activityCommander: VnosPotnikovListener
+    private lateinit var activityCommander: VnosPotnikovListener
     private var ime_field: EditText? = null
     private var priimek_field: EditText? = null
     private var rad_m: RadioButton? = null
     private var rad_f: RadioButton? = null
     private var date_field: EditText? = null
     private var vnos_container: RelativeLayout? = null
+    private var SERVER_URL = "http://asistentslivko.azurewebsites.net"
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -44,7 +46,7 @@ class VnosPotnikov : Fragment() {
 
         val button = view.findViewById(R.id.button_dodaj_potnika) as Button
 
-        button.setOnClickListener { buttonClicked() }
+        button.setOnClickListener { addPassenger() }
         return view
 
 
@@ -91,7 +93,8 @@ class VnosPotnikov : Fragment() {
         return true
     }
 
-    private fun buttonClicked() {
+
+    private fun addPassenger() {
 
         if (!checkFields())
             return
@@ -108,6 +111,21 @@ class VnosPotnikov : Fragment() {
         activityCommander.sendUser(userData) //passamo input
 
         println("Sent user data")
+
+
+        // write to database
+        val service = "/ServicePersonData.svc"
+        val operationContract = "/WritePassenger"
+
+
+        val params = HashMap<String, String>()
+        params.put("name", ime_field!!.text.toString())
+        params.put("surname", priimek_field!!.text.toString())
+        params.put("gender", if (rad_m!!.isChecked) "Moški" else "Ženska")
+        params.put("age", date_field!!.text.toString())
+
+        VolleyHelper().writeRequest(params, service, operationContract)
+
     }
 
 
