@@ -23,7 +23,7 @@ class VolleyHelper {
 
         // VOLLEY GET PERSON
         val service = "/ServicePersonData.svc"
-        val operationContract = "/GetUser"
+        val operationContract = "/User"
         val personID = "/" + GID
 
         var contains_local = false
@@ -59,7 +59,7 @@ class VolleyHelper {
 
     fun writeRequest(params: HashMap<String, String>, service: String, operationContract: String): JsonObjectRequest {
 
-        val req = JsonObjectRequest(SERVER_URL + service + operationContract, JSONObject(params), // not tested but this should send json object
+        val req = JsonObjectRequest(Request.Method.POST, SERVER_URL + service + operationContract, JSONObject(params), // not tested but this should send json object
                 Response.Listener<JSONObject> { response ->
                     try {
                         VolleyLog.v("Response:%n %s", response.toString(4))
@@ -78,7 +78,7 @@ class VolleyHelper {
         params.put("email", account.email.toString())
 
         val service = "/ServicePersonData.svc"
-        val operationContract = "/AddUser"
+        val operationContract = "/User"
 
 
         val requestQueue = Volley.newRequestQueue(activity)
