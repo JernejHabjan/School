@@ -70,6 +70,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Service1.svc" />
     <Content Include="ServicePersonData.svc" />
+    <Content Include="ServiceTravelData.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -84,6 +85,7 @@
     </Compile>
     <Compile Include="GoogleProfile.cs" />
     <Compile Include="IServicePersonData.cs" />
+    <Compile Include="IServiceTravelData.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -98,6 +100,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicePersonData.svc.cs">
       <DependentUpon>ServicePersonData.svc</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceTravelData.svc.cs">
+      <DependentUpon>ServiceTravelData.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

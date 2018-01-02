@@ -64,7 +64,7 @@ namespace RESTService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "SELECT * FROM PERSONS";
+                string sql = "SELECT * FROM User";
                 SqlCommand cmd = new SqlCommand(sql, con);
 
 
@@ -141,9 +141,28 @@ namespace RESTService
         }
 
 
-        
 
 
 
+
+
+
+        public void AddPassenger(Passenger passenger) // TODO ------------- WE DONT KNOW WHO ADDED THIS PASSENGER IF WE ADD IT MANUALLY - BUT IF WE ADD IT VIA ORDER WE DO
+        {
+
+            
+            
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                string sql = "INSERT INTO Passenger (name, surname, gender, age) VALUES (@0, @1, @2, @3)";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", passenger.name));
+                cmd.Parameters.Add(new SqlParameter("1", passenger.surname));
+                cmd.Parameters.Add(new SqlParameter("2", passenger.gender));
+                cmd.Parameters.Add(new SqlParameter("3", passenger.age));
+                int passengerID = (int)cmd.ExecuteScalar();
+
+            }
+        }
     }
 }

@@ -31,8 +31,19 @@ namespace RESTService
 
         [OperationContract]
         [WebInvoke(UriTemplate = "User/{googleID}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
-        void UpdateUser(User user, string googleID);
-        
+        void UpdateUser(User user,  string googleID);
+
+
+
+
+
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "Passenger", ResponseFormat = WebMessageFormat.Json)]
+        void AddPassenger(Passenger passenger);
+
+
+
     }
 
     
@@ -53,5 +64,31 @@ namespace RESTService
         public string gender { get; set; }
 
     }
-    
+
+
+    [DataContract]
+    public class Role
+    {
+        [DataMember]
+        public int roleID { get; set; }
+        [DataMember]
+        public string description { get; set; }
+       
+    }
+
+    [DataContract]
+    public class Passenger
+    {
+        [DataMember]
+        public int passengerID { get; set; }
+        [DataMember]
+        public string name { get; set; }
+        [DataMember]
+        public string surname { get; set; }
+        [DataMember]
+        public string gender { get; set; }
+        [DataMember]
+        public int age { get; set; }
+
+    }
 }
