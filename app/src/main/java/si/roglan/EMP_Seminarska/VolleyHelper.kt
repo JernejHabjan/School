@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.ArrayList
 
 
 class VolleyHelper {
@@ -23,6 +24,7 @@ class VolleyHelper {
         val service = "/ServicePersonData.svc"
         val operationContract = "/User"
         val personID = "/" + account.id.toString()
+
 
         val requestURL = SERVER_URL + service + operationContract + personID;
         val strReq = JsonObjectRequest(Request.Method.GET, requestURL,
@@ -91,6 +93,41 @@ class VolleyHelper {
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(writeRequest(params, service, operationContract))
         Log.e("Volley", "Added User")
+    }
+
+    fun addTravel(activity: Activity, nakupData: ArrayList<String>, passengerData: ArrayList<String>){
+        val params = JSONObject()
+
+        val lokacija_odhoda = nakupData!![0]
+        val lokacija_prihoda = nakupData!![1]
+        val datum_odhoda = nakupData!![2]
+        val razred_odhoda = nakupData!![3]
+
+        print("ODHOD: " + lokacija_odhoda + " PRIHOD: " + lokacija_prihoda);
+        print("DATUM_ODHODA: " + datum_odhoda)
+        print("RAZRED_ODHODA: " + razred_odhoda)
+        print("NUM_PASSENGERS: " + passengerData.size)
+
+       /*
+            "Prvi" -> factor *= 2.0f
+            "Poslovni" -> factor *= 1.5f
+            "Ekonomski" -> factor *= 1.2f
+        */
+
+        //Has return flight
+        if (nakupData!!.size > 4) {
+            val datum_prihoda = nakupData!![4]
+            val razred_prihoda = nakupData!![5]
+        }
+
+
+        val service = "/ServiceTravelData.svc"
+        val operationContract = "/Travel"
+
+
+        //val requestQueue = Volley.newRequestQueue(activity)
+        //requestQueue.add(writeRequest(params, service, operationContract))
+        //Log.e("Volley", "Added travel entry")
     }
 
 }

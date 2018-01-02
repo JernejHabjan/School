@@ -106,9 +106,9 @@ class Placilo : Fragment() {
             }
 
 
-            val destinacija = nakupData!![0]
-            val datum_odhoda = nakupData!![1]
-            val st_oseb = nakupData!![2]
+            val lokacija_odhoda = nakupData!![0]
+            val lokacija_prihoda = nakupData!![1]
+            val datum_odhoda = nakupData!![2]
             val razred_odhoda = nakupData!![3]
             var datum_odhoda_date = Date()
             try {
@@ -215,6 +215,8 @@ class Placilo : Fragment() {
                     .setMessage("Ali res želite plačati?")
                     .setPositiveButton(android.R.string.yes) { dialog, which ->
                         Snackbar.make(placilo_relative!!, "Nakup ste uspešno opravili", Snackbar.LENGTH_LONG).show()
+
+                        //TODO if data from MainActivity not matched, pass through here
                         activityCommander.finalizePurchase();
                     }
                     .setNegativeButton(android.R.string.no) { dialog, which -> }

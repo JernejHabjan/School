@@ -212,11 +212,7 @@ class MainActivity : AppCompatActivity(),
         bundle.putString("GID", m_GID)
         setContainerFragment(TravelsFragment(), "Potovanja", bundle, "1")
 
-        //TODO WRITE TO DATABASE
-
-        for(v in nakupData){
-            print(v);
-        }
+        VolleyHelper().addTravel(this, nakupData, userData);
 
         nakupData.clear();
         userData.clear();

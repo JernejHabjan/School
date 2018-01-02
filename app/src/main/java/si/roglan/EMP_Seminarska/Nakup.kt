@@ -43,8 +43,8 @@ class Nakup : Fragment() {
     private lateinit var razred_prihoda_view: TextView
     private lateinit var dvosmerna: CheckBox
 
-    private var mOdhodAutocomplete: SupportPlaceAutocompleteFragment = SupportPlaceAutocompleteFragment()
-    private var mPrihodAutocomplete: SupportPlaceAutocompleteFragment = SupportPlaceAutocompleteFragment()
+    private var mOdhodAutocompleteString: String = ""
+    private var mPrihodAutocompleteString: String = ""
 
 
     override fun onAttach(context: Context?) {
@@ -222,29 +222,7 @@ class Nakup : Fragment() {
 
 
     private fun setAutocompleteFragmentOnSelectedListener(fragment: SupportPlaceAutocompleteFragment){
-        fragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            val TAG = "bla"
 
-            override fun onPlaceSelected(place: Place) {
-                // TODO: Get info about the selected place. - THIS IS WHERE U INSERT TEXT IN TEXTVIEW
-                Log.i(TAG, "Place: " + place.name)
-
-                val placeDetailsStr = place.name.toString()
-                /*val placeDetailsStr = (place.name.toString() + "\n"
-                        + place.id + "\n"
-                        + place.latLng.toString() + "\n"
-                        + place.address + "\n"
-                        + place.attributions)*/
-                //paste_location_view.text = placeDetailsStr
-
-                fragment.setText(placeDetailsStr)
-            }
-
-            override fun onError(status: Status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status)
-            }
-        })
     }
 
     private fun setupAutocompleteFragments(view: View) {
@@ -266,12 +244,46 @@ class Nakup : Fragment() {
             mGoogleApiClient!!.connect()
 
 
-        setAutocompleteFragmentOnSelectedListener(mOdhodAutocomplete)
-        setAutocompleteFragmentOnSelectedListener(mPrihodAutocomplete)
+
+        var odhodAutocomplete = SupportPlaceAutocompleteFragment()
+        odhodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                Log.i("Autocomplete", "Place: " + place.name)
+
+                /*mOdhodAutocompleteString = (place.name.toString() + "\n"
+                        + place.id + "\n"
+                        + place.latLng.toString() + "\n"
+                        + place.address + "\n"
+                        + place.attributions)*/
+                //paste_location_view.text = placeDetailsStr
+
+                mOdhodAutocompleteString = place.name.toString()
+                odhodAutocomplete.setText(mOdhodAutocompleteString)
+            }
+
+            override fun onError(status: Status) {
+                Log.i("Autocomplete fragment", "An error occurred: " + status)
+            }
+        })
+
+        var prihodAutocomplete = SupportPlaceAutocompleteFragment()
+        prihodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                Log.i("Autocomplete", "Place: " + place.name)
+
+                mPrihodAutocompleteString = place.name.toString()
+                prihodAutocomplete.setText(mPrihodAutocompleteString)
+            }
+
+            override fun onError(status: Status) {
+                Log.i("Autocomplete fragment", "An error occurred: " + status)
+            }
+        })
+
 
         val ft = fragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_odhod, mOdhodAutocomplete)
-        ft.replace(R.id.fragment_prihod, mPrihodAutocomplete)
+        ft.replace(R.id.fragment_odhod, odhodAutocomplete)
+        ft.replace(R.id.fragment_prihod, prihodAutocomplete)
         ft.commit()
     }
 
@@ -320,10 +332,11 @@ class Nakup : Fragment() {
 
         val button_label = (view as Button).text.toString()
 
+
         val nakup_data = ArrayList<String>()
-        nakup_data.add(mOdhodAutocomplete.toString())
+        nakup_data.add(mOdhodAutocompleteString)
+        nakup_data.add(mPrihodAutocompleteString)
         nakup_data.add(datum_odhoda.text.toString())
-        nakup_data.add(1.toString()) //TODO remove
         nakup_data.add(razred_odhoda.selectedItem.toString())
 
         if (dvosmerna.isChecked) {
