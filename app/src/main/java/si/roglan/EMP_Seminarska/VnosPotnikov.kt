@@ -35,6 +35,7 @@ class VnosPotnikov : Fragment() {
     private var vnos_container: RelativeLayout? = null
     private var SERVER_URL = "http://asistentslivko.azurewebsites.net"
 
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 

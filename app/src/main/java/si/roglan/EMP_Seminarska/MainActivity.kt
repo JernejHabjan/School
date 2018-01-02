@@ -25,14 +25,15 @@ class MainActivity : AppCompatActivity(),
         VnosPotnikov.VnosPotnikovListener,
         Potniki.PotnikiListener,
         SignInFragment.LoginListener,
-        TravelsFragment.TravelsListener {
-
-
+        TravelsFragment.TravelsListener,
+        Placilo.PlaciloListener
+{
     private lateinit var fragmentTransaction: FragmentTransaction
     private var userData = ArrayList<String>()
     private var nakupData = ArrayList<String>()
     private var m_verifiedAccount = false
     private var m_GID = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -204,6 +205,21 @@ class MainActivity : AppCompatActivity(),
     override fun sendUser(userData: ArrayList<String>) {
         this.userData.addAll(userData)
         setPotnikiFragment()
+    }
+
+    override fun finalizePurchase() {
+        val bundle = Bundle()
+        bundle.putString("GID", m_GID)
+        setContainerFragment(TravelsFragment(), "Potovanja", bundle, "1")
+
+        //TODO WRITE TO DATABASE
+
+        for(v in nakupData){
+            print(v);
+        }
+
+        nakupData.clear();
+        userData.clear();
     }
 
 }

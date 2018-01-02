@@ -1,5 +1,6 @@
 package si.roglan.EMP_Seminarska
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -12,6 +13,7 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_placilo.*
+import org.w3c.dom.Text
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,9 +26,21 @@ class Placilo : Fragment() {
     private lateinit var priimek_placnika: EditText
     private lateinit var ime_placnika: EditText
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private lateinit var activityCommander: PlaciloListener
 
+    override fun onAttach(context: Context?) {
+        try {
+            activityCommander = (context as PlaciloListener?)!!
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context!!.toString())
+        }
+        super.onAttach(context)
+    }
+
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_placilo, container, false)
+
         kartica_input = view.findViewById(R.id.kartica_input) as EditText
         priimek_placnika = view.findViewById(R.id.priimek_placnika) as EditText
         ime_placnika = view.findViewById(R.id.ime_placnika) as EditText
@@ -57,11 +71,13 @@ class Placilo : Fragment() {
         return view
     }
 
-    private fun calculatePrice() {
+    private fun calculatePrice(view: View) {
         val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
         var karta_price = 0;
         var i = 0
-        while (i < userData!!.size) {
+
+        while (i < userData!!.size)
+        {
             val name = userData!![i]
             val surname = userData!![i + 1]
             val spol = userData!![i + 2]
@@ -114,7 +130,7 @@ class Placilo : Fragment() {
 
             //Generate random price
             val maxPrice = 400;
-            var randomPrice = (Random().nextInt() % maxPrice).toFloat();
+            var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat();
             randomPrice -= randomPrice * discount;
 
             karta_price += (randomPrice * factor).toInt()
@@ -143,7 +159,9 @@ class Placilo : Fragment() {
             }
             i += 4
         }
-        cena_display!!.text = Integer.toString(karta_price)
+
+        val priceDisplay = view.findViewById(R.id.cena_display) as TextView;
+        priceDisplay.text = Integer.toString(karta_price)
     }
 
     private fun recieveUser_NakupData(view: View, bundle: Bundle?) {
@@ -182,7 +200,7 @@ class Placilo : Fragment() {
                 val numPassengers = view.findViewById(R.id.st_potnikov_label) as TextView;
                 numPassengers!!.text = Integer.toString(numUsers)
 
-                calculatePrice()
+                calculatePrice(view);
             }
         }
     }
@@ -195,11 +213,20 @@ class Placilo : Fragment() {
             AlertDialog.Builder(context)
                     .setTitle("Plačilo")
                     .setMessage("Ali res želite plačati?")
-                    .setPositiveButton(android.R.string.yes) { dialog, which -> Snackbar.make(placilo_relative!!, "Nakup ste uspešno opravili", Snackbar.LENGTH_LONG).show() }
+                    .setPositiveButton(android.R.string.yes) { dialog, which ->
+                        Snackbar.make(placilo_relative!!, "Nakup ste uspešno opravili", Snackbar.LENGTH_LONG).show()
+                        activityCommander.finalizePurchase();
+                    }
                     .setNegativeButton(android.R.string.no) { dialog, which -> }
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show()
 
         }
     }
+
+
+    internal interface PlaciloListener {
+        fun finalizePurchase()
+    }
+
 }

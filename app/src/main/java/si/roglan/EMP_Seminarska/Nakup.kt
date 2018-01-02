@@ -43,6 +43,8 @@ class Nakup : Fragment() {
     private lateinit var razred_prihoda_view: TextView
     private lateinit var dvosmerna: CheckBox
 
+    private var mOdhodAutocomplete: SupportPlaceAutocompleteFragment = SupportPlaceAutocompleteFragment()
+    private var mPrihodAutocomplete: SupportPlaceAutocompleteFragment = SupportPlaceAutocompleteFragment()
 
 
     override fun onAttach(context: Context?) {
@@ -100,9 +102,6 @@ class Nakup : Fragment() {
         c.add(Calendar.DATE, 1);
         datum_prihoda.setText(df.format(c.getTime()));
 
-
-        val doloci_potnike_button = view.findViewById(R.id.doloci_potnike_button) as Button
-        doloci_potnike_button.setOnClickListener { v -> dolociPotnikeButtonClicked(v) }
 
         dvosmerna.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -204,6 +203,11 @@ class Nakup : Fragment() {
 
         setupAutocompleteFragments(view)
 
+        //Must be called after setting autocomplete fragments (avoid null values)
+        val doloci_potnike_button = view.findViewById(R.id.doloci_potnike_button) as Button
+        doloci_potnike_button.setOnClickListener { v -> dolociPotnikeButtonClicked(v) }
+
+
         return view
     }
 
@@ -225,11 +229,12 @@ class Nakup : Fragment() {
                 // TODO: Get info about the selected place. - THIS IS WHERE U INSERT TEXT IN TEXTVIEW
                 Log.i(TAG, "Place: " + place.name)
 
-                val placeDetailsStr = (place.name.toString() + "\n"
+                val placeDetailsStr = place.name.toString()
+                /*val placeDetailsStr = (place.name.toString() + "\n"
                         + place.id + "\n"
                         + place.latLng.toString() + "\n"
                         + place.address + "\n"
-                        + place.attributions)
+                        + place.attributions)*/
                 //paste_location_view.text = placeDetailsStr
 
                 fragment.setText(placeDetailsStr)
@@ -260,15 +265,13 @@ class Nakup : Fragment() {
         else
             mGoogleApiClient!!.connect()
 
-        val autocompleteFragmentOdhod = SupportPlaceAutocompleteFragment()
-        val autocompleteFragmentPrihod = SupportPlaceAutocompleteFragment()
 
-        setAutocompleteFragmentOnSelectedListener(autocompleteFragmentOdhod)
-        setAutocompleteFragmentOnSelectedListener(autocompleteFragmentPrihod)
+        setAutocompleteFragmentOnSelectedListener(mOdhodAutocomplete)
+        setAutocompleteFragmentOnSelectedListener(mPrihodAutocomplete)
 
         val ft = fragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_odhod, autocompleteFragmentOdhod)
-        ft.replace(R.id.fragment_prihod, autocompleteFragmentPrihod)
+        ft.replace(R.id.fragment_odhod, mOdhodAutocomplete)
+        ft.replace(R.id.fragment_prihod, mPrihodAutocomplete)
         ft.commit()
     }
 
@@ -318,9 +321,9 @@ class Nakup : Fragment() {
         val button_label = (view as Button).text.toString()
 
         val nakup_data = ArrayList<String>()
-        //nakup_data.add(destinacije.selectedItem.toString())
+        nakup_data.add(mOdhodAutocomplete.toString())
         nakup_data.add(datum_odhoda.text.toString())
-        //nakup_data.add(st_oseb_spinner.selectedItem.toString())
+        nakup_data.add(1.toString()) //TODO remove
         nakup_data.add(razred_odhoda.selectedItem.toString())
 
         if (dvosmerna.isChecked) {
