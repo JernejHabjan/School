@@ -19,11 +19,11 @@ namespace RESTService
         {
 
             User user = new User();
-            /*
+            
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "SELECT * FROM User WHERE googleID=@0";
+                string sql = "SELECT * FROM [User] WHERE [User].googleID=@0";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", GoogleID));
 
@@ -33,28 +33,14 @@ namespace RESTService
                     {
                         user.userID= Convert.ToInt32(reader[0]);
                         user.roleID= Convert.ToInt32(reader[1]);
-                        user.GoogleID = reader.GetString(2);
+                        user.googleID = reader.GetString(2);
                         user.name = reader.GetString(3);
-                        user.email = reader.GetString(4);
-                        user.gender = reader.GetString(5);
-                 
+                        user.email = reader.GetString(4);                 
                     }
                 }
                 con.Close();
                 return user;
-            }*/
-            return new User
-            {
-                userID = 1,
-                roleID =22,
-                GoogleID ="wwewew",
-                name = "wwewew",
-                email = "wwewew",
-                gender = "wwewew"
-            };
-
-
-            // TODO- -------- NEVEN ZAKAJ NE POBERE NČ IZ BAZE.... PROBOV SM TUD INSERTAT V BAZO SAM JE NEKI ČUDN... TUJ KLUČ PROBLEM? --- TODO neda sem zdle
+            }
         }
 
         public List<User> ReturnUsers()
@@ -64,7 +50,7 @@ namespace RESTService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "SELECT * FROM User";
+                string sql = "SELECT * FROM [User]";
                 SqlCommand cmd = new SqlCommand(sql, con);
 
 
@@ -76,10 +62,10 @@ namespace RESTService
                         {
                             userID = Convert.ToInt32(reader[0]),
                             roleID = Convert.ToInt32(reader[1]),
-                            GoogleID = reader.GetString(2),
+                            googleID = reader.GetString(2),
                             name = reader.GetString(3),
-                            email = reader.GetString(4),
-                            gender = reader.GetString(5)
+                            email = reader.GetString(4)
+   
                         });
 
                     }
@@ -96,13 +82,12 @@ namespace RESTService
             {
                 con.Open();
                 string sql =
-                    "INSERT INTO User (roleID, googleID, name, email, gender) VALUES (@0, @1, @2, @3, @4)";
+                    "INSERT INTO [User] (roleID, googleID, name, email) VALUES (@0, @1, @2, @3)";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", user.roleID));
-                cmd.Parameters.Add(new SqlParameter("1", user.GoogleID));
+                cmd.Parameters.Add(new SqlParameter("1", user.googleID));
                 cmd.Parameters.Add(new SqlParameter("2", user.name));
                 cmd.Parameters.Add(new SqlParameter("3", user.email));
-                cmd.Parameters.Add(new SqlParameter("4", user.gender));
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -114,7 +99,7 @@ namespace RESTService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "DELETE FROM User WHERE googleID=@googleID";
+                string sql = "DELETE FROM [User] WHERE googleID=@googleID";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("googleID", googleID));
                 cmd.ExecuteNonQuery();
@@ -127,13 +112,12 @@ namespace RESTService
             using(SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "UPDATE User set roleID=@0 name=@2, email=@3, gender=@4 WHERE googleID=@1";
+                string sql = "UPDATE [User] set roleID=@0 name=@2, email=@3 WHERE [User].googleID=@1";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", user.roleID));
                 cmd.Parameters.Add(new SqlParameter("1", googleID));
                 cmd.Parameters.Add(new SqlParameter("2", user.name));
                 cmd.Parameters.Add(new SqlParameter("3", user.email));
-                cmd.Parameters.Add(new SqlParameter("4", user.gender));
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -142,26 +126,40 @@ namespace RESTService
 
 
 
-
-
-
-
-
-        public void AddPassenger(Passenger passenger) // TODO ------------- WE DONT KNOW WHO ADDED THIS PASSENGER IF WE ADD IT MANUALLY - BUT IF WE ADD IT VIA ORDER WE DO
+        public List<Passenger> ReturnPassengers(string googleID)
         {
+            var retVal = new List<Passenger>();
 
-            
-            
             using (SqlConnection con = new SqlConnection(cs))
             {
-                string sql = "INSERT INTO Passenger (name, surname, gender, age) VALUES (@0, @1, @2, @3)";
+                con.Open();
+                string sql = "SELECT * FROM [Passenger] " +
+                    " JOIN [Order] USING (userID) " +
+                    " JOIN [passengers] USING (orderID) " +
+                    " JOIN [Passenger] USING (paseengerID) " +
+                    " WHERE [User].googleID=@0";
                 SqlCommand cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", passenger.name));
-                cmd.Parameters.Add(new SqlParameter("1", passenger.surname));
-                cmd.Parameters.Add(new SqlParameter("2", passenger.gender));
-                cmd.Parameters.Add(new SqlParameter("3", passenger.age));
-                int passengerID = (int)cmd.ExecuteScalar();
+                cmd.Parameters.Add(new SqlParameter("0", googleID));
 
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        retVal.Add(new Passenger
+                        {
+                            passengerID = Convert.ToInt32(reader[0]),
+                            name = reader.GetString(1),
+                            surname = reader.GetString(2),
+                            gender = reader.GetString(3),
+                            age = Convert.ToInt32(reader[4])
+
+                        });
+
+                    }
+                }
+                con.Close();
+
+                return retVal;
             }
         }
     }

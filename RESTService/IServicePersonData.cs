@@ -35,13 +35,9 @@ namespace RESTService
 
 
 
-
-
-
         [OperationContract]
-        [WebInvoke(UriTemplate = "Passenger", ResponseFormat = WebMessageFormat.Json)]
-        void AddPassenger(Passenger passenger);
-
+        [WebGet(UriTemplate = "Passengers/{googleID}", ResponseFormat = WebMessageFormat.Json)]
+        List<Passenger> ReturnPassengers(string googleID);
 
 
     }
@@ -55,13 +51,11 @@ namespace RESTService
         [DataMember]
         public int roleID { get; set; }
         [DataMember]
-        public string GoogleID { get; set; }
+        public string googleID { get; set; }
         [DataMember]
         public string name { get; set; }
         [DataMember]
         public string email { get; set; }
-        [DataMember]
-        public string gender { get; set; }
 
     }
 
