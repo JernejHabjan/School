@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_placilo.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -30,12 +31,10 @@ class Placilo : Fragment() {
         priimek_placnika = view.findViewById(R.id.priimek_placnika) as EditText
         ime_placnika = view.findViewById(R.id.ime_placnika) as EditText
 
-
         kartica_input.visibility = View.GONE
         priimek_placnika.visibility = View.GONE
         ime_placnika.visibility = View.GONE
 
-        //recieveUserData(this.getArguments());
 
         val credit_card_switch = view.findViewById(R.id.kreditna_kartica_switch) as Switch;
         credit_card_switch!!.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -52,16 +51,15 @@ class Placilo : Fragment() {
 
         val finish_payment = view.findViewById(R.id.zakljuci_placilo) as Button;
         finish_payment.setOnClickListener { v -> buttonClickedInfo(v) }
-        recieveUser_NakupData(this.arguments)
+
+        recieveUser_NakupData(view, this.arguments)
 
         return view
     }
 
     private fun calculatePrice() {
-
-
         val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
-        var karta_price = 0
+        var karta_price = 0;
         var i = 0
         while (i < userData!!.size) {
             val name = userData!![i]
@@ -110,26 +108,19 @@ class Placilo : Fragment() {
             }
 
 
-            when (destinacija) {
-                "Gabrška gora" -> karta_price += (50 * factor).toInt()
-                "Žiri" -> karta_price += (55 * factor).toInt()
-                "Gorenja vas" -> karta_price += (101 * factor).toInt()
-                "Log nad Škofjo Loko" -> karta_price += (14 * factor).toInt()
-                "Žetina" -> karta_price += (22 * factor).toInt()
-                "Brode" -> karta_price += (66 * factor).toInt()
-                "Zminec" -> karta_price += (52 * factor).toInt()
-                "Rovte" -> karta_price += (80 * factor).toInt()
-                "Dolenčice" -> karta_price += (255 * factor).toInt()
-                "Javorje" -> karta_price += (12 * factor).toInt()
-                else -> {
-                    Snackbar.make(placilo_relative!!, "Destinacija ni podprta", Snackbar.LENGTH_LONG).show()
-                    karta_price = 0
-                    cena_display!!.text = Integer.toString(karta_price)
-                    return
-                }
-            }
+           //Generate random discount
+            val discountInt = Random().nextInt()
+            val discount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 15.0f) / 100.0f;
+
+            //Generate random price
+            val maxPrice = 400;
+            var randomPrice = (Random().nextInt() % maxPrice).toFloat();
+            randomPrice -= randomPrice * discount;
+
+            karta_price += (randomPrice * factor).toInt()
 
 
+            //Has return flight
             if (nakupData!!.size > 4) {
                 val datum_prihoda = nakupData!![4]
                 val razred_prihoda = nakupData!![5]
@@ -148,32 +139,14 @@ class Placilo : Fragment() {
                     "Ekonomski" -> factor *= 1.2f
                 }
 
-
-                when (destinacija) {
-                    "Gabrška gora" -> karta_price += (50 * factor).toInt()
-                    "Žiri" -> karta_price += (55 * factor).toInt()
-                    "Gorenja vas" -> karta_price += (101 * factor).toInt()
-                    "Log nad Škofjo Loko" -> karta_price += (14 * factor).toInt()
-                    "Žetina" -> karta_price += (22 * factor).toInt()
-                    "Brode" -> karta_price += (66 * factor).toInt()
-                    "Zminec" -> karta_price += (52 * factor).toInt()
-                    "Rovte" -> karta_price += (80 * factor).toInt()
-                    "Dolenčice" -> karta_price += (255 * factor).toInt()
-                    "Javorje" -> karta_price += (12 * factor).toInt()
-                    else -> {
-                        Snackbar.make(placilo_relative!!, "Destinacija ni podprta", Snackbar.LENGTH_LONG).show()
-                        karta_price = 0
-                        cena_display!!.text = Integer.toString(karta_price)
-                        return
-                    }
-                }
+                karta_price += (randomPrice * factor).toInt()
             }
             i += 4
         }
         cena_display!!.text = Integer.toString(karta_price)
     }
 
-    private fun recieveUser_NakupData(bundle: Bundle?) {
+    private fun recieveUser_NakupData(view: View, bundle: Bundle?) {
         if (bundle != null) {
             nakupData = bundle.getStringArrayList("nakupData")
             userData = bundle.getStringArrayList("userData")
@@ -204,7 +177,11 @@ class Placilo : Fragment() {
                 }
 
                 val numUsers = userData!!.size / 4
-                st_potnikov_label!!.text = Integer.toString(numUsers)
+                println("NUM USERS:" + numUsers)
+
+                val numPassengers = view.findViewById(R.id.st_potnikov_label) as TextView;
+                numPassengers!!.text = Integer.toString(numUsers)
+
                 calculatePrice()
             }
         }
