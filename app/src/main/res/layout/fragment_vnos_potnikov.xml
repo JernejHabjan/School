@@ -114,16 +114,17 @@
             android:layout_marginBottom="52dp"
             android:text="Dodaj potnika" />
 
-    </RelativeLayout>
+        <EditText
+            android:id="@+id/vnos_datum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="117dp"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="date" />
 
-    <EditText
-        android:id="@+id/vnos_datum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="117dp"
-        android:ems="10"
-        android:inputType="date" />
+    </RelativeLayout>
 
 </RelativeLayout>

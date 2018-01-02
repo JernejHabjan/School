@@ -1,6 +1,7 @@
 package si.roglan.EMP_Seminarska
 
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -22,6 +23,11 @@ import kotlinx.android.synthetic.main.fragment_nakup.*
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.DatePicker
+
+
 
 
 
@@ -84,6 +90,16 @@ class Nakup : Fragment() {
 
         recieveUserData(this.arguments)
 
+        //Set initial departure and arrival dates
+        val c = Calendar.getInstance();
+        val df = SimpleDateFormat("dd.MM.yyyy");
+
+        var datum_odhoda = view.findViewById(R.id.datum_odhoda) as EditText
+        datum_odhoda.setText(df.format(c.getTime()));
+
+        c.add(Calendar.DATE, 1);
+        datum_prihoda.setText(df.format(c.getTime()));
+
 
         val doloci_potnike_button = view.findViewById(R.id.doloci_potnike_button) as Button
         doloci_potnike_button.setOnClickListener { v -> dolociPotnikeButtonClicked(v) }
@@ -94,14 +110,97 @@ class Nakup : Fragment() {
                 razred_prihoda.visibility = View.VISIBLE
                 datum_prihoda_view.visibility = View.VISIBLE
                 razred_prihoda_view.visibility = View.VISIBLE
-            } else {
 
+                //Set valid return date
+                var datumOdhoda = view.findViewById(R.id.datum_odhoda) as EditText;
+                val dateArray = datumOdhoda!!.text.toString().split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+
+                val c = Calendar.getInstance()
+                c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[0]))
+                c.set(Calendar.MONTH, Integer.parseInt(dateArray[1]) - 1)
+                c.set(Calendar.YEAR, Integer.parseInt(dateArray[2]))
+                c.add(Calendar.DATE, 1)
+                datum_prihoda!!.setText(SimpleDateFormat("dd.MM.yyyy").format(c.time))
+
+            } else {
                 datum_prihoda.visibility = View.GONE
                 razred_prihoda.visibility = View.GONE
                 datum_prihoda_view.visibility = View.GONE
                 razred_prihoda_view.visibility = View.GONE
             }
         }
+
+
+        datum_odhoda!!.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v : View?){
+                val dateArray = datum_odhoda.text.toString().split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val day = Integer.parseInt(dateArray[0])
+                val month = Integer.parseInt(dateArray[1])
+                val year = Integer.parseInt(dateArray[2])
+
+                val dpd = DatePickerDialog(context,
+                        DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                            datum_odhoda!!.setText(
+                                    String.format("%02d", dayOfMonth) + "." +
+                                            String.format("%02d", monthOfYear + 1) + "." +
+                                            String.format("%02d", year)
+                            )
+
+                            if (dvosmerna.isChecked) {
+                                val dateArray = datum_prihoda!!.text.toString().split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                                val returnDay = Integer.parseInt(dateArray[0])
+                                val returnMonth = Integer.parseInt(dateArray[1])
+                                val returnYear = Integer.parseInt(dateArray[2])
+
+                                if (year > returnYear || monthOfYear + 1 > returnMonth || dayOfMonth >= returnDay) {
+                                    val c = Calendar.getInstance()
+                                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                                    c.set(Calendar.MONTH, monthOfYear)
+                                    c.set(Calendar.YEAR, year)
+                                    c.add(Calendar.DATE, 1)
+                                    datum_prihoda!!.setText(SimpleDateFormat("dd.MM.yyyy").format(c.time))
+                                }
+                            }
+                        }, year, month - 1, day)
+
+                //Limit date to today
+                val c = Calendar.getInstance()
+                dpd.datePicker.minDate = c.time.time
+                dpd.show()
+            }
+        })
+
+
+        datum_prihoda!!.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                val dateArray = datum_prihoda.text.toString().split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val day = Integer.parseInt(dateArray[0])
+                val month = Integer.parseInt(dateArray[1])
+                val year = Integer.parseInt(dateArray[2])
+
+                val dpd = DatePickerDialog(context,
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                        val fday = String.format("%02d", dayOfMonth)
+                        val fmonth = String.format("%02d", monthOfYear + 1)
+                        val fyear = String.format("%02d", year)
+                        datum_prihoda.setText("$fday.$fmonth.$fyear")
+                    }, year, month - 1, day)
+
+
+                val ddateArray = datum_prihoda.text.toString().split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val limitDay = Integer.parseInt(ddateArray[0]);
+                val limitMonth = Integer.parseInt(ddateArray[1]);
+                val limitYear = Integer.parseInt(ddateArray[2]);
+
+                val c = Calendar.getInstance();
+                c.set(Calendar.DAY_OF_MONTH, limitDay);
+                c.set(Calendar.MONTH, limitMonth - 1);
+                c.set(Calendar.YEAR, limitYear);
+                dpd.getDatePicker().setMinDate(c.getTime().getTime());
+                dpd.show();
+            }
+        })
+
 
         setupAutocompleteFragments(view)
 
