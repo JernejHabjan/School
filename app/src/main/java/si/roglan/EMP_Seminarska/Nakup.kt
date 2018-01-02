@@ -102,7 +102,8 @@ class Nakup : Fragment() {
                 razred_prihoda_view.visibility = View.GONE
             }
         }
-        setupAutocompleteFramment(view)
+
+        setupAutocompleteFragments(view)
 
         return view
     }
@@ -117,7 +118,32 @@ class Nakup : Fragment() {
 
 
 
-    private fun setupAutocompleteFramment(view: View) {
+    private fun setAutocompleteFragmentOnSelectedListener(fragment: SupportPlaceAutocompleteFragment){
+        fragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            val TAG = "bla"
+
+            override fun onPlaceSelected(place: Place) {
+                // TODO: Get info about the selected place. - THIS IS WHERE U INSERT TEXT IN TEXTVIEW
+                Log.i(TAG, "Place: " + place.name)
+
+                val placeDetailsStr = (place.name.toString() + "\n"
+                        + place.id + "\n"
+                        + place.latLng.toString() + "\n"
+                        + place.address + "\n"
+                        + place.attributions)
+                //paste_location_view.text = placeDetailsStr
+
+                fragment.setText(placeDetailsStr)
+            }
+
+            override fun onError(status: Status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status)
+            }
+        })
+    }
+
+    private fun setupAutocompleteFragments(view: View) {
 
 
         // Construct a GeoDataClient.
@@ -135,40 +161,16 @@ class Nakup : Fragment() {
         else
             mGoogleApiClient!!.connect()
 
-        val autocompleteFragment = SupportPlaceAutocompleteFragment()
-        val fm = fragmentManager
-        val ft = fm.beginTransaction()
-        ft.replace(R.id.fragment_content, autocompleteFragment)
+        val autocompleteFragmentOdhod = SupportPlaceAutocompleteFragment()
+        val autocompleteFragmentPrihod = SupportPlaceAutocompleteFragment()
+
+        setAutocompleteFragmentOnSelectedListener(autocompleteFragmentOdhod)
+        setAutocompleteFragmentOnSelectedListener(autocompleteFragmentPrihod)
+
+        val ft = fragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_odhod, autocompleteFragmentOdhod)
+        ft.replace(R.id.fragment_prihod, autocompleteFragmentPrihod)
         ft.commit()
-
-
-
-        // Autocomplete fragment - fragment found on Nakup fragment and it's used for quickly selecting places
-        //val autocompleteFragment = activity.fragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as PlaceAutocompleteFragment
-
-        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            val TAG = "bla"
-
-            override fun onPlaceSelected(place: Place) {
-                // TODO: Get info about the selected place. - THIS IS WHERE U INSERT TEXT IN TEXTVIEW
-                Log.i(TAG, "Place: " + place.name)
-
-                val placeDetailsStr = (place.name.toString() + "\n"
-                        + place.id + "\n"
-                        + place.latLng.toString() + "\n"
-                        + place.address + "\n"
-                        + place.attributions)
-                //paste_location_view.text = placeDetailsStr
-
-                autocompleteFragment.setText(placeDetailsStr)
-
-            }
-
-            override fun onError(status: Status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status)
-            }
-        })
     }
 
     private fun checkFields(): Boolean {
