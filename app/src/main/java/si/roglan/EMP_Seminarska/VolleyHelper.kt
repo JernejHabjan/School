@@ -17,33 +17,27 @@ class VolleyHelper {
 
 
     fun AddUserIfNotInDatabase(activity: Activity, account: GoogleSignInAccount) {
-
         val requestQueue = Volley.newRequestQueue(activity)
-
 
         // VOLLEY GET PERSON
         val service = "/ServicePersonData.svc"
         val operationContract = "/User"
         val personID = "/" + account.id.toString()
 
-
-
-        val strReq = JsonObjectRequest(Request.Method.GET, SERVER_URL + service + operationContract + personID,
+        val requestURL = SERVER_URL + service + operationContract + personID;
+        val strReq = JsonObjectRequest(Request.Method.GET, requestURL,
                 Response.Listener { response ->
                     // Check the length of our response (to see if the user has any repos)
                     if (response != null) {
                         try {
                             if(response.getString("googleID") != "null"){
-
-                                Log.e("Volley", response.getString("googleID"))
-
-                                Log.e("Volley", "CONTAINS IN DATABASE")
+                                val googleID = response.getString("googleID");
+                                Log.e("Volley", "CONTAINS IN DATABASE -> ID: " + googleID)
                             }
                             else{
-                                Log.e("Volley", "DOESNT CONTAIN IN DATABASE")
-
-
-                                    VolleyHelper().addUser(activity, account)
+                                Log.e("Volley", "USER NOT FOUND IN DATABASE: Added '" +
+                                        account.displayName + "'");
+                                this.addUser(activity, account)
                             }
                         } catch (e: JSONException) {
                             // If there is an error then output this to the logs.
@@ -62,7 +56,6 @@ class VolleyHelper {
         )
 
         requestQueue.add(strReq)
-
     }
 
 
@@ -82,7 +75,6 @@ class VolleyHelper {
     }
 
 
-
     fun addUser(activity: Activity, account: GoogleSignInAccount) {
 
         val params = JSONObject()
@@ -100,6 +92,5 @@ class VolleyHelper {
         requestQueue.add(writeRequest(params, service, operationContract))
         Log.e("Volley", "Added User")
     }
-
 
 }

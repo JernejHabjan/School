@@ -163,8 +163,6 @@ class SignInFragment : Fragment(), View.OnClickListener {
         // writes account to database if needed
 
         VolleyHelper().AddUserIfNotInDatabase(activity, account!!)
-
-
     }
 
     override fun onClick(v: View) {

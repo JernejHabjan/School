@@ -7,7 +7,9 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.Switch
 import kotlinx.android.synthetic.main.fragment_placilo.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -35,7 +37,8 @@ class Placilo : Fragment() {
 
         //recieveUserData(this.getArguments());
 
-        kreditna_kartica_switch!!.setOnCheckedChangeListener { buttonView, isChecked ->
+        val credit_card_switch = view.findViewById(R.id.kreditna_kartica_switch) as Switch;
+        credit_card_switch!!.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 kartica_input.visibility = View.VISIBLE
                 priimek_placnika.visibility = View.VISIBLE
@@ -47,7 +50,8 @@ class Placilo : Fragment() {
             }
         }
 
-        zakljuci_placilo.setOnClickListener { v -> buttonClickedInfo(v) }
+        val finish_payment = view.findViewById(R.id.zakljuci_placilo) as Button;
+        finish_payment.setOnClickListener { v -> buttonClickedInfo(v) }
         recieveUser_NakupData(this.arguments)
 
         return view
