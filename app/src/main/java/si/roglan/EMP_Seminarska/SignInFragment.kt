@@ -162,10 +162,8 @@ class SignInFragment : Fragment(), View.OnClickListener {
     private fun managageDatabaseAccount(account: GoogleSignInAccount?) {
         // writes account to database if needed
 
-        val contains = VolleyHelper().doesDatabaseContainGID(activity, account!!.id.toString())
-        if (!contains){
-            VolleyHelper().addUser(activity, account)
-        }
+        VolleyHelper().AddUserIfNotInDatabase(activity, account!!)
+
 
     }
 

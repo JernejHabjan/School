@@ -208,7 +208,7 @@ go
 /* Table: Flight                                                */
 /*==============================================================*/
 create table Flight (
-   flightID             int                  not null,
+   flightID             int                  not null identity,
    locationID           int                  not null,
    planeID              int                  not null,
    Loc_locationID       int                  not null,
@@ -252,7 +252,7 @@ go
 /* Table: Location                                              */
 /*==============================================================*/
 create table Location (
-   locationID           int                  not null,
+   locationID           int                  not null identity,
    name                 varchar(150)         not null,
    constraint PK_LOCATION primary key (locationID)
 )
@@ -262,7 +262,7 @@ go
 /* Table: "Order"                                               */
 /*==============================================================*/
 create table "Order" (
-   orderID              int                  not null,
+   orderID              int                  not null identity,
    userID               int                  not null,
    flightID             int                  not null,
    Fli_flightID         int                  null,
@@ -304,7 +304,7 @@ go
 /* Table: Passenger                                             */
 /*==============================================================*/
 create table Passenger (
-   passengerID          int                  not null,
+   passengerID          int                  not null identity,
    name                 varchar(150)         null,
    surname              varchar(50)          null,
    gender               varchar(10)          null,
@@ -317,7 +317,7 @@ go
 /* Table: Plane                                                 */
 /*==============================================================*/
 create table Plane (
-   planeID              int                  not null,
+   planeID              int                  not null identity,
    name                 varchar(150)         not null,
    seats                int                  not null,
    company              varchar(50)          not null,
@@ -330,7 +330,7 @@ go
 /* Table: Role                                                  */
 /*==============================================================*/
 create table Role (
-   roleID               int                  not null,
+   roleID               int                  not null identity,
    description          varchar(30)          null,
    constraint PK_ROLE primary key (roleID)
 )
@@ -340,12 +340,11 @@ go
 /* Table: "User"                                                */
 /*==============================================================*/
 create table "User" (
-   userID               int                  not null,
+   userID               int                  not null identity,
    roleID               int                  not null,
    googleID             varchar(30)          not null,
    name                 varchar(150)         not null,
    email                varchar(255)         not null,
-   gender               varchar(10)          null,
    constraint PK_USER primary key (userID)
 )
 go

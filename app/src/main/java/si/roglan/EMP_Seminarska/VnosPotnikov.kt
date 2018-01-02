@@ -144,18 +144,22 @@ class VnosPotnikov : Fragment() {
 
 
         // write to database
+
+        /*
+        TODO ---------- THIS CANNOT BE WRITTEN THIS WAY BUT PASSENGERS CAN BE WRITTEN IN DATABASE WITH
+
         val service = "/ServicePersonData.svc"
         val operationContract = "/WritePassenger"
 
 
-        val params = HashMap<String, String>()
+        val params = JSONObject()
         params.put("name", ime_field!!.text.toString())
         params.put("surname", priimek_field!!.text.toString())
         params.put("gender", if (rad_m!!.isChecked) "Moški" else "Ženska")
         params.put("age", date_field!!.text.toString())
 
         VolleyHelper().writeRequest(params, service, operationContract)
-
+        */
     }
 
 

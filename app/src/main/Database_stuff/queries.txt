@@ -1,0 +1,9 @@
+
+
+INSERT INTO [Role] (description) VALUES('user');
+INSERT INTO [Role] (description) VALUES('admin');
+
+
+INSERT INTO [User] (roleID, googleID, name, email) VALUES (1, '5432t532g52f432g432', 'Jernej Habjan', 'jernej.habjan96@gmail.com');
+
+

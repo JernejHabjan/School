@@ -6,17 +6,17 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import org.json.JSONException
 import org.json.JSONObject
 
+
 class VolleyHelper {
     private var SERVER_URL = "http://asistentslivko.azurewebsites.net"
 
 
-    fun doesDatabaseContainGID(activity: Activity, GID: String): Boolean {
+    fun AddUserIfNotInDatabase(activity: Activity, account: GoogleSignInAccount) {
 
         val requestQueue = Volley.newRequestQueue(activity)
 
@@ -24,17 +24,27 @@ class VolleyHelper {
         // VOLLEY GET PERSON
         val service = "/ServicePersonData.svc"
         val operationContract = "/User"
-        val personID = "/" + GID
+        val personID = "/" + account.id.toString()
 
-        var contains_local = false
 
-        val strReq = StringRequest(Request.Method.GET, SERVER_URL + service + operationContract + personID,
+
+        val strReq = JsonObjectRequest(Request.Method.GET, SERVER_URL + service + operationContract + personID,
                 Response.Listener { response ->
                     // Check the length of our response (to see if the user has any repos)
                     if (response != null) {
                         try {
-                            contains_local = true
+                            if(response.getString("googleID") != "null"){
 
+                                Log.e("Volley", response.getString("googleID"))
+
+                                Log.e("Volley", "CONTAINS IN DATABASE")
+                            }
+                            else{
+                                Log.e("Volley", "DOESNT CONTAIN IN DATABASE")
+
+
+                                    VolleyHelper().addUser(activity, account)
+                            }
                         } catch (e: JSONException) {
                             // If there is an error then output this to the logs.
                             Log.e("Volley", "Invalid JSON Object.")
@@ -51,31 +61,36 @@ class VolleyHelper {
                 }
         )
 
-
         requestQueue.add(strReq)
-        return contains_local
+
     }
 
 
-    fun writeRequest(params: HashMap<String, String>, service: String, operationContract: String): JsonObjectRequest {
+    fun writeRequest(params: JSONObject, service: String, operationContract: String): JsonObjectRequest {
 
-        val req = JsonObjectRequest(Request.Method.POST, SERVER_URL + service + operationContract, JSONObject(params), // not tested but this should send json object
+        val req = JsonObjectRequest(Request.Method.POST, SERVER_URL + service + operationContract, params, // not tested but this should send json object
                 Response.Listener<JSONObject> { response ->
                     try {
                         VolleyLog.v("Response:%n %s", response.toString(4))
+                        Log.d("VOLLEY RESPONSE", response.toString())
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener { error -> VolleyLog.e("Error: ", error.message) })
         return req
+
     }
 
+
+
     fun addUser(activity: Activity, account: GoogleSignInAccount) {
-        val params = HashMap<String, String>()
-        params.put("GoogleID", account.id.toString())
+
+        val params = JSONObject()
+        params.put("roleID", "1")
+        params.put("googleID", account.id.toString())
         params.put("name", account.displayName.toString())
         params.put("email", account.email.toString())
-        params.put("email", account.email.toString())
+
 
         val service = "/ServicePersonData.svc"
         val operationContract = "/User"
@@ -83,6 +98,7 @@ class VolleyHelper {
 
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(writeRequest(params, service, operationContract))
+        Log.e("Volley", "Added User")
     }
 
 
