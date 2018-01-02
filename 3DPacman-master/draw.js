@@ -24,17 +24,19 @@ function drawScene() {
   // and 100 units away from the camera.
   mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
-  var specularHighlights = document.getElementById("specular").checked;
-  gl.uniform1i(shaderProgram.showSpecularHighlightsUniform, specularHighlights);
+  // var specularHighlights = document.getElementById("specular").checked;
+  gl.uniform1i(shaderProgram.showSpecularHighlightsUniform, true);
 
   // Ligthing
-  var lighting = document.getElementById("lighting").checked;
+  // var lighting = document.getElementById("lighting").checked;
+
+
 
   // set uniform to the value of the checkbox.
-  gl.uniform1i(shaderProgram.useLightingUniform, lighting);
+  gl.uniform1i(shaderProgram.useLightingUniform, true);
 
   // set uniforms for lights as defined in the document
-  if (lighting) {
+  // if (lighting) {
     gl.uniform3f(
       shaderProgram.ambientColorUniform,
       parseFloat(document.getElementById("ambientR").value),
@@ -44,32 +46,42 @@ function drawScene() {
 
     gl.uniform3f(
       shaderProgram.pointLightingLocationUniform,
-      parseFloat(document.getElementById("lightPositionX").value),
-      parseFloat(document.getElementById("lightPositionY").value),
-      parseFloat(document.getElementById("lightPositionZ").value)
+      -0.3,
+      4.0,
+      -20.0
+      // parseFloat(document.getElementById("lightPositionX").value),
+      // parseFloat(document.getElementById("lightPositionY").value),
+      // parseFloat(document.getElementById("lightPositionZ").value)
     );
 
     gl.uniform3f(
       shaderProgram.pointLightingSpecularColorUniform,
-      parseFloat(document.getElementById("specularR").value),
-      parseFloat(document.getElementById("specularG").value),
-      parseFloat(document.getElementById("specularB").value)
+      0.8,
+      0.8,
+      0.8
+      // parseFloat(document.getElementById("specularR").value),
+      // parseFloat(document.getElementById("specularG").value),
+      // parseFloat(document.getElementById("specularB").value)
     );
 
     gl.uniform3f(
       shaderProgram.pointLightingDiffuseColorUniform,
-      parseFloat(document.getElementById("diffuseR").value),
-      parseFloat(document.getElementById("diffuseG").value),
-      parseFloat(document.getElementById("diffuseB").value)
+      0.67,
+      0.43,
+      0.66
+      // parseFloat(document.getElementById("diffuseR").value),
+      // parseFloat(document.getElementById("diffuseG").value),
+      // parseFloat(document.getElementById("diffuseB").value)
     );
-  }
+  // }
 
   // Textures
-  var texture = document.getElementById("texture").value;
+  // var texture = document.getElementById("texture").value;
 
   // set uniform to the value of the checkbox.
-  gl.uniform1i(shaderProgram.useTexturesUniform, texture != "none");
+  gl.uniform1i(shaderProgram.useTexturesUniform, true);
 
+  
   
   // Set the drawing position to the "identity" point, which is
   // the center of the scene.
@@ -89,11 +101,7 @@ function drawScene() {
   
   // Activate textures
   gl.activeTexture(gl.TEXTURE0);
-  if (texture == "earth") {
-    gl.bindTexture(gl.TEXTURE_2D, earthTexture);
-  } else if (texture == "galvanized") {
-    gl.bindTexture(gl.TEXTURE_2D, metalTexture);
-  }
+  gl.bindTexture(gl.TEXTURE_2D, metalTexture);
   gl.uniform1i(shaderProgram.samplerUniform, 0);
 
   // Activate shininess
@@ -127,11 +135,15 @@ function drawScene() {
   }
 
 
+  // ce je zmankalo casa ali pobrali vse kovance, konec igre
+  if (end) {
+    document.getElementById("loadingtext").textContent = "Game Over, you have collected"+ " " + coinCounter + " " + "coins. Congratulations.";
+  }
+
+
 }
 
 function drawCoin() {
-  // TODO: izrisi kovance, iz blenderja moras pravilno exportati
-
   // mvPushMatrix();
   // mat4.rotate(mvMatrix, degToRad(rotationCoin), [0, 1, 0]);
 
@@ -177,8 +189,13 @@ function animate() {
 
     // rotationCoin += (75 * elapsed) / 1000.0;
 
+     // ce so pobrani vsi kovanci, ali pa je zmankalo casa, je konec
+     if (end) {
+      timeNode = 0;
+      return;
+    }
 
-    // TODO: NAREDI, DA SE VSI KOVANCI VRTIJO OKOLI ENE OSI
+
     for (var i in coins) {
       // rotate the cube for a small amount
       coins[i].animate(elapsed);
@@ -190,7 +207,6 @@ function animate() {
     var xPositionTemp = xPosition - Math.sin(degToRad(yaw)) * speed * elapsed * 5;
     var zPositionTemp = zPosition - Math.cos(degToRad(yaw)) * speed * elapsed * 5;
 
-    // console.log(trianglePositions);
 
     // pogleda, ce bi sel iz tal -> v zid
     if (checkCollision(xPositionTemp, zPositionTemp)) {
@@ -201,11 +217,19 @@ function animate() {
       for (var i = 0; i < coins.length; i++) {
         var l = Math.sqrt(Math.pow((xPositionTemp - coins[i].startCoordX), 2) + Math.pow((zPositionTemp - coins[i].startCoordZ), 2));
         if (l < 0.4) {
-          console.log("stevilo kovancev: ", coinCounter);
+          // console.log("stevilo kovancev: ", coinCounter);
           coins.splice(i, 1);
           // kovanec je pobran, na novo zrisemo seznam kovancev, z enim manj
           coinCounter += 1;
+          counterNode.nodeValue = coinCounter;
           // coinSound play
+
+          // ce so vsi kovanci pobrani, se igra konca
+          
+          if (coinCounter == coins.length) {
+            end = true;
+          }
+
           audio.play();
           for (var i in coins) {
             coins[i].draw();
@@ -229,20 +253,5 @@ function animate() {
   lastTime = timeNow;
 }
 
-// collision detection part
-// gres cez vse trikotnike, preveris ploscine treh trikotnikov znotraj glavnega
 
-// ploscina trikotnika
-function surfaceTriangle(x1, z1, x2, z2, x3, z3) {
-  var a = Math.sqrt(Math.pow((x3 - x2), 2) + Math.pow((z3 - z2), 2));
-  var b = Math.sqrt(Math.pow((x3 - x1), 2) + Math.pow((z3 - z1), 2));
-  var c = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((z2 - z1), 2));
-  // console.log(a, b, c);
-
-  var s = (a + b + c) / 2;
-
-  var surface = Math.sqrt(s * (s - a) * (s - b) * (s - c));
-
-  return surface;
-}
 

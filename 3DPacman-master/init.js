@@ -32,7 +32,31 @@ function initGL(canvas) {
 function start() {
   canvas = document.getElementById("glcanvas");
 
+  // time and counter
+
+  // look up the elements we want to affect
+  var timeElement = document.getElementById("time");
+  var counterElement = document.getElementById("counter");
+
+
+  // Create text nodes to save some time for the browser.
+  timeNode = document.createTextNode("");
+  counterNode = document.createTextNode("");
+
+
+  // Add those text nodes where they need to go
+  timeElement.appendChild(timeNode);
+  counterElement.appendChild(counterNode);
+  //
+
+
   gl = initGL(canvas);      // Initialize the GL context
+  
+  // timer
+  var time = 60,
+      display = timeNode;
+      startTimer(time, display);
+
   if (gl) {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);                      // Set clear color to black, fully opaque
     gl.clearDepth(1.0);                                     // Clear everything
@@ -52,15 +76,15 @@ function start() {
     loadTeapot();
     
     // MUSIC in the background
-    var audio = new Audio('./assets/magnifico.mp3');
-    audio.play();
-    
+    // var audio = new Audio('./assets/magnifico.mp3');
+    // audio.play();
 	
 	
 	// Bind keyboard handling functions to document handlers
     document.onkeydown = handleKeyDown;
     document.onkeyup = handleKeyUp;
-    
+  
+
     // Set up to draw the scene periodically.
     setInterval(function() {
       if (texturesLoaded) { // only draw scene and animate when textures are loaded.
@@ -69,7 +93,34 @@ function start() {
         drawScene();
       }
     }, 15);
-  
+
 
   }
+}
+
+// timer
+
+function startTimer(duration, display) {
+  var timer = duration, minutes, seconds;
+  setInterval(function () {
+      // minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
+
+      seconds =  seconds;
+
+      if (!end) {
+        display.nodeValue = seconds;
+      } else {
+        display.nodeValue = 0;
+      }
+      
+
+      // if (timer == 0) {
+      //   console.log(timer);
+      // }
+      if (--timer < 0) {
+          // timer = duration;
+          end = true;
+      }
+  }, 1000);
 }

@@ -20,14 +20,14 @@ function initTextures() {
   metalTexture.image.onload = function () {
     handleTextureLoaded(metalTexture)
   }
-  metalTexture.image.src = "./assets/metal.jpg";
+  metalTexture.image.src = "./assets/blueWall.png";
 
   goldTexture = gl.createTexture();
   goldTexture.image = new Image();
   goldTexture.image.onload = function () {
     handleTextureLoaded(goldTexture)
   }
-  goldTexture.image.src = "./assets/gold.jpg";
+  goldTexture.image.src = "./assets/gold3.jpg";
 }
 
 function handleTextureLoaded(texture) {

@@ -54,7 +54,6 @@ function loadTeapot() {
   request.send();
 }
 
-// TODO: pravilno izrisi kovance
 
 // Handle loaded Coins
 //
@@ -106,7 +105,6 @@ function Coin(startCoordinatesX, startCoordinatesZ) {
 Coin.prototype.draw = function() {
   mvPushMatrix();
 
-
   // Move to the star's position
   // mat4.rotate(mvMatrix, degToRad(this.angle), [0.0, 0.0, 1.0]);
   mat4.translate(mvMatrix, [this.startCoordX, 0.0, this.startCoordZ]);
@@ -135,6 +133,7 @@ function initCoins() {
   var arr1 = [];
   var arr2 = [];
 
+  // pozicije kovancev
   arr1.push([0, 0]);
   arr1.push([0, 4]);
   arr1.push([0, 12]);
@@ -176,7 +175,8 @@ function initCoins() {
     if (z != 0) {
       arr2.push([x, -z]);  
     }
-    
+  
+
   }
   // console.log(arr1);
   // console.log(arr2);
@@ -185,15 +185,12 @@ function initCoins() {
     var c = arr2[i];
     coins.push(new Coin(c[0], c[1]));
   }
+  console.log("all coins: ", coins.length);
 
   // console.log(coins.length);
 }
 
-// TODO: gledas koordinate kovancev zacetne, in ce si dovol blizu ga izbrises in na novo
-// izrises
 
-
-// TODO: vec coinov daj v mapo, potem pa da jih poberas!!!
 
 function loadCoins() {
   var request = new XMLHttpRequest();
@@ -241,6 +238,21 @@ function getPositions(floorData) {
 }
 
 // detekcija kolizij
+// gres cez vse trikotnike, preveris ploscine treh trikotnikov znotraj glavnega
+
+// ploscina trikotnika
+function surfaceTriangle(x1, z1, x2, z2, x3, z3) {
+  var a = Math.sqrt(Math.pow((x3 - x2), 2) + Math.pow((z3 - z2), 2));
+  var b = Math.sqrt(Math.pow((x3 - x1), 2) + Math.pow((z3 - z1), 2));
+  var c = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((z2 - z1), 2));
+  // console.log(a, b, c);
+
+  var s = (a + b + c) / 2;
+
+  var surface = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+
+  return surface;
+}
 
 function checkCollision(xPosition, zPosition) {
   var x1;
@@ -303,4 +315,3 @@ function loadFloor() {
   }
   request.send();
 }
-

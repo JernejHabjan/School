@@ -50,6 +50,11 @@ var coins = [];
 var coinCounter = 0;
 var rotationCoin = 0;
 
+// endGame
+
+var end = false;
+
+
 // Variables for storing current rotation of cube
 var tilt = 90;
 var spin = 1.5;
@@ -57,6 +62,12 @@ var spin = 1.5;
 // helper variables for animation
 
 var effectiveFPMS = 60 / 1000;
+
+// time
+
+var counterNode;
+var timeNode;
+var then = 0;
 
 // Keyboard handling helper variable for reading the status of keys
 var currentlyPressedKeys = {};
