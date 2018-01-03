@@ -207,12 +207,13 @@ class MainActivity : AppCompatActivity(),
         setPotnikiFragment()
     }
 
-    override fun finalizePurchase() {
+    override fun finalizePurchase(discount: Float) {
         val bundle = Bundle()
         bundle.putString("GID", m_GID)
         setContainerFragment(TravelsFragment(), "Potovanja", bundle, "1")
 
-        VolleyHelper().addTravel(this, nakupData, userData);
+        //TODO send to db
+        //VolleyHelper().addTravel(this, nakupData, userData);
 
         nakupData.clear();
         userData.clear();

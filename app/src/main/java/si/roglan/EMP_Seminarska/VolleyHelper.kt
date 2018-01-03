@@ -95,7 +95,44 @@ class VolleyHelper {
         Log.e("Volley", "Added User")
     }
 
-    fun addTravel(activity: Activity, nakupData: ArrayList<String>, passengerData: ArrayList<String>){
+
+    fun addPassengers(activity: Activity, passengerData: ArrayList<String>){
+        Log.i("PASSENGERS", "NUM_PASSENGERS: " + passengerData.size)
+
+        val params = JSONObject()
+        params.put("roleID", passengerData)
+
+        val service = "/ServiceTravelData.svc"
+        val operationContract = "/Passengers"
+        val flightID = "/" + "1"
+
+        val requestURL = SERVER_URL + service + operationContract + flightID;
+        val strReq = JsonObjectRequest(Request.Method.GET, requestURL,
+                Response.Listener { response ->
+                    if (response != null) {
+                        try {
+                            Log.e("Volley", response.toString());
+                        } catch (e: JSONException) {
+                            // If there is an error then output this to the logs.
+                            Log.e("Volley", "Invalid JSON Object.")
+                        }
+                    } else {
+                        Log.e("Volley", "No responses found")
+                    }
+                },
+
+                Response.ErrorListener { error ->
+                    // If there a HTTP error then add a note to our repo list.
+                    Log.e("Volley", "Error while calling REST API.")
+                    Log.e("Volley", error.toString())
+                }
+        )
+
+        val requestQueue = Volley.newRequestQueue(activity)
+        requestQueue.add(strReq)
+    }
+
+    fun addTravel(activity: Activity, nakupData: ArrayList<String>){
         val params = JSONObject()
 
         val lokacija_odhoda = nakupData!![0]
@@ -106,7 +143,7 @@ class VolleyHelper {
         print("ODHOD: " + lokacija_odhoda + " PRIHOD: " + lokacija_prihoda);
         print("DATUM_ODHODA: " + datum_odhoda)
         print("RAZRED_ODHODA: " + razred_odhoda)
-        print("NUM_PASSENGERS: " + passengerData.size)
+
 
        /*
             "Prvi" -> factor *= 2.0f
