@@ -14,21 +14,20 @@ namespace RESTService
     {
         string cs = ConfigurationManager.ConnectionStrings["SlivkoDatabaseConnectionString"].ConnectionString;
 
-        
-        public List<TravelInfo> ReturnTravels(string googleID)
+
+        public List<TravelSendInfo> ReturnTravels(string googleID)
         {
-            var retVal = new List<TravelInfo>();
+            var travelsInfo = new List<TravelSendInfo>();
 
             using (SqlConnection con = new SqlConnection(cs))
             {
-                con.Open();
-                string sql = "SELECT [Plane].name, [Location].name " +
-                    " FROM [User] " +
-                    " JOIN [Order] USING(userID) " +
-                    " JOIN [passengers] USING (orderID) " +
+                con.Open(); //TODO get all the data
+                string sql = "SELECT [Order].orderID" +
+                    " FROM [Order] " +
+                    /*" JOIN [Order] USING(userID) " +
                     " JOIN [Flight] USING (flightID) " +
                     " JOIN [Location] USING (locationID) " +
-                    " JOIN [Plane] USING (planeID) " +
+                    " JOIN [Plane] USING (planeID) " +*/
                     " WHERE [User].googleID=@googleID";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("googleID", googleID));
@@ -38,23 +37,26 @@ namespace RESTService
                 {
                     while (reader.Read())
                     {
-                        retVal.Add(new TravelInfo
+                        travelsInfo.Add(new TravelSendInfo
                         {
-                            Plane_name = reader.GetString(0),
-                            Location_name = reader.GetString(1)
-
+                            orderID = reader.GetInt32(0),
+                            /*departureLocation = reader.GetString(1),
+                            arrivalLocation = reader.GetString(2),
+                            departureDate = reader.GetString(3),
+                            returnlDate = reader.GetString(4),
+                            price = reader.GetFloat(5)*/
                         });
 
                     }
                 }
-                con.Close();
-
-                return retVal;
+                con.Close();        
             }
+
+            return travelsInfo;
         }
 
 
-        public void AddTravel(List<Passenger> passengers, Location fromLocation, Location toLocation, Plane plane, Flight initialFlight, Flight returnFlight, Order order, string googleID)
+        public void AddTravel(TravelReceiveInfo info)
         {
             using (SqlConnection con = new SqlConnection(cs))
             {
@@ -65,10 +67,10 @@ namespace RESTService
 
 
 
-                
+
                 // ADD FROM LOCATION
 
-                sql ="INSERT INTO [Location] (name) VALUES (@0)";
+               /* sql ="INSERT INTO [Location] (name) VALUES (@0)";
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", fromLocation.name));
                 int fromLocationID = (int)cmd.ExecuteScalar();
@@ -132,7 +134,7 @@ namespace RESTService
                             
                     }
                 }
-                con.Close();
+                
           
 
                 //ADD ORDER
@@ -165,11 +167,9 @@ namespace RESTService
                     cmd.Parameters.Add(new SqlParameter("1", passengerID));
                     cmd.ExecuteNonQuery();
 
-                }
+                }*/
 
-
-
-
+                con.Close();
             }
         }
 
@@ -179,9 +179,47 @@ namespace RESTService
         }
 
 
-        public void UpdateTravel(TravelInfo travel, string googleID)
+       /* public void UpdateTravel(TravelInfo travel, string googleID)
         {
             throw new NotImplementedException();
+        }*/
+
+
+        public List<Passenger> ReturnPassengers(int orderID)
+        {
+            var passengers = new List<Passenger>();
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                string sql = "SELECT [Passenger].name, [Passenger].surname, [Passenger].gender, [Passenger].age " +
+                    " FROM [Passenger] " +
+                    " JOIN [Order] USING(passengerID) " +
+                    " WHERE [Order].orderID=@OID";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("OID", orderID));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        passengers.Add(new Passenger
+                        {
+                            name = reader.GetString(0),
+                            surname = reader.GetString(1),
+                            gender = reader.GetString(2),
+                            age = reader.GetInt32(3),
+                        });
+
+                    }
+                }
+                con.Close();
+            }
+
+            //passengers.Add(new Passenger { name = "Tester", surname = "Habjan", age = 12, gender = "Habjan" });
+
+            return passengers;
         }
+
     }
 }
