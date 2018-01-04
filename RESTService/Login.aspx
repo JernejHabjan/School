@@ -15,16 +15,11 @@
                 <hr />
             <table>
                     <tr>
-                    <td rowspan="5" align="top">
+                    <td rowspan="5">
                         <asp:Image ID="ProfileImage" runat="server" Width="50" Height="50"/>
                     </td>
                     </tr>
-                    <tr>
-                         <td>
-                        ID:
-                        <asp:Label ID="LblId" runat="server" Text=""></asp:Label>
-                    </td>
-                    </tr>
+                   
                    
                     <tr>
                         <td>

@@ -26,7 +26,7 @@ namespace RESTService
                 string code = Request.QueryString["code"];
                 string json = GoogleConnect.Fetch("me", code);
                 GoogleProfile profile = new JavaScriptSerializer().Deserialize<GoogleProfile>(json);
-                LblId.Text = profile.ID;
+                Session["googleID"] = profile.ID; // set session variable
                 LblName.Text = profile.DisplayName;
                 LblEmail.Text = profile.Emails.Find(email => email.Type == "account").value;
                 LblGender.Text = profile.Gender;
@@ -35,8 +35,12 @@ namespace RESTService
                 pnlProfile.Visible = true;
                 btnLogin.Enabled = false;
 
-                //GoogleLoginAndRegistration LoginManager = new GoogleLoginAndRegistration();
-                //LoginManager.AddGUserIfNotExist(profile);
+                GoogleLoginAndRegistration LoginManager = new GoogleLoginAndRegistration();
+                LoginManager.AddGUserIfNotExist(profile);
+
+
+                Response.Redirect("http://asistentslivko.azurewebsites.net/MainPage.aspx");
+
             }
             if (Request.QueryString["error"] == "access_denied")
             {

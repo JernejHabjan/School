@@ -124,15 +124,17 @@ namespace RESTService
         [DataMember]
         public int flightID { get; set; }
         [DataMember]
-        public int locationID { get; set; }
+        public int fromLocationID { get; set; }
         [DataMember]
         public int planeID { get; set; }
         [DataMember]
-        public int Loc_locationID { get; set; }
+        public int toLocationID { get; set; }
         [DataMember]
         public DateTime date { get; set; }
         [DataMember]
         public float discount { get; set; }
+        [DataMember]
+        public float price { get; set; }
     }
     [DataContract]
     public class Order
@@ -142,9 +144,9 @@ namespace RESTService
         [DataMember]
         public int userID { get; set; }
         [DataMember]
-        public int flightID { get; set; }
+        public int initialFlightID { get; set; }
         [DataMember]
-        public int Fli_flightID { get; set; }
+        public int returnFlightID { get; set; }
 
     }
 

@@ -36,16 +36,14 @@ namespace RESTService
     {
         string cs = ConfigurationManager.ConnectionStrings["SlivkoDatabaseConnectionString"].ConnectionString;
 
-        public GoogleProfile ReturnEntryFromGID(string GID)
+        public int ReturnUserIDFromGID(string GID)
         {
-            GoogleProfile oseba = new GoogleProfile();
-
-
+            int userID = -1;
 
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "SELECT * FROM Entries WHERE GID=@param1";
+                string sql = "SELECT [User].userID FROM [User] WHERE [User].googleID=@param1";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("param1", GID));
 
@@ -53,17 +51,12 @@ namespace RESTService
                 {
                     if (reader.Read())
                     {
-                        oseba.ID = reader.GetString(0);
-                        oseba.DisplayName = reader.GetString(2);
-                        oseba.Gender= reader.GetString(3);
-                        oseba.ObjectType = reader.GetString(4);
-                     
-                        //oseba.Image = reader.GetString(5);
-                        //oseba.Emals = reader.GetString(6);
+
+                        userID = reader.GetInt32(0);
                     }
                 }
                 con.Close();
-                return oseba;
+                return userID;
             }
         }
 
@@ -72,23 +65,28 @@ namespace RESTService
         public void AddGUserIfNotExist(GoogleProfile profile)
         {
 
-            if (ReturnEntryFromGID(profile.ID).ID == null)
+            if (ReturnUserIDFromGID(profile.ID) == -1) // NOT INSERTED
             {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    con.Open();
+                    string sql = "INSERT INTO [User] (roleID, googleID, name, email) VALUES (@0, @1, @2, @3)";
 
-            }
-            using (SqlConnection con = new SqlConnection(cs))
-            {
-                con.Open();
-                string sql =
-                   "INSERT INTO Entries (GID, Gname) VALUES (@0, @1)";
-             
-                SqlCommand cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", profile.ID));
-                cmd.Parameters.Add(new SqlParameter("1", profile.DisplayName));
-                cmd.ExecuteNonQuery();
-                con.Close();
+                    SqlCommand cmd = new SqlCommand(sql, con);
+                    cmd.Parameters.Add(new SqlParameter("0", 1)); //insert as regular user
+                    cmd.Parameters.Add(new SqlParameter("1", profile.ID));
+                    cmd.Parameters.Add(new SqlParameter("2", profile.DisplayName));
+                    cmd.Parameters.Add(new SqlParameter("3", profile.Emails));
 
+
+
+
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
+                }
             }
+           
         }
     }
 

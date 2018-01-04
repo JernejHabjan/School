@@ -69,50 +69,51 @@ namespace RESTService
 
 
                 // ADD FROM LOCATION
-
-               /* sql ="INSERT INTO [Location] (name) VALUES (@0)";
+                
+                sql ="INSERT INTO [Location] (name) VALUES (@0)";
                 cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", fromLocation.name));
+                cmd.Parameters.Add(new SqlParameter("0", info.departureName));
                 int fromLocationID = (int)cmd.ExecuteScalar();
 
-                // THEN TO ADD LOCATION
+                // THEN ADD TO LOCATION
 
                 sql = "INSERT INTO [Location] (name) VALUES (@0)";
                 cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", toLocation.name)); 
+                cmd.Parameters.Add(new SqlParameter("0", info.arrivalName)); 
                 int toLocationID = (int)cmd.ExecuteScalar();
 
 
 
 
                 //ADD PLANE
-                sql = "INSERT INTO [Plane] (name, seats, company, price) VALUES (@0, @1, @2, @3)";
+                sql = "INSERT INTO [Plane] (name, company) VALUES (@0, @1)";
                 cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", plane.name));
-                cmd.Parameters.Add(new SqlParameter("1", plane.seats));
-                cmd.Parameters.Add(new SqlParameter("2", plane.company));
-                cmd.Parameters.Add(new SqlParameter("3", plane.price));
+                cmd.Parameters.Add(new SqlParameter("0", info.planeName));
+                cmd.Parameters.Add(new SqlParameter("1", info.planeCompany));
+               
                 int planeID = (int)cmd.ExecuteScalar();
 
 
-                //ADD FLIGHT INFO
-                sql = "INSERT INTO [Flight] (locationID, planeID, Loc_locationID, date, discount) VALUES (@0, @1, @2, @3, @4)";
+                //ADD INITIAL FLIGHT INFO
+                sql = "INSERT INTO [Flight] (locationID, planeID, Loc_locationID, date, discount, price) VALUES (@0, @1, @2, @3, @4, @5)";
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", fromLocationID));
                 cmd.Parameters.Add(new SqlParameter("1", planeID));
                 cmd.Parameters.Add(new SqlParameter("2", toLocationID));
-                cmd.Parameters.Add(new SqlParameter("3", initialFlight.date));
-                cmd.Parameters.Add(new SqlParameter("4", initialFlight.discount));
+                cmd.Parameters.Add(new SqlParameter("3", info.departureDate));
+                cmd.Parameters.Add(new SqlParameter("4", info.discount));
+                cmd.Parameters.Add(new SqlParameter("5", info.price));
                 int initialFlightID = (int)cmd.ExecuteScalar();
 
-                //ADD FLIGHT INFO
-                sql = "INSERT INTO [Flight] (locationID, planeID, Loc_locationID, date, discount) VALUES (@0, @1, @2, @3, @4)";  // RETURN FLIGHT TO CHECK TODO
+                //ADD RETURN FLIGHT INFO
+                sql = "INSERT INTO [Flight] (locationID, planeID, Loc_locationID, date, discount, price) VALUES (@0, @1, @2, @3, @4, @5)";  
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", toLocationID));
                 cmd.Parameters.Add(new SqlParameter("1", planeID));
                 cmd.Parameters.Add(new SqlParameter("2", fromLocationID));
-                cmd.Parameters.Add(new SqlParameter("3", returnFlight.date));
-                cmd.Parameters.Add(new SqlParameter("4", returnFlight.discount));
+                cmd.Parameters.Add(new SqlParameter("3", info.returnDate));
+                cmd.Parameters.Add(new SqlParameter("4", info.discount));
+                cmd.Parameters.Add(new SqlParameter("5", info.price));
                 int returnFlightID = (int)cmd.ExecuteScalar();
 
 
@@ -124,7 +125,7 @@ namespace RESTService
                 con.Open();
                 sql = "SELECT [User].userID FROM [User] WHERE [User].googleID=@0";
                 cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", googleID));
+                cmd.Parameters.Add(new SqlParameter("0", info.googleID));
 
                 using (SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.SingleRow))
                 {
@@ -150,8 +151,12 @@ namespace RESTService
 
 
                 // WHEN WE HAVE ORDER WE CAN CONNECT IT WITH PASSENGERS ADD PASSENGERS
-                foreach (Passenger passenger in passengers)
+                foreach (string passenger in info.passengerData)
                 {
+                    /*
+                     
+                 TODO --- NEVEM KKO PARSAT TA PASSENGER STRING
+                
                     sql = "INSERT INTO [Passenger] (name, surname, gender, age) VALUES (@0, @1, @2, @3)";
                     cmd = new SqlCommand(sql, con);
                     cmd.Parameters.Add(new SqlParameter("0", passenger.name));
@@ -159,15 +164,9 @@ namespace RESTService
                     cmd.Parameters.Add(new SqlParameter("2", passenger.gender));
                     cmd.Parameters.Add(new SqlParameter("3", passenger.age));
                     int passengerID = (int)cmd.ExecuteScalar();
-
-                    // INSERT V VMESNO TABELO passengers
-                    sql = "INSERT INTO [passengers] (orderID, passengerID) VALUES (@0, @1)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", orderID));
-                    cmd.Parameters.Add(new SqlParameter("1", passengerID));
-                    cmd.ExecuteNonQuery();
-
-                }*/
+                    
+                    */
+                }
 
                 con.Close();
             }

@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="Baza.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="MainPage.aspx" />
     <Content Include="Service1.svc" />
     <Content Include="ServicePersonData.svc" />
     <Content Include="ServiceTravelData.svc" />
@@ -92,6 +93,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.aspx.cs">
+      <DependentUpon>MainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainPage.aspx.designer.cs">
+      <DependentUpon>MainPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
