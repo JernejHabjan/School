@@ -1,5 +1,6 @@
 package si.roglan.EMP_Seminarska
 
+import android.app.ActionBar
 import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -18,6 +19,8 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import si.roglan.EMP_Seminarska.R.id.imageView
+import android.widget.LinearLayout
 
 
 class Potniki : Fragment() {
@@ -30,6 +33,7 @@ class Potniki : Fragment() {
     private var userData: ArrayList<String>? = ArrayList()
     private lateinit var activityCommander: PotnikiListener
     private var tabela: TableLayout? = null
+    private var tabelaChildSize: Int = 0;
     private var potniki_container: ConstraintLayout? = null
     private var outer_linear_layout: LinearLayout? = null
 
@@ -84,8 +88,9 @@ class Potniki : Fragment() {
 
 
         potniki_container = view.findViewById(R.id.potniki_container) as ConstraintLayout
-        outer_linear_layout = view.findViewById(R.id.outer_linear_layout) as LinearLayout
+       // outer_linear_layout = view.findViewById(R.id.outer_linear_layout) as LinearLayout
         tabela = view.findViewById(R.id.table_1) as TableLayout
+        tabelaChildSize = tabela!!.childCount
 
         recieveUserData(this.arguments)
 
@@ -112,7 +117,7 @@ class Potniki : Fragment() {
         //GETTING LAYOUT DATA
 
 
-        val m_GID = recieveGID(this.arguments)
+       /* val m_GID = recieveGID(this.arguments)
         if (m_GID != "") {
             Log.d("GoogleID", "GOT GOOGLE ID:")
             Log.d("GoogleID", m_GID)
@@ -123,7 +128,7 @@ class Potniki : Fragment() {
             val noIDText = TextView(context)
             noIDText.text = "No google ID"
             outer_linear_layout!!.addView(noIDText)
-        }
+        }*/
 
         return view
     }
@@ -231,38 +236,60 @@ class Potniki : Fragment() {
 
 
     fun recieveUserData(bundle: Bundle?) {
-
-        if (bundle != null) {
-
+        if (bundle != null)
+        {
             userData = bundle.getStringArrayList("userData")
             if (userData != null) {
-
-                val add_index = tabela!!.childCount
-                var i = 0
-                while (i < userData!!.size) {
-
-                    val row = TableRow(context)
-
-                    val lp = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT)
-                    row.layoutParams = lp
-
-                    val ime = TextView(context)
-                    val priimek = TextView(context)
-                    val spol = TextView(context)
-                    val datum_rojstva = TextView(context)
-                    ime.text = userData!![i]
-                    priimek.text = userData!![i + 1]
-                    spol.text = userData!![i + 2]
-                    datum_rojstva.text = userData!![i + 3]
-
-                    row.addView(ime)
-                    row.addView(priimek)
-                    row.addView(spol)
-                    row.addView(datum_rojstva)
-                    tabela!!.addView(row, add_index + i / 4)
-                    i += 4
-                }
+                initPassengerTable(userData);
             }
+        }
+    }
+
+    fun initPassengerTable(data: ArrayList<String>?){
+        for (j in 1 until tabela!!.childCount)
+            tabela!!.removeView(tabela!!.getChildAt(1))
+
+        var i = 0
+        while (i < userData!!.size)
+        {
+            val row = TableRow(context)
+
+            val lp = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT)
+            row.layoutParams = lp
+
+            val ime = TextView(context)
+            val priimek = TextView(context)
+            val datum_rojstva = TextView(context)
+            ime.text = userData!![i]
+            priimek.text = userData!![i + 1]
+            datum_rojstva.text = userData!![i + 3]
+
+            val closeButton = Button(context);
+            closeButton.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
+            closeButton.text = "X"
+            //closeButton.minimumWidth = 0
+            //closeButton.width = 20
+            closeButton.tag = i / 4;
+
+            val index = i;
+            closeButton.setOnClickListener(object: View.OnClickListener {
+                override fun onClick(v : View?){
+                    val id = Integer.parseInt(v!!.tag.toString())
+                    Log.i("BUTTON", id.toString());
+
+                    for(j in 0..3) userData!!.removeAt(id);
+                    Log.i("BUTTON_ARRAYSIZE", userData!!.size.toString());
+
+                    initPassengerTable(userData)
+                }
+            })
+
+            row.addView(ime)
+            row.addView(priimek)
+            row.addView(datum_rojstva)
+            row.addView(closeButton)
+            tabela!!.addView(row, tabelaChildSize + i / 4)
+            i += 4
         }
     }
 
