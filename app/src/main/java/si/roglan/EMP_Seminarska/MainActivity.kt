@@ -124,12 +124,8 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
         if (item.itemId == R.id.action_settings) {
-            setContainerFragment(SettingsFragment(), "Nastavitve")
+            setContainerFragment(SignInFragment(), "Uporabnik", null, "1")
             return true
         }
 
@@ -146,7 +142,6 @@ class MainActivity : AppCompatActivity(),
                 setContainerFragment(TravelsFragment(), "Potovanja", bundle, "1")
             }
             R.id.nav_nakup -> setContainerFragment(Nakup(), "Nakup", null, "1")
-            R.id.nav_login -> setContainerFragment(SignInFragment(), "Uporabnik", null, "1")
             R.id.nav_avtor -> setContainerFragment(AvtorFragment(), "Avtor", null, "1")
             R.id.nav_itm -> {
                 if (nakupData.size > 0) {

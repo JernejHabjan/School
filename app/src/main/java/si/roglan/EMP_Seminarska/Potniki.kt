@@ -254,7 +254,7 @@ class Potniki : Fragment() {
         {
             val row = TableRow(context)
 
-            val lp = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT)
+            val lp = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
             row.layoutParams = lp
 
             val ime = TextView(context)
@@ -264,8 +264,20 @@ class Potniki : Fragment() {
             priimek.text = userData!![i + 1]
             datum_rojstva.text = userData!![i + 3]
 
+            val maxTextLength = 5;
+            if(ime.text.length > maxTextLength + 3){
+                ime.text = ime.text.substring(0, maxTextLength) + "...";
+            }
+            if(priimek.text.length > maxTextLength + 3){
+                priimek.text = priimek.text.substring(0, maxTextLength) + "...";
+            }
+
             val closeButton = Button(context);
-            closeButton.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
+            closeButton.setLayoutParams(TableRow.LayoutParams(
+                    TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT))
+            closeButton.width = 50
+            closeButton.height = 50
+            //closeButton.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
             closeButton.text = "X"
             //closeButton.minimumWidth = 0
             //closeButton.width = 20

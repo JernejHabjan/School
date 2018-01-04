@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Uporabnik</string>
     <string name="home">Domov</string>
     <string name="itm" translatable="false">ITM</string>
     <string name="doziranje">Doziranje</string>
