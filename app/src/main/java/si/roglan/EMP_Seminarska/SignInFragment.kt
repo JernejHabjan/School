@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
@@ -31,7 +32,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
     private val RC_SIGN_IN = 9001
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private var mStatusTextView: TextView? = null
-
+    private var mUsernameTextEdit: EditText? = null
 
     //==================================================================================================
     private lateinit var activityCommander: LoginListener
@@ -56,6 +57,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_sign_in, container, false)
         mStatusTextView = view!!.findViewById(R.id.status) as TextView?
+        mUsernameTextEdit = view!!.findViewById(R.id.username) as EditText?
 
         view.findViewById(R.id.sign_in_button).setOnClickListener(this)
         view.findViewById(R.id.sign_out_button).setOnClickListener(this)
@@ -139,7 +141,9 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
             activityCommander.onLogin(account)
 
-            mStatusTextView!!.text = getString(R.string.signed_in_fmt, account.displayName)
+            mStatusTextView!!.text = getString(R.string.signed_in_fmt)
+            mUsernameTextEdit!!.setText(account.displayName, TextView.BufferType.EDITABLE);
+            mUsernameTextEdit!!.visibility = View.VISIBLE;
 
             view!!.findViewById(R.id.sign_in_button).visibility = View.GONE
             view!!.findViewById(R.id.sign_out_and_disconnect).visibility = View.VISIBLE
@@ -150,8 +154,9 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
 
         } else {
-            activityCommander.onLogout()
+            mUsernameTextEdit!!.visibility = View.GONE;
 
+            activityCommander.onLogout()
             mStatusTextView!!.setText(R.string.signed_out)
 
             view!!.findViewById(R.id.sign_in_button).visibility = View.VISIBLE

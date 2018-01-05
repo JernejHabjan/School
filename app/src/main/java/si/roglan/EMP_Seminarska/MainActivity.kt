@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity(),
     override fun finalizePurchase(discount: Float) {
         val bundle = Bundle()
         bundle.putString("GID", m_GID)
-        setContainerFragment(TravelsFragment(), "Potovanja", bundle, "1")
+        setContainerFragment(TravelsFragment(), "Potovanja", bundle)
 
         //TODO send to db
         //VolleyHelper().addTravel(this, nakupData, userData);
