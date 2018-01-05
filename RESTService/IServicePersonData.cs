@@ -94,8 +94,6 @@ namespace RESTService
 
         public string ID { get; set; }
         public string DisplayName { get; set; }
-        public string Gender { get; set; }
-        public string ObjectType { get; set; }
         public Image Image { get; set; }
         public List<Email> Emails { get; set; }
 

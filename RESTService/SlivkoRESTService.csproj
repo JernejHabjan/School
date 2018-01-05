@@ -96,6 +96,7 @@
     <Content Include="globals.js" />
     <Content Include="Login.aspx" />
     <Content Include="MainPage.aspx" />
+    <Content Include="ManageUserInfo.aspx" />
     <Content Include="query.js" />
     <Content Include="script.js" />
     <Content Include="Service1.svc" />
@@ -139,6 +140,13 @@
     </Compile>
     <Compile Include="MainPage.aspx.designer.cs">
       <DependentUpon>MainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ManageUserInfo.aspx.cs">
+      <DependentUpon>ManageUserInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManageUserInfo.aspx.designer.cs">
+      <DependentUpon>ManageUserInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>

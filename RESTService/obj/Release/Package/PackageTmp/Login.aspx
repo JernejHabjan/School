@@ -35,18 +35,7 @@
                     </td>
                      </tr>
 
-                    <tr>
-                    <td>
-                        Gender:
-                        <asp:Label ID="LblGender" runat="server" Text=""></asp:Label>
-                    </td>
-                     </tr>
-                <tr>
-                    <td>
-                        Type:
-                        <asp:Label ID="LblType" runat="server" Text=""></asp:Label>
-                    </td>
-                     </tr>
+                   
                 <tr>
                     <td>
                       
@@ -60,9 +49,6 @@
             </table>
                 </asp:panel>
         </div>
-        
-   
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         
    
     </form>

@@ -14,38 +14,62 @@ namespace RESTService
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
+            string sessionUserId = Session["googleID"] as string;
+
+
+
             GoogleConnect.ClientId = "331110486379-5b5815ianb75del9dflgrrqcs1lbtnva.apps.googleusercontent.com";
             GoogleConnect.ClientSecret = "aAIHWqBKYH8ayXelGqEy1foG";
 
             GoogleConnect.RedirectUri = Request.Url.AbsoluteUri.Split('?')[0];
-         
+
+   
+
+            if (!String.IsNullOrEmpty(sessionUserId) && sessionUserId != "")
+            {
+
+                Response.Write("RESTORING PROFILE DATA:");
+                ServicePersonData sPersonData = new ServicePersonData();
+                User user = sPersonData.ReturnUser(Session["googleID"].ToString());
+
+                LblName.Text = user.name;
+                LblEmail.Text = user.email;
+                ProfileImage.ImageUrl = "https://openclipart.org/download/247324/abstract-user-flat-1.svg";
+
+
+                pnlProfile.Visible = true;
+                btnLogin.Visible = false;
+
+            }
+            
+
             if (!string.IsNullOrEmpty(Request.QueryString["code"]))
             {
-        
+
                 string code = Request.QueryString["code"];
                 string json = GoogleConnect.Fetch("me", code);
                 GoogleProfile profile = new JavaScriptSerializer().Deserialize<GoogleProfile>(json);
                 Session["googleID"] = profile.ID; // set session variable
                 LblName.Text = profile.DisplayName;
                 LblEmail.Text = profile.Emails.Find(email => email.Type == "account").value;
-                LblGender.Text = profile.Gender;
-                LblType.Text = profile.ObjectType;
                 ProfileImage.ImageUrl = profile.Image.Url;
                 pnlProfile.Visible = true;
                 btnLogin.Visible = false;
 
-            
+
                 ServicePersonData sPersonData = new ServicePersonData();
                 User user = sPersonData.ReturnUser(profile.ID);
-    
-               
+
+
+                Response.Write(Session["googleID"]);
                 Response.Write("IS USER WRITTEN TO DATABASE:");
+
                 Response.Write(String.IsNullOrEmpty(user.googleID));
-          
+
                 if (String.IsNullOrEmpty(user.googleID))
                 {
-                 
+
                     sPersonData.AddUser(new RESTService.User
                     {
                         userID = -1,
@@ -71,7 +95,9 @@ namespace RESTService
 
         protected void Clear_click(object sender, EventArgs e) //clear
         {
+            Session["googleID"] = "";
             GoogleConnect.Clear(Request.QueryString["code"]);
+            
         }
 
 
@@ -85,7 +111,7 @@ namespace RESTService
 
         protected void ChangeInfo(object sender, EventArgs e)
         {
-
+            Response.Redirect("http://asistentslivko.azurewebsites.net/ManageUserInfo.aspx");
         }
     }
 }

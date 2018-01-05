@@ -74,18 +74,39 @@ namespace RESTService
     [DataContract]
     public class TravelSendInfo
     {
+
+     
+   
         [DataMember]
-        public int orderID { get; set; }
+        public string fromLocationName { get; set; }
         [DataMember]
-        public string departureLocation { get; set; }
+        public string toLocationName { get; set; }
         [DataMember]
-        public string arrivalLocation { get; set; }
+        public string initialPrice { get; set; }
         [DataMember]
-        public string departureDate { get; set; }
+        public string initialDate { get; set; }
         [DataMember]
-        public string returnlDate { get; set; }
+        public string initialDiscount { get; set; }
         [DataMember]
-        public float price { get; set; }
+        public string initialPlaneName { get; set; }
+        [DataMember]
+        public string initialPlaneCompany { get; set; }
+
+        [DataMember]
+        public string returnDate { get; set; }
+        [DataMember]
+        public string returnDiscount { get; set; }
+        [DataMember]
+        public string returnPrice { get; set; }
+        [DataMember]
+        public string returnPlaneName { get; set; }
+        [DataMember]
+        public string returnPlaneCompany { get; set; }
+        [DataMember]
+        public string returnToLocation { get; set; }
+        [DataMember]
+        public string returnFromLocation { get; set; }
+
 
     }
 

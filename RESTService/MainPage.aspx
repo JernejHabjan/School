@@ -5,9 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link type="text/css" href="style.css" rel="stylesheet"/>
+    
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+    <link type="text/css" href="style.css" rel="stylesheet"/>
      <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -19,19 +19,19 @@
 <body>
 
     
-<nav class="navbar navbar-inverse" style="background-color:#4286f4">
+<nav class="navbar navbar-inverse" >
   <div class="container-fluid">
     <div class="navbar-header" >
-      <a class="navbar-brand active" style="color:#000" href="http://asistentslivko.azurewebsites.net/MainPage.aspx">Asistent Slivko</a>
+      <a class="navbar-brand active"  href="http://asistentslivko.azurewebsites.net/MainPage.aspx">Asistent Slivko</a>
     </div>
     <ul class="nav navbar-nav">
      
-      <li><a href="#" style="color:#000">Nakup</a></li>
-        <li><a href="#" style="color:#000">Potniki</a></li>
+      <li><a href="#" >Nakup</a></li>
+        <li><a href="#" >Potniki</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
  
-      <li><a href="http://asistentslivko.azurewebsites.net/Login.aspx" style="color:#000"> <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li><a href="http://asistentslivko.azurewebsites.net/Login.aspx" > <span class="glyphicon glyphicon-log-in"> <span  id="loginNav" runat="server" >Login</span></span></a></li>
     </ul>
   </div>
 </nav>

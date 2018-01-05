@@ -112,7 +112,7 @@ namespace RESTService
             using(SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "UPDATE [User] set roleID=@0 name=@2, email=@3 WHERE [User].googleID=@1";
+                string sql = "UPDATE [User] set [User].roleID=@0, [User].name=@2, [User].email=@3 WHERE [User].googleID=@1";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", user.roleID));
                 cmd.Parameters.Add(new SqlParameter("1", googleID));
