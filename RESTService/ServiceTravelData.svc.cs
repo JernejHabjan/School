@@ -184,7 +184,7 @@ namespace RESTService
         }*/
 
 
-        public List<Passenger> ReturnPassengers(int orderID)
+        public List<Passenger> ReturnPassengers(string orderID)
         {
             var passengers = new List<Passenger>();
 

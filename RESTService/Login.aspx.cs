@@ -33,13 +33,32 @@ namespace RESTService
                 LblType.Text = profile.ObjectType;
                 ProfileImage.ImageUrl = profile.Image.Url;
                 pnlProfile.Visible = true;
-                btnLogin.Enabled = false;
+                btnLogin.Visible = false;
 
-                GoogleLoginAndRegistration LoginManager = new GoogleLoginAndRegistration();
-                LoginManager.AddGUserIfNotExist(profile);
-
-
+            
+                ServicePersonData sPersonData = new ServicePersonData();
+                User user = sPersonData.ReturnUser(profile.ID);
+    
                
+                Response.Write("IS USER WRITTEN TO DATABASE:");
+                Response.Write(String.IsNullOrEmpty(user.googleID));
+          
+                if (String.IsNullOrEmpty(user.googleID))
+                {
+                 
+                    sPersonData.AddUser(new RESTService.User
+                    {
+                        userID = -1,
+                        roleID = 1, //regular useer
+                        googleID = profile.ID,
+                        name = profile.DisplayName,
+                        email = profile.Emails[0].value
+
+                    });
+
+                }
+
+
 
             }
             if (Request.QueryString["error"] == "access_denied")
@@ -55,10 +74,18 @@ namespace RESTService
             GoogleConnect.Clear(Request.QueryString["code"]);
         }
 
+
+
+
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             GoogleConnect.Authorize("profile", "email");
-            Response.Redirect("http://asistentslivko.azurewebsites.net/MainPage.aspx");
+            //Response.Redirect("http://asistentslivko.azurewebsites.net/MainPage.aspx");
+        }
+
+        protected void ChangeInfo(object sender, EventArgs e)
+        {
+
         }
     }
 }

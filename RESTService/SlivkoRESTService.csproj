@@ -67,6 +67,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Baza.aspx" />
+    <Content Include="Connected Services\ServiceReferencePersonData\RESTService.ServiceReferencePersonData.Passenger.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ServiceReferencePersonData\RESTService.ServiceReferencePersonData.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\ServiceReferencePersonData\ServicePersonData.disco" />
+    <None Include="Connected Services\ServiceReferencePersonData\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiceReferencePersonData\configuration.svcinfo" />
+    <None Include="Connected Services\ServiceReferencePersonData\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Connected Services\ServiceReferenceTravelData\RESTService.ServiceReferenceTravelData.Passenger.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ServiceReferenceTravelData\RESTService.ServiceReferenceTravelData.TravelSendInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\ServiceReferenceTravelData\ServiceTravelData.disco" />
+    <None Include="Connected Services\ServiceReferenceTravelData\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiceReferenceTravelData\configuration.svcinfo" />
+    <None Include="Connected Services\ServiceReferenceTravelData\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="globals.js" />
     <Content Include="Login.aspx" />
     <Content Include="MainPage.aspx" />
@@ -88,7 +114,16 @@
     <Compile Include="Baza.aspx.designer.cs">
       <DependentUpon>Baza.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GoogleProfile.cs" />
+    <Compile Include="Connected Services\ServiceReferencePersonData\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\ServiceReferenceTravelData\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="IServicePersonData.cs" />
     <Compile Include="IServiceTravelData.cs" />
     <Compile Include="Login.aspx.cs">
@@ -121,6 +156,29 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\ServiceReferencePersonData\ServicePersonData.wsdl" />
+    <None Include="Connected Services\ServiceReferencePersonData\ServicePersonData.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferencePersonData\ServicePersonData1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferencePersonData\ServicePersonData2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceTravelData\ServiceTravelData.wsdl" />
+    <None Include="Connected Services\ServiceReferenceTravelData\ServiceTravelData.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceTravelData\ServiceTravelData1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceTravelData\ServiceTravelData2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceTravelData\ServiceTravelData3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\AsistentSlivko - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\AsistentSlivko - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\AsistentSlivko - Web Deploy %282%29.pubxml" />
@@ -135,6 +193,13 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiceReferencePersonData\" />
+    <WCFMetadataStorage Include="Connected Services\ServiceReferenceTravelData\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

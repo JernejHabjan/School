@@ -9,10 +9,11 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:Button ID="btnLogin" Text="Google Login" runat="server" OnClick="btnLogin_Click" />
-
+    
+            <asp:Button ID="btnLogin" Text="Login with Google" runat="server" OnClick="btnLogin_Click"  />
+        
             <asp:panel ID="pnlProfile" runat="server" Visible="false">
-                <hr />
+          
             <table>
                     <tr>
                     <td rowspan="5">
@@ -49,8 +50,9 @@
                 <tr>
                     <td>
                       
-                        <asp:Label Text="Clear: " runat="server"></asp:Label>
+                 
                         <asp:Button ID="Button1" runat="server" OnClick="Clear_click" Text="Logout" />
+                         <asp:Button ID="Button2" runat="server" OnClick="ChangeInfo" Text="Change personal info" style="height: 26px" />
                     </td>
                      </tr>
               

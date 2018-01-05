@@ -85,4 +85,31 @@ namespace RESTService
         public int age { get; set; }
 
     }
+
+
+
+
+    public class GoogleProfile
+    {
+
+        public string ID { get; set; }
+        public string DisplayName { get; set; }
+        public string Gender { get; set; }
+        public string ObjectType { get; set; }
+        public Image Image { get; set; }
+        public List<Email> Emails { get; set; }
+
+    }
+    public class Email
+    {
+
+        public string value { get; set; }
+        public string Type { get; set; }
+    }
+    public class Image
+    {
+        public string Url { get; set; }
+
+    }
+
 }

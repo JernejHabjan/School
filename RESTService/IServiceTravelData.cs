@@ -33,7 +33,7 @@ namespace RESTService
 
         [OperationContract]
         [WebGet(UriTemplate = "Passengers/{orderID}", ResponseFormat = WebMessageFormat.Json)]
-        List<Passenger> ReturnPassengers(int orderID);
+        List<Passenger> ReturnPassengers(string orderID);
 
 
 

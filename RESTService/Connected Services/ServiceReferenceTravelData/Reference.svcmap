@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="86f90717-6d60-4b51-9d4a-8339709cce17" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1794/ServiceTravelData.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServiceTravelData.xsd" MetadataType="Schema" ID="23ebd7f6-277b-4dc3-bc57-a469d34d3010" SourceId="1" SourceUrl="http://localhost:1794/ServiceTravelData.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServiceTravelData1.xsd" MetadataType="Schema" ID="f36b36f4-aa03-4668-b397-cba26bfc46f2" SourceId="1" SourceUrl="http://localhost:1794/ServiceTravelData.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServiceTravelData2.xsd" MetadataType="Schema" ID="f18dc96c-97c8-481e-b83b-930b3118e0b3" SourceId="1" SourceUrl="http://localhost:1794/ServiceTravelData.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServiceTravelData3.xsd" MetadataType="Schema" ID="9fafb920-7759-415e-b358-1baf68fe8306" SourceId="1" SourceUrl="http://localhost:1794/ServiceTravelData.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServiceTravelData.disco" MetadataType="Disco" ID="193edd52-6619-46db-8134-61d14b33c07b" SourceId="1" SourceUrl="http://localhost:1794/ServiceTravelData.svc?disco" />
+    <MetadataFile FileName="ServiceTravelData.wsdl" MetadataType="Wsdl" ID="e179cdf6-a041-4b54-afae-829d65e7ed20" SourceId="1" SourceUrl="http://localhost:1794/ServiceTravelData.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

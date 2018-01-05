@@ -6,6 +6,11 @@
 <head runat="server">
     <title></title>
     <link type="text/css" href="style.css" rel="stylesheet"/>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 </head>
 
 
@@ -13,16 +18,26 @@
 
 <body>
 
-    <div id="menu">
-        <ul>
-            <li><a href="http://asistentslivko.azurewebsites.net/MainPage.aspx">Domov</a></li>
-            <li><a href="#">Nakup</a></li>
-            <li><a href="#">Potniki</a></li>
-            <li><a href="http://asistentslivko.azurewebsites.net/Login.aspx">Uporabnik</a></li>
-            <li><a href="#">Avtorji</a></li>
-        </ul>
-      
+    
+<nav class="navbar navbar-inverse" style="background-color:#4286f4">
+  <div class="container-fluid">
+    <div class="navbar-header" >
+      <a class="navbar-brand active" style="color:#000" href="http://asistentslivko.azurewebsites.net/MainPage.aspx">Asistent Slivko</a>
     </div>
+    <ul class="nav navbar-nav">
+     
+      <li><a href="#" style="color:#000">Nakup</a></li>
+        <li><a href="#" style="color:#000">Potniki</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+ 
+      <li><a href="http://asistentslivko.azurewebsites.net/Login.aspx" style="color:#000"> <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
 <div class="row">
 
   <div class="col-6">
@@ -217,6 +232,7 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7yGt8l4pdtPqap0Eby1soUByYKqzmZNo&callback=initMap&libraries=geometry"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="globals.js"> </script>
 <script src="query.js"> </script>
