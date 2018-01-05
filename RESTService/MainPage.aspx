@@ -7,10 +7,12 @@
     <title></title>
     <link type="text/css" href="style.css" rel="stylesheet"/>
 </head>
+
+
+
+
 <body>
-    <form id="form1" runat="server">
-        
-    </form>
+
     <div id="menu">
         <ul>
             <li><a href="http://asistentslivko.azurewebsites.net/MainPage.aspx">Domov</a></li>
@@ -19,6 +21,7 @@
             <li><a href="http://asistentslivko.azurewebsites.net/Login.aspx">Uporabnik</a></li>
             <li><a href="#">Avtorji</a></li>
         </ul>
+      
     </div>
 <div class="row">
 
@@ -218,6 +221,13 @@
 <script src="globals.js"> </script>
 <script src="query.js"> </script>
 <script src="script.js"> </script>
+
+
+
+    
+    
+
+
 
 </body>
 

@@ -51,8 +51,9 @@ namespace RESTService
                 {
                     if (reader.Read())
                     {
-
-                        userID = reader.GetInt32(0);
+                        string col1Value = reader["userID"].ToString();
+                        Console.WriteLine(col1Value);
+                        //userID = reader.GetInt32(0);
                     }
                 }
                 con.Close();
@@ -76,7 +77,7 @@ namespace RESTService
                     cmd.Parameters.Add(new SqlParameter("0", 1)); //insert as regular user
                     cmd.Parameters.Add(new SqlParameter("1", profile.ID));
                     cmd.Parameters.Add(new SqlParameter("2", profile.DisplayName));
-                    cmd.Parameters.Add(new SqlParameter("3", profile.Emails));
+                    cmd.Parameters.Add(new SqlParameter("3", profile.Emails[0].value));
 
 
 

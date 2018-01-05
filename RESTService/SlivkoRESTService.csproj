@@ -67,11 +67,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Baza.aspx" />
+    <Content Include="globals.js" />
     <Content Include="Login.aspx" />
     <Content Include="MainPage.aspx" />
+    <Content Include="query.js" />
+    <Content Include="script.js" />
     <Content Include="Service1.svc" />
     <Content Include="ServicePersonData.svc" />
     <Content Include="ServiceTravelData.svc" />
+    <Content Include="style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

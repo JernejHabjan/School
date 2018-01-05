@@ -39,7 +39,7 @@ namespace RESTService
                 LoginManager.AddGUserIfNotExist(profile);
 
 
-                Response.Redirect("http://asistentslivko.azurewebsites.net/MainPage.aspx");
+               
 
             }
             if (Request.QueryString["error"] == "access_denied")
@@ -58,6 +58,7 @@ namespace RESTService
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             GoogleConnect.Authorize("profile", "email");
+            Response.Redirect("http://asistentslivko.azurewebsites.net/MainPage.aspx");
         }
     }
 }
