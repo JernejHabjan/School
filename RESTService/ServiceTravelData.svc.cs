@@ -82,13 +82,35 @@ namespace RESTService
             return travelsInfo;
         }
 
-
-        public void AddTravel(TravelReceiveInfo info)
+        public int GetMaxIndex(SqlConnection con ,string tableName)
         {
+       
+            string sql = "SELECT COUNT(*) FROM [" + tableName + "]";
+            SqlCommand cmd = new SqlCommand(sql, con);
+     
+
+            using (SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.SingleRow))
+            {
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader[0]);
+                       
+                }
+            }
+     
+            return -1;
+            
+
+
+
+
+            
+        }
+        public string AddTravel(TravelReceiveInfo info)
+        {
+
             using (SqlConnection con = new SqlConnection(cs))
             {
-
-             
 
                 string sql;
                 SqlCommand cmd;
@@ -98,87 +120,96 @@ namespace RESTService
 
                 // FIRST INITIAL FLIGHT
 
-                    // ADD FROM LOCATION
-                
-                    sql ="INSERT INTO [Location] (name) VALUES (@0)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", info.departureName));
-                    int InitialFromLocationID = (int)(decimal)cmd.ExecuteScalar();
-                
-                    // THEN ADD TO LOCATION
+                // ADD FROM LOCATION
 
-                    sql = "INSERT INTO [Location] (name) VALUES (@0)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", info.arrivalName)); 
-                    int InitialToLocationID = (int)(decimal)cmd.ExecuteScalar();
+                sql = "INSERT INTO [Location] (name) VALUES (@0)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", info.departureName));
+                cmd.ExecuteNonQuery();
+                int InitialFromLocationID = GetMaxIndex(con, "Location");
 
+                // THEN ADD TO LOCATION
 
-                    //ADD PLANE
-                    sql = "INSERT INTO [Plane] (name, company) VALUES (@0, @1)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", info.planeName));
-                    cmd.Parameters.Add(new SqlParameter("1", info.planeCompany));
-               
-                    int initialPlaneID = (int)(decimal)cmd.ExecuteScalar();
+                sql = "INSERT INTO [Location] (name) VALUES (@0)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", info.arrivalName));
+                cmd.ExecuteNonQuery();
+                int InitialToLocationID = GetMaxIndex(con, "Location");
 
 
-                    //ADD INITIAL FLIGHT INFO
-                    sql = "INSERT INTO [Flight] (fromLocationID, planeID, toLocationID, date, discount, price) VALUES (@0, @1, @2, @3, @4, @5)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", InitialFromLocationID));
-                    cmd.Parameters.Add(new SqlParameter("1", initialPlaneID));
-                    cmd.Parameters.Add(new SqlParameter("2", InitialToLocationID));
-                    cmd.Parameters.Add(new SqlParameter("3", info.departureDate));
-                    cmd.Parameters.Add(new SqlParameter("4", info.discount));
-                    cmd.Parameters.Add(new SqlParameter("5", info.price));
-                    int initialFlightID = (int)(decimal)cmd.ExecuteScalar();
+                //ADD PLANE
+                sql = "INSERT INTO [Plane] (name, company) VALUES (@0, @1)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", info.planeName));
+                cmd.Parameters.Add(new SqlParameter("1", info.planeCompany));
+                cmd.ExecuteNonQuery();
+                int initialPlaneID = GetMaxIndex(con, "Plane");
+
+
+                //ADD INITIAL FLIGHT INFO
+                sql = "INSERT INTO [Flight] (fromLocationID, planeID, toLocationID, date, discount, price) VALUES (@0, @1, @2, @3, @4, @5)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", InitialFromLocationID));
+                cmd.Parameters.Add(new SqlParameter("1", initialPlaneID));
+                cmd.Parameters.Add(new SqlParameter("2", InitialToLocationID));
+                cmd.Parameters.Add(new SqlParameter("3", info.departureDate));
+                cmd.Parameters.Add(new SqlParameter("4", info.discount));
+                cmd.Parameters.Add(new SqlParameter("5", info.price));
+                cmd.ExecuteNonQuery();
+                int initialFlightID = GetMaxIndex(con, "Flight");
 
                 // THEN RETURN FLIGHT
 
-                    // ADD FROM LOCATION
+                // ADD FROM LOCATION
 
-                    sql = "INSERT INTO [Location] (name) VALUES (@0)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", info.departureName));
-                    int returnFromLocationID = (int)(decimal)cmd.ExecuteScalar();
+                sql = "INSERT INTO [Location] (name) VALUES (@0)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", info.departureName));
+                cmd.ExecuteNonQuery();
+                int returnFromLocationID = GetMaxIndex(con, "Location");
 
-                    // THEN ADD TO LOCATION
+                // THEN ADD TO LOCATION
 
-                    sql = "INSERT INTO [Location] (name) VALUES (@0)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", info.arrivalName));
-                    int returnToLocationID = (int)(decimal)cmd.ExecuteScalar();
-
-
-
-
-                    //ADD PLANE
-                    sql = "INSERT INTO [Plane] (name, company) VALUES (@0, @1)";
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", info.planeName));
-                    cmd.Parameters.Add(new SqlParameter("1", info.planeCompany));
-
-                    int returnPlaneID = (int)(decimal)cmd.ExecuteScalar();
+                sql = "INSERT INTO [Location] (name) VALUES (@0)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", info.arrivalName));
+                cmd.ExecuteNonQuery();
+                int returnToLocationID = GetMaxIndex(con, "Location");
+                
 
 
-                    //ADD RETURN FLIGHT INFO
-                    sql = "INSERT INTO [Flight] (toLocationID, planeID, fromLocationID, date, discount, price) VALUES (@0, @1, @2, @3, @4, @5)";  
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.Add(new SqlParameter("0", returnToLocationID));
-                    cmd.Parameters.Add(new SqlParameter("1", returnPlaneID));
-                    cmd.Parameters.Add(new SqlParameter("2", returnFromLocationID));
-                    cmd.Parameters.Add(new SqlParameter("3", info.returnDate));
-                    cmd.Parameters.Add(new SqlParameter("4", info.discount));
-                    cmd.Parameters.Add(new SqlParameter("5", info.price));
-                    int returnFlightID = (int)(decimal)cmd.ExecuteScalar();
 
+
+                //ADD PLANE
+                sql = "INSERT INTO [Plane] (name, company) VALUES (@0, @1)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", info.planeName));
+                cmd.Parameters.Add(new SqlParameter("1", info.planeCompany));
+                cmd.ExecuteNonQuery();
+                int returnPlaneID = GetMaxIndex(con, "Plane");
+
+
+
+                //ADD RETURN FLIGHT INFO
+                sql = "INSERT INTO [Flight] (toLocationID, planeID, fromLocationID, date, discount, price) VALUES (@0, @1, @2, @3, @4, @5)";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", returnToLocationID));
+                cmd.Parameters.Add(new SqlParameter("1", returnPlaneID));
+                cmd.Parameters.Add(new SqlParameter("2", returnFromLocationID));
+                cmd.Parameters.Add(new SqlParameter("3", info.returnDate));
+                cmd.Parameters.Add(new SqlParameter("4", info.discount));
+                cmd.Parameters.Add(new SqlParameter("5", info.price));
+                cmd.ExecuteNonQuery();
+                int returnFlightID = GetMaxIndex(con, "Flight");
+
+                
 
 
                 // GET USER ID TO CONNECT IT TO ORDER
 
                 int userID = -1;
-                
-                con.Open();
+
+          
                 sql = "SELECT [User].userID FROM [User] WHERE [User].googleID=@0";
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", info.googleID));
@@ -187,55 +218,53 @@ namespace RESTService
                 {
                     if (reader.Read())
                     {
-                        userID= (int)(decimal)reader[0];
+                        userID = (int)reader[0];
                     }
                 }
-                
-          
+
+
 
                 //ADD ORDER
 
-                sql = "INSERT INTO [Order] (userID, flightID, Fli_flightID) VALUES (@0, @1, @2)";
+                sql = "INSERT INTO [Order] (userID, initialFlightID, returnFlightID) VALUES (@0, @1, @2)";
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", userID));
                 cmd.Parameters.Add(new SqlParameter("1", initialFlightID));
                 cmd.Parameters.Add(new SqlParameter("2", returnFlightID));
-                int orderID = (int)(decimal)cmd.ExecuteScalar();
-                con.Close();
+                cmd.ExecuteNonQuery();
+                int orderID = GetMaxIndex(con, "Order");
 
+
+               
+                
 
 
                 // WHEN WE HAVE ORDER WE CAN CONNECT IT WITH PASSENGERS
-                for (int i = 0; i < info.passengerData.Count; i+=4)
+                for (int i = 0; i < info.passengerData.Count; i += 4)
                 {
                     sql = "INSERT INTO [Passenger] (name, surname, gender, age, orderID) VALUES (@0, @1, @2, @3, @4)";
                     cmd = new SqlCommand(sql, con);
 
-                 
-                    cmd.Parameters.Add(new SqlParameter("0", info.passengerData[i + 0].ToString()));
-                    cmd.Parameters.Add(new SqlParameter("1", info.passengerData[i + 1].ToString()));
-                    cmd.Parameters.Add(new SqlParameter("2", info.passengerData[i + 2].ToString()));
-                    cmd.Parameters.Add(new SqlParameter("3", info.passengerData[i + 3].ToString()));
-                    cmd.Parameters.Add(new SqlParameter("4", orderID));
-                    int passengerID = (int)(decimal)cmd.ExecuteScalar();
-                    
-                    
-                }
 
+                    cmd.Parameters.Add(new SqlParameter("0", info.passengerData[i + 0]));
+                    cmd.Parameters.Add(new SqlParameter("1", info.passengerData[i + 1]));
+                    cmd.Parameters.Add(new SqlParameter("2", info.passengerData[i + 2]));
+                    cmd.Parameters.Add(new SqlParameter("3", info.passengerData[i + 3]));
+                    cmd.Parameters.Add(new SqlParameter("4", orderID));
+                    cmd.ExecuteNonQuery();
+
+
+                }
                 con.Close();
+
+                return "";
+                
+                
             }
         }
 
-        public void RemoveTravel(string googleID)
-        {
-            throw new NotImplementedException();
-        }
+ 
 
-
-       /* public void UpdateTravel(TravelInfo travel, string googleID)
-        {
-            throw new NotImplementedException();
-        }*/
 
 
         public List<Passenger> ReturnPassengers(string orderID)

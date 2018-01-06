@@ -47,39 +47,7 @@ namespace RESTService
                 }
              */
 
-
-
-
-
-                /*
-
-          public string googleID { get; set; }
-
-            [DataMember]
-            public string planeName { get; set; }
-            [DataMember]
-            public string planeCompany { get; set; }
-
-            [DataMember]
-            public string departureName{ get; set; }
-            [DataMember]
-            public string arrivalName { get; set; }
-
-            [DataMember]
-            public string departureDate { get; set; }
-            [DataMember]
-            public string returnDate { get; set; }
-
-            [DataMember]
-            public float price { get; set; }
-            [DataMember]
-            public float discount { get; set; }
-
-            [DataMember]
-            public List<string> passengerData { get; set; }
-                 */
-
-
+            
 
             }
             else
@@ -88,7 +56,9 @@ namespace RESTService
             }
 
             ServiceTravelData sTravelData = new ServiceTravelData();
-            sTravelData.AddTravel(new TravelReceiveInfo
+            // TESTING INSERT - --------------------------------------- DELETE THIS AFTER IMPLEMENTED
+
+           /* sTravelData.AddTravel(new TravelReceiveInfo
             {
                 googleID = "108315117481134440467",
                 planeName = "jurešnik",
@@ -97,19 +67,19 @@ namespace RESTService
                 departureName = "grem z loga",
                 arrivalName = "grem na kitajsk",
 
-                departureDate = "12.2.2222",
-                returnDate = "31.2.2223",
+                departureDate = Convert.ToDateTime("2017-12-03T00:00:00.0000000"),
+                returnDate = Convert.ToDateTime("2017-12-03T00:00:00.0000000"),
 
                 price = 243,
                 discount = 33,
 
-                passengerData = new List<string>(new string[] { "pasName1", "passSurname1", "passgender1", "passAge1", "pasName2", "passSurname2", "passgender2", "passAge2" })
+                passengerData = new List<string>(new string[] { "pasName1", "passSurname1", "male", "1", "pasName2", "passSurname2", "female", "1" })
 
 
 
 
-        });
-
+           });
+        */
 
 
 

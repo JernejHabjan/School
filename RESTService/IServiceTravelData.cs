@@ -20,16 +20,7 @@ namespace RESTService
 
         [OperationContract]
         [WebInvoke(UriTemplate = "Travel", ResponseFormat = WebMessageFormat.Json)]
-        void AddTravel(TravelReceiveInfo info);
-
-        [OperationContract]
-        [WebInvoke(UriTemplate = "Travel/{googleID}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
-        void RemoveTravel(string googleID);
-
-        /*[OperationContract]
-        [WebInvoke(UriTemplate = "Travel/{googleID}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
-        void UpdateTravel(TravelInfo travel, string googleID);*/
-
+        string AddTravel(TravelReceiveInfo info);
 
         [OperationContract]
         [WebGet(UriTemplate = "Passengers/{orderID}", ResponseFormat = WebMessageFormat.Json)]
@@ -57,9 +48,9 @@ namespace RESTService
         public string arrivalName { get; set; }
 
         [DataMember]
-        public string departureDate { get; set; }
+        public DateTime departureDate { get; set; }
         [DataMember]
-        public string returnDate { get; set; }
+        public DateTime returnDate { get; set; }
 
         [DataMember]
         public float price { get; set; }
