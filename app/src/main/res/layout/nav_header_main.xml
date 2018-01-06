@@ -14,7 +14,7 @@
         android:background="@color/colorPrimary"
         android:contentDescription="@string/slivko_logo"
         android:cropToPadding="false"
-        android:padding="22dp"
+        android:padding="32dp"
         app:srcCompat="@drawable/title_pic" />
 
 </LinearLayout>

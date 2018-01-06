@@ -33,6 +33,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private var mStatusTextView: TextView? = null
     private var mUsernameTextEdit: EditText? = null
+    private var mEmailTextView: TextView? = null
 
     //==================================================================================================
     private lateinit var activityCommander: LoginListener
@@ -58,6 +59,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
         val view = inflater!!.inflate(R.layout.fragment_sign_in, container, false)
         mStatusTextView = view!!.findViewById(R.id.status) as TextView?
         mUsernameTextEdit = view!!.findViewById(R.id.username) as EditText?
+        mEmailTextView = view!!.findViewById(R.id.detail) as TextView?
 
         view.findViewById(R.id.sign_in_button).setOnClickListener(this)
         view.findViewById(R.id.sign_out_button).setOnClickListener(this)
@@ -129,21 +131,26 @@ class SignInFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    private fun revokeAccess() {
-        mGoogleSignInClient!!.revokeAccess().addOnCompleteListener({
-            updateState(null)
-        })
+    private fun updateUsername() {
+        val account = GoogleSignIn.getLastSignedInAccount(context)
+        if(account != null){
+            val username = mUsernameTextEdit!!.text.toString();
+            val googleID = account.id.toString();
+            VolleyHelper().renameUser(activity, googleID, username);
+        }
     }
 
     private fun updateState(account: GoogleSignInAccount?) {
-
-        if (account != null) {
-
+        if (account != null)
+        {
             activityCommander.onLogin(account)
 
             mStatusTextView!!.text = getString(R.string.signed_in_fmt)
             mUsernameTextEdit!!.setText(account.displayName, TextView.BufferType.EDITABLE);
+            mEmailTextView!!.text = "e-mail: " + account.email;
+
             mUsernameTextEdit!!.visibility = View.VISIBLE;
+            mEmailTextView!!.visibility = View.VISIBLE;
 
             view!!.findViewById(R.id.sign_in_button).visibility = View.GONE
             view!!.findViewById(R.id.sign_out_and_disconnect).visibility = View.VISIBLE
@@ -155,6 +162,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
         } else {
             mUsernameTextEdit!!.visibility = View.GONE;
+            mEmailTextView!!.visibility = View.GONE;
 
             activityCommander.onLogout()
             mStatusTextView!!.setText(R.string.signed_out)
@@ -174,7 +182,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
         when (v.id) {
             R.id.sign_in_button -> signIn()
             R.id.sign_out_button -> signOut()
-            R.id.disconnect_button -> revokeAccess()
+            R.id.disconnect_button -> updateUsername()
         }
     }
 

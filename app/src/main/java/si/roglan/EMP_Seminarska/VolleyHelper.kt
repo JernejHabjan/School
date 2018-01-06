@@ -95,22 +95,31 @@ class VolleyHelper {
         Log.e("Volley", "Added User")
     }
 
-
-    fun addPassengers(activity: Activity, passengerData: ArrayList<String>){
-        Log.i("PASSENGERS", "NUM_PASSENGERS: " + passengerData.size)
+    fun renameUser(activity: Activity, googleID: String, username: String){
+        val service = "/ServicePersonData.svc"
+        val operationContract = "/RenameUser"
 
         val params = JSONObject()
-        params.put("roleID", passengerData)
+        params.put("googleID", googleID)
+        params.put("username", username)
+
+        val requestQueue = Volley.newRequestQueue(activity)
+        requestQueue.add(writeRequest(params, service, operationContract))
+        Log.e("Volley", "Renamed user")
+    }
+
+    fun getPassengerData(activity: Activity, orderId: Int): ArrayList<String> {
+        val passengerData: ArrayList<String> = ArrayList<String>()
 
         val service = "/ServiceTravelData.svc"
-        val operationContract = "/Passengers"
-        val flightID = "/" + "1"
+        val operationContract = "/Passengers/" + orderId;
+        val requestURL = SERVER_URL + service + operationContract;
 
-        val requestURL = SERVER_URL + service + operationContract + flightID;
         val strReq = JsonObjectRequest(Request.Method.GET, requestURL,
                 Response.Listener { response ->
                     if (response != null) {
                         try {
+                            //passengerData
                             Log.e("Volley", response.toString());
                         } catch (e: JSONException) {
                             // If there is an error then output this to the logs.
@@ -130,11 +139,11 @@ class VolleyHelper {
 
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(strReq)
+
+        return passengerData
     }
 
-    fun addTravel(activity: Activity, nakupData: ArrayList<String>){
-        val params = JSONObject()
-
+    fun addTravel(activity: Activity, nakupData: ArrayList<String>, passengerData: ArrayList<String>){
         val lokacija_odhoda = nakupData!![0]
         val lokacija_prihoda = nakupData!![1]
         val datum_odhoda = nakupData!![2]
@@ -144,6 +153,7 @@ class VolleyHelper {
         print("DATUM_ODHODA: " + datum_odhoda)
         print("RAZRED_ODHODA: " + razred_odhoda)
 
+        Log.i("PASSENGERS", "NUM_PASSENGERS: " + passengerData.size)
 
        /*
             "Prvi" -> factor *= 2.0f
@@ -162,9 +172,76 @@ class VolleyHelper {
         val operationContract = "/Travel"
 
 
+        val params = JSONObject()
+        params.put("roleID", passengerData)
+
         //val requestQueue = Volley.newRequestQueue(activity)
         //requestQueue.add(writeRequest(params, service, operationContract))
         //Log.e("Volley", "Added travel entry")
     }
 
+    fun getTravels(activity: Activity, googleID: String): ArrayList<TravelData>{
+        val travels: ArrayList<TravelData> = ArrayList<TravelData>()
+
+        val service = "/ServiceTravelData.svc"
+        val operationContract = "/Travels/" + googleID;
+        val requestURL = SERVER_URL + service + operationContract;
+
+        val strReq = JsonObjectRequest(Request.Method.GET, requestURL,
+                Response.Listener { response ->
+                    if (response != null) {
+                        try {
+                            //travels
+                            Log.e("Volley", response.toString());
+
+                        } catch (e: JSONException) {
+                            // If there is an error then output this to the logs.
+                            Log.e("Volley", "Invalid JSON Object.")
+                        }
+                    } else {
+                        Log.e("Volley", "No responses found")
+                    }
+                },
+
+                Response.ErrorListener { error ->
+                    // If there a HTTP error then add a note to our repo list.
+                    Log.e("Volley", "Error while calling REST API.")
+                    Log.e("Volley", error.toString())
+                }
+        )
+
+        val requestQueue = Volley.newRequestQueue(activity)
+        requestQueue.add(strReq)
+
+        return travels
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

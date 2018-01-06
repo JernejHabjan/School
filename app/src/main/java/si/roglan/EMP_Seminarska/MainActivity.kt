@@ -15,7 +15,9 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TableRow
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlinx.android.synthetic.main.our_travels.*
 import java.util.*
 
 
@@ -55,23 +57,24 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onLogin(account: GoogleSignInAccount) {
-        if (!m_verifiedAccount) {
+        if (!m_verifiedAccount)
+        {
             m_GID = account.id.toString()
             val bundle = Bundle() // send GID to Potovanja fragment on login
             bundle.putString("GID", m_GID)
             setContainerFragment(TravelsFragment(), "Potovanja", bundle)
 
+            val toolbar = findViewById(R.id.toolbar) as Toolbar
+            val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
+
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
             Snackbar.make(findViewById(R.id.main_container),
                     "Prijavljeni ste kot '" + account.displayName.toString() + "'", Snackbar.LENGTH_LONG).show()
 
-
             m_verifiedAccount = true
-
-            val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-
-            val toolbar = findViewById(R.id.toolbar) as Toolbar
         }
+
         Log.i("LOGIN", "LOGIN")
     }
 
@@ -108,6 +111,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onBackPressed() {
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+
         if (supportActionBar != null)
             supportActionBar!!.title = "Potovanja"
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -142,7 +146,7 @@ class MainActivity : AppCompatActivity(),
                 setContainerFragment(TravelsFragment(), "Potovanja", bundle, "1")
             }
             R.id.nav_nakup -> setContainerFragment(Nakup(), "Nakup", null, "1")
-            R.id.nav_avtor -> setContainerFragment(AvtorFragment(), "Avtor", null, "1")
+            R.id.nav_avtor -> setContainerFragment(AvtorFragment(), "Avtorji", null, "1")
             R.id.nav_itm -> {
                 if (nakupData.size > 0) {
                     setPotnikiFragment()
@@ -207,8 +211,7 @@ class MainActivity : AppCompatActivity(),
         bundle.putString("GID", m_GID)
         setContainerFragment(TravelsFragment(), "Potovanja", bundle)
 
-        //TODO send to db
-        //VolleyHelper().addTravel(this, nakupData, userData);
+        VolleyHelper().addTravel(this, nakupData, userData);
 
         nakupData.clear();
         userData.clear();

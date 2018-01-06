@@ -24,11 +24,7 @@ import android.widget.LinearLayout
 
 
 class Potniki : Fragment() {
-    private var button: Button? = null
-    private var textView: TextView? = null
-
     private var SERVER_URL = "http://asistentslivko.azurewebsites.net"
-
 
     private var userData: ArrayList<String>? = ArrayList()
     private lateinit var activityCommander: PotnikiListener
@@ -49,39 +45,6 @@ class Potniki : Fragment() {
     }
 
 
-    private fun getPerson(): StringRequest {
-        // VOLLEY GET PERSON
-        val service = "/Service1.svc"
-        val operationContract = "/Oseba"
-        val PersonID = "/1"
-
-        val strReq = StringRequest(Request.Method.GET, SERVER_URL + service + operationContract + PersonID,
-                Response.Listener { response ->
-                    // Check the length of our response (to see if the user has any repos)
-                    if (response != null) {
-                        try {
-                            textView!!.text = textView!!.text.toString() + response.toString() + "\n"
-                            Snackbar.make(potniki_container!!, "RETURNED OSEBE", Snackbar.LENGTH_LONG).show()
-
-
-                        } catch (e: JSONException) {
-                            // If there is an error then output this to the logs.
-                            Log.e("Volley", "Invalid JSON Object.")
-                        }
-                    } else {
-                        Snackbar.make(potniki_container!!, "No responses found", Snackbar.LENGTH_LONG).show()
-                    }
-                },
-
-                Response.ErrorListener { error ->
-                    // If there a HTTP error then add a note to our repo list.
-                    Snackbar.make(potniki_container!!, "Error while calling REST API", Snackbar.LENGTH_LONG).show()
-                    Log.e("Volley", error.toString())
-                }
-        )
-        return strReq
-    }
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_potniki, container, false)
@@ -94,28 +57,13 @@ class Potniki : Fragment() {
 
         recieveUserData(this.arguments)
 
-        // VOLLEY
-        button = view.findViewById(R.id.button) as Button
-        textView = view.findViewById(R.id.textView) as TextView
-        // END VOLLEY
-
         val button_kupi = view.findViewById(R.id.kupi_button) as Button
         val button_dodaj = view.findViewById(R.id.button_dodaj_potnika) as Button
         button_kupi.setOnClickListener { kupi_buttonClicked() }
         button_dodaj.setOnClickListener { dodaj_buttonClicked() }
 
-
-        // TODO --- VOLLEY EXAMPLE - we bind functions on button click
-        button!!.setOnClickListener {
-            val requestQueue = Volley.newRequestQueue(activity)
-
-            requestQueue.add(getPerson())
-            //requestQueue.add(getAllPersons())
-        }
-
-
+        
         //GETTING LAYOUT DATA
-
 
        /* val m_GID = recieveGID(this.arguments)
         if (m_GID != "") {
@@ -150,7 +98,7 @@ class Potniki : Fragment() {
     }
 
     private fun kupi_buttonClicked() { //gets called when button is clicked
-        if (userData!!.size > 0) {
+        if (userData != null && userData!!.size > 0) {
             activityCommander.launch_placilo()
         } else {
             Snackbar.make(potniki_container!!, "Vnesite vsaj enega potnika", Snackbar.LENGTH_LONG).show()
@@ -272,6 +220,7 @@ class Potniki : Fragment() {
                 priimek.text = priimek.text.substring(0, maxTextLength) + "...";
             }
 
+
             val closeButton = Button(context);
             closeButton.setLayoutParams(TableRow.LayoutParams(
                     TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT))
@@ -295,6 +244,7 @@ class Potniki : Fragment() {
                     initPassengerTable(userData)
                 }
             })
+
 
             row.addView(ime)
             row.addView(priimek)

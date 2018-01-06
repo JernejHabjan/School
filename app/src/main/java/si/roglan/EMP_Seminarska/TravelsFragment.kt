@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TableLayout
+import android.widget.TableRow
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
@@ -49,7 +51,7 @@ class TravelsFragment : Fragment() {
         //GETTING LAYOUT DATA
 
         val m_GID = recieveGID(this.arguments)
-        if (m_GID != "") {
+        /*if (m_GID != "") {
             Log.d("GoogleID", "GOT GOOGLE ID:")
             Log.d("GoogleID", m_GID)
             getPreviousTravels(view, m_GID)
@@ -61,11 +63,29 @@ class TravelsFragment : Fragment() {
             val noIDText = TextView(context)
             noIDText.text = "No google ID"
             grid_linear_layout_add.addView(noIDText)
-        }
+        }*/
+
+        updateTravelsList(view, m_GID);
 
         return view
+    }
 
 
+    private fun updateTravelsList(view: View?, googleID: String){
+        val travels = VolleyHelper().getTravels(activity, googleID);
+
+        val table = view!!.findViewById(R.id.travels_table) as TableLayout;
+        val travel_layout = view!!.findViewById(R.id.travel_layout) as TableRow;
+
+
+        //val inflator = activity.getLayoutInflater()
+        //val rowView = TableRow(travel_layout.context)
+        //inflator.inflate(R.layout.travel_entry, rowView)
+        //var tableRow = TableRow(context);
+
+        //table.addView(rowView)
+
+        //TODO update table
     }
 
     fun recieveGID(bundle: Bundle?): String {
@@ -96,7 +116,7 @@ class TravelsFragment : Fragment() {
     fun addSingleLayout(view: View, jsonObj: JSONObject) {
 
 
-        val grid_linear_layout_add = view.findViewById(R.id.grid_linear_layout_add) as LinearLayout
+        /*val grid_linear_layout_add = view.findViewById(R.id.grid_linear_layout_add) as LinearLayout
 
         val outer_linear_layout = LinearLayout(context)
         outer_linear_layout.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -116,7 +136,7 @@ class TravelsFragment : Fragment() {
 
         //adding properties to single entry
         addProperty(inner_linear_layout, "Plane name", jsonObj.get("planeName").toString())
-        addProperty(inner_linear_layout, "Destination", jsonObj.get("destination").toString())
+        addProperty(inner_linear_layout, "Destination", jsonObj.get("destination").toString())*/
 
     }
 
@@ -147,11 +167,11 @@ class TravelsFragment : Fragment() {
                         }
                     } else {
 
-                        Log.e("Volley", "No responses found")
+                       /* Log.e("Volley", "No responses found")
                         val grid_linear_layout_add = view.findViewById(R.id.grid_linear_layout_add) as LinearLayout
                         val noResponsesText = TextView(context)
                         noResponsesText.text = "No previous travels found."
-                        grid_linear_layout_add.addView(noResponsesText)
+                        grid_linear_layout_add.addView(noResponsesText)*/
                     }
                 },
                 Response.ErrorListener { error ->

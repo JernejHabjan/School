@@ -93,7 +93,7 @@
 
     <!-- Button labels -->
     <string name="sign_out">Odjavi se</string>
-    <string name="disconnect">Prekini povezavo</string>
+    <string name="save_username">Shrani ime</string>
     <string name="refresh_token">Pridobi svež žeton</string>
 
     <!-- Content Description for images -->
