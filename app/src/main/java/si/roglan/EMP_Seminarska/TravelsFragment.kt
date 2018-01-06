@@ -5,23 +5,24 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.telephony.cdma.CdmaCellLocation
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonArrayRequest
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.ArrayList
 
 class TravelsFragment : Fragment() {
     private lateinit var add_trip_float_button: FloatingActionButton
     var travels_content_local: ConstraintLayout? = null
+    var mTravelsData: ArrayList<TravelData> = ArrayList<TravelData>();
 
     private var SERVER_URL = "http://asistentslivko.azurewebsites.net"
     private lateinit var activityCommander: TravelsListener
@@ -72,11 +73,94 @@ class TravelsFragment : Fragment() {
 
 
     private fun updateTravelsList(view: View?, googleID: String){
-        val travels = VolleyHelper().getTravels(activity, googleID);
+        mTravelsData = VolleyHelper().getTravels(activity, googleID);
 
         val table = view!!.findViewById(R.id.travels_table) as TableLayout;
         val travel_layout = view!!.findViewById(R.id.travel_layout) as TableRow;
 
+        //Remove all children except column names
+        for (j in 1 until table!!.childCount)
+            table!!.removeView(table!!.getChildAt(1))
+
+        for (i in 0 until mTravelsData.size)
+        {
+            val travelData = mTravelsData.get(i)
+
+            val row = TableRow(context)
+            row.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT)
+
+            val id = TextView(context)
+            id.text = travelData.mOrderId.toString()
+
+
+            val fromLocation = TextView(context)
+            fromLocation.text = travelData.mFromLocation
+            val toLocation = TextView(context)
+            toLocation.text = travelData.mToLocation
+
+            //Limit location string lengths
+            val locationMaxLength = 10;
+            if (fromLocation.text.length > locationMaxLength + 3) {
+                fromLocation.text = fromLocation.text.substring(0, locationMaxLength) + "...";
+            }
+            if (toLocation.text.length > locationMaxLength + 3) {
+                toLocation.text = toLocation.text.substring(0, locationMaxLength) + "...";
+            }
+
+            val locationsLayout = LinearLayout(context);
+            locationsLayout.orientation = LinearLayout.VERTICAL;
+            locationsLayout.addView(fromLocation)
+            locationsLayout.addView(toLocation)
+
+
+            val date = TextView(context)
+            date.text = travelData.mDate
+            val returnDate = TextView(context)
+            returnDate.text = travelData.mReturnDate
+
+            val datesLayout = LinearLayout(context);
+            datesLayout.orientation = LinearLayout.VERTICAL;
+            datesLayout.addView(date)
+            datesLayout.addView(returnDate)
+
+
+            val odpriButton = Button(context);
+            odpriButton.text = "ODPRI"
+            odpriButton.tag = id.text
+            odpriButton.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    val id = Integer.parseInt(v!!.tag.toString())
+                    Log.i("ORDER_ID: ", id.toString());
+
+                    //TODO
+                    //setNakupFragment("DATA")
+                }
+            })
+
+
+            val closeButton = Button(context)
+            closeButton.text = "X"
+            closeButton.tag = id.text
+            closeButton.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    val id = Integer.parseInt(v!!.tag.toString())
+                    Log.i("ORDER_ID: ", id.toString());
+
+                    //mTravelsData!!.removeAt(id);
+                    VolleyHelper().removeOrder(activity, id)
+
+                    updateTravelsList(view, googleID)
+                }
+            })
+
+
+            row.addView(id)
+            row.addView(locationsLayout)
+            row.addView(datesLayout)
+            row.addView(odpriButton)
+            row.addView(closeButton)
+            table!!.addView(row, 1 + i)
+        }
 
         //val inflator = activity.getLayoutInflater()
         //val rowView = TableRow(travel_layout.context)
@@ -140,66 +224,9 @@ class TravelsFragment : Fragment() {
 
     }
 
-
-    private fun getPreviousTravels(view: View, GID: String): JsonArrayRequest {
-
-        val service = "/ServiceTravelData.svc"
-        val operationContract = "/PreviousTravelsAll"
-        val personID = "/" + GID
-
-        val arrReq = JsonArrayRequest(Request.Method.GET, SERVER_URL + service + operationContract + personID,
-                Response.Listener { response ->
-                    // Check the length of our response (to see if the user has any repos)
-                    if (response.length() > 0) {
-                        // The user does have repos, so let's loop through them all.
-                        for (i in 0 until response.length()) {
-                            try {
-                                // For each repo, add a new line to our repo list.
-                                val jsonObj = response.getJSONObject(i)
-
-
-                                addSingleLayout(view, jsonObj)
-
-                            } catch (e: JSONException) {
-                                // If there is an error then output this to the logs.
-                                Log.e("Volley", "Invalid JSON Object.")
-                            }
-                        }
-                    } else {
-
-                       /* Log.e("Volley", "No responses found")
-                        val grid_linear_layout_add = view.findViewById(R.id.grid_linear_layout_add) as LinearLayout
-                        val noResponsesText = TextView(context)
-                        noResponsesText.text = "No previous travels found."
-                        grid_linear_layout_add.addView(noResponsesText)*/
-                    }
-                },
-                Response.ErrorListener { error ->
-                    // If there a HTTP error then add a note to our repo list.
-                    Log.e("Volley", "Error while calling REST API.")
-                    Log.e("Volley", error.toString())
-                }
-        )
-        return arrReq
-    }
-
-    fun internalDatabaseExampleCode() {
-        // We may need this ???
-        val DATABASE_NAME = "SlivkoDatabase"
-        val DATABASE_VERSION = 1
-
-        val databaseHelper = DatabaseHelper(context, DATABASE_NAME, context, DATABASE_VERSION)
-        databaseHelper.insertContact("LastNameExample", "FirstNameExample", "AddressExample", "CityExample")
-        databaseHelper.close()
-        Log.d("DATABASE", "PERSON WRITTEN IN DATABASE ON PHONE!!!!!!!!!!!!!!!!!!!")
-        val cursor = databaseHelper.getAllContacts()
-        while (cursor.moveToNext()) {
-            Log.d("DATABASE", cursor.getString(1)) // v log izpisujem samo lastname vsake N-Terice :)
-        }
-    }
-
     internal interface TravelsListener {
-
         fun setNakupFragment()
+        fun setNakupFragment(fromLocation: String, toLocation: String, date: String, returnDate: String,
+                             travelClass: String, returnClass: String)
     }
 }

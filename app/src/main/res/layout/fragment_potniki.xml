@@ -76,35 +76,35 @@
                 android:layout_margin="0dp">
 
                 <TextView
-                    android:id="@+id/w"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/p_ime"
+                    android:layout_width="match_parent"
 
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:paddingRight="20dp"
                     android:text="Ime"
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/p_priimek"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:paddingRight="20dp"
                     android:text="Priimek"
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/p_rojstvo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:paddingRight="20dp"
                     android:text="Rojstvo"
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/p_close"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingRight="20dp"

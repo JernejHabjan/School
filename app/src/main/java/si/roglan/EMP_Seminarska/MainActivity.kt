@@ -185,6 +185,12 @@ class MainActivity : AppCompatActivity(),
         setContainerFragment(Nakup(), "Nakup", null, "1")
     }
 
+    override fun setNakupFragment(fromLocation: String, toLocation: String, date: String,
+                                  returnDate: String, travelClass: String, returnClass: String)
+    {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun sendNakupData(nakupData: ArrayList<String>) {
         this.nakupData = nakupData //da posljemo homefragmentu
     }

@@ -5,6 +5,8 @@ class TravelData {
     public var mFromLocation : String = ""
     public var mToLocation : String = ""
     public var mDate : String = ""
+    public var mClass : String = ""
     public var mReturnDate : String = ""
+    public var mReturnClass : String = ""
 
 }

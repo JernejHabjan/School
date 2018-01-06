@@ -182,17 +182,15 @@ class Placilo : Fragment() {
                     while (i < userData!!.size) {
                         println("GOT USER")
                         i += 4
-
                     }
                 }
                 for (i in nakupData!!.indices) {
                     println(nakupData!![i])
-
                 }
 
                 if (nakupData!!.size > 4) {
-                    dvosnerna_display!!.text = "Da"
-
+                    val dvosmerna = view.findViewById(R.id.dvosnerna_display) as TextView
+                    dvosmerna!!.text = "Da"
                 }
 
                 val numUsers = userData!!.size / 4

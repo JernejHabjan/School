@@ -144,40 +144,27 @@ class VolleyHelper {
     }
 
     fun addTravel(activity: Activity, nakupData: ArrayList<String>, passengerData: ArrayList<String>){
-        val lokacija_odhoda = nakupData!![0]
-        val lokacija_prihoda = nakupData!![1]
-        val datum_odhoda = nakupData!![2]
-        val razred_odhoda = nakupData!![3]
-
-        print("ODHOD: " + lokacija_odhoda + " PRIHOD: " + lokacija_prihoda);
-        print("DATUM_ODHODA: " + datum_odhoda)
-        print("RAZRED_ODHODA: " + razred_odhoda)
-
         Log.i("PASSENGERS", "NUM_PASSENGERS: " + passengerData.size)
-
-       /*
-            "Prvi" -> factor *= 2.0f
-            "Poslovni" -> factor *= 1.5f
-            "Ekonomski" -> factor *= 1.2f
-        */
-
-        //Has return flight
-        if (nakupData!!.size > 4) {
-            val datum_prihoda = nakupData!![4]
-            val razred_prihoda = nakupData!![5]
-        }
-
 
         val service = "/ServiceTravelData.svc"
         val operationContract = "/Travel"
 
-
         val params = JSONObject()
-        params.put("roleID", passengerData)
+        params.put("passengerData", passengerData)
+        params.put("departureLocation", nakupData!![0])
+        params.put("arrivalLocation", nakupData!![1])
+        params.put("departureDate", nakupData!![2])
+        params.put("departureClass", nakupData!![3])
 
-        //val requestQueue = Volley.newRequestQueue(activity)
-        //requestQueue.add(writeRequest(params, service, operationContract))
-        //Log.e("Volley", "Added travel entry")
+        //Has return flight
+        if (nakupData!!.size > 4) {
+            params.put("returnDate", nakupData!![4])
+            params.put("returnClass", nakupData!![5])
+        }
+
+        val requestQueue = Volley.newRequestQueue(activity)
+        requestQueue.add(writeRequest(params, service, operationContract))
+        Log.e("Volley", "Added travel entry")
     }
 
     fun getTravels(activity: Activity, googleID: String): ArrayList<TravelData>{
@@ -190,14 +177,15 @@ class VolleyHelper {
         val strReq = JsonObjectRequest(Request.Method.GET, requestURL,
                 Response.Listener { response ->
                     if (response != null) {
-                        try {
-                            //travels
-                            Log.e("Volley", response.toString());
+                        for (i in 0 until response.length()) {
+                            try {
+                                val jsonObj = response.getJSONObject(i.toString())
 
-                        } catch (e: JSONException) {
-                            // If there is an error then output this to the logs.
-                            Log.e("Volley", "Invalid JSON Object.")
+                            } catch (e: JSONException) {
+                                Log.e("Volley", "Invalid JSON Object.")
+                            }
                         }
+
                     } else {
                         Log.e("Volley", "No responses found")
                     }
@@ -213,7 +201,31 @@ class VolleyHelper {
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(strReq)
 
+
+        //TODO TMP REMOVE
+        val tmpTravel: TravelData = TravelData()
+        tmpTravel.mOrderId=5
+        tmpTravel.mFromLocation="Ljubljana, Slovenia"
+        tmpTravel.mToLocation="New York, USA"
+        tmpTravel.mDate="1.1.1970"
+        tmpTravel.mClass="First"
+        tmpTravel.mReturnDate="1.1.1980"
+        tmpTravel.mReturnClass="First"
+        travels.add(tmpTravel)
+
         return travels
+    }
+
+    fun removeOrder(activity: Activity, orderID: Int){
+        val service = "/ServiceTravelData.svc"
+        val operationContract = "/RemoveOrer"
+
+        val params = JSONObject()
+        params.put("orderID", orderID)
+
+        val requestQueue = Volley.newRequestQueue(activity)
+        requestQueue.add(writeRequest(params, service, operationContract))
+        Log.e("Volley", "Removed order")
     }
 
 }

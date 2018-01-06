@@ -62,7 +62,7 @@ class Potniki : Fragment() {
         button_kupi.setOnClickListener { kupi_buttonClicked() }
         button_dodaj.setOnClickListener { dodaj_buttonClicked() }
 
-        
+
         //GETTING LAYOUT DATA
 
        /* val m_GID = recieveGID(this.arguments)
@@ -187,8 +187,10 @@ class Potniki : Fragment() {
         if (bundle != null)
         {
             userData = bundle.getStringArrayList("userData")
-            if (userData != null) {
+            if (userData != null && userData!!.size != 0) {
                 initPassengerTable(userData);
+            }else{
+                activityCommander.setVnosPotnikovFragment();
             }
         }
     }
@@ -202,7 +204,7 @@ class Potniki : Fragment() {
         {
             val row = TableRow(context)
 
-            val lp = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
+            val lp = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT)
             row.layoutParams = lp
 
             val ime = TextView(context)
@@ -221,7 +223,10 @@ class Potniki : Fragment() {
             }
 
 
-            val closeButton = Button(context);
+            var closeButton = View.inflate(context, R.layout.delete_button, null) as Button
+            closeButton.tag = i / 4
+
+            /*val closeButton = Button(context);
             closeButton.setLayoutParams(TableRow.LayoutParams(
                     TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT))
             closeButton.width = 50
@@ -229,17 +234,21 @@ class Potniki : Fragment() {
             //closeButton.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
             closeButton.text = "X"
             //closeButton.minimumWidth = 0
-            //closeButton.width = 20
-            closeButton.tag = i / 4;
+            //closeButton.width = 20*/
 
-            val index = i;
+
             closeButton.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(v : View?){
                     val id = Integer.parseInt(v!!.tag.toString())
                     Log.i("BUTTON", id.toString());
 
                     for(j in 0..3) userData!!.removeAt(id);
-                    Log.i("BUTTON_ARRAYSIZE", userData!!.size.toString());
+                    //Log.i("BUTTON_ARRAYSIZE", userData!!.size.toString());
+
+                    if(userData != null && userData!!.size == 0){
+                        //If we delete all passengers, then try to enter one
+                        activityCommander.setVnosPotnikovFragment();
+                    }
 
                     initPassengerTable(userData)
                 }
