@@ -86,7 +86,7 @@ class Placilo : Fragment() {
             mPrice -= randomPrice * mDiscount;
         }
 
-        val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
+        val format = SimpleDateFormat("d.M.yyyy", Locale.ENGLISH)
         var i = 0
         var totalPrice = 0.0
 

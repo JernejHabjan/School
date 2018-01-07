@@ -114,7 +114,7 @@ class VnosPotnikov : Fragment() {
         }
 
         try {
-            val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
+            val format = SimpleDateFormat("d.M.yyyy", Locale.ENGLISH)
             format.parse(date_field!!.text.toString())
         } catch (e: Exception) {
             Snackbar.make(vnos_container!!, "Vnesite pravilen format datum rojstva -> dan.mesec.leto", Snackbar.LENGTH_LONG).show()

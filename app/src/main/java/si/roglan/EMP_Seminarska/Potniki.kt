@@ -226,7 +226,7 @@ class Potniki : Fragment() {
             if(ime.text.length > maxTextLength + 3){
                 ime.text = ime.text.substring(0, maxTextLength) + "...";
             }
-            if(priimek.text.length > maxTextLength + 3 + 5){
+            if(priimek.text.length > maxTextLength + 3 + 3){
                 priimek.text = priimek.text.substring(0, maxTextLength) + "...";
             }
 

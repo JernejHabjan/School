@@ -14,7 +14,6 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import org.json.JSONException
 import org.json.JSONObject
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import java.text.SimpleDateFormat
@@ -166,7 +165,7 @@ class VolleyHelper {
 
                             val c = Calendar.getInstance();
                             c.add(Calendar.YEAR, -jsonObject.getString("age").toInt())
-                            passengerData.add(SimpleDateFormat("dd.MM.yyyy").format(c.time))
+                            passengerData.add(SimpleDateFormat("d.M.yyyy").format(c.time))
 
                         } catch (e: JSONException) {
                             // If there is an error then output this to the logs.
@@ -222,16 +221,22 @@ class VolleyHelper {
         if (nakupData!!.size > 4) {
             params.put("returnDate", nakupData!![4])
             params.put("returnClass", nakupData!![5])
+        }else{
+            params.put("returnDate", "")
+            params.put("returnClass", "")
         }
 
+        //TODO convert date to age
         //params.put("passengerData", "")//passengerData
+
+        Log.i("Travel PARAMETERS", params.toString())
 
         val service = "/ServiceTravelData.svc"
         val operationContract = "/Travel"
 
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(writeRequest(params, service, operationContract))
-        Log.e("Volley", "Added travel entry")
+        Log.i("Volley", "Added travel entry")
     }
 
     fun getTravels(travelsFragment: TravelsFragment, googleID: String): ArrayList<TravelData>{
@@ -288,18 +293,6 @@ class VolleyHelper {
         val requestQueue = Volley.newRequestQueue(travelsFragment.activity)
         requestQueue.add(strReq)
 
-
-        //TODO TMP REMOVE
-        /*val tmpTravel: TravelData = TravelData()
-        tmpTravel.mOrderId=5
-        tmpTravel.mFromLocation="Ljubljana, Slovenia"
-        tmpTravel.mToLocation="New York, USA"
-        tmpTravel.mDate="1.1.1970"
-        tmpTravel.mClass="First"
-        tmpTravel.mReturnDate="1.1.1980"
-        tmpTravel.mReturnClass="First"
-        travels.add(tmpTravel)*/
-
         return travels
     }
 
@@ -310,7 +303,7 @@ class VolleyHelper {
 
         val deleteRequest = StringRequest(Request.Method.DELETE, url,
                 Response.Listener { response ->
-                    Snackbar.make(view!!, "Naročilo '" + orderID + "' ste uspešno odstranili",
+                    Snackbar.make(view!!, "Potovanje '" + orderID + "' ste uspešno odstranili",
                             Snackbar.LENGTH_LONG).show()
                 },
                 Response.ErrorListener {

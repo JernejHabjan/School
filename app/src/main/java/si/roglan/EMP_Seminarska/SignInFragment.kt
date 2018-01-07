@@ -136,6 +136,8 @@ class SignInFragment : Fragment(), View.OnClickListener {
             if(username.isEmpty()){
                 Snackbar.make(view!!, "Vnesite veljavno ime", Snackbar.LENGTH_LONG).show()
             }else{
+                Snackbar.make(view!!, "Ime posodobljeno", Snackbar.LENGTH_LONG).show()
+
                 val googleID = account.id.toString();
                 VolleyHelper().updateUser(activity, googleID, username);
             }

@@ -2,24 +2,19 @@ package si.roglan.EMP_Seminarska
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.telephony.cdma.CdmaCellLocation
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.JsonArrayRequest
-import kotlinx.android.synthetic.main.fragment_placilo.*
-import org.json.JSONException
 import org.json.JSONObject
 import java.util.ArrayList
+
 
 class TravelsFragment : Fragment() {
     private lateinit var add_trip_float_button: FloatingActionButton
@@ -68,16 +63,26 @@ class TravelsFragment : Fragment() {
             grid_linear_layout_add.addView(noIDText)
         }*/
 
-        VolleyHelper().getTravels(this, m_GID);
+        updateTravelsListFromVolley(m_GID)
+        //updateTravelsList(view); //Already called inside volley helper
 
-        //updateTravelsList(view);
+        val handler = Handler()
+        val delay = 3000L //milliseconds
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                updateTravelsListFromVolley(m_GID)
+                //handler.postDelayed(this, delay)
+            }
+        }, delay)
 
         return view
     }
 
 
-    public fun updatePassengerData(passengerData: ArrayList<String>){
-
+    public fun updateTravelsListFromVolley(googleID: String){
+        Log.i("UPDATE", "UPDATED TRAVEL LIST")
+        VolleyHelper().getTravels(this, googleID);
     }
 
     public fun updateTravelsList(view: View?){
@@ -166,19 +171,27 @@ class TravelsFragment : Fragment() {
             closeButton.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     val id = Integer.parseInt(v!!.tag.toString())
-                    Log.i("ORDER_ID: ", id.toString());
+                    //Log.i("ORDER_ID: ", id.toString());
 
-                    for (j in 0 until mTravelsData.size){
-                        if(mTravelsData.get(j).mOrderId == id){ //Find correct id
-                            table!!.removeView(table!!.getChildAt(1 + j))
-                            mTravelsData.removeAt(j) //Remove array entry
-                            
-                            break
+                    AlertDialog.Builder(context)
+                        .setTitle("Izbris Potovanja")
+                        .setMessage("Ali res želite odstaniti potovanje?")
+                        .setPositiveButton(android.R.string.yes) { dialog, which ->
+                            for (j in 0 until mTravelsData.size){
+                                if(mTravelsData.get(j).mOrderId == id){ //Find correct id
+                                    table!!.removeView(table!!.getChildAt(1 + j))
+                                    mTravelsData.removeAt(j) //Remove array entry
+
+                                    break
+                                }
+                            }
+
+                            VolleyHelper().removeOrder(view, activity, id)
+                            //updateTravelsList(view)
                         }
-                    }
-
-                    VolleyHelper().removeOrder(view, activity, id)
-                    //updateTravelsList(view)
+                        .setNegativeButton(android.R.string.no) { dialog, which -> }
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show()
                 }
             })
 

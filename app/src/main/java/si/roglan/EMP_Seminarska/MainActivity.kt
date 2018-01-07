@@ -184,6 +184,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun setNakupFragment() {
+        //TODO maybe remove
+        userData.clear()
+
         setContainerFragment(Nakup(), "Nakup", null, "1")
     }
 
@@ -233,12 +236,13 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun finalizePurchase(price: Float, discount: Float) {
-        VolleyHelper().addTravel(this, m_GID, price, discount, nakupData, userData);
+        VolleyHelper().addTravel(this, m_GID, mPrice, discount, nakupData, userData);
 
         val bundle = Bundle()
         bundle.putString("GID", m_GID)
         setContainerFragment(TravelsFragment(), "Potovanja", bundle)
 
+        mPrice = 0.0f;
         nakupData.clear();
         userData.clear();
     }

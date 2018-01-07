@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.widget.AppCompatEditText
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -45,8 +46,8 @@ class Nakup : Fragment() {
 
     private var mOdhodAutocompleteString: String = ""
     private var mPrihodAutocompleteString: String = ""
-    private var mOdhodAutocomplete = SupportPlaceAutocompleteFragment()
-    private var mPrihodAutocomplete = SupportPlaceAutocompleteFragment()
+    private var mOdhodAutocomplete: SupportPlaceAutocompleteFragment? = null
+    private var mPrihodAutocomplete: SupportPlaceAutocompleteFragment? = null
 
     private var mPrice: Float = 0.0f
 
@@ -113,7 +114,7 @@ class Nakup : Fragment() {
 
         //Set initial departure and arrival dates
         val c = Calendar.getInstance();
-        val df = SimpleDateFormat("dd.MM.yyyy");
+        val df = SimpleDateFormat("d.M.yyyy");
 
         var datum_odhoda = view.findViewById(R.id.datum_odhoda) as EditText
         datum_odhoda.setText(df.format(c.getTime()));
@@ -138,7 +139,7 @@ class Nakup : Fragment() {
                 c.set(Calendar.MONTH, Integer.parseInt(dateArray[1]) - 1)
                 c.set(Calendar.YEAR, Integer.parseInt(dateArray[2]))
                 c.add(Calendar.DATE, 1)
-                datum_prihoda!!.setText(SimpleDateFormat("dd.MM.yyyy").format(c.time))
+                datum_prihoda!!.setText(SimpleDateFormat("d.M.yyyy").format(c.time))
 
             } else {
                 datum_prihoda.visibility = View.GONE
@@ -176,7 +177,7 @@ class Nakup : Fragment() {
                                     c.set(Calendar.MONTH, monthOfYear)
                                     c.set(Calendar.YEAR, year)
                                     c.add(Calendar.DATE, 1)
-                                    datum_prihoda!!.setText(SimpleDateFormat("dd.MM.yyyy").format(c.time))
+                                    datum_prihoda!!.setText(SimpleDateFormat("d.M.yyyy").format(c.time))
                                 }
                             }
                         }, year, month - 1, day)
@@ -261,20 +262,21 @@ class Nakup : Fragment() {
         else
             mGoogleApiClient!!.connect()
 
-
-        mOdhodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+        mOdhodAutocomplete = SupportPlaceAutocompleteFragment()
+        mOdhodAutocomplete!!.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 Log.i("Autocomplete", "Place: " + place.name)
 
-                /*mOdhodAutocompleteString = (place.name.toString() + "\n"
-                        + place.id + "\n"
-                        + place.latLng.toString() + "\n"
-                        + place.address + "\n"
-                        + place.attributions)*/
-                //paste_location_view.text = placeDetailsStr
-
                 mOdhodAutocompleteString = place.name.toString()
-                mOdhodAutocomplete.setText(mOdhodAutocompleteString)
+                //mOdhodAutocomplete!!.setText(mOdhodAutocompleteString)
+
+                val odhodLinearLayout = mOdhodAutocomplete!!.view as LinearLayout
+
+                //val t = odhodLinearLayout.getChildAt(1) as AppCompatEditText
+                val t = odhodLinearLayout.findViewById(R.id.place_autocomplete_search_input) as EditText
+                t.setText("TESTING FEATURE")
+
+                Log.i("AUTOCOMPLETE: ", odhodLinearLayout.getChildAt(1).toString())
             }
 
             override fun onError(status: Status) {
@@ -282,18 +284,21 @@ class Nakup : Fragment() {
             }
         })
 
-        mPrihodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+
+        mPrihodAutocomplete = SupportPlaceAutocompleteFragment()
+        mPrihodAutocomplete!!.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 Log.i("Autocomplete", "Place: " + place.name)
 
                 mPrihodAutocompleteString = place.name.toString()
-                mPrihodAutocomplete.setText(mPrihodAutocompleteString)
+                //mPrihodAutocomplete!!.setText(mPrihodAutocompleteString)
             }
 
             override fun onError(status: Status) {
                 Log.i("Autocomplete fragment", "An error occurred: " + status)
             }
         })
+
 
 
         val ft = fragmentManager.beginTransaction()
@@ -301,9 +306,18 @@ class Nakup : Fragment() {
         ft.replace(R.id.fragment_prihod, mPrihodAutocomplete)
         ft.commit()
 
-        /*val fragmentOdhod = view.findViewById(R.id.fragment_odhod)
-        val prihodEditText = mOdhodAutocomplete.view!!.findViewById(
-                R.id.place_autocomplete_search_input) as EditText
+        Log.i("ACCCC:", mOdhodAutocomplete!!.view.toString())
+
+        val f = fragmentManager.findFragmentById(R.id.fragment_odhod)
+        Log.i("ACCCC:", f.view.toString())
+
+        /*val fragmentOdhod = view.findViewById(R.id.fragment_odhod) as FrameLayout
+        val prihodEditText = fragmentOdhod.findViewById(R.id.place_autocomplete_search_input)
+        Log.i("AUTOCOMPLETE:", prihodEditText.toString())*/
+
+        /**/
+
+        /*mOdhodAutocomplete.view!!.findViewById(
         prihodEditText.setText("DEFAULT TEXT")*/
     }
 
@@ -314,7 +328,7 @@ class Nakup : Fragment() {
             return false
         }
         try {
-            val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
+            val format = SimpleDateFormat("d.M.yyyy", Locale.ENGLISH)
             format.parse(datum_odhoda.text.toString())
 
         } catch (e: Exception) {
@@ -329,7 +343,7 @@ class Nakup : Fragment() {
                 return false
             }
             try {
-                val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
+                val format = SimpleDateFormat("d.M.yyyy", Locale.ENGLISH)
                 format.parse(datum_prihoda.text.toString())
             } catch (e: Exception) {
                 Snackbar.make(home_container, "Vnesite pravilen format datum prihoda -> dan.mesec.leto", Snackbar.LENGTH_LONG).show()
