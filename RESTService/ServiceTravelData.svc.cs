@@ -80,10 +80,10 @@ namespace RESTService
         }
 
 
-        public int GetMaxIndex(SqlConnection con, string tableName)
+        public int GetMaxIndex(SqlConnection con, string tableName, string idName)
         {
        
-            string sql = "SELECT COUNT(*) FROM [" + tableName + "]";
+            string sql = "SELECT MAX("+ idName + ") FROM [" + tableName + "]";
             SqlCommand cmd = new SqlCommand(sql, con);
      
 
@@ -117,7 +117,7 @@ namespace RESTService
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", info.fromLocation));
                 cmd.ExecuteNonQuery();
-                int InitialFromLocationID = GetMaxIndex(con, "Location");
+                int InitialFromLocationID = GetMaxIndex(con, "Location", "locationID");
 
                 // THEN ADD TO LOCATION
 
@@ -125,7 +125,7 @@ namespace RESTService
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", info.toLocation));
                 cmd.ExecuteNonQuery();
-                int InitialToLocationID = GetMaxIndex(con, "Location");
+                int InitialToLocationID = GetMaxIndex(con, "Location", "locationID");
 
 
                 //ADD PLANE
@@ -134,7 +134,7 @@ namespace RESTService
                 cmd.Parameters.Add(new SqlParameter("0", info.planeName));
                 cmd.Parameters.Add(new SqlParameter("1", info.planeCompany));
                 cmd.ExecuteNonQuery();
-                int initialPlaneID = GetMaxIndex(con, "Plane");
+                int initialPlaneID = GetMaxIndex(con, "Plane", "planeID");
 
 
                 //ADD INITIAL FLIGHT INFO
@@ -147,7 +147,7 @@ namespace RESTService
                 cmd.Parameters.Add(new SqlParameter("4", info.discount));
                 cmd.Parameters.Add(new SqlParameter("5", info.price));
                 cmd.ExecuteNonQuery();
-                int initialFlightID = GetMaxIndex(con, "Flight");
+                int initialFlightID = GetMaxIndex(con, "Flight", "flightID");
 
 
                 //ADD PLANE
@@ -156,7 +156,7 @@ namespace RESTService
                 cmd.Parameters.Add(new SqlParameter("0", info.planeName));
                 cmd.Parameters.Add(new SqlParameter("1", info.planeCompany));
                 cmd.ExecuteNonQuery();
-                int returnPlaneID = GetMaxIndex(con, "Plane");
+                int returnPlaneID = GetMaxIndex(con, "Plane", "planeID");
 
 
 
@@ -170,7 +170,7 @@ namespace RESTService
                 cmd.Parameters.Add(new SqlParameter("4", info.discount));
                 cmd.Parameters.Add(new SqlParameter("5", info.price));
                 cmd.ExecuteNonQuery();
-                int returnFlightID = GetMaxIndex(con, "Flight");
+                int returnFlightID = GetMaxIndex(con, "Flight", "flightID");
 
                 
 
@@ -200,9 +200,9 @@ namespace RESTService
                 cmd.Parameters.Add(new SqlParameter("1", initialFlightID));
                 cmd.Parameters.Add(new SqlParameter("2", returnFlightID));
                 cmd.ExecuteNonQuery();
-                int orderID = GetMaxIndex(con, "Order");
+                int orderID = GetMaxIndex(con, "Order", "orderID");
 
-
+                
                 // WHEN WE HAVE ORDER WE CAN CONNECT IT WITH PASSENGERS
                 for (int i = 0; i < info.passengerData.Count; i += 4)
                 {
@@ -213,11 +213,12 @@ namespace RESTService
                     cmd.Parameters.Add(new SqlParameter("0", info.passengerData[i + 0]));
                     cmd.Parameters.Add(new SqlParameter("1", info.passengerData[i + 1]));
                     cmd.Parameters.Add(new SqlParameter("2", info.passengerData[i + 2]));
-                    cmd.Parameters.Add(new SqlParameter("3", info.passengerData[i + 3]));
+                    cmd.Parameters.Add(new SqlParameter("3", Convert.ToInt32(info.passengerData[i + 3])));
                     cmd.Parameters.Add(new SqlParameter("4", orderID));
                     cmd.ExecuteNonQuery();
                 }
-
+                
+            
                 con.Close();
             }
         }
