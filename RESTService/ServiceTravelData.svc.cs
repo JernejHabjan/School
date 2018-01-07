@@ -143,7 +143,7 @@ namespace RESTService
                 cmd.Parameters.Add(new SqlParameter("0", InitialFromLocationID));
                 cmd.Parameters.Add(new SqlParameter("1", initialPlaneID));
                 cmd.Parameters.Add(new SqlParameter("2", InitialToLocationID));
-                cmd.Parameters.Add(new SqlParameter("3", info.departureDate));
+                cmd.Parameters.Add(new SqlParameter("3", Convert.ToDateTime(info.departureDate)));
                 cmd.Parameters.Add(new SqlParameter("4", info.discount));
                 cmd.Parameters.Add(new SqlParameter("5", info.price));
                 cmd.ExecuteNonQuery();
@@ -166,7 +166,7 @@ namespace RESTService
                 cmd.Parameters.Add(new SqlParameter("0", InitialToLocationID));
                 cmd.Parameters.Add(new SqlParameter("1", returnPlaneID));
                 cmd.Parameters.Add(new SqlParameter("2", InitialFromLocationID));
-                cmd.Parameters.Add(new SqlParameter("3", info.returnDate));
+                cmd.Parameters.Add(new SqlParameter("3", Convert.ToDateTime(info.returnDate)));
                 cmd.Parameters.Add(new SqlParameter("4", info.discount));
                 cmd.Parameters.Add(new SqlParameter("5", info.price));
                 cmd.ExecuteNonQuery();

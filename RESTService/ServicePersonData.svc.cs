@@ -122,8 +122,8 @@ namespace RESTService
                 con.Open();
 
                 string sql = "UPDATE [User] set "; 
-                if (updateRole) sql+= " [User].roleID=@0, ";
-                if(updateName) sql+= " [User].name=@2, ";
+                if (updateRole) sql+= " [User].roleID=@0,";
+                if(updateName) sql+= " [User].name=@2,";
                 if(updateEmail) sql+= " [User].email=@3 ";
 
                 //Remove comma at the end
@@ -152,23 +152,22 @@ namespace RESTService
                 con.Open();
                 string sql = "SELECT [Passenger].name, [Passenger].surname, [Passenger].gender, [Passenger].age " +
                     " FROM [Passenger] " +
-                    " JOIN [Order] USING(passengerID) " +
-                    " WHERE [Order].orderID=@OID";
+                    " WHERE [Passenger].orderID=@OID";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("OID", orderID));
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
+               using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        reader.GetString(1);
                         passengers.Add(new Passenger
                         {
                             name = reader.GetString(0),
                             surname = reader.GetString(1),
                             gender = reader.GetString(2),
-                            age = reader.GetInt32(3),
-                        });
-
+                            age =  reader.GetInt32(3)                       
+                        });          
                     }
                 }
                 con.Close();

@@ -45,7 +45,7 @@ namespace RESTService
         public string toLocation { get; set; }
 
         [DataMember]
-        public DateTime departureDate { get; set; }
+        public string departureDate { get; set; }
         [DataMember]
         public string departureClass { get; set; }
         
@@ -55,7 +55,7 @@ namespace RESTService
         public float discount { get; set; }
     
         [DataMember]
-        public DateTime returnDate { get; set; }
+        public string returnDate { get; set; }
         [DataMember]
         public string returnClass { get; set; }
 

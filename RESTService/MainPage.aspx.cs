@@ -109,8 +109,8 @@ namespace RESTService
                 departureClass = "prvi",
                 returnClass = "prvi",
 
-                departureDate = Convert.ToDateTime("2017-12-03T00:00:00.0000000"),
-                returnDate = Convert.ToDateTime("2017-12-03T00:00:00.0000000"),
+                departureDate = "3.12.2017",
+                returnDate = "3.12.2017",
 
                 price = 243,
                 discount = 33,
