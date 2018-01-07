@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(),
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
             Snackbar.make(findViewById(R.id.main_container),
-                    "Prijavljeni ste kot '" + account.displayName.toString() + "'", Snackbar.LENGTH_LONG).show()
+                    "Prijavljeni ste kot '" + account.email.toString() + "'", Snackbar.LENGTH_LONG).show()
 
             m_verifiedAccount = true
         }
