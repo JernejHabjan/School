@@ -136,7 +136,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
         if(account != null){
             val username = mUsernameTextEdit!!.text.toString();
             val googleID = account.id.toString();
-            VolleyHelper().renameUser(activity, googleID, username);
+            VolleyHelper().updateUser(activity, googleID, username);
         }
     }
 
@@ -145,20 +145,20 @@ class SignInFragment : Fragment(), View.OnClickListener {
         {
             activityCommander.onLogin(account)
 
+            //write this account to our database if it doensn't exist yet
+            managageDatabaseAccount(account)
+
             mStatusTextView!!.text = getString(R.string.signed_in_fmt)
             mUsernameTextEdit!!.setText(account.displayName, TextView.BufferType.EDITABLE);
             mEmailTextView!!.text = "e-mail: " + account.email;
 
+            //Update username from database
+            VolleyHelper().getUsername(activity, mUsernameTextEdit!!, account.id.toString())
+
             mUsernameTextEdit!!.visibility = View.VISIBLE;
             mEmailTextView!!.visibility = View.VISIBLE;
-
             view!!.findViewById(R.id.sign_in_button).visibility = View.GONE
             view!!.findViewById(R.id.sign_out_and_disconnect).visibility = View.VISIBLE
-
-
-            //write this account to our database if it doensn't exist yet
-            managageDatabaseAccount(account)
-
 
         } else {
             mUsernameTextEdit!!.visibility = View.GONE;

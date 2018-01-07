@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.telephony.cdma.CdmaCellLocation
 import android.util.Log
@@ -15,6 +16,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonArrayRequest
+import kotlinx.android.synthetic.main.fragment_placilo.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.ArrayList
@@ -66,17 +68,16 @@ class TravelsFragment : Fragment() {
             grid_linear_layout_add.addView(noIDText)
         }*/
 
-        updateTravelsList(view, m_GID);
+        VolleyHelper().getTravels(this, "5432t532g52f432g432");
+
+        //updateTravelsList(view);
 
         return view
     }
 
 
-    private fun updateTravelsList(view: View?, googleID: String){
-        mTravelsData = VolleyHelper().getTravels(activity, googleID);
-
+    public fun updateTravelsList(view: View?){
         val table = view!!.findViewById(R.id.travels_table) as TableLayout;
-        val travel_layout = view!!.findViewById(R.id.travel_layout) as TableRow;
 
         //Remove all children except column names
         for (j in 1 until table!!.childCount)
@@ -132,8 +133,15 @@ class TravelsFragment : Fragment() {
                     val id = Integer.parseInt(v!!.tag.toString())
                     Log.i("ORDER_ID: ", id.toString());
 
-                    //TODO
-                    //setNakupFragment("DATA")
+                    for (j in 0 until mTravelsData.size){
+                        val tData = mTravelsData.get(j)
+                        if(tData.mOrderId == id){ //Find correct id
+                            activityCommander.setNakupFragment(tData.mFromLocation, tData.mToLocation,
+                                    tData.mDate, tData.mReturnDate, tData.mClass, tData.mReturnClass)
+                        }
+                    }
+
+                    activityCommander.updatePassengerData(VolleyHelper().getPassengerData(activity, id))
                 }
             })
 
@@ -147,9 +155,12 @@ class TravelsFragment : Fragment() {
                     Log.i("ORDER_ID: ", id.toString());
 
                     //mTravelsData!!.removeAt(id);
-                    VolleyHelper().removeOrder(activity, id)
+                    VolleyHelper().removeOrder(view, activity, id)
 
-                    updateTravelsList(view, googleID)
+                    Snackbar.make(view, "Uspešno ste odstanili prejšnje potovanje",
+                            Snackbar.LENGTH_LONG).show()
+
+                    updateTravelsList(view)
                 }
             })
 
@@ -225,6 +236,7 @@ class TravelsFragment : Fragment() {
     }
 
     internal interface TravelsListener {
+        fun updatePassengerData(passengerData: ArrayList<String>)
         fun setNakupFragment()
         fun setNakupFragment(fromLocation: String, toLocation: String, date: String, returnDate: String,
                              travelClass: String, returnClass: String)

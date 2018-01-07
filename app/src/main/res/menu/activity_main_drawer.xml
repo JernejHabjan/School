@@ -12,7 +12,7 @@
             android:title="Nakup" />
         <item
             android:id="@+id/nav_itm"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="Potniki" />
     </group>
 

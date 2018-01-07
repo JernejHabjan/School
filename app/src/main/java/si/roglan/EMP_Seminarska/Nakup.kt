@@ -45,6 +45,8 @@ class Nakup : Fragment() {
 
     private var mOdhodAutocompleteString: String = ""
     private var mPrihodAutocompleteString: String = ""
+    private var mOdhodAutocomplete = SupportPlaceAutocompleteFragment()
+    private var mPrihodAutocomplete = SupportPlaceAutocompleteFragment()
 
 
     override fun onAttach(context: Context?) {
@@ -58,18 +60,22 @@ class Nakup : Fragment() {
     }
 
 
-    fun recieveUserData(bundle: Bundle?) {
+    fun recieveNakupData(bundle: Bundle?) {
         if (bundle != null) {
 
-            val userData = bundle.getStringArrayList("userData")
-            if (userData != null) {
-                /*destinacije.setText(userData[0]);
-                home_surname_input_var.setText(userData[1]);
-                if(userData[2].equals("Moški")) radioButton_male_var.setChecked(true);
-                else radioButton_female_var.setChecked(true);
-                visina_input_var.setText(userData[3]);
-                */
-                Snackbar.make(home_container, userData[0] + "<- ---USER DATA 0", Snackbar.LENGTH_LONG).show()
+            val nakupData = bundle.getStringArrayList("nakupData")
+            if (nakupData != null) {
+
+                /*nakupData.add(fromLocation)
+                nakupData.add(toLocation)
+                nakupData.add(date)
+                nakupData.add(travelClass)
+                nakupData.add(returnDate)
+                nakupData.add(returnClass)*/
+
+                mOdhodAutocompleteString = nakupData[0]
+                mPrihodAutocompleteString = nakupData[1]
+
             }
         }
     }
@@ -89,8 +95,6 @@ class Nakup : Fragment() {
         datum_prihoda_view.visibility = View.GONE
         razred_prihoda_view.visibility = View.GONE
 
-
-        recieveUserData(this.arguments)
 
         //Set initial departure and arrival dates
         val c = Calendar.getInstance();
@@ -200,16 +204,17 @@ class Nakup : Fragment() {
             }
         })
 
-
         setupAutocompleteFragments(view)
 
         //Must be called after setting autocomplete fragments (avoid null values)
         val doloci_potnike_button = view.findViewById(R.id.doloci_potnike_button) as Button
         doloci_potnike_button.setOnClickListener { v -> dolociPotnikeButtonClicked(v) }
 
+        recieveNakupData(this.arguments)
 
         return view
     }
+
 
 
     override fun onStop() {
@@ -218,8 +223,6 @@ class Nakup : Fragment() {
         mGoogleApiClient!!.stopAutoManage(activity)
         mGoogleApiClient!!.disconnect()
     }
-
-
 
     private fun setAutocompleteFragmentOnSelectedListener(fragment: SupportPlaceAutocompleteFragment){
 
@@ -244,9 +247,7 @@ class Nakup : Fragment() {
             mGoogleApiClient!!.connect()
 
 
-
-        var odhodAutocomplete = SupportPlaceAutocompleteFragment()
-        odhodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+        mOdhodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 Log.i("Autocomplete", "Place: " + place.name)
 
@@ -258,7 +259,7 @@ class Nakup : Fragment() {
                 //paste_location_view.text = placeDetailsStr
 
                 mOdhodAutocompleteString = place.name.toString()
-                odhodAutocomplete.setText(mOdhodAutocompleteString)
+                mOdhodAutocomplete.setText(mOdhodAutocompleteString)
             }
 
             override fun onError(status: Status) {
@@ -266,13 +267,12 @@ class Nakup : Fragment() {
             }
         })
 
-        var prihodAutocomplete = SupportPlaceAutocompleteFragment()
-        prihodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+        mPrihodAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 Log.i("Autocomplete", "Place: " + place.name)
 
                 mPrihodAutocompleteString = place.name.toString()
-                prihodAutocomplete.setText(mPrihodAutocompleteString)
+                mPrihodAutocomplete.setText(mPrihodAutocompleteString)
             }
 
             override fun onError(status: Status) {
@@ -282,8 +282,8 @@ class Nakup : Fragment() {
 
 
         val ft = fragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_odhod, odhodAutocomplete)
-        ft.replace(R.id.fragment_prihod, prihodAutocomplete)
+        ft.replace(R.id.fragment_odhod, mOdhodAutocomplete)
+        ft.replace(R.id.fragment_prihod, mPrihodAutocomplete)
         ft.commit()
     }
 

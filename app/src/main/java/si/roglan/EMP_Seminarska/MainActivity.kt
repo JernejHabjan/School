@@ -188,11 +188,26 @@ class MainActivity : AppCompatActivity(),
     override fun setNakupFragment(fromLocation: String, toLocation: String, date: String,
                                   returnDate: String, travelClass: String, returnClass: String)
     {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        nakupData.clear();
+        nakupData.add(fromLocation)
+        nakupData.add(toLocation)
+        nakupData.add(date)
+        nakupData.add(travelClass)
+        nakupData.add(returnDate)
+        nakupData.add(returnClass)
+
+        val bundle = Bundle()
+        bundle.putStringArrayList("nakupData", nakupData)
+
+        setContainerFragment(Nakup(), "Nakup", bundle, "1")
     }
 
     override fun sendNakupData(nakupData: ArrayList<String>) {
         this.nakupData = nakupData //da posljemo homefragmentu
+    }
+
+    override fun updatePassengerData(passengerData: ArrayList<String>) {
+        this.userData = passengerData
     }
 
     override fun setPotnikiFragment() {
@@ -212,12 +227,12 @@ class MainActivity : AppCompatActivity(),
         setPotnikiFragment()
     }
 
-    override fun finalizePurchase(discount: Float) {
+    override fun finalizePurchase(price: Float, discount: Float) {
+        VolleyHelper().addTravel(this, m_GID, price, discount, nakupData, userData);
+
         val bundle = Bundle()
         bundle.putString("GID", m_GID)
         setContainerFragment(TravelsFragment(), "Potovanja", bundle)
-
-        VolleyHelper().addTravel(this, nakupData, userData);
 
         nakupData.clear();
         userData.clear();

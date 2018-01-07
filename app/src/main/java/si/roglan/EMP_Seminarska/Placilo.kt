@@ -26,6 +26,7 @@ class Placilo : Fragment() {
     private lateinit var priimek_placnika: EditText
     private lateinit var ime_placnika: EditText
     private var mDiscount: Float = 0.0f;
+    private var mPrice: Float = 0.0f;
 
     private lateinit var activityCommander: PlaciloListener
 
@@ -73,9 +74,19 @@ class Placilo : Fragment() {
     }
 
     private fun calculatePrice(view: View) {
+        //Generate random discount
+        val discountInt = Random().nextInt()
+        mDiscount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 15.0f) / 100.0f;
+
+        //Generate random price
+        val maxPrice = 400;
+        var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat();
+        mPrice -= randomPrice * mDiscount;
+
+
         val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
-        var karta_price = 0;
         var i = 0
+        var totalPrice = 0.0
 
         while (i < userData!!.size)
         {
@@ -124,18 +135,7 @@ class Placilo : Fragment() {
                 "Ekonomski" -> factor *= 1.2f
             }
 
-
-           //Generate random discount
-            val discountInt = Random().nextInt()
-            mDiscount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 15.0f) / 100.0f;
-
-            //Generate random price
-            val maxPrice = 400;
-            var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat();
-            randomPrice -= randomPrice * mDiscount;
-
-            karta_price += (randomPrice * factor).toInt()
-
+            totalPrice += (randomPrice * factor)
 
             //Has return flight
             if (nakupData!!.size > 4) {
@@ -156,13 +156,13 @@ class Placilo : Fragment() {
                     "Ekonomski" -> factor *= 1.2f
                 }
 
-                karta_price += (randomPrice * factor).toInt()
+                totalPrice += (randomPrice * factor).toInt()
             }
             i += 4
         }
 
         val priceDisplay = view.findViewById(R.id.cena_display) as TextView;
-        priceDisplay.text = Integer.toString(karta_price)
+        priceDisplay.text = totalPrice.toString()
     }
 
     private fun recieveUser_NakupData(view: View, bundle: Bundle?) {
@@ -216,7 +216,7 @@ class Placilo : Fragment() {
                         Snackbar.make(placilo_relative!!, "Nakup ste uspešno opravili", Snackbar.LENGTH_LONG).show()
 
                         //TODO if data from MainActivity not matched, pass through here
-                        activityCommander.finalizePurchase(mDiscount);
+                        activityCommander.finalizePurchase(mPrice, mDiscount);
                     }
                     .setNegativeButton(android.R.string.no) { dialog, which -> }
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -227,7 +227,7 @@ class Placilo : Fragment() {
 
 
     internal interface PlaciloListener {
-        fun finalizePurchase(discount: Float)
+        fun finalizePurchase(price: Float, discount: Float)
     }
 
 }
