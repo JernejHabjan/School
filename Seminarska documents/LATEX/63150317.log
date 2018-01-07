@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.6)  7 JAN 2018 21:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.6)  8 JAN 2018 00:05
 entering extended mode
 **./63150317.tex
 (63150317.tex
@@ -97,6 +97,27 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 \Gin@req@width=\dimen105
 )
 (63150317.aux
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
 
 LaTeX Warning: Label `sl:koncept' multiply defined.
 
@@ -208,32 +229,96 @@ Package pdftex.def Info: bazaVAzure.png used on input line 48.
  [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2 <./bazaVAzure.png>]
-<loginScreen.jpg, id=16, 1084.05pt x 1927.2pt>
-File: loginScreen.jpg Graphic file (type jpg)
- <use loginScreen.jpg>
-Package pdftex.def Info: loginScreen.jpg used on input line 98.
+<GUI/login.jpg, id=16, 1445.4pt x 2569.6pt>
+File: GUI/login.jpg Graphic file (type jpg)
+ <use GUI/login.jpg>
+Package pdftex.def Info: GUI/login.jpg used on input line 98.
 (pdftex.def)             Requested size: 360.0pt x 640.0067pt.
 
 
 LaTeX Warning: Float too large for page by 69.93561pt on input line 101.
 
-<nakupScreen.jpg, id=17, 1084.05pt x 1927.2pt>
-File: nakupScreen.jpg Graphic file (type jpg)
- <use nakupScreen.jpg>
-Package pdftex.def Info: nakupScreen.jpg used on input line 104.
+<GUI/potovanja.jpg, id=17, 1445.4pt x 2569.6pt>
+File: GUI/potovanja.jpg Graphic file (type jpg)
+ <use GUI/potovanja.jpg>
+Package pdftex.def Info: GUI/potovanja.jpg used on input line 104.
 (pdftex.def)             Requested size: 360.0pt x 640.0067pt.
 
 
 LaTeX Warning: Float too large for page by 69.93561pt on input line 107.
 
-<potnikiScreen.jpg, id=18, 1084.05pt x 1927.2pt>
-File: potnikiScreen.jpg Graphic file (type jpg)
- <use potnikiScreen.jpg>
-Package pdftex.def Info: potnikiScreen.jpg used on input line 110.
+<GUI/nakup.jpg, id=18, 1445.4pt x 2569.6pt>
+File: GUI/nakup.jpg Graphic file (type jpg)
+ <use GUI/nakup.jpg>
+Package pdftex.def Info: GUI/nakup.jpg used on input line 110.
 (pdftex.def)             Requested size: 360.0pt x 640.0067pt.
 
 
 LaTeX Warning: Float too large for page by 69.93561pt on input line 113.
+
+<GUI/Potniki.jpg, id=19, 1445.4pt x 2569.6pt>
+File: GUI/Potniki.jpg Graphic file (type jpg)
+ <use GUI/Potniki.jpg>
+Package pdftex.def Info: GUI/Potniki.jpg used on input line 118.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 121.
+
+<GUI/vnosPotnika.jpg, id=20, 1445.4pt x 2569.6pt>
+File: GUI/vnosPotnika.jpg Graphic file (type jpg)
+ <use GUI/vnosPotnika.jpg>
+Package pdftex.def Info: GUI/vnosPotnika.jpg used on input line 125.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 128.
+
+<GUI/placilo.jpg, id=21, 1445.4pt x 2569.6pt>
+File: GUI/placilo.jpg Graphic file (type jpg)
+ <use GUI/placilo.jpg>
+Package pdftex.def Info: GUI/placilo.jpg used on input line 132.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 67.80644pt on input line 135.
+
+<GUI/zakljucekPlacila.jpg, id=22, 1445.4pt x 2569.6pt>
+File: GUI/zakljucekPlacila.jpg Graphic file (type jpg)
+
+<use GUI/zakljucekPlacila.jpg>
+Package pdftex.def Info: GUI/zakljucekPlacila.jpg used on input line 138.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 141.
+
+<GUI/navigation.jpg, id=23, 1445.4pt x 2569.6pt>
+File: GUI/navigation.jpg Graphic file (type jpg)
+ <use GUI/navigation.jpg>
+Package pdftex.def Info: GUI/navigation.jpg used on input line 144.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 147.
+
+<GUI/autocomplete.jpg, id=24, 1445.4pt x 2569.6pt>
+File: GUI/autocomplete.jpg Graphic file (type jpg)
+ <use GUI/autocomplete.jpg>
+Package pdftex.def Info: GUI/autocomplete.jpg used on input line 150.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 153.
+
+<GUI/datePicker.jpg, id=25, 1445.4pt x 2569.6pt>
+File: GUI/datePicker.jpg Graphic file (type jpg)
+ <use GUI/datePicker.jpg>
+Package pdftex.def Info: GUI/datePicker.jpg used on input line 156.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 67.80644pt on input line 159.
 
 (63150317.bbl
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -250,17 +335,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--22
  / signin$\OT1/cmr/m/n/10.95 ,
  []
 
-) [4] [5 <./loginScreen.jpg>] [6 <./nakupScreen.jpg>] [7 <./potnikiScreen.jpg>]
-(63150317.aux)
+) [4] [5 <./GUI/login.jpg>] [6 <./GUI/potovanja.jpg>] [7 <./GUI/nakup.jpg>]
+[8 <./GUI/Potniki.jpg>] [9 <./GUI/vnosPotnika.jpg>] [10 <./GUI/placilo.jpg>]
+[11 <./GUI/zakljucekPlacila.jpg>] [12 <./GUI/navigation.jpg>] [13 <./GUI/autoco
+mplete.jpg>] [14 <./GUI/datePicker.jpg>] (63150317.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2959 strings out of 493323
- 40088 string characters out of 3139066
- 110277 words of memory out of 3000000
- 6459 multiletter control sequences out of 15000+200000
+ 2995 strings out of 493323
+ 40810 string characters out of 3139066
+ 112279 words of memory out of 3000000
+ 6487 multiletter control sequences out of 15000+200000
  8671 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,7n,25p,388b,667s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -270,9 +357,9 @@ es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmtt10.pfb>
-Output written on 63150317.pdf (7 pages, 425271 bytes).
+Output written on 63150317.pdf (14 pages, 3630445 bytes).
 PDF statistics:
- 56 PDF objects out of 1000 (max. 8388607)
+ 85 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
