@@ -23,15 +23,15 @@ namespace RESTService
             {
                 con.Open(); //TODO get all the data
                 string sql = "" +
-                    "SELECT Plane.name as returnPlaneName, Plane.company as returnPlaneCompany, returnToLocation, returnFromLocation, fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany,  returnDate, returnDiscount, returnPrice FROM Plane " +
-                    "    JOIN(SELECT Location.name as returnToLocation, returnFromLocation, fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany, returnDate, returnDiscount, returnPrice, returnPlaneID  FROM Location " +
-                    "        JOIN(SELECT Location.name as returnFromLocation, fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany, returnToLocationID, returnDate, returnDiscount, returnPrice, returnPlaneID  FROM Location " +
-                    "            JOIN(SELECT fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany, Flight.fromLocationID as returnFromLocationID, Flight.toLocationID as returnToLocationID, date as returnDate, discount as returnDiscount, price as returnPrice, planeID as returnPlaneID FROM Flight " +
-                    "                JOIN(SELECT fromLocationName, toLocationName, returnFlightID, initialPrice, initialDate, initialDiscount, Plane.name as initialPlaneName, Plane.company as initialPlaneCompany FROM Plane " +
-                    "                    JOIN(SELECT FromLocation.name as fromLocationName, toLocationName, returnFlightID, planeID as initialPlaneID, price as initialPrice, date as initialDate, discount as initialDiscount   FROM Location as FromLocation " +
-                    "                        JOIN(SELECT fromLocationID, planeID, date, discount, price, ToLocation.name as toLocationName, returnFlightID FROM Location as ToLocation " +
-                    "                            JOIN(SELECT fromLocationID, planeID, toLocationID, date, discount, price, returnFlightID FROM Flight as AllInitialFlights " +
-                    "                                JOIN(SELECT  initialFlightID, returnFlightID  FROM[Order]  AS AllOrders " +
+                    "SELECT orderID, Plane.name as returnPlaneName, Plane.company as returnPlaneCompany, returnToLocation, returnFromLocation, fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany,  returnDate, returnDiscount, returnPrice FROM Plane " +
+                    "    JOIN(SELECT orderID, Location.name as returnToLocation, returnFromLocation, fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany, returnDate, returnDiscount, returnPrice, returnPlaneID  FROM Location " +
+                    "        JOIN(SELECT orderID, Location.name as returnFromLocation, fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany, returnToLocationID, returnDate, returnDiscount, returnPrice, returnPlaneID  FROM Location " +
+                    "            JOIN(SELECT orderID, fromLocationName, toLocationName, initialPrice, initialDate, initialDiscount, initialPlaneName, initialPlaneCompany, Flight.fromLocationID as returnFromLocationID, Flight.toLocationID as returnToLocationID, date as returnDate, discount as returnDiscount, price as returnPrice, planeID as returnPlaneID FROM Flight " +
+                    "                JOIN(SELECT orderID, fromLocationName, toLocationName, returnFlightID, initialPrice, initialDate, initialDiscount, Plane.name as initialPlaneName, Plane.company as initialPlaneCompany FROM Plane " +
+                    "                    JOIN(SELECT orderID, FromLocation.name as fromLocationName, toLocationName, returnFlightID, planeID as initialPlaneID, price as initialPrice, date as initialDate, discount as initialDiscount   FROM Location as FromLocation " +
+                    "                        JOIN(SELECT orderID, fromLocationID, planeID, date, discount, price, ToLocation.name as toLocationName, returnFlightID FROM Location as ToLocation " +
+                    "                            JOIN(SELECT orderID, fromLocationID, planeID, toLocationID, date, discount, price, returnFlightID FROM Flight as AllInitialFlights " +
+                    "                                JOIN(SELECT orderID, initialFlightID, returnFlightID  FROM[Order]  AS AllOrders " +
                     "                                    WHERE AllOrders.userID = ( " +
                     "                                        SELECT[User].userID FROM[User] " +
                     "                                            WHERE[User].googleID = @googleID)) as Orders " +
@@ -42,7 +42,7 @@ namespace RESTService
                     "                ON(Flight.flightID = returnFlightID)) AS FlightReturn " +
                     "            ON(FlightReturn.returnFromLocationID = Location.locationID)) AS ReturnWithFromLocation " +
                     "        ON(ReturnWithFromLocation.returnToLocationID = Location.LocationID)) AS ReturnWithLocations " +
-                    "    ON(Plane.planeID = ReturnWithLocations.returnPlaneID);";
+                    "      ON(Plane.planeID = ReturnWithLocations.returnPlaneID);";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("googleID", googleID));
 
@@ -50,11 +50,10 @@ namespace RESTService
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
-                    {
-              
+                    {    
                         travelsInfo.Add(new TravelSendInfo
                         {
-
+                            orderID = (int)reader["orderID"],
                             fromLocationName = reader["fromLocationName"].ToString(),
                             toLocationName = reader["toLocationName"].ToString(),
                             initialPrice = reader["initialPrice"].ToString(),
@@ -71,9 +70,7 @@ namespace RESTService
                             returnToLocation = reader["returnToLocation"].ToString(),
                             returnFromLocation = reader["returnFromLocation"].ToString(),
 
-
                         });
-
                     }
                 }
                 con.Close();        
@@ -82,7 +79,8 @@ namespace RESTService
             return travelsInfo;
         }
 
-        public int GetMaxIndex(SqlConnection con ,string tableName)
+
+        public int GetMaxIndex(SqlConnection con, string tableName)
         {
        
             string sql = "SELECT COUNT(*) FROM [" + tableName + "]";
@@ -99,19 +97,12 @@ namespace RESTService
             }
      
             return -1;
-            
-
-
-
-
-            
         }
-        public string AddTravel(TravelReceiveInfo info)
-        {
 
+        public void AddTravel(TravelReceiveInfo info)
+        {
             using (SqlConnection con = new SqlConnection(cs))
             {
-
                 string sql;
                 SqlCommand cmd;
 
@@ -124,7 +115,7 @@ namespace RESTService
 
                 sql = "INSERT INTO [Location] (name) VALUES (@0)";
                 cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", info.departureName));
+                cmd.Parameters.Add(new SqlParameter("0", info.fromLocation));
                 cmd.ExecuteNonQuery();
                 int InitialFromLocationID = GetMaxIndex(con, "Location");
 
@@ -132,7 +123,7 @@ namespace RESTService
 
                 sql = "INSERT INTO [Location] (name) VALUES (@0)";
                 cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", info.arrivalName));
+                cmd.Parameters.Add(new SqlParameter("0", info.toLocation));
                 cmd.ExecuteNonQuery();
                 int InitialToLocationID = GetMaxIndex(con, "Location");
 
@@ -158,27 +149,6 @@ namespace RESTService
                 cmd.ExecuteNonQuery();
                 int initialFlightID = GetMaxIndex(con, "Flight");
 
-                // THEN RETURN FLIGHT
-
-                // ADD FROM LOCATION
-
-                sql = "INSERT INTO [Location] (name) VALUES (@0)";
-                cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", info.departureName));
-                cmd.ExecuteNonQuery();
-                int returnFromLocationID = GetMaxIndex(con, "Location");
-
-                // THEN ADD TO LOCATION
-
-                sql = "INSERT INTO [Location] (name) VALUES (@0)";
-                cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", info.arrivalName));
-                cmd.ExecuteNonQuery();
-                int returnToLocationID = GetMaxIndex(con, "Location");
-                
-
-
-
 
                 //ADD PLANE
                 sql = "INSERT INTO [Plane] (name, company) VALUES (@0, @1)";
@@ -193,9 +163,9 @@ namespace RESTService
                 //ADD RETURN FLIGHT INFO
                 sql = "INSERT INTO [Flight] (toLocationID, planeID, fromLocationID, date, discount, price) VALUES (@0, @1, @2, @3, @4, @5)";
                 cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", returnToLocationID));
+                cmd.Parameters.Add(new SqlParameter("0", InitialToLocationID));
                 cmd.Parameters.Add(new SqlParameter("1", returnPlaneID));
-                cmd.Parameters.Add(new SqlParameter("2", returnFromLocationID));
+                cmd.Parameters.Add(new SqlParameter("2", InitialFromLocationID));
                 cmd.Parameters.Add(new SqlParameter("3", info.returnDate));
                 cmd.Parameters.Add(new SqlParameter("4", info.discount));
                 cmd.Parameters.Add(new SqlParameter("5", info.price));
@@ -223,9 +193,7 @@ namespace RESTService
                 }
 
 
-
                 //ADD ORDER
-
                 sql = "INSERT INTO [Order] (userID, initialFlightID, returnFlightID) VALUES (@0, @1, @2)";
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", userID));
@@ -235,12 +203,8 @@ namespace RESTService
                 int orderID = GetMaxIndex(con, "Order");
 
 
-               
-                
-
-
                 // WHEN WE HAVE ORDER WE CAN CONNECT IT WITH PASSENGERS
-                for (int i = 0; i < info.passengerData.Count; i += 4)
+                /*for (int i = 0; i < info.passengerData.Count; i += 4)
                 {
                     sql = "INSERT INTO [Passenger] (name, surname, gender, age, orderID) VALUES (@0, @1, @2, @3, @4)";
                     cmd = new SqlCommand(sql, con);
@@ -252,55 +216,31 @@ namespace RESTService
                     cmd.Parameters.Add(new SqlParameter("3", info.passengerData[i + 3]));
                     cmd.Parameters.Add(new SqlParameter("4", orderID));
                     cmd.ExecuteNonQuery();
+                }*/
 
-
-                }
                 con.Close();
-
-                return "";
-                
-                
             }
         }
 
- 
 
-
-
-        public List<Passenger> ReturnPassengers(string orderID)
+        public void RemoveOrder(string orderID)
         {
-            var passengers = new List<Passenger>();
-
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "SELECT [Passenger].name, [Passenger].surname, [Passenger].gender, [Passenger].age " +
-                    " FROM [Passenger] " +
-                    " JOIN [Order] USING(passengerID) " +
-                    " WHERE [Order].orderID=@OID";
+
+                string sql = "DELETE FROM [Passenger] WHERE orderID=@OID";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("OID", orderID));
+                cmd.ExecuteNonQuery();
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        passengers.Add(new Passenger
-                        {
-                            name = reader.GetString(0),
-                            surname = reader.GetString(1),
-                            gender = reader.GetString(2),
-                            age = reader.GetInt32(3),
-                        });
+                sql = "DELETE FROM [Order] WHERE orderID=@OID";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("OID", orderID));
+                cmd.ExecuteNonQuery();
 
-                    }
-                }
                 con.Close();
             }
-
-            //passengers.Add(new Passenger { name = "Tester", surname = "Habjan", age = 12, gender = "Habjan" });
-
-            return passengers;
         }
 
     }

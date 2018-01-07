@@ -107,60 +107,74 @@ namespace RESTService
             }
         }
 
-        public void UpdateUser(User user, string googleID)
+        public void UpdateUser(User user)
         {
+            bool updateRole = user.roleID != 0;
+            bool updateName = user.name != "";
+            bool updateEmail = user.email != "";
+
+            if(user.googleID == "" || (!updateRole && !updateName && !updateEmail)){
+                return; //Invalid data
+            }
+
             using(SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "UPDATE [User] set [User].roleID=@0, [User].name=@2, [User].email=@3 WHERE [User].googleID=@1";
+
+                string sql = "UPDATE [User] set "; 
+                if (updateRole) sql+= " [User].roleID=@0, ";
+                if(updateName) sql+= " [User].name=@2, ";
+                if(updateEmail) sql+= " [User].email=@3, ";
+
+                //Remove comma at the end
+                sql = sql.Remove(sql.Length - 1);
+                sql += " WHERE [User].googleID=@1";
+
+                
                 SqlCommand cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", user.roleID));
-                cmd.Parameters.Add(new SqlParameter("1", googleID));
-                cmd.Parameters.Add(new SqlParameter("2", user.name));
-                cmd.Parameters.Add(new SqlParameter("3", user.email));
+                if (updateRole) cmd.Parameters.Add(new SqlParameter("0", user.roleID));
+                cmd.Parameters.Add(new SqlParameter("1", user.googleID));
+                if(updateName) cmd.Parameters.Add(new SqlParameter("2", user.name));
+                if(updateEmail) cmd.Parameters.Add(new SqlParameter("3", user.email));
                 cmd.ExecuteNonQuery();
                 con.Close();
-
             }
         }
 
 
-
-        public List<Passenger> ReturnPassengers(string googleID)
+        public List<Passenger> ReturnPassengers(string orderID)
         {
-            var retVal = new List<Passenger>();
+            var passengers = new List<Passenger>();
 
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string sql = "SELECT * FROM [Passenger] " +
-                    " JOIN [Order] USING (userID) " +
-                    " JOIN [passengers] USING (orderID) " +
-                    " JOIN [Passenger] USING (paseengerID) " +
-                    " WHERE [User].googleID=@0";
+                string sql = "SELECT [Passenger].name, [Passenger].surname, [Passenger].gender, [Passenger].age " +
+                    " FROM [Passenger] " +
+                    " JOIN [Order] USING(passengerID) " +
+                    " WHERE [Order].orderID=@OID";
                 SqlCommand cmd = new SqlCommand(sql, con);
-                cmd.Parameters.Add(new SqlParameter("0", googleID));
+                cmd.Parameters.Add(new SqlParameter("OID", orderID));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        retVal.Add(new Passenger
+                        passengers.Add(new Passenger
                         {
-                            passengerID = Convert.ToInt32(reader[0]),
-                            name = reader.GetString(1),
-                            surname = reader.GetString(2),
-                            gender = reader.GetString(3),
-                            age = Convert.ToInt32(reader[4])
-
+                            name = reader.GetString(0),
+                            surname = reader.GetString(1),
+                            gender = reader.GetString(2),
+                            age = reader.GetInt32(3),
                         });
 
                     }
                 }
                 con.Close();
-
-                return retVal;
             }
+
+            return passengers;
         }
+
     }
 }

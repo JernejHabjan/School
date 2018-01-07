@@ -17,16 +17,13 @@ namespace RESTService
         [WebGet(UriTemplate = "Travels/{googleID}", ResponseFormat = WebMessageFormat.Json)]
         List<TravelSendInfo> ReturnTravels(string googleID);
 
-
         [OperationContract]
         [WebInvoke(UriTemplate = "Travel", ResponseFormat = WebMessageFormat.Json)]
-        string AddTravel(TravelReceiveInfo info);
+        void AddTravel(TravelReceiveInfo info);
 
         [OperationContract]
-        [WebGet(UriTemplate = "Passengers/{orderID}", ResponseFormat = WebMessageFormat.Json)]
-        List<Passenger> ReturnPassengers(string orderID);
-
-
+        [WebInvoke(UriTemplate = "Order/{orderID}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
+        void RemoveOrder(string orderID);
 
     }
 
@@ -43,19 +40,24 @@ namespace RESTService
         public string planeCompany { get; set; }
 
         [DataMember]
-        public string departureName{ get; set; }
+        public string fromLocation { get; set; }
         [DataMember]
-        public string arrivalName { get; set; }
+        public string toLocation { get; set; }
 
         [DataMember]
         public DateTime departureDate { get; set; }
         [DataMember]
-        public DateTime returnDate { get; set; }
-
+        public string departureClass { get; set; }
+        
         [DataMember]
         public float price { get; set; }
         [DataMember]
         public float discount { get; set; }
+    
+        [DataMember]
+        public DateTime returnDate { get; set; }
+        [DataMember]
+        public string returnClass { get; set; }
 
         [DataMember]
         public List<string> passengerData { get; set; }
@@ -65,9 +67,8 @@ namespace RESTService
     [DataContract]
     public class TravelSendInfo
     {
-
-     
-   
+        [DataMember]
+        public int orderID { get; set; }
         [DataMember]
         public string fromLocationName { get; set; }
         [DataMember]
@@ -97,8 +98,6 @@ namespace RESTService
         public string returnToLocation { get; set; }
         [DataMember]
         public string returnFromLocation { get; set; }
-
-
     }
 
 

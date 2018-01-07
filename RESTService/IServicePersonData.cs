@@ -30,14 +30,14 @@ namespace RESTService
         void RemoveUser(string googleID);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "User/{googleID}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
-        void UpdateUser(User user,  string googleID);
+        [WebInvoke(UriTemplate = "UpdateUser", ResponseFormat = WebMessageFormat.Json)]
+        void UpdateUser(User user);
 
 
 
         [OperationContract]
-        [WebGet(UriTemplate = "Passengers/{googleID}", ResponseFormat = WebMessageFormat.Json)]
-        List<Passenger> ReturnPassengers(string googleID);
+        [WebGet(UriTemplate = "Passengers/{orderID}", ResponseFormat = WebMessageFormat.Json)]
+        List<Passenger> ReturnPassengers(string orderID);
 
 
     }

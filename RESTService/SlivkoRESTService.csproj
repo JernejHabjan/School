@@ -188,8 +188,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\AsistentSlivko - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\AsistentSlivko - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\AsistentSlivko - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\AsistentSlivko - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\AsistentSlivko - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\AsistentSlivko - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\resftufl - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\resftufl - Web Deploy.pubxml" />

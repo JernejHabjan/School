@@ -1,0 +1,6 @@
+C:\Users\test33\Documents\GitHub\IS-Seminarska\RESTService\obj\Debug\RESTService.dll
+C:\Users\test33\Documents\GitHub\IS-Seminarska\RESTService\obj\Debug\RESTService.pdb
+C:\Users\test33\Documents\GitHub\IS-Seminarska\RESTService\bin\RESTService.dll.config
+C:\Users\test33\Documents\GitHub\IS-Seminarska\RESTService\bin\RESTService.dll
+C:\Users\test33\Documents\GitHub\IS-Seminarska\RESTService\bin\RESTService.pdb
+C:\Users\test33\Documents\GitHub\IS-Seminarska\RESTService\obj\Debug\SlivkoRESTService.csprojResolveAssemblyReference.cache

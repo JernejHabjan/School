@@ -26,7 +26,7 @@ namespace RESTService
                 user.email = email_input.Value;
                 user.name = name_input.Value;
 
-                sPersonData.UpdateUser(user, user.googleID);
+                sPersonData.UpdateUser(user/*, user.googleID*/);
 
 
                 Response.Redirect("http://asistentslivko.azurewebsites.net/Login.aspx");
