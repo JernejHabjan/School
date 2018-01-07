@@ -75,18 +75,6 @@ class Placilo : Fragment() {
     }
 
     private fun calculatePrice(view: View) {
-        //Generate random discount
-        val discountInt = Math.abs(Random().nextInt())
-        mDiscount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 5.0f) / 100.0f;
-
-        //Generate random price if none was proviced
-        if(mPrice == 0.0f){
-            val minPrice = 50;
-            val maxPrice = 300;
-            var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat() + minPrice;
-            mPrice -= randomPrice * mDiscount;
-        }
-
         val format = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
         var i = 0
         var totalPrice = 0.0
@@ -176,8 +164,23 @@ class Placilo : Fragment() {
             val priceData = bundle.getFloat("price")
             if(priceData != null){
                 mPrice = priceData;
+
                 Log.i("RECEIVED_PRICE", mPrice.toString())
             }
+
+            if(priceData == null || mPrice <= 0.0){
+                //Generate random price if none was proviced
+                val minPrice = 50;
+                val maxPrice = 300;
+                var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat() + minPrice;
+                mPrice = randomPrice
+            }
+
+            //Generate random discount
+            val discountInt = Math.abs(Random().nextInt())
+            mDiscount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 5.0f) / 100.0f;
+            mPrice -= mPrice * mDiscount;
+
 
             println("RECIEVE USER NAKUP DATA")
             println(nakupData!!.size)

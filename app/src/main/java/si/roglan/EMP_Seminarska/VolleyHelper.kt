@@ -2,6 +2,7 @@ package si.roglan.EMP_Seminarska
 
 import android.app.Activity
 import android.support.design.widget.Snackbar
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -16,9 +17,11 @@ import org.json.JSONException
 import org.json.JSONObject
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
+import org.json.JSONArray
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 
 class VolleyHelper {
@@ -224,7 +227,6 @@ class VolleyHelper {
         }
 
         val copyPassengers = ArrayList<String>(passengerData)
-
         //Convert date of birth to "almost" accurate age
         var i = 0
         val thisYear = Calendar.getInstance().get(Calendar.YEAR)
@@ -236,11 +238,15 @@ class VolleyHelper {
             i += 4
         }
 
-        params.put("passengerData", copyPassengers)
 
-        //TODO convert date to age
-        //params.put("passengerData", "")//passengerData
+        /*val jsonPassengerArray = JSONArray()
+        jsonPassengerArray.put(copyPassengers)
+        params.put("passengerData", jsonPassengerArray)*/
 
+        val passengerDataString = TextUtils.join("$$$", copyPassengers)
+        params.put("passengerData", passengerDataString)
+
+        //Print parameters
         Log.i("Travel PARAMETERS", params.toString())
 
         val service = "/ServiceTravelData.svc"

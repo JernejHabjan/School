@@ -15,9 +15,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TableRow
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import kotlinx.android.synthetic.main.our_travels.*
 import java.util.*
 
 
@@ -243,6 +241,13 @@ class MainActivity : AppCompatActivity(),
         setContainerFragment(TravelsFragment(), "Potovanja", bundle)
 
         mPrice = 0.0f;
+
+        //Generate random price if none was proviced
+        val minPrice = 50;
+        val maxPrice = 300;
+        var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat() + minPrice;
+        mPrice = randomPrice
+
         nakupData.clear();
         userData.clear();
     }
