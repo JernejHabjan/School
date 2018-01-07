@@ -60,7 +60,7 @@ namespace RESTService
         public string returnClass { get; set; }
 
         [DataMember]
-        public List<string> passengerData { get; set; }
+        public string passengerData { get; set; }
     }
 
 

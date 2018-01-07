@@ -176,10 +176,8 @@ namespace RESTService
 
 
                 // GET USER ID TO CONNECT IT TO ORDER
-
                 int userID = -1;
 
-          
                 sql = "SELECT [User].userID FROM [User] WHERE [User].googleID=@0";
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.Add(new SqlParameter("0", info.googleID));
@@ -202,18 +200,20 @@ namespace RESTService
                 cmd.ExecuteNonQuery();
                 int orderID = GetMaxIndex(con, "Order", "orderID");
 
-                
+
+                String[] passengerArray = info.passengerData.Split(new[]{"$$$"}, StringSplitOptions.None);
+
                 // WHEN WE HAVE ORDER WE CAN CONNECT IT WITH PASSENGERS
-                for (int i = 0; i < info.passengerData.Count; i += 4)
+                for (int i = 0; i < passengerArray.Length; i += 4)
                 {
                     sql = "INSERT INTO [Passenger] (name, surname, gender, age, orderID) VALUES (@0, @1, @2, @3, @4)";
                     cmd = new SqlCommand(sql, con);
 
 
-                    cmd.Parameters.Add(new SqlParameter("0", info.passengerData[i + 0]));
-                    cmd.Parameters.Add(new SqlParameter("1", info.passengerData[i + 1]));
-                    cmd.Parameters.Add(new SqlParameter("2", info.passengerData[i + 2]));
-                    cmd.Parameters.Add(new SqlParameter("3", Convert.ToInt32(info.passengerData[i + 3])));
+                    cmd.Parameters.Add(new SqlParameter("0", passengerArray[i + 0]));
+                    cmd.Parameters.Add(new SqlParameter("1", passengerArray[i + 1]));
+                    cmd.Parameters.Add(new SqlParameter("2", passengerArray[i + 2]));
+                    cmd.Parameters.Add(new SqlParameter("3", Convert.ToInt32(passengerArray[i + 3])));
                     cmd.Parameters.Add(new SqlParameter("4", orderID));
                     cmd.ExecuteNonQuery();
                 }

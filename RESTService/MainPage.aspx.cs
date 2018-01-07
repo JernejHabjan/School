@@ -115,10 +115,7 @@ namespace RESTService
                 price = 243,
                 discount = 33,
 
-                passengerData = new List<string>(new string[] { "pasName1", "passSurname1", "male", "1", "pasName2", "passSurname2", "female", "1" })
-
-
-
+                passengerData = "pasName1$$$passSurname1$$$male$$$1$$$pasName2$$$passSurname2$$$female$$$1"
 
            });
            
