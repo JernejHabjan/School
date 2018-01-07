@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  7 JAN 2018 00:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.6)  7 JAN 2018 21:53
 entering extended mode
 **./63150317.tex
 (63150317.tex
 LaTeX2e <2017-04-15>
-Babel <3.15> and hyphenation patterns for 75 language(s) loaded.
+Babel <3.10> and hyphenation patterns for 75 language(s) loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\size11.clo"
@@ -41,11 +41,8 @@ File: uni-global.def 2013/05/13 UCS: Unicode global data
 \uc@temptokena=\toks18
 )
 ("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.sty"
-Package: babel 2017/11/03 3.15 The Babel package
+Package: babel 2017/05/19 3.10 The Babel package
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\switch.def"
-File: switch.def 2017/11/03 3.15 Babel switching mechanism
-)
 *************************************
 * Local config file bblopts.cfg used
 *
@@ -57,11 +54,7 @@ File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
 Language: slovene 2005/03/31 v1.2m Slovene support from the babel system
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.def"
-File: babel.def 2017/11/03 3.15 Babel common definitions
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\switch.def"
-File: switch.def 2017/11/03 3.15 Babel switching mechanism
-)
+File: babel.def 2017/05/19 3.10 Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
@@ -72,14 +65,14 @@ Package babel Info: Making " an active character on input line 79.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
-Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
-Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2017/04/14 v1.1b Standard LaTeX Graphics (DPC,SPQR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
@@ -90,12 +83,23 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 Package graphics Info: Driver file: pdftex.def on input line 99.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def"
-File: pdftex.def 2017/06/24 v1.0g Graphics/color driver for pdftex
+File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count89
 ))
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
 )
 (63150317.aux
+
+LaTeX Warning: Label `sl:koncept' multiply defined.
+
 
 LaTeX Warning: Label `sl:koncept' multiply defined.
 
@@ -122,54 +126,25 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count89
+\scratchcounter=\count90
 \scratchdimen=\dimen106
 \scratchbox=\box26
-\nofMPsegments=\count90
-\nofMParguments=\count91
+\nofMPsegments=\count91
+\nofMParguments=\count92
 \everyMPshowfont=\toks20
-\MPscratchCnt=\count92
+\MPscratchCnt=\count93
 \MPscratchDim=\dimen107
-\MPnumerator=\count93
-\makeMPintoPDFobject=\count94
+\MPnumerator=\count94
+\makeMPintoPDFobject=\count95
 \everyMPtoPDFconversion=\toks21
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
-Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+) ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
+Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
-Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty"
-Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
-Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
-)))
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
-Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty"
-Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty"
-Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifluatex.sty"
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-)))
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
-Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
-)
-
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
 )
@@ -178,10 +153,32 @@ Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty"
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty"
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty"
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 38.
 Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
@@ -202,34 +199,46 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 35.
+
+<bazaVAzure.png, id=1, 683.55376pt x 625.33624pt>
+File: bazaVAzure.png Graphic file (type png)
+ <use bazaVAzure.png>
+Package pdftex.def Info: bazaVAzure.png used on input line 48.
+(pdftex.def)             Requested size: 360.0pt x 329.34651pt.
  [1
 
-{C:/Users/jerne/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<loginScreen.jpg, id=10, 1084.05pt x 1927.2pt>
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2 <./bazaVAzure.png>]
+<loginScreen.jpg, id=16, 1084.05pt x 1927.2pt>
 File: loginScreen.jpg Graphic file (type jpg)
-<use loginScreen.jpg>
-Package pdftex.def Info: loginScreen.jpg  used on input line 63. on input line 
-63.
-Package pdftex.def Info: Requested size: 71.9989pt x 127.97781pt on input line 
-63.
-<nakupScreen.jpg, id=11, 1084.05pt x 1927.2pt>
+ <use loginScreen.jpg>
+Package pdftex.def Info: loginScreen.jpg used on input line 98.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 101.
+
+<nakupScreen.jpg, id=17, 1084.05pt x 1927.2pt>
 File: nakupScreen.jpg Graphic file (type jpg)
-<use nakupScreen.jpg>
-Package pdftex.def Info: nakupScreen.jpg  used on input line 69. on input line 
-69.
-Package pdftex.def Info: Requested size: 71.9989pt x 127.97781pt on input line 
-69.
-<potnikiScreen.jpg, id=12, 1084.05pt x 1927.2pt>
+ <use nakupScreen.jpg>
+Package pdftex.def Info: nakupScreen.jpg used on input line 104.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 107.
+
+<potnikiScreen.jpg, id=18, 1084.05pt x 1927.2pt>
 File: potnikiScreen.jpg Graphic file (type jpg)
-<use potnikiScreen.jpg>
-Package pdftex.def Info: potnikiScreen.jpg  used on input line 75. on input lin
-e 75.
-Package pdftex.def Info: Requested size: 71.9989pt x 127.97781pt on input line 
-75.
- (63150317.bbl
+ <use potnikiScreen.jpg>
+Package pdftex.def Info: potnikiScreen.jpg used on input line 110.
+(pdftex.def)             Requested size: 360.0pt x 640.0067pt.
+
+
+LaTeX Warning: Float too large for page by 69.93561pt on input line 113.
+
+(63150317.bbl
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 6.
- [2 <./loginScreen.jpg> <./nakupScreen.jpg>]
+ [3]
 Underfull \hbox (badness 10000) in paragraph at lines 17--22
 []\OT1/cmr/m/n/10.95 Google sign-in sam-ple.  Do-se-gljivo: $\OT1/cmtt/m/n/10.9
 5 https : / / github . com /
@@ -241,28 +250,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--22
  / signin$\OT1/cmr/m/n/10.95 ,
  []
 
-) [3 <./potnikiScreen.jpg>] (63150317.aux)
+) [4] [5 <./loginScreen.jpg>] [6 <./nakupScreen.jpg>] [7 <./potnikiScreen.jpg>]
+(63150317.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2941 strings out of 493312
- 40184 string characters out of 3138900
- 108019 words of memory out of 3000000
- 6448 multiletter control sequences out of 15000+200000
- 8364 words of font info for 30 fonts, out of 3000000 for 9000
+ 2959 strings out of 493323
+ 40088 string characters out of 3139066
+ 110277 words of memory out of 3000000
+ 6459 multiletter control sequences out of 15000+200000
+ 8671 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,7n,25p,388b,667s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,7n,25p,388b,667s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmtt10.pfb>
-Output written on 63150317.pdf (3 pages, 334193 bytes).
+Output written on 63150317.pdf (7 pages, 425271 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
+ 56 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
