@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,13 +77,14 @@ class Placilo : Fragment() {
     private fun calculatePrice(view: View) {
         //Generate random discount
         val discountInt = Random().nextInt()
-        mDiscount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 15.0f) / 100.0f;
+        mDiscount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 5.0f) / 100.0f;
 
-        //Generate random price
-        val maxPrice = 400;
-        var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat();
-        mPrice -= randomPrice * mDiscount;
-
+        //Generate random price if none was proviced
+        if(mPrice == 0.0f){
+            val maxPrice = 300;
+            var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat();
+            mPrice -= randomPrice * mDiscount;
+        }
 
         val format = SimpleDateFormat("d.m.yyyy", Locale.ENGLISH)
         var i = 0
@@ -135,7 +137,7 @@ class Placilo : Fragment() {
                 "Ekonomski" -> factor *= 1.2f
             }
 
-            totalPrice += (randomPrice * factor)
+            totalPrice += mPrice
 
             //Has return flight
             if (nakupData!!.size > 4) {
@@ -156,19 +158,26 @@ class Placilo : Fragment() {
                     "Ekonomski" -> factor *= 1.2f
                 }
 
-                totalPrice += (randomPrice * factor).toInt()
+                totalPrice += mPrice
             }
             i += 4
         }
 
         val priceDisplay = view.findViewById(R.id.cena_display) as TextView;
-        priceDisplay.text = totalPrice.toString()
+        priceDisplay.text = totalPrice.toInt().toString()
     }
 
     private fun recieveUser_NakupData(view: View, bundle: Bundle?) {
         if (bundle != null) {
             nakupData = bundle.getStringArrayList("nakupData")
             userData = bundle.getStringArrayList("userData")
+
+            val priceData = bundle.getFloat("price")
+            if(priceData != null){
+                mPrice = priceData;
+                Log.i("RECEIVED_PRICE", mPrice.toString())
+            }
+
             println("RECIEVE USER NAKUP DATA")
             println(nakupData!!.size)
             println(userData!!.size)

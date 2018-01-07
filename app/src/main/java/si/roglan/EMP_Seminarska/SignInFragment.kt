@@ -133,8 +133,12 @@ class SignInFragment : Fragment(), View.OnClickListener {
         val account = GoogleSignIn.getLastSignedInAccount(context)
         if(account != null){
             val username = mUsernameTextEdit!!.text.toString();
-            val googleID = account.id.toString();
-            VolleyHelper().updateUser(activity, googleID, username);
+            if(username.isEmpty()){
+                Snackbar.make(view!!, "Vnesite veljavno ime", Snackbar.LENGTH_LONG).show()
+            }else{
+                val googleID = account.id.toString();
+                VolleyHelper().updateUser(activity, googleID, username);
+            }
         }
     }
 
@@ -147,7 +151,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
             managageDatabaseAccount(account)
 
             mStatusTextView!!.text = getString(R.string.signed_in_fmt)
-            mUsernameTextEdit!!.setText(account.displayName, TextView.BufferType.EDITABLE);
+            //mUsernameTextEdit!!.setText(account.displayName, TextView.BufferType.EDITABLE);
             mEmailTextView!!.text = "e-mail: " + account.email;
 
             //Update username from database

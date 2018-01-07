@@ -68,7 +68,7 @@ class TravelsFragment : Fragment() {
             grid_linear_layout_add.addView(noIDText)
         }*/
 
-        VolleyHelper().getTravels(this, "5432t532g52f432g432");
+        VolleyHelper().getTravels(this, m_GID);
 
         //updateTravelsList(view);
 
@@ -76,7 +76,13 @@ class TravelsFragment : Fragment() {
     }
 
 
+    public fun updatePassengerData(passengerData: ArrayList<String>){
+
+    }
+
     public fun updateTravelsList(view: View?){
+        if(view == null)return
+
         val table = view!!.findViewById(R.id.travels_table) as TableLayout;
 
         //Remove all children except column names
@@ -88,7 +94,8 @@ class TravelsFragment : Fragment() {
             val travelData = mTravelsData.get(i)
 
             val row = TableRow(context)
-            row.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT)
+            row.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT)
 
             val id = TextView(context)
             id.text = travelData.mOrderId.toString()
@@ -136,12 +143,19 @@ class TravelsFragment : Fragment() {
                     for (j in 0 until mTravelsData.size){
                         val tData = mTravelsData.get(j)
                         if(tData.mOrderId == id){ //Find correct id
-                            activityCommander.setNakupFragment(tData.mFromLocation, tData.mToLocation,
-                                    tData.mDate, tData.mReturnDate, tData.mClass, tData.mReturnClass)
+                            activityCommander.setNakupFragment(id,
+                                tData.mFromLocation,
+                                tData.mToLocation,
+                                tData.mDate,
+                                tData.mReturnDate,
+                                tData.mClass,
+                                tData.mReturnClass,
+                                tData.mPrice
+                            )
+
+                            break
                         }
                     }
-
-                    activityCommander.updatePassengerData(VolleyHelper().getPassengerData(activity, id))
                 }
             })
 
@@ -154,16 +168,19 @@ class TravelsFragment : Fragment() {
                     val id = Integer.parseInt(v!!.tag.toString())
                     Log.i("ORDER_ID: ", id.toString());
 
-                    //mTravelsData!!.removeAt(id);
+                    for (j in 0 until mTravelsData.size){
+                        if(mTravelsData.get(j).mOrderId == id){ //Find correct id
+                            table!!.removeView(table!!.getChildAt(1 + j))
+                            mTravelsData.removeAt(j) //Remove array entry
+                            
+                            break
+                        }
+                    }
+
                     VolleyHelper().removeOrder(view, activity, id)
-
-                    Snackbar.make(view, "Uspešno ste odstanili prejšnje potovanje",
-                            Snackbar.LENGTH_LONG).show()
-
-                    updateTravelsList(view)
+                    //updateTravelsList(view)
                 }
             })
-
 
             row.addView(id)
             row.addView(locationsLayout)
@@ -171,6 +188,25 @@ class TravelsFragment : Fragment() {
             row.addView(odpriButton)
             row.addView(closeButton)
             table!!.addView(row, 1 + i)
+
+
+            val scale = resources.displayMetrics.density
+            val heightDp = (45 * scale + 0.5f).toInt()
+
+            val openButtonParams = odpriButton.getLayoutParams()
+            openButtonParams.height = heightDp
+            openButtonParams.width = (heightDp * 1.55).toInt()
+            odpriButton.setLayoutParams(openButtonParams)
+
+
+            val closeButtonParams = closeButton.getLayoutParams()
+            closeButtonParams.height = heightDp
+            closeButtonParams.width = heightDp
+            closeButton.setLayoutParams(closeButtonParams)
+
+            odpriButton.requestLayout()
+            closeButton.requestLayout()
+            table!!.requestLayout()
         }
 
         //val inflator = activity.getLayoutInflater()
@@ -238,7 +274,7 @@ class TravelsFragment : Fragment() {
     internal interface TravelsListener {
         fun updatePassengerData(passengerData: ArrayList<String>)
         fun setNakupFragment()
-        fun setNakupFragment(fromLocation: String, toLocation: String, date: String, returnDate: String,
-                             travelClass: String, returnClass: String)
+        fun setNakupFragment(orderID: Int, fromLocation: String, toLocation: String, date: String, returnDate: String,
+                             travelClass: String, returnClass: String, price: Float)
     }
 }

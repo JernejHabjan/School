@@ -8,5 +8,5 @@ class TravelData {
     public var mClass : String = ""
     public var mReturnDate : String = ""
     public var mReturnClass : String = ""
-
+    public var mPrice: Float = 0.0f
 }

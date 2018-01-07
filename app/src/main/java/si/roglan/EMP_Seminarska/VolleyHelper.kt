@@ -14,11 +14,11 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.ArrayList
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class VolleyHelper {
@@ -146,39 +146,47 @@ class VolleyHelper {
     }
 
 
-    fun getPassengerData(activity: Activity, orderId: Int): ArrayList<String> {
-        val passengerData: ArrayList<String> = ArrayList<String>()
-
-        val service = "/ServiceTravelData.svc"
+    fun getPassengerData(activity: Activity, passengerData: ArrayList<String>, orderId: Int){
+        val service = "/ServicePersonData.svc"
         val operationContract = "/Passengers/" + orderId;
         val requestURL = SERVER_URL + service + operationContract;
 
-        val strReq = JsonObjectRequest(Request.Method.GET, requestURL,
-                Response.Listener { response ->
-                    if (response != null) {
+        val strReq = JsonArrayRequest(Request.Method.GET, requestURL,
+            Response.Listener { response ->
+                //val passengerData: ArrayList<String> = ArrayList<String>()
+                if (response != null) {
+                    passengerData.clear()
+                    for (i in 0 until response.length()) {
                         try {
-                            //passengerData
-                            Log.e("Volley", response.toString());
+                            val jsonObject = response.getJSONObject(i)
+
+                            passengerData.add(jsonObject.getString("name"))
+                            passengerData.add(jsonObject.getString("surname"))
+                            passengerData.add(jsonObject.getString("gender"))
+
+                            val c = Calendar.getInstance();
+                            c.add(Calendar.YEAR, -jsonObject.getString("age").toInt())
+                            passengerData.add(SimpleDateFormat("dd.MM.yyyy").format(c.time))
+
                         } catch (e: JSONException) {
                             // If there is an error then output this to the logs.
                             Log.e("Volley", "Invalid JSON Object.")
                         }
-                    } else {
-                        Log.e("Volley", "No responses found")
                     }
-                },
-
-                Response.ErrorListener { error ->
-                    // If there a HTTP error then add a note to our repo list.
-                    Log.e("Volley", "Error while calling REST API.")
-                    Log.e("Volley", error.toString())
+                } else {
+                    Log.e("Volley", "No responses found")
                 }
+            },
+
+            Response.ErrorListener { error ->
+                // If there a HTTP error then add a note to our repo list.
+                Log.e("Volley", "Error while calling REST API.")
+                Log.e("Volley", error.toString())
+            }
         )
 
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(strReq)
-
-        return passengerData
     }
 
     fun addTravel(activity: Activity, googleID: String, price: Float, discount: Float,
@@ -207,8 +215,8 @@ class VolleyHelper {
         params.put("toLocation", nakupData!![1])
         params.put("departureDate", nakupData!![2])
         params.put("departureClass", nakupData!![3])
-        params.put("price", "0")
-        params.put("discount", "0")
+        params.put("price", price.toString())
+        params.put("discount", discount.toString())
 
         //Has return flight
         if (nakupData!!.size > 4) {
@@ -246,6 +254,7 @@ class VolleyHelper {
                                 val travelData = TravelData()
                                 travelData.mClass = ""
                                 travelData.mReturnClass = ""
+                                travelData.mPrice = jsonObject.getString("initialPrice").toFloat()
                                 travelData.mOrderId = jsonObject.getString("orderID").toInt();
                                 travelData.mFromLocation = jsonObject.getString("fromLocationName")
                                 travelData.mToLocation = jsonObject.getString("toLocationName")

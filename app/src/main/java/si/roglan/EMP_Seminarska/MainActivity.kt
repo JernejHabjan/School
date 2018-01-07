@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(),
     private var nakupData = ArrayList<String>()
     private var m_verifiedAccount = false
     private var m_GID = ""
+    private var mPrice: Float = 0.0f
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -170,35 +171,42 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun launch_placilo() {
-        setPlaciloFragment()
-    }
-
-    override fun setPlaciloFragment() {
         val bundle = Bundle()
         bundle.putStringArrayList("nakupData", nakupData)
         bundle.putStringArrayList("userData", userData)
+        bundle.putFloat("price", mPrice)
 
         setContainerFragment(Placilo(), "Plačilo", bundle, "1")
+    }
+
+    override fun setPlaciloFragment() {
+        launch_placilo()
     }
 
     override fun setNakupFragment() {
         setContainerFragment(Nakup(), "Nakup", null, "1")
     }
 
-    override fun setNakupFragment(fromLocation: String, toLocation: String, date: String,
-                                  returnDate: String, travelClass: String, returnClass: String)
+    override fun setNakupFragment(orderID: Int,fromLocation: String, toLocation: String, date: String,
+                                  returnDate: String, travelClass: String, returnClass: String, price: Float)
     {
+        mPrice = price
+
         nakupData.clear();
         nakupData.add(fromLocation)
         nakupData.add(toLocation)
         nakupData.add(date)
         nakupData.add(travelClass)
-        nakupData.add(returnDate)
-        nakupData.add(returnClass)
+        if(!returnDate.isEmpty()){
+            nakupData.add(returnDate)
+            nakupData.add(returnClass)
+        }
+
+
+        VolleyHelper().getPassengerData(this, userData, orderID)
 
         val bundle = Bundle()
         bundle.putStringArrayList("nakupData", nakupData)
-
         setContainerFragment(Nakup(), "Nakup", bundle, "1")
     }
 
@@ -212,11 +220,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun setPotnikiFragment() {
         val bundle = Bundle()
-        if (userData.size > 0) {
-            bundle.putStringArrayList("userData", userData)
-
-        }
         bundle.putString("GID", m_GID)
+        if (userData.size > 0)bundle.putStringArrayList("userData", userData)
 
         setContainerFragment(Potniki(), "Potniki", bundle, "1")
     }

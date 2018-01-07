@@ -48,6 +48,8 @@ class Nakup : Fragment() {
     private var mOdhodAutocomplete = SupportPlaceAutocompleteFragment()
     private var mPrihodAutocomplete = SupportPlaceAutocompleteFragment()
 
+    private var mPrice: Float = 0.0f
+
 
     override fun onAttach(context: Context?) {
         try {
@@ -60,8 +62,13 @@ class Nakup : Fragment() {
     }
 
 
-    fun recieveNakupData(bundle: Bundle?) {
+    fun recieveNakupData(view: View, bundle: Bundle?) {
         if (bundle != null) {
+            val price = bundle.getFloat("price")
+            if(price != null){
+                mPrice = price
+                Log.i("PRICE: ", mPrice.toString())
+            }
 
             val nakupData = bundle.getStringArrayList("nakupData")
             if (nakupData != null) {
@@ -73,9 +80,17 @@ class Nakup : Fragment() {
                 nakupData.add(returnDate)
                 nakupData.add(returnClass)*/
 
+
+                val datum_odhoda = view.findViewById(R.id.datum_odhoda) as EditText
+                datum_odhoda.setText(nakupData[2], TextView.BufferType.EDITABLE);
+
+                if(nakupData.size > 4){
+                    if(!dvosmerna.isChecked())dvosmerna.toggle()
+                    datum_prihoda.setText(nakupData[4], TextView.BufferType.EDITABLE);
+                }
+
                 mOdhodAutocompleteString = nakupData[0]
                 mPrihodAutocompleteString = nakupData[1]
-
             }
         }
     }
@@ -210,7 +225,7 @@ class Nakup : Fragment() {
         val doloci_potnike_button = view.findViewById(R.id.doloci_potnike_button) as Button
         doloci_potnike_button.setOnClickListener { v -> dolociPotnikeButtonClicked(v) }
 
-        recieveNakupData(this.arguments)
+        recieveNakupData(view, this.arguments)
 
         return view
     }
@@ -238,7 +253,7 @@ class Nakup : Fragment() {
         val mPlaceDetectionClient = Places.getPlaceDetectionClient(activity, null)
 
         if (mGoogleApiClient == null)
-        mGoogleApiClient = GoogleApiClient.Builder(activity)
+            mGoogleApiClient = GoogleApiClient.Builder(activity)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(activity, null)
@@ -285,6 +300,11 @@ class Nakup : Fragment() {
         ft.replace(R.id.fragment_odhod, mOdhodAutocomplete)
         ft.replace(R.id.fragment_prihod, mPrihodAutocomplete)
         ft.commit()
+
+        /*val fragmentOdhod = view.findViewById(R.id.fragment_odhod)
+        val prihodEditText = mOdhodAutocomplete.view!!.findViewById(
+                R.id.place_autocomplete_search_input) as EditText
+        prihodEditText.setText("DEFAULT TEXT")*/
     }
 
     private fun checkFields(): Boolean {
@@ -343,6 +363,7 @@ class Nakup : Fragment() {
             nakup_data.add(datum_prihoda.text.toString())
             nakup_data.add(razred_prihoda.selectedItem.toString())
         }
+
         activityCommander.sendNakupData(nakup_data)
 
 
@@ -351,8 +372,6 @@ class Nakup : Fragment() {
         } else {
             activityCommander.setPlaciloFragment() //passamo input
         }
-
-
     }
 
 

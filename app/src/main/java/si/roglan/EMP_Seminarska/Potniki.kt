@@ -27,6 +27,8 @@ class Potniki : Fragment() {
     private var SERVER_URL = "http://asistentslivko.azurewebsites.net"
 
     private var userData: ArrayList<String>? = ArrayList()
+    private var mPrice: Float = 0.0f;
+
     private lateinit var activityCommander: PotnikiListener
     private var tabela: TableLayout? = null
     private var tabelaChildSize: Int = 0;
@@ -186,11 +188,16 @@ class Potniki : Fragment() {
     fun recieveUserData(bundle: Bundle?) {
         if (bundle != null)
         {
+            val price = bundle.getFloat("price")
+            if(price != null){
+                mPrice = price
+            }
+
             userData = bundle.getStringArrayList("userData")
             if (userData != null && userData!!.size != 0) {
                 initPassengerTable(userData);
             }else{
-                activityCommander.setVnosPotnikovFragment();
+                //activityCommander.setVnosPotnikovFragment();
             }
         }
     }
@@ -204,7 +211,8 @@ class Potniki : Fragment() {
         {
             val row = TableRow(context)
 
-            val lp = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT)
+            val lp = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT)
             row.layoutParams = lp
 
             val ime = TextView(context)
@@ -214,29 +222,18 @@ class Potniki : Fragment() {
             priimek.text = userData!![i + 1]
             datum_rojstva.text = userData!![i + 3]
 
-            val maxTextLength = 5;
+            val maxTextLength = 4;
             if(ime.text.length > maxTextLength + 3){
                 ime.text = ime.text.substring(0, maxTextLength) + "...";
             }
-            if(priimek.text.length > maxTextLength + 3){
+            if(priimek.text.length > maxTextLength + 3 + 5){
                 priimek.text = priimek.text.substring(0, maxTextLength) + "...";
             }
 
 
-            var closeButton = View.inflate(context, R.layout.delete_button, null) as Button
-            closeButton.tag = i / 4
-
-            /*val closeButton = Button(context);
-            closeButton.setLayoutParams(TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT))
-            closeButton.width = 50
-            closeButton.height = 50
-            //closeButton.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
+            val closeButton = Button(context);
             closeButton.text = "X"
-            //closeButton.minimumWidth = 0
-            //closeButton.width = 20*/
-
-
+            closeButton.tag = i / 4
             closeButton.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(v : View?){
                     val id = Integer.parseInt(v!!.tag.toString())
@@ -247,7 +244,7 @@ class Potniki : Fragment() {
 
                     if(userData != null && userData!!.size == 0){
                         //If we delete all passengers, then try to enter one
-                        activityCommander.setVnosPotnikovFragment();
+                        //activityCommander.setVnosPotnikovFragment();
                     }
 
                     initPassengerTable(userData)
@@ -260,6 +257,16 @@ class Potniki : Fragment() {
             row.addView(datum_rojstva)
             row.addView(closeButton)
             tabela!!.addView(row, tabelaChildSize + i / 4)
+
+            val scale = resources.displayMetrics.density
+            val heightDp = (40 * scale + 0.5f).toInt()
+            val params = closeButton.getLayoutParams()
+            params.height = heightDp
+            params.width = heightDp
+            closeButton.setLayoutParams(params)
+            closeButton.requestLayout()
+            tabela!!.requestLayout()
+
             i += 4
         }
     }
