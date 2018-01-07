@@ -36,6 +36,7 @@ class VolleyHelper {
                     try {
                         if(response.getString("name") != "null"){
                             val username = response.getString("name");
+                            Log.e("Volley", "Set username to " + username)
                             usernameText.setText(username, TextView.BufferType.EDITABLE);
                         }
                     } catch (e: JSONException) {
@@ -129,38 +130,19 @@ class VolleyHelper {
     fun updateUser(activity: Activity, googleID: String,
                    name: String = "", roleID: Int = 0, email: String = "")
     {
+        val params = JSONObject()
+        params.put("roleID", "0")
+        params.put("googleID", googleID)
+        params.put("name", name)
+        params.put("email",email)
+
+
         val service = "/ServicePersonData.svc"
-        val operationContract = "/User"
-        val url = SERVER_URL + service + operationContract
-
-        val putRequest = object : StringRequest(Request.Method.PUT, url,
-                Response.Listener { response ->
-                    // response
-                    Log.d("Response", response)
-                    Log.e("Volley", "Renamed user")
-                },
-                Response.ErrorListener {
-                    // error
-                }
-        ) {
-
-            override fun getBodyContentType(): String {
-                return "application/json; charset=utf-8";
-            }
-
-            override fun getParams(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params.put("roleID", roleID.toString())
-                params.put("googleID", googleID)
-                params.put("name", name)
-                params.put("email", email)
-
-                return params
-            }
-        }
+        val operationContract = "/UpdateUser"
 
         val requestQueue = Volley.newRequestQueue(activity)
-        requestQueue.add(putRequest)
+        requestQueue.add(writeRequest(params, service, operationContract))
+        Log.e("Volley", "Updated User")
     }
 
 

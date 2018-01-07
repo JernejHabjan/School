@@ -73,8 +73,6 @@ class SignInFragment : Fragment(), View.OnClickListener {
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso)
 
         //val signInButton = view.findViewById(R.id.sign_in_button)
-        //signInButton.setSize(SignInButton.SIZE_STANDARD)
-        //signInButton.setColorScheme(SignInButton.COLOR_LIGHT)
 
         return view
     }
