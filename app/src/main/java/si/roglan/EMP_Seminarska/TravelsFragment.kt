@@ -129,7 +129,8 @@ class TravelsFragment : Fragment() {
             val date = TextView(context)
             date.text = travelData.mDate
             val returnDate = TextView(context)
-            returnDate.text = travelData.mReturnDate
+            if(travelData.mReturnDate.isEmpty())returnDate.text = "--"
+            else returnDate.text = travelData.mReturnDate
 
             val datesLayout = LinearLayout(context);
             datesLayout.orientation = LinearLayout.VERTICAL;

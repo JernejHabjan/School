@@ -76,17 +76,18 @@ class Placilo : Fragment() {
 
     private fun calculatePrice(view: View) {
         //Generate random discount
-        val discountInt = Random().nextInt()
+        val discountInt = Math.abs(Random().nextInt())
         mDiscount = ((discountInt % 2) * 10.0f + (discountInt % 3) * 5.0f) / 100.0f;
 
         //Generate random price if none was proviced
         if(mPrice == 0.0f){
+            val minPrice = 50;
             val maxPrice = 300;
-            var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat();
+            var randomPrice = Math.abs(Random().nextInt() % maxPrice).toFloat() + minPrice;
             mPrice -= randomPrice * mDiscount;
         }
 
-        val format = SimpleDateFormat("d.M.yyyy", Locale.ENGLISH)
+        val format = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
         var i = 0
         var totalPrice = 0.0
 

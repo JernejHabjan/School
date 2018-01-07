@@ -114,7 +114,7 @@ class Nakup : Fragment() {
 
         //Set initial departure and arrival dates
         val c = Calendar.getInstance();
-        val df = SimpleDateFormat("d.M.yyyy");
+        val df = SimpleDateFormat("dd.MM.yyyy");
 
         var datum_odhoda = view.findViewById(R.id.datum_odhoda) as EditText
         datum_odhoda.setText(df.format(c.getTime()));
@@ -139,7 +139,7 @@ class Nakup : Fragment() {
                 c.set(Calendar.MONTH, Integer.parseInt(dateArray[1]) - 1)
                 c.set(Calendar.YEAR, Integer.parseInt(dateArray[2]))
                 c.add(Calendar.DATE, 1)
-                datum_prihoda!!.setText(SimpleDateFormat("d.M.yyyy").format(c.time))
+                datum_prihoda!!.setText(SimpleDateFormat("dd.MM.yyyy").format(c.time))
 
             } else {
                 datum_prihoda.visibility = View.GONE
@@ -177,7 +177,7 @@ class Nakup : Fragment() {
                                     c.set(Calendar.MONTH, monthOfYear)
                                     c.set(Calendar.YEAR, year)
                                     c.add(Calendar.DATE, 1)
-                                    datum_prihoda!!.setText(SimpleDateFormat("d.M.yyyy").format(c.time))
+                                    datum_prihoda!!.setText(SimpleDateFormat("dd.MM.yyyy").format(c.time))
                                 }
                             }
                         }, year, month - 1, day)
@@ -308,9 +308,6 @@ class Nakup : Fragment() {
 
         Log.i("ACCCC:", mOdhodAutocomplete!!.view.toString())
 
-        val f = fragmentManager.findFragmentById(R.id.fragment_odhod)
-        Log.i("ACCCC:", f.view.toString())
-
         /*val fragmentOdhod = view.findViewById(R.id.fragment_odhod) as FrameLayout
         val prihodEditText = fragmentOdhod.findViewById(R.id.place_autocomplete_search_input)
         Log.i("AUTOCOMPLETE:", prihodEditText.toString())*/
@@ -322,13 +319,12 @@ class Nakup : Fragment() {
     }
 
     private fun checkFields(): Boolean {
-
         if (datum_odhoda.text.toString() == "") {
             Snackbar.make(home_container, "Vnesite datum odhoda", Snackbar.LENGTH_LONG).show()
             return false
         }
         try {
-            val format = SimpleDateFormat("d.M.yyyy", Locale.ENGLISH)
+            val format = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
             format.parse(datum_odhoda.text.toString())
 
         } catch (e: Exception) {
@@ -343,26 +339,31 @@ class Nakup : Fragment() {
                 return false
             }
             try {
-                val format = SimpleDateFormat("d.M.yyyy", Locale.ENGLISH)
+                val format = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
                 format.parse(datum_prihoda.text.toString())
             } catch (e: Exception) {
                 Snackbar.make(home_container, "Vnesite pravilen format datum prihoda -> dan.mesec.leto", Snackbar.LENGTH_LONG).show()
                 return false
             }
-
         }
 
+        if(mOdhodAutocompleteString.isEmpty()){
+            Snackbar.make(home_container, "Vnesite lokacijo odhoda", Snackbar.LENGTH_LONG).show()
+            return false
+        }
+
+        if(mPrihodAutocompleteString.isEmpty()){
+            Snackbar.make(home_container, "Vnesite lokacijo prihoda", Snackbar.LENGTH_LONG).show()
+            return false
+        }
 
         return true
     }
 
 
     private fun dolociPotnikeButtonClicked(view: View) { //gets called when button is clicked
-
-
-        //if (!checkFields()) // TODO COMMENTED CHECKING ON FRAGMENT NAKUP - TO DEBUG EASIER
-        //    return;
-
+        if (!checkFields())
+            return;
 
         val button_label = (view as Button).text.toString()
 

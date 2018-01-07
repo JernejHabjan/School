@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class VolleyHelper {
@@ -165,7 +166,7 @@ class VolleyHelper {
 
                             val c = Calendar.getInstance();
                             c.add(Calendar.YEAR, -jsonObject.getString("age").toInt())
-                            passengerData.add(SimpleDateFormat("d.M.yyyy").format(c.time))
+                            passengerData.add(SimpleDateFormat("dd.MM.yyyy").format(c.time))
 
                         } catch (e: JSONException) {
                             // If there is an error then output this to the logs.
@@ -188,22 +189,18 @@ class VolleyHelper {
         requestQueue.add(strReq)
     }
 
+
+    fun reformatDate(date: String): String{
+        val dateArray = date.split('.')
+        if(dateArray.size != 3)return date
+
+        val newDate = dateArray[1] + "." + dateArray[0] + "." + dateArray[2]
+        return newDate
+    }
+
     fun addTravel(activity: Activity, googleID: String, price: Float, discount: Float,
                   nakupData: ArrayList<String>, passengerData: ArrayList<String>)
     {
-        /*val params = JSONObject()
-        params.put("email", "GOLD")
-        params.put("googleID", "12312452352")
-        params.put("name", "NOFACE")
-
-
-        val service = "/ServicePersonData.svc"
-        val operationContract = "/User"
-
-        val requestQueue = Volley.newRequestQueue(activity)
-        requestQueue.add(writeRequest(params, service, operationContract))
-        Log.e("Volley", "Added User")*/
-
         Log.i("PASSENGERS", "NUM_PASSENGERS: " + passengerData.size/4)
 
         val params = JSONObject()
@@ -212,19 +209,34 @@ class VolleyHelper {
         params.put("planeCompany", "Default_Plane_Company")
         params.put("fromLocation", nakupData!![0])
         params.put("toLocation", nakupData!![1])
-        params.put("departureDate", nakupData!![2])
+        params.put("departureDate", reformatDate(nakupData!![2]))
         params.put("departureClass", nakupData!![3])
         params.put("price", price.toString())
         params.put("discount", discount.toString())
 
         //Has return flight
         if (nakupData!!.size > 4) {
-            params.put("returnDate", nakupData!![4])
+            params.put("returnDate", reformatDate(nakupData!![4]))
             params.put("returnClass", nakupData!![5])
         }else{
-            params.put("returnDate", "")
-            params.put("returnClass", "")
+            params.put("returnDate", "12.31.9999")
+            params.put("returnClass", "-")
         }
+
+        val copyPassengers = ArrayList<String>(passengerData)
+
+        //Convert date of birth to "almost" accurate age
+        var i = 0
+        val thisYear = Calendar.getInstance().get(Calendar.YEAR)
+        while(i < copyPassengers.size){
+            val year = copyPassengers[i + 3].split('.')[2].toInt()
+            val age = (thisYear - year).toString()
+            copyPassengers[i + 3] = age
+
+            i += 4
+        }
+
+        params.put("passengerData", copyPassengers)
 
         //TODO convert date to age
         //params.put("passengerData", "")//passengerData
@@ -268,6 +280,15 @@ class VolleyHelper {
 
                                 travelData.mDate = travelData.mDate.split(" ")[0].replace('/', '.');
                                 travelData.mReturnDate = travelData.mReturnDate.split(" ")[0].replace('/', '.');
+
+                                travelData.mDate = reformatDate(travelData.mDate)
+                                travelData.mReturnDate = reformatDate(travelData.mReturnDate)
+
+                                //If invalid date -> no return date
+                                if(travelData.mReturnDate.split('.')[2] == "9999"){
+                                    travelData.mReturnDate = "";
+                                    travelData.mReturnClass = "";
+                                }
 
                                 travelsFragment.mTravelsData.add(travelData)
 
