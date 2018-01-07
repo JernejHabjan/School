@@ -17,6 +17,16 @@ Obdelava:
 	Desaturation
 	Sharpen Edges: Za poudarek črt na platiščih, pokrovu in vratih za lažje upragovanje
 	Upragovanje: 200
+
+	Redukcija šuma v Photoshopu: Strength: 10; Preserve_Details:0%; Reduce_Color_Noise:0%; Sharpen_Details:50%
+	- S tem naredimo sliko bolj gladko in se tako znebimo šuma pri upragovanju
 	
+	Oljna barva v Photoshopu: Stylization: 1.0; Cleanliness:10; Scale:10; Bristle_Detail:0; Angular_Direction:0; Shine:0;	
+	- S tem še dodatno skupaj zlijemo črte in dodamo sliki narisan stil
 	
+	Sliko nato upragujemo pri vrednosti 80
+	- S tem po obdelavi z odstranjevanjem šuma dobimo boljšo sliko po upragovanju
+	
+	Sliko ponovno oblikujemo z oljno barvo(Stylization: 1.0; Cleanliness:10; Scale:10; Bristle_Detail:0; Angular_Direction:0; Shine:0)
+	- S tem dobimo končno čisto upragovano sliko
 	
