@@ -27,9 +27,13 @@ namespace RESTService
                 loginNav.InnerText = " Pozdravljen " + user.name;
 
 
+                user.name = "NOV NAME";
+                sPersonData.UpdateUser(user);
+         
+                Response.Write("UPDATED USER");
 
                 // TODOOOOOOOOOOOOOOOOOOOOOOOOOO TEMP GOOGLE ID THAT HAS TRAVELS INSERTED - FOR TESTING ---- DELETE THIS AFTER
-                sessionUserId = "5432t532g52f432g432";
+                //sessionUserId = "5432t532g52f432g432";
 
 
                 /*
@@ -47,7 +51,7 @@ namespace RESTService
                 }
              */
 
-            
+
 
             }
             else
@@ -56,16 +60,54 @@ namespace RESTService
             }
 
             ServiceTravelData sTravelData = new ServiceTravelData();
+
+            /*
+             
+      [DataMember]
+        public string googleID { get; set; }
+
+        [DataMember]
+        public string planeName { get; set; }
+        [DataMember]
+        public string planeCompany { get; set; }
+
+        [DataMember]
+        public string fromLocation { get; set; }
+        [DataMember]
+        public string toLocation { get; set; }
+
+        [DataMember]
+        public DateTime departureDate { get; set; }
+        [DataMember]
+        public string departureClass { get; set; }
+        
+        [DataMember]
+        public float price { get; set; }
+        [DataMember]
+        public float discount { get; set; }
+    
+        [DataMember]
+        public DateTime returnDate { get; set; }
+        [DataMember]
+        public string returnClass { get; set; }
+
+        [DataMember]
+        public List<string> passengerData { get; set; }*/
+
             // TESTING INSERT - --------------------------------------- DELETE THIS AFTER IMPLEMENTED
 
-           /* sTravelData.AddTravel(new TravelReceiveInfo
+            sTravelData.AddTravel(new TravelReceiveInfo
             {
-                googleID = "108315117481134440467",
+                googleID = "104967849801990887085",
                 planeName = "jurešnik",
                 planeCompany = "companyPlaneJurešnik",
 
-                departureName = "grem z loga",
-                arrivalName = "grem na kitajsk",
+                fromLocation = "grem z loga",
+                toLocation = "grem na kitajsk",
+
+
+                departureClass = "prvi",
+                returnClass = "prvi",
 
                 departureDate = Convert.ToDateTime("2017-12-03T00:00:00.0000000"),
                 returnDate = Convert.ToDateTime("2017-12-03T00:00:00.0000000"),
@@ -79,7 +121,7 @@ namespace RESTService
 
 
            });
-        */
+
 
 
 
@@ -101,3 +143,4 @@ namespace RESTService
    
 
 }
+ 

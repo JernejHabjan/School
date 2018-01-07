@@ -204,7 +204,7 @@ namespace RESTService
 
 
                 // WHEN WE HAVE ORDER WE CAN CONNECT IT WITH PASSENGERS
-                /*for (int i = 0; i < info.passengerData.Count; i += 4)
+                for (int i = 0; i < info.passengerData.Count; i += 4)
                 {
                     sql = "INSERT INTO [Passenger] (name, surname, gender, age, orderID) VALUES (@0, @1, @2, @3, @4)";
                     cmd = new SqlCommand(sql, con);
@@ -216,7 +216,7 @@ namespace RESTService
                     cmd.Parameters.Add(new SqlParameter("3", info.passengerData[i + 3]));
                     cmd.Parameters.Add(new SqlParameter("4", orderID));
                     cmd.ExecuteNonQuery();
-                }*/
+                }
 
                 con.Close();
             }

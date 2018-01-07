@@ -124,13 +124,14 @@ namespace RESTService
                 string sql = "UPDATE [User] set "; 
                 if (updateRole) sql+= " [User].roleID=@0, ";
                 if(updateName) sql+= " [User].name=@2, ";
-                if(updateEmail) sql+= " [User].email=@3, ";
+                if(updateEmail) sql+= " [User].email=@3 ";
 
                 //Remove comma at the end
                 sql = sql.Remove(sql.Length - 1);
                 sql += " WHERE [User].googleID=@1";
 
                 
+
                 SqlCommand cmd = new SqlCommand(sql, con);
                 if (updateRole) cmd.Parameters.Add(new SqlParameter("0", user.roleID));
                 cmd.Parameters.Add(new SqlParameter("1", user.googleID));
