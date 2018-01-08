@@ -1,0 +1,4 @@
+V programu Adobe Illustrator sem odprl nov dokument velikosti A3.
+S klikom na File > Place sem dodal vektorizirano sliko.
+Sliko sem spremenil na primerno velikost.
+Z orodjem Pen tool sem narisal krivulji na kateri sem kasneje z orodjem Type on a path tool napisal tekst, ki je sledil smeri krivluj.
