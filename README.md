@@ -11,6 +11,8 @@ Beetle z zavitimi gumam: http://www.fanpop.com/clubs/volkswagen-beetle/images/23
 
 Slika Beetle avtomobila: http://money.cnn.com/gallery/autos/2014/07/16/history-of-the-volkswagen-beetle/index.html
 
+Font: https://www.dafont.com/keep-calm.font
+
 Obdelava:
 	Mirror: Orientacija v desno stran - branje z leve proti desni ???????? dunno
 	Obdelava barv s krivuljo: posvetlitev rdečega kanala za svetlejša vrata
