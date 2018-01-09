@@ -3,6 +3,7 @@
 
 html, button {
   font-family: sans-serif;
+
 }
 
 header{
@@ -61,7 +62,7 @@ table{
   overflow: visible;
 }
 
-button{
+button, .button1{
   border-radius: 5px;
   background-color: #4CAF50;
   border: none;
@@ -115,6 +116,22 @@ div.tab button:active{
   padding: 15px 10px 15px 10px;
   width: 100%;
 }
+
+
+/* FORM */
+.textInput {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color:black;
+}
+
+
+
 
 @media only screen and (min-width: 990px) {
 	.col-1 { width: 8.33%; }

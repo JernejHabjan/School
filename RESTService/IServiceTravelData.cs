@@ -18,6 +18,10 @@ namespace RESTService
         List<TravelSendInfo> ReturnTravels(string googleID);
 
         [OperationContract]
+        [WebGet(UriTemplate = "Travels/{googleID}/{orderID}", ResponseFormat = WebMessageFormat.Json)]
+        TravelSendInfo ReturnTravel(string googleID, string orderID);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "Travel", ResponseFormat = WebMessageFormat.Json)]
         void AddTravel(TravelReceiveInfo info);
 

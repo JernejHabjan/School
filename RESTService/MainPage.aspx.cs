@@ -15,6 +15,15 @@ namespace RESTService
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            // FOR TEST PURPOSES ------- FIXED orderID AND googleID 
+            Session["orderID"] = 109;
+            Session["googleID"] = "104967849801990887085";
+
+
+
+
+
+
             // SET LOGIN TEXT
             string sessionUserId = Session["googleID"] as string;
 
@@ -95,7 +104,7 @@ namespace RESTService
         public List<string> passengerData { get; set; }*/
 
             // TESTING INSERT - --------------------------------------- DELETE THIS AFTER IMPLEMENTED
-
+            /*
             sTravelData.AddTravel(new TravelReceiveInfo
             {
                 googleID = "104967849801990887085",
@@ -118,13 +127,15 @@ namespace RESTService
                 passengerData = "pasName1$$$passSurname1$$$male$$$1$$$pasName2$$$passSurname2$$$female$$$1"
 
            });
-           
+           */
 
 
 
         }
         private void Display_TravelInfo(TravelSendInfo travelInfo)
         {
+
+
             // TODO
 
 
@@ -132,10 +143,7 @@ namespace RESTService
 
         }
 
-        protected void SqlDataSource1_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
-        {
-
-        }
+        
     }
    
 

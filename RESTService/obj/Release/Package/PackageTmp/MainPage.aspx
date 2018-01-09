@@ -4,9 +4,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Main page</title>
     
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link type="text/css" href="style.css" rel="stylesheet"/>
      <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,23 +18,23 @@
 
 <body>
 
-    
-<nav class="navbar navbar-inverse" >
-  <div class="container-fluid">
-    <div class="navbar-header" >
-      <a class="navbar-brand active"  href="http://asistentslivko.azurewebsites.net/MainPage.aspx">Asistent Slivko</a>
-    </div>
-    <ul class="nav navbar-nav">
+    <!-- #######################################################  Navigation bar ####################################################################### -->
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header" >
+          <a class="navbar-brand active"  href="http://asistentslivko.azurewebsites.net/MainPage.aspx">Asistent Slivko</a>
+        </div>
+        <ul class="nav navbar-nav">
      
-      <li><a href="#" >Nakup</a></li>
-        <li><a href="#" >Potniki</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://asistentslivko.azurewebsites.net/Flight.aspx" >Plan</a></li>
+  
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
  
-      <li><a href="http://asistentslivko.azurewebsites.net/Login.aspx" > <span class="glyphicon glyphicon-log-in"> <span  id="loginNav" runat="server" >Login</span></span></a></li>
-    </ul>
-  </div>
-</nav>
+          <li><a href="http://asistentslivko.azurewebsites.net/Login.aspx" > <span class="glyphicon glyphicon-log-in"> <span  id="loginNav" runat="server" >Login</span></span></a></li>
+        </ul>
+      </div>
+    </nav>
 
 
 
@@ -76,6 +76,9 @@
       <button id="back_route" style="display: none;">&larr; Back to route</button>
       <button id="back_list" style="display: none;">&larr; Back to list</button>    
   </div>
+
+
+   
 
   <div style="height:400px; width:100%; overflow-y:scroll;" id="address_view"> 
 
@@ -144,7 +147,40 @@
     
   </div>
 
-  
+     <!-- ############################################# form display all travels in grid ######################################################-->
+
+ <form id="form1" runat="server">
+    <asp:GridView ID="GridViewFlights" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1">
+        <Columns>
+            <asp:BoundField DataField="orderID" HeaderText="orderID" SortExpression="orderID" />
+            <asp:BoundField DataField="fromLocationName" HeaderText="fromLocationName" SortExpression="fromLocationName" />
+            <asp:BoundField DataField="toLocationName" HeaderText="toLocationName" SortExpression="toLocationName" />
+            <asp:BoundField DataField="initialPrice" HeaderText="initialPrice" SortExpression="initialPrice" />
+            <asp:BoundField DataField="initialDate" HeaderText="initialDate" SortExpression="initialDate" />
+            <asp:BoundField DataField="initialDiscount" HeaderText="initialDiscount" SortExpression="initialDiscount" />
+            <asp:BoundField DataField="initialPlaneName" HeaderText="initialPlaneName" SortExpression="initialPlaneName" />
+            <asp:BoundField DataField="initialPlaneCompany" HeaderText="initialPlaneCompany" SortExpression="initialPlaneCompany" />
+            <asp:BoundField DataField="returnDate" HeaderText="returnDate" SortExpression="returnDate" />
+            <asp:BoundField DataField="returnDiscount" HeaderText="returnDiscount" SortExpression="returnDiscount" />
+            <asp:BoundField DataField="returnPrice" HeaderText="returnPrice" SortExpression="returnPrice" />
+            <asp:BoundField DataField="returnPlaneName" HeaderText="returnPlaneName" SortExpression="returnPlaneName" />
+            <asp:BoundField DataField="returnPlaneCompany" HeaderText="returnPlaneCompany" SortExpression="returnPlaneCompany" />
+            <asp:BoundField DataField="returnToLocation" HeaderText="returnToLocation" SortExpression="returnToLocation" />
+            <asp:BoundField DataField="returnFromLocation" HeaderText="returnFromLocation" SortExpression="returnFromLocation" />
+        </Columns>
+    </asp:GridView>
+    <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" DataObjectTypeName="RESTService.TravelReceiveInfo" InsertMethod="AddTravel" SelectMethod="ReturnTravels" TypeName="RESTService.ServiceTravelData">
+        <SelectParameters>
+            <asp:SessionParameter DefaultValue="&quot;-1&quot;" Name="googleID" SessionField="googleID" Type="String" />
+        </SelectParameters>
+    </asp:ObjectDataSource>
+    </form>
+
+       <!-- ############################################# finish display travels ######################################################-->
+
+
+
+
   </aside>
 </div>
 

@@ -14,6 +14,21 @@ namespace RESTService
     {
         string cs = ConfigurationManager.ConnectionStrings["SlivkoDatabaseConnectionString"].ConnectionString;
 
+        public TravelSendInfo ReturnTravel(string googleID, string orderID)
+        {
+            List<TravelSendInfo> travels = ReturnTravels(googleID);
+            foreach (TravelSendInfo travel in travels)
+            {
+                if(travel.orderID == Convert.ToInt32(orderID))
+                {
+                    return travel;
+                }
+            }
+            return new TravelSendInfo
+            {
+                fromLocationName = "NONEEEEE"
+            }; // return empty object
+        }
 
         public List<TravelSendInfo> ReturnTravels(string googleID)
         {
@@ -244,5 +259,6 @@ namespace RESTService
             }
         }
 
+   
     }
 }

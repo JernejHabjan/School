@@ -93,6 +93,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Flight.aspx" />
     <Content Include="globals.js" />
     <Content Include="Login.aspx" />
     <Content Include="MainPage.aspx" />
@@ -124,6 +125,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Flight.aspx.cs">
+      <DependentUpon>Flight.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Flight.aspx.designer.cs">
+      <DependentUpon>Flight.aspx</DependentUpon>
     </Compile>
     <Compile Include="IServicePersonData.cs" />
     <Compile Include="IServiceTravelData.cs" />
