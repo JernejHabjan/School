@@ -181,9 +181,26 @@
             <asp:SessionParameter DefaultValue="&quot;-1&quot;" Name="googleID" SessionField="googleID" Type="String" />
         </SelectParameters>
     </asp:ObjectDataSource>
-    </form>
-
+     
        <!-- ############################################# finish display travels ######################################################-->
+
+    <!-- ############################################# admin choose user and view its travels ######################################################-->
+     <div id="displayUsersData" style="visibility:hidden;" runat="server">
+         <br />
+         <br />
+         <h1> Choose User and display his data </h1>
+     
+         <asp:GridView ID="GridView1" runat="server">
+         </asp:GridView>
+     
+        <asp:DropDownList ID="userIDDropdownList" AutoPostBack="True" OnSelectedIndexChanged="ddComapanyFilter_SelectedIndexChanged" runat="server" DataSourceID="SqlDataSource1" DataTextField="name" DataValueField="googleID">
+        </asp:DropDownList>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SlivkoDatabaseConnectionString %>" SelectCommand="SELECT [name], [googleID] FROM [User]"></asp:SqlDataSource>
+
+     </div>
+
+    
+    </form>
 
 
 
@@ -193,7 +210,7 @@
 
 
 <footer class="col-12">
-  Matic Vrtačnik, 63150317<br>
+  Matic Vrtačnik, 63150317<br/>
   Jernej Habjan, 63150106
 </footer>
 
@@ -220,6 +237,10 @@
 
 
     
+    
+
+
+
     
 
 

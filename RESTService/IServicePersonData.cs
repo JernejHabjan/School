@@ -39,6 +39,10 @@ namespace RESTService
         [WebGet(UriTemplate = "Passengers/{orderID}", ResponseFormat = WebMessageFormat.Json)]
         List<Passenger> ReturnPassengers(string orderID);
 
+        [OperationContract]
+        [WebGet(UriTemplate = "Role/{googleID}", ResponseFormat = WebMessageFormat.Json)]
+        List<String> GetRole(string googleID);
+        
 
     }
 

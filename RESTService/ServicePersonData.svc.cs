@@ -176,5 +176,30 @@ namespace RESTService
             return passengers;
         }
 
+
+        public List<String> GetRole(string googleID)
+        {
+            List<String> role = new List<String> { "0", "user" };
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                string sql = "SELECT * FROM [Role] JOIN [User] ON ([User].roleID = [Role].roleID) WHERE [User].googleID=@0;";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.Add(new SqlParameter("0", googleID));
+
+                using (SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.SingleRow))
+                {
+                    if (reader.Read())
+                    {
+                        role[0] = reader[0].ToString();
+                        role[1] = reader[1].ToString();
+                    }
+                }
+                con.Close();
+                return role;
+            }
+        }
+
     }
 }

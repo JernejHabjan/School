@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
@@ -11,15 +12,20 @@ namespace RESTService
     public partial class MainPage : System.Web.UI.Page
     {
 
+        DataTable dt = new DataTable();
+        Boolean isAdmin = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            // FOR TEST PURPOSES ------- FIXED orderID AND googleID 
-            Session["orderID"] = 109;
-            Session["googleID"] = "104967849801990887085";
+            int orderID = Convert.ToInt32(Session["orderID"]);
+            string googleID = Session["orderID"] as string;
 
 
+
+            // FOR TEST PURPOSES --- TODO - REMOVE THIS AFTER DEBUGGING
+            orderID = 109;
+            googleID = "104967849801990887085";
 
 
 
@@ -30,133 +36,122 @@ namespace RESTService
             if (!String.IsNullOrEmpty(sessionUserId) && sessionUserId != "")
             {
 
-                Response.Write("RESTORING PROFILE DATA:");
+                Response.Write("Profile data restored.");
                 ServicePersonData sPersonData = new ServicePersonData();
-                User user = sPersonData.ReturnUser(Session["googleID"].ToString());
+                User user = sPersonData.ReturnUser(googleID);
                 loginNav.InnerText = " Pozdravljen " + user.name;
 
+                // get role - admin and user right
+                List<string> role = sPersonData.GetRole(googleID);
+                int roleID = Convert.ToInt32(role[0]);
+                isAdmin = Convert.ToBoolean(roleID);
 
-                user.name = "NOV NAME";
-                sPersonData.UpdateUser(user);
-         
-                Response.Write("UPDATED USER");
-
-                // TODOOOOOOOOOOOOOOOOOOOOOOOOOO TEMP GOOGLE ID THAT HAS TRAVELS INSERTED - FOR TESTING ---- DELETE THIS AFTER
-                //sessionUserId = "5432t532g52f432g432";
-
-
-                /*
-
-                // RETRIEVE FLIGHT DATA FOR USER
-                ServiceTravelData sTravelData = new ServiceTravelData();
-                List<TravelSendInfo> travelsInfo = sTravelData.ReturnTravels(sessionUserId);
-                
-                foreach(TravelSendInfo travelInfo in travelsInfo)
-                {
-                    Response.Write(travelInfo.initialDiscount);
-                    Response.Write(travelInfo.returnFromLocation);
-          
-                    Display_TravelInfo(travelInfo);
-                }
-             */
-
-
+                string roleName = role[1];
 
             }
             else
             {
-                Response.Write("No session id found yet");
+                Response.Write("Login to display additional data");
             }
 
-            ServiceTravelData sTravelData = new ServiceTravelData();
+            // setup data table with ids
+            dt.Columns.Add("orderID");
+            dt.Columns.Add("fromLocationName");
+            dt.Columns.Add("toLocationName");
+            dt.Columns.Add("initialPrice");
+            dt.Columns.Add("initialDate");
+            dt.Columns.Add("initialDiscount");
+            dt.Columns.Add("initialPlaneName");
+            dt.Columns.Add("initialPlaneCompany");
+            dt.Columns.Add("returnDate");
+            dt.Columns.Add("returnDiscount");
+            dt.Columns.Add("returnPrice");
+            dt.Columns.Add("returnPlaneName");
+            dt.Columns.Add("returnPlaneCompany");
+            dt.Columns.Add("returnToLocation");
+            dt.Columns.Add("returnFromLocation");
 
-            /*
-             
-      [DataMember]
-        public string googleID { get; set; }
-
-        [DataMember]
-        public string planeName { get; set; }
-        [DataMember]
-        public string planeCompany { get; set; }
-
-        [DataMember]
-        public string fromLocation { get; set; }
-        [DataMember]
-        public string toLocation { get; set; }
-
-        [DataMember]
-        public DateTime departureDate { get; set; }
-        [DataMember]
-        public string departureClass { get; set; }
-        
-        [DataMember]
-        public float price { get; set; }
-        [DataMember]
-        public float discount { get; set; }
-    
-        [DataMember]
-        public DateTime returnDate { get; set; }
-        [DataMember]
-        public string returnClass { get; set; }
-
-        [DataMember]
-        public List<string> passengerData { get; set; }*/
-
-            // TESTING INSERT - --------------------------------------- DELETE THIS AFTER IMPLEMENTED
-            /*
-            sTravelData.AddTravel(new TravelReceiveInfo
+            if (isAdmin)
             {
-                googleID = "104967849801990887085",
-                planeName = "jurešnik",
-                planeCompany = "companyPlaneJurešnik",
-
-                fromLocation = "grem z loga",
-                toLocation = "grem na kitajsk",
+                // set visibiliy of element to true if admin
+                displayUsersData.Style.Add("visibility", "visible");
 
 
-                departureClass = "prvi",
-                returnClass = "prvi",
-
-                departureDate = "3.12.2017",
-                returnDate = "3.12.2017",
-
-                price = 243,
-                discount = 33,
-
-                passengerData = "pasName1$$$passSurname1$$$male$$$1$$$pasName2$$$passSurname2$$$female$$$1"
-
-           });
-           */
+                // On postback - reload data in gridview when admin selects user and views its previous travels
+                if (IsPostBack)
+                {
+                    Bind();
+                }
+            }
 
 
-
+            
         }
-        private void Display_TravelInfo(TravelSendInfo travelInfo)
-        {
-
-
-            // TODO
-
-
-
-
-        }
-
+     
 
         protected void GridViewFlights_OnRowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName != "RemoveOrder") return;
             int orderID = Convert.ToInt32(e.CommandArgument);
             // do something
-            Response.Write("REMOVED ORDER WITH IDDDDDDD" + orderID.ToString());
+            Response.Write("Removed order with ID: " + orderID.ToString());
 
         }
 
         protected void GridViewFlights_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Response.Write("REMOVED ORDER WITH IDDDDDDD");
+            Response.Write("TODO");
         }
+        private void Bind()
+        {
+            string selectedGoogleID = userIDDropdownList.SelectedValue;
+
+            GridView gridView = GridView1;
+            DataRow dr;
+
+            ServiceTravelData sTravelData = new ServiceTravelData();
+            List<TravelSendInfo> travelsInfo = sTravelData.ReturnTravels(selectedGoogleID);
+
+            foreach (TravelSendInfo travelInfo in travelsInfo)
+            {
+                // add new data
+                dr = dt.NewRow();
+                dr["orderID"] = travelInfo.orderID;
+                dr["fromLocationName"] = travelInfo.fromLocationName;
+                dr["toLocationName"] = travelInfo.toLocationName;
+                dr["initialPrice"] = travelInfo.initialPrice;
+                dr["initialDate"] = travelInfo.initialDate;
+                dr["initialDiscount"] = travelInfo.initialDiscount;
+                dr["initialPlaneName"] = travelInfo.initialPlaneName;
+                dr["initialPlaneCompany"] = travelInfo.initialPlaneCompany;
+                dr["returnDate"] = travelInfo.returnDate;
+                dr["returnDiscount"] = travelInfo.returnDiscount;
+                dr["returnPrice"] = travelInfo.returnPrice;
+                dr["returnPlaneName"] = travelInfo.returnPlaneName;
+                dr["returnPlaneCompany"] = travelInfo.returnPlaneCompany;
+                dr["returnToLocation"] = travelInfo.returnToLocation;
+                dr["returnFromLocation"] = travelInfo.returnFromLocation;
+
+
+                dt.Rows.Add(dr);
+            }
+
+            // bind data to gridView
+            gridView.DataSourceID = null;
+            gridView.DataSource = dt;
+            gridView.DataBind();
+
+        }
+
+        protected void ddComapanyFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isAdmin)
+            {
+                Bind();
+            }
+            
+        }
+
     }
    
 
