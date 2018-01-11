@@ -33,7 +33,7 @@
  <form id="form1" runat="server">
 
     <!-- ###############################################################  Flight data #####################################################  -->
-        <div>
+        
             <h1 style="text-align:center" >Podatki o letu</h1>
             
             <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="CurrentTravelDataInfo">
@@ -61,7 +61,7 @@
                      <asp:SessionParameter DefaultValue="-1" Name="orderID" SessionField="orderID" Type="String" />
                  </SelectParameters>
              </asp:ObjectDataSource>
-
+     <div id="inputTravelData" runat="server">
             <table>
                 <tr>
                     <th style="text-align:center"><asp:Label runat="server" Text="Mesto odhoda"></asp:Label></th>
@@ -110,7 +110,7 @@
 
 
         <!--###################################################### Passenger data #######################################################-->
-        <div>
+        
             <h1 style="text-align:center" >Potniki</h1>
             
  
@@ -127,8 +127,9 @@
                     <asp:SessionParameter DefaultValue="-1" Name="orderID" SessionField="orderID" Type="String" />
                 </SelectParameters>
             </asp:ObjectDataSource>
-
+            
             <br />
+     <div id="inputPassenger" runat="server">
             <table>
                 <tr>
                     <th><asp:Label runat="server" Text="Ime"></asp:Label></th>
@@ -151,7 +152,7 @@
         </div>
         <!-- ########################################################## Finish order ######################################################### -->
 
-        <div>
+        <div id="zakljucekPlacila" runat="server">
             <h1 style="text-align:center" >Zaključek plačila</h1>
        
 

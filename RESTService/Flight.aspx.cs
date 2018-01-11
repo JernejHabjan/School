@@ -24,6 +24,13 @@ namespace RESTService
             if (Session["orderID"] == null || String.IsNullOrWhiteSpace(Session["orderID"].ToString()))
             {
                 GridView2.Style.Add("visibility", "hidden");
+
+            }
+            else
+            {
+                inputTravelData.Style.Add("visibility", "hidden");
+                inputPassenger.Style.Add("visibility", "hidden");
+                zakljucekPlacila.Style.Add("visibility", "hidden");
             }
 
             // setup data table with ids
@@ -57,29 +64,38 @@ namespace RESTService
             {
                 // dodamo passengerja v tabelo
                 GridView gridView = GridView1;
-             
+                DataRow dr;
 
-               
-                DataRow dr = dt.NewRow();
+
+                
+                // ADD PREV DATA
+                foreach (GridViewRow gvr in gridView.Rows)
+                {
+                    dr = dt.NewRow();
+                    dr["name"] = gvr.Cells[gvr.GetCellIndexByFieldHandle("name")].Text;
+                    dr["surname"] = gvr.Cells[gvr.GetCellIndexByFieldHandle("surname")].Text;
+                    dr["gender"] = gvr.Cells[gvr.GetCellIndexByFieldHandle("gender")].Text;
+                    dr["age"] = gvr.Cells[gvr.GetCellIndexByFieldHandle("age")].Text;
+                    dt.Rows.Add(dr);
+                }
+
+                // add new data
+                dr = dt.NewRow();
                 dr["name"] = ime_input.Value;
                 dr["surname"] = priimek_input.Value;
                 dr["gender"] = spol_input.Value;
                 dr["age"] = rojstvo_input.Value;
                 dt.Rows.Add(dr);
 
-                
-
+                // bind data to gridView
                 gridView.DataSourceID = null;
                 gridView.DataSource = dt;
                 gridView.DataBind();
-
-                /* TODO ne dela še za več passengerju, prav tako se pobriše prejšni data ki je v njem*/
 
             }
             else
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Vnesite vse podatke')", true);
-            
             }
 
 
@@ -223,6 +239,44 @@ namespace RESTService
                 updatePrice(-100); // TODO - update price doesnt work-------------------------------------!!!!!!!!!!!!!!!!!!!!!!
             }
 
+        }
+
+
+    }
+
+
+    public static class Utility
+    {
+        /// <summary>
+        /// Gets the ordinal index of a TableCell in a rendered GridViewRow, using a text fieldHandle (e.g. the corresponding column's DataFieldName/SortExpression/HeaderText)
+        /// </summary>
+        public static int GetCellIndexByFieldHandle(this GridView grid, string fieldHandle)
+        {
+            int iCellIndex = -1;
+
+            for (int iColIndex = 0; iColIndex < grid.Columns.Count; iColIndex++)
+            {
+                if (grid.Columns[iColIndex] is DataControlField)
+                {
+                    DataControlField col = (DataControlField)grid.Columns[iColIndex];
+                    if ((col is BoundField && string.Compare(((BoundField)col).DataField, fieldHandle, true) == 0)
+                        || string.Compare(col.SortExpression, fieldHandle, true) == 0
+                        || col.HeaderText.Contains(fieldHandle))
+                    {
+                        iCellIndex = iColIndex;
+                        break;
+                    }
+                }
+            }
+            return iCellIndex;
+        }
+
+        /// <summary>
+        /// Gets the ordinal index of a TableCell in a rendered GridViewRow, using a text fieldHandle (e.g. the corresponding column's DataFieldName/SortExpression/HeaderText)
+        /// </summary>
+        public static int GetCellIndexByFieldHandle(this GridViewRow row, string fieldHandle)
+        {
+            return GetCellIndexByFieldHandle((GridView)row.Parent.Parent, fieldHandle);
         }
     }
 }

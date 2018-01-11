@@ -49,6 +49,15 @@ namespace RESTService {
         protected global::System.Web.UI.WebControls.ObjectDataSource CurrentTravelDataInfo;
         
         /// <summary>
+        /// inputTravelData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl inputTravelData;
+        
+        /// <summary>
         /// mestoOdhoda_input control.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace RESTService {
         protected global::System.Web.UI.WebControls.ObjectDataSource PotnikiDataSource;
         
         /// <summary>
+        /// inputPassenger control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl inputPassenger;
+        
+        /// <summary>
         /// ime_input control.
         /// </summary>
         /// <remarks>
@@ -182,6 +200,15 @@ namespace RESTService {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button b_accept;
+        
+        /// <summary>
+        /// zakljucekPlacila control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl zakljucekPlacila;
         
         /// <summary>
         /// kartica_checkbox control.
