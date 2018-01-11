@@ -175,17 +175,10 @@
                 </tr>
 
             </table>
-                  
-            <p style="text-align:center">
-                
                 <p style="text-align:center"><asp:Label id="cena_label" runat="server" Text="Končna cena: "></asp:Label> </p>
                 <br />
-                <asp:Button ID="b_potrdiNarocilo" class="button1" runat="server" OnClick="b_potrdiNarocilo_Click" Text="Potrdi naročilo" />
-            </p>
+                <p style="text-align:center"><asp:Button ID="b_potrdiNarocilo" class="button1" style="width:200px;" runat="server" OnClick="b_potrdiNarocilo_Click" Text="Potrdi naročilo" /></p>
         </div>
-
-
-
     </form>
 
 

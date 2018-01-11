@@ -32,11 +32,17 @@
 
     <!-- #######################################################   Change info form  ################################################## -->
     <form id="form1" runat="server">
-        <div>
-            <asp:Label ID="Label1"  runat="server" Text="Novo prikazno ime: "></asp:Label>
-            <input id="name_input" class="textInput" type="text" runat="server"/></div>
-            <asp:Label ID="Label2" runat="server" Text="Nov email: "></asp:Label>
-            <input id="email_input" class="textInput" type="text" runat="server"/><p>
+   
+
+        <table >
+            <tr >
+                <th style="text-align:center"><asp:Label runat="server" Text="Novo prikazno ime: "></asp:Label></th>
+            </tr>
+            <tr style="text-align:center">
+                <td><input id="name_input" class="textInput" type="text" runat="server"/></td>
+            </tr>
+        </table>
+        <p style="text-align:center">
             <asp:Button ID="b_accept" class="button1" runat="server" OnClick="b_accept_Click" Text="Potrdi spremembe" />
             <asp:Button ID="b_cancel" class="button1" runat="server" OnClick="b_cancel_Click" Text="Prekini" />
         </p>

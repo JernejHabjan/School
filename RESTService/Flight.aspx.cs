@@ -19,6 +19,12 @@ namespace RESTService
             Session["orderID"] = 108;
             Session["googleID"] = "104967849801990887085";
 
+        
+            //if onLoad - no orderID - we didnt view previous travel - remove gridview Viewer
+            if (Session["orderID"] == null || String.IsNullOrWhiteSpace(Session["orderID"].ToString()))
+            {
+                GridView2.Style.Add("visibility", "hidden");
+            }
 
             // setup data table with ids
             dt.Columns.Add("passengerID");

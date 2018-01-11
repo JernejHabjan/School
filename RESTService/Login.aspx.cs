@@ -51,21 +51,27 @@ namespace RESTService
                 string json = GoogleConnect.Fetch("me", code);
                 GoogleProfile profile = new JavaScriptSerializer().Deserialize<GoogleProfile>(json);
                 Session["googleID"] = profile.ID; // set session variable
-                LblName.Text = profile.DisplayName;
-                LblEmail.Text = profile.Emails.Find(email => email.Type == "account").value;
-                ProfileImage.ImageUrl = profile.Image.Url;
-                pnlProfile.Visible = true;
-                btnLogin.Visible = false;
-
 
                 ServicePersonData sPersonData = new ServicePersonData();
                 User user = sPersonData.ReturnUser(profile.ID);
 
+                if (String.IsNullOrEmpty(user.googleID))
+                {
+                    LblName.Text = profile.DisplayName;
+                    
+                }
+                else // if user is already written in database, it may have changed name, so read name from database and display it 
+                {
+                    LblName.Text = user.name;
+                }
 
-                Response.Write(Session["googleID"]);
-                Response.Write("IS USER WRITTEN TO DATABASE:");
-
-                Response.Write(String.IsNullOrEmpty(user.googleID));
+                LblEmail.Text = profile.Emails.Find(email => email.Type == "account").value;
+                ProfileImage.ImageUrl = profile.Image.Url;
+                pnlProfile.Visible = true;
+                btnLogin.Visible = false;
+                
+                Response.Write("Current session googleID: " + Session["googleID"] + "\n");
+                Response.Write("IS USER WRITTEN TO DATABASE?:" + String.IsNullOrEmpty(user.googleID));
 
                 if (String.IsNullOrEmpty(user.googleID))
                 {

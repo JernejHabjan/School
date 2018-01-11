@@ -19,11 +19,10 @@ namespace RESTService
         protected void b_accept_Click(object sender, EventArgs e)
         {
             // if inserted valid email and name, save profile
-            if(!String.IsNullOrEmpty(email_input.Value) && !String.IsNullOrWhiteSpace(email_input.Value) && !String.IsNullOrEmpty(name_input.Value) && !String.IsNullOrWhiteSpace(name_input.Value))
+            if(!String.IsNullOrEmpty(name_input.Value) && !String.IsNullOrWhiteSpace(name_input.Value))
             {
                 ServicePersonData sPersonData = new ServicePersonData();
                 User user = sPersonData.ReturnUser(Session["googleID"].ToString());
-                user.email = email_input.Value;
                 user.name = name_input.Value;
 
                 sPersonData.UpdateUser(user/*, user.googleID*/);

@@ -83,10 +83,10 @@
             <br />
             <p style="text-align:center"><asp:Label runat="server" Text="Dvosmerna"></asp:Label>
                 <br />
-                <asp:CheckBox ID="dvosmerna_checkbox" runat="server" />
+                <asp:CheckBox ID="dvosmerna_checkbox" runat="server" OnCheckedChanged="dvosmerna_checkbox_CheckedChanged"  AutoPostBack="True" />
             </p>
             <br />
-            <table>
+            <table id="dvosmernaTable" runat="server">
                  <tr >
                     <th style="text-align:center"><asp:Label runat="server" Text="Datum prihoda"></asp:Label></th>
                     <th style="text-align:center"><asp:Label runat="server" Text="Razred prihoda"></asp:Label></th>
@@ -154,14 +154,15 @@
         <div>
             <h1 style="text-align:center" >Zaključek plačila</h1>
        
+
             <br />
             <p style="text-align:center"><asp:Label runat="server" Text="Kreditna kartica: "></asp:Label> 
                 <br />
-                <asp:CheckBox ID="kartica_checkbox" runat="server" />
+                <asp:CheckBox ID="kartica_checkbox" runat="server" OnCheckedChanged="kartica_checkbox_CheckedChanged" AutoPostBack="True" />
             </p>
             
       
-            <table>
+            <table runat="server" id="karticaTable" >
                  <tr >
                     <th style="text-align:center"><asp:Label runat="server" Text="Ime plačnika"></asp:Label></th>
                     <th style="text-align:center"><asp:Label runat="server" Text="Priimek plačnika"></asp:Label></th>
@@ -176,6 +177,9 @@
             </table>
                   
             <p style="text-align:center">
+                
+                <p style="text-align:center"><asp:Label id="cena_label" runat="server" Text="Končna cena: "></asp:Label> </p>
+                <br />
                 <asp:Button ID="b_potrdiNarocilo" class="button1" runat="server" OnClick="b_potrdiNarocilo_Click" Text="Potrdi naročilo" />
             </p>
         </div>

@@ -33,24 +33,24 @@
 
     <!-- ####################################################  Login form  #######################################################  -->
     <form id="form1" runat="server">
-        <div>
-            <asp:Button ID="btnLogin" class="button1" Text="Login with Google" runat="server" OnClick="btnLogin_Click"  />
+        <div style="text-align:center">
+            <asp:Button style="background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Google-favicon-2015.png/150px-Google-favicon-2015.png'); background-size: 50px 50px; background-repeat:no-repeat; height:50px; width:300px; color:black;" ID="btnLogin" class="button1" Text="Login with Google" runat="server" OnClick="btnLogin_Click"  />
             <asp:panel ID="pnlProfile" runat="server" Visible="false">
                 <table>
                     <tr>
-                        <td rowspan="5"><asp:Image ID="ProfileImage" style="padding:30px;" runat="server" Width="100" Height="100"/></td>
+                        <td rowspan="5"><asp:Image ID="ProfileImage" style="padding:30px;" runat="server" Width="200" Height="200"/></td>
                     </tr>
                     <tr>
-                        <td>Name:<asp:Label ID="LblName" runat="server" Text=""></asp:Label></td>
+                        <td>Ime: <asp:Label ID="LblName" runat="server" Text=""></asp:Label></td>
                     </tr>
                     <tr>
-                        <td>Email:<asp:Label ID="LblEmail" runat="server" Text=""></asp:Label></td>
+                        <td>Email: <asp:Label ID="LblEmail" runat="server" Text=""></asp:Label></td>
                     </tr>
                     <tr>
-                        <td><asp:Button class="button1" ID="Button2" runat="server" OnClick="ChangeInfo" Text="Change personal info" style="height: 26px" /></td>
+                        <td><asp:Button class="button1" ID="Button2" runat="server" OnClick="ChangeInfo" Text="Spremeni prikazno ime" style="width:200px;" /></td>
                     </tr>
                     <tr>
-                        <td><asp:Button class="button1" ID="Button1" runat="server" OnClick="Clear_click" Text="Logout" /></td>
+                        <td><asp:Button class="button1" ID="Button1" runat="server" OnClick="Clear_click" Text="Logout"  style="width:200px;"/></td>
                     </tr>
                 </table>
            </asp:panel>
