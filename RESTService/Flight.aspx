@@ -38,21 +38,21 @@
             
             <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="CurrentTravelDataInfo">
                 <Columns>
-                    <asp:BoundField DataField="orderID" HeaderText="orderID" SortExpression="orderID" />
-                    <asp:BoundField DataField="fromLocationName" HeaderText="fromLocationName" SortExpression="fromLocationName" />
-                    <asp:BoundField DataField="toLocationName" HeaderText="toLocationName" SortExpression="toLocationName" />
-                    <asp:BoundField DataField="initialPrice" HeaderText="initialPrice" SortExpression="initialPrice" />
-                    <asp:BoundField DataField="initialDate" HeaderText="initialDate" SortExpression="initialDate" />
-                    <asp:BoundField DataField="initialDiscount" HeaderText="initialDiscount" SortExpression="initialDiscount" />
-                    <asp:BoundField DataField="initialPlaneName" HeaderText="initialPlaneName" SortExpression="initialPlaneName" />
-                    <asp:BoundField DataField="initialPlaneCompany" HeaderText="initialPlaneCompany" SortExpression="initialPlaneCompany" />
-                    <asp:BoundField DataField="returnDate" HeaderText="returnDate" SortExpression="returnDate" />
-                    <asp:BoundField DataField="returnDiscount" HeaderText="returnDiscount" SortExpression="returnDiscount" />
-                    <asp:BoundField DataField="returnPrice" HeaderText="returnPrice" SortExpression="returnPrice" />
-                    <asp:BoundField DataField="returnPlaneName" HeaderText="returnPlaneName" SortExpression="returnPlaneName" />
-                    <asp:BoundField DataField="returnPlaneCompany" HeaderText="returnPlaneCompany" SortExpression="returnPlaneCompany" />
-                    <asp:BoundField DataField="returnToLocation" HeaderText="returnToLocation" SortExpression="returnToLocation" />
-                    <asp:BoundField DataField="returnFromLocation" HeaderText="returnFromLocation" SortExpression="returnFromLocation" />
+                    <asp:BoundField DataField="orderID" HeaderText="ID naročila" SortExpression="orderID" />
+                    <asp:BoundField DataField="fromLocationName" HeaderText="Začetna lokacija odhodnega leta" SortExpression="fromLocationName" />
+                    <asp:BoundField DataField="toLocationName" HeaderText="Končna lokacija odhodnega leta" SortExpression="toLocationName" />
+                    <asp:BoundField DataField="initialPrice" HeaderText="Cena začenega leta" SortExpression="initialPrice" />
+                    <asp:BoundField DataField="initialDate" HeaderText="Datum začetnega leta" SortExpression="initialDate" />
+                    <asp:BoundField DataField="initialDiscount" HeaderText="Popust začetnega leta" SortExpression="initialDiscount" />
+                    <asp:BoundField DataField="initialPlaneName" HeaderText="Ime začetnega letala" SortExpression="initialPlaneName" />
+                    <asp:BoundField DataField="initialPlaneCompany" HeaderText="Proizvajalec začetnega letala" SortExpression="initialPlaneCompany" />
+                    <asp:BoundField DataField="returnDate" HeaderText="Povratni datum" SortExpression="returnDate" />
+                    <asp:BoundField DataField="returnDiscount" HeaderText="Povratni popust" SortExpression="returnDiscount" />
+                    <asp:BoundField DataField="returnPrice" HeaderText="Povratna cena" SortExpression="returnPrice" />
+                    <asp:BoundField DataField="returnPlaneName" HeaderText="Ime povratnega letala" SortExpression="returnPlaneName" />
+                    <asp:BoundField DataField="returnPlaneCompany" HeaderText="Proizvajalec povratnega letala" SortExpression="returnPlaneCompany" />
+                    <asp:BoundField DataField="returnToLocation" HeaderText="Povratna začetna lokacija leta" SortExpression="returnToLocation" />
+                    <asp:BoundField DataField="returnFromLocation" HeaderText="Povratna končna lokacija leta" SortExpression="returnFromLocation" />
                 </Columns>
              </asp:GridView>
              <asp:ObjectDataSource ID="CurrentTravelDataInfo" runat="server" SelectMethod="ReturnTravel" TypeName="RESTService.ServiceTravelData">
@@ -116,10 +116,11 @@
  
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="PotnikiDataSource">
                 <Columns>
-                    <asp:BoundField DataField="name" HeaderText="name" SortExpression="name" />
-                    <asp:BoundField DataField="surname" HeaderText="surname" SortExpression="surname" />
-                    <asp:BoundField DataField="gender" HeaderText="gender" SortExpression="gender" />
-                    <asp:BoundField DataField="age" HeaderText="age" SortExpression="age" />
+                    <asp:BoundField DataField="name" HeaderText="Ime" SortExpression="name" />
+                    <asp:BoundField DataField="surname" HeaderText="Priimek" SortExpression="surname" />
+                    <asp:BoundField DataField="gender" HeaderText="Spol" SortExpression="gender" />
+                    <asp:BoundField DataField="age" HeaderText="Starost" SortExpression="age" />
+                    
                 </Columns>
             </asp:GridView>
             <asp:ObjectDataSource ID="PotnikiDataSource" runat="server" SelectMethod="ReturnPassengers" TypeName="RESTService.ServicePersonData">

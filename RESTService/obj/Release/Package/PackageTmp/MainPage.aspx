@@ -148,26 +148,35 @@
      <!-- ############################################# form display all travels in grid ######################################################-->
 
  <form id="form1" runat="server">
-    <asp:GridView ID="GridViewFlights" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1">
+    <asp:GridView ID="GridViewFlights" runat="server" AutoGenerateColumns="False"  DataSourceID="ObjectDataSource1" OnSelectedIndexChanged="GridViewFlights_SelectedIndexChanged" DataKeyNames="orderID">
         <Columns>
-            <asp:BoundField DataField="orderID" HeaderText="orderID" SortExpression="orderID" />
-            <asp:BoundField DataField="fromLocationName" HeaderText="fromLocationName" SortExpression="fromLocationName" />
-            <asp:BoundField DataField="toLocationName" HeaderText="toLocationName" SortExpression="toLocationName" />
-            <asp:BoundField DataField="initialPrice" HeaderText="initialPrice" SortExpression="initialPrice" />
-            <asp:BoundField DataField="initialDate" HeaderText="initialDate" SortExpression="initialDate" />
-            <asp:BoundField DataField="initialDiscount" HeaderText="initialDiscount" SortExpression="initialDiscount" />
-            <asp:BoundField DataField="initialPlaneName" HeaderText="initialPlaneName" SortExpression="initialPlaneName" />
-            <asp:BoundField DataField="initialPlaneCompany" HeaderText="initialPlaneCompany" SortExpression="initialPlaneCompany" />
-            <asp:BoundField DataField="returnDate" HeaderText="returnDate" SortExpression="returnDate" />
-            <asp:BoundField DataField="returnDiscount" HeaderText="returnDiscount" SortExpression="returnDiscount" />
-            <asp:BoundField DataField="returnPrice" HeaderText="returnPrice" SortExpression="returnPrice" />
-            <asp:BoundField DataField="returnPlaneName" HeaderText="returnPlaneName" SortExpression="returnPlaneName" />
-            <asp:BoundField DataField="returnPlaneCompany" HeaderText="returnPlaneCompany" SortExpression="returnPlaneCompany" />
-            <asp:BoundField DataField="returnToLocation" HeaderText="returnToLocation" SortExpression="returnToLocation" />
-            <asp:BoundField DataField="returnFromLocation" HeaderText="returnFromLocation" SortExpression="returnFromLocation" />
+            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True"/>
+            <asp:TemplateField>
+            <ItemTemplate>                
+              <asp:Button ButtonType="Button" runat="server" CommandName="GridViewFlights_OnRowCommand" Text="TODO-COMMAND ARGUMENT IS 96" CommandArgument="96" />
+            </ItemTemplate>
+          </asp:TemplateField>
+            <asp:BoundField DataField="orderID" HeaderText="ID naročila" SortExpression="orderID" />
+            <asp:BoundField DataField="fromLocationName" HeaderText="Začetna lokacija odhodnega leta" SortExpression="fromLocationName" />
+            <asp:BoundField DataField="toLocationName" HeaderText="Končna lokacija odhodnega leta" SortExpression="toLocationName" />
+            <asp:BoundField DataField="initialPrice" HeaderText="Cena začenega leta" SortExpression="initialPrice" />
+            <asp:BoundField DataField="initialDate" HeaderText="Datum začetnega leta" SortExpression="initialDate" />
+            <asp:BoundField DataField="initialDiscount" HeaderText="Popust začetnega leta" SortExpression="initialDiscount" />
+            <asp:BoundField DataField="initialPlaneName" HeaderText="Ime začetnega letala" SortExpression="initialPlaneName" />
+            <asp:BoundField DataField="initialPlaneCompany" HeaderText="Proizvajalec začetnega letala" SortExpression="initialPlaneCompany" />
+            <asp:BoundField DataField="returnDate" HeaderText="Povratni datum" SortExpression="returnDate" />
+            <asp:BoundField DataField="returnDiscount" HeaderText="Povratni popust" SortExpression="returnDiscount" />
+            <asp:BoundField DataField="returnPrice" HeaderText="Povratna cena" SortExpression="returnPrice" />
+            <asp:BoundField DataField="returnPlaneName" HeaderText="Ime povratnega letala" SortExpression="returnPlaneName" />
+            <asp:BoundField DataField="returnPlaneCompany" HeaderText="Proizvajalec povratnega letala" SortExpression="returnPlaneCompany" />
+            <asp:BoundField DataField="returnToLocation" HeaderText="Povratna začetna lokacija leta" SortExpression="returnToLocation" />
+            <asp:BoundField DataField="returnFromLocation" HeaderText="Povratna končna lokacija leta" SortExpression="returnFromLocation" />
         </Columns>
     </asp:GridView>
-    <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" DataObjectTypeName="RESTService.TravelReceiveInfo" InsertMethod="AddTravel" SelectMethod="ReturnTravels" TypeName="RESTService.ServiceTravelData">
+    <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" DataObjectTypeName="RESTService.TravelReceiveInfo" InsertMethod="AddTravel" SelectMethod="ReturnTravels" TypeName="RESTService.ServiceTravelData" DeleteMethod="RemoveOrder">
+        <DeleteParameters>
+            <asp:Parameter Name="orderID" Type="String" />
+        </DeleteParameters>
         <SelectParameters>
             <asp:SessionParameter DefaultValue="&quot;-1&quot;" Name="googleID" SessionField="googleID" Type="String" />
         </SelectParameters>

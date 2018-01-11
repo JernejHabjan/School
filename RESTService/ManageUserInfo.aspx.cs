@@ -28,7 +28,7 @@ namespace RESTService
                 sPersonData.UpdateUser(user/*, user.googleID*/);
 
 
-                Response.Redirect("http://asistentslivko.azurewebsites.net/Login.aspx");
+                Response.Redirect("http://asistentslivko.azurewebsites.net/Login.aspx"); 
             }
             else
             {

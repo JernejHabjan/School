@@ -28,9 +28,11 @@ namespace RESTService
             }
             else
             {
-                inputTravelData.Style.Add("visibility", "hidden");
-                inputPassenger.Style.Add("visibility", "hidden");
-                zakljucekPlacila.Style.Add("visibility", "hidden");
+                // TODO - uncomment this after debugging - this is commented for debugging
+
+                //inputTravelData.Style.Add("visibility", "hidden");
+                //inputPassenger.Style.Add("visibility", "hidden");
+                //zakljucekPlacila.Style.Add("visibility", "hidden");
             }
 
             // setup data table with ids

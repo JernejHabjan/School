@@ -143,7 +143,20 @@ namespace RESTService
 
         }
 
-        
+
+        protected void GridViewFlights_OnRowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName != "RemoveOrder") return;
+            int orderID = Convert.ToInt32(e.CommandArgument);
+            // do something
+            Response.Write("REMOVED ORDER WITH IDDDDDDD" + orderID.ToString());
+
+        }
+
+        protected void GridViewFlights_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Response.Write("REMOVED ORDER WITH IDDDDDDD");
+        }
     }
    
 
