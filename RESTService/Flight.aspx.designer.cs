@@ -49,67 +49,76 @@ namespace RESTService {
         protected global::System.Web.UI.WebControls.ObjectDataSource CurrentTravelDataInfo;
         
         /// <summary>
-        /// Text4 control.
+        /// mestoOdhoda_input control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text4;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText mestoOdhoda_input;
         
         /// <summary>
-        /// Text5 control.
+        /// mestoPrihoda_input control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text5;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText mestoPrihoda_input;
         
         /// <summary>
-        /// Text6 control.
+        /// datumOdhoda_date control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Text6;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl datumOdhoda_date;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// razredOdhoda_drop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.DropDownList razredOdhoda_drop;
         
         /// <summary>
-        /// CheckBox2 control.
+        /// dvosmerna_checkbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox2;
+        protected global::System.Web.UI.WebControls.CheckBox dvosmerna_checkbox;
         
         /// <summary>
-        /// Text8 control.
+        /// dvosmernaTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Text8;
+        protected global::System.Web.UI.HtmlControls.HtmlTable dvosmernaTable;
         
         /// <summary>
-        /// DropDownList2 control.
+        /// datumPrihoda_date control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl datumPrihoda_date;
+        
+        /// <summary>
+        /// razredPrihoda_drop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList razredPrihoda_drop;
         
         /// <summary>
         /// GridView1 control.
@@ -175,40 +184,58 @@ namespace RESTService {
         protected global::System.Web.UI.WebControls.Button b_accept;
         
         /// <summary>
-        /// CheckBox1 control.
+        /// kartica_checkbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
+        protected global::System.Web.UI.WebControls.CheckBox kartica_checkbox;
         
         /// <summary>
-        /// Date1 control.
+        /// karticaTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Date1;
+        protected global::System.Web.UI.HtmlControls.HtmlTable karticaTable;
         
         /// <summary>
-        /// Text1 control.
+        /// imePlacnika_input control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText imePlacnika_input;
         
         /// <summary>
-        /// Text2 control.
+        /// priimekPlacnika_input control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Text2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText priimekPlacnika_input;
+        
+        /// <summary>
+        /// kartica_input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl kartica_input;
+        
+        /// <summary>
+        /// cena_label control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label cena_label;
         
         /// <summary>
         /// b_potrdiNarocilo control.

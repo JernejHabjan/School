@@ -70,10 +70,10 @@
                     <th style="text-align:center"><asp:Label runat="server" Text="Razred odhoda"></asp:Label></th>
                 </tr>
                 <tr style="text-align:center">
-                    <td><input id="Text4" class="textInput" type="text" runat="server"/></td>
-                    <td><input id="Text5" class="textInput" type="text" runat="server"/></td>
-                    <td><input id="Text6" class="textInput" type="date" runat="server"/></td>
-                    <td><asp:DropDownList ID="DropDownList1" runat="server">
+                    <td><input id="mestoOdhoda_input" class="textInput" type="text" runat="server"/></td>
+                    <td><input id="mestoPrihoda_input" class="textInput" type="text" runat="server"/></td>
+                    <td><input id="datumOdhoda_date" class="textInput" type="date" runat="server"/></td>
+                    <td><asp:DropDownList ID="razredOdhoda_drop" runat="server">
                            <asp:ListItem Selected="True">Prvi</asp:ListItem>
                            <asp:ListItem>Drugi</asp:ListItem>
                        </asp:DropDownList>
@@ -83,17 +83,17 @@
             <br />
             <p style="text-align:center"><asp:Label runat="server" Text="Dvosmerna"></asp:Label>
                 <br />
-                <asp:CheckBox ID="CheckBox2" runat="server" />
+                <asp:CheckBox ID="dvosmerna_checkbox" runat="server" OnCheckedChanged="dvosmerna_checkbox_CheckedChanged"  AutoPostBack="True" />
             </p>
             <br />
-            <table>
+            <table id="dvosmernaTable" runat="server">
                  <tr >
                     <th style="text-align:center"><asp:Label runat="server" Text="Datum prihoda"></asp:Label></th>
                     <th style="text-align:center"><asp:Label runat="server" Text="Razred prihoda"></asp:Label></th>
                 </tr>
                 <tr style="text-align:center">
-                    <td><input id="Text8" class="textInput" type="date" runat="server"/></td>
-                    <td><asp:DropDownList ID="DropDownList2" runat="server">
+                    <td><input id="datumPrihoda_date" class="textInput" type="date" runat="server"/></td>
+                    <td><asp:DropDownList ID="razredPrihoda_drop" runat="server">
                            <asp:ListItem Selected="True">Prvi</asp:ListItem>
                            <asp:ListItem>Drugi</asp:ListItem>
                        </asp:DropDownList>
@@ -116,7 +116,6 @@
  
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="PotnikiDataSource">
                 <Columns>
-                    <asp:BoundField DataField="passengerID" HeaderText="passengerID" SortExpression="passengerID" />
                     <asp:BoundField DataField="name" HeaderText="name" SortExpression="name" />
                     <asp:BoundField DataField="surname" HeaderText="surname" SortExpression="surname" />
                     <asp:BoundField DataField="gender" HeaderText="gender" SortExpression="gender" />
@@ -155,55 +154,39 @@
         <div>
             <h1 style="text-align:center" >Zaključek plačila</h1>
        
+
             <br />
             <p style="text-align:center"><asp:Label runat="server" Text="Kreditna kartica: "></asp:Label> 
                 <br />
-                <asp:CheckBox ID="CheckBox1" runat="server" />
+                <asp:CheckBox ID="kartica_checkbox" runat="server" OnCheckedChanged="kartica_checkbox_CheckedChanged" AutoPostBack="True" />
             </p>
             
       
-            <table>
+            <table runat="server" id="karticaTable" >
                  <tr >
                     <th style="text-align:center"><asp:Label runat="server" Text="Ime plačnika"></asp:Label></th>
                     <th style="text-align:center"><asp:Label runat="server" Text="Priimek plačnika"></asp:Label></th>
                      <th style="text-align:center"><asp:Label runat="server" Text="Kartica"></asp:Label></th>
                 </tr>
                 <tr style="text-align:center">
-                    <td><input id="Date1" class="textInput" type="text" runat="server"/></td>
-                    <td><input id="Text1" class="textInput" type="text" runat="server"/></td>
-                    <td><input id="Text2" class="textInput" type="number" runat="server"/></td>
+                    <td><input id="imePlacnika_input" class="textInput" type="text" runat="server"/></td>
+                    <td><input id="priimekPlacnika_input" class="textInput" type="text" runat="server"/></td>
+                    <td><input id="kartica_input" class="textInput" type="number" runat="server"/></td>
                 </tr>
 
             </table>
                   
             <p style="text-align:center">
-                <button class="button1" runat="server" onclick="myFunction()">Potrdi naročilo</button>
-                <asp:Button ID="b_potrdiNarocilo" class="button1" runat="server" OnClick="b_accept_Click" Text="Potrdi potrdi naročilo" />
-
+                
+                <p style="text-align:center"><asp:Label id="cena_label" runat="server" Text="Končna cena: "></asp:Label> </p>
+                <br />
+                <asp:Button ID="b_potrdiNarocilo" class="button1" runat="server" OnClick="b_potrdiNarocilo_Click" Text="Potrdi naročilo" />
             </p>
         </div>
 
 
 
     </form>
-
-
-   
-
-<p id="demo"></p>
-
-<script>
-    function myFunction() {
-        var txt;
-        if (confirm("Press a button!") == true) {
-            txt = "You pressed OK!";
-            window.location.href = "http://asistentslivko.azurewebsites.net/MainPage.aspx";
-        } else {
-            txt = "You pressed Cancel!";
-        }
-        document.getElementById("demo").innerHTML = txt;
-    }
-</script>
 
 
 
