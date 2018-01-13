@@ -7,6 +7,7 @@
     <title>Flight</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link type="text/css" href="style.css" rel="stylesheet"/>
+    <meta charset="utf-8"/>
 </head>
 <body>
    
@@ -30,6 +31,7 @@
       </div>
     </nav>
 
+    <center>
  <form id="form1" runat="server">
 
     <!-- ###############################################################  Flight data #####################################################  -->
@@ -106,20 +108,23 @@
 
 
 
-
-
-
         <!--###################################################### Passenger data #######################################################-->
         
             <h1 style="text-align:center" >Potniki</h1>
             
  
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="PotnikiDataSource">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="PotnikiDataSource" >
                 <Columns>
                     <asp:BoundField DataField="name" HeaderText="Ime" SortExpression="name" />
                     <asp:BoundField DataField="surname" HeaderText="Priimek" SortExpression="surname" />
                     <asp:BoundField DataField="gender" HeaderText="Spol" SortExpression="gender" />
                     <asp:BoundField DataField="age" HeaderText="Starost" SortExpression="age" />
+
+                    <%--
+                    <asp:TemplateField><ItemTemplate>
+                    <asp:Button runat="server" class="button1" Text="Odstrani" CommandName="Remove" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" />
+                    </ItemTemplate></asp:TemplateField>
+                    --%>
                     
                 </Columns>
             </asp:GridView>
@@ -136,15 +141,26 @@
                     <th><asp:Label runat="server" Text="Ime"></asp:Label></th>
                     <th><asp:Label runat="server" Text="Priimek"></asp:Label></th>
                     <th><asp:Label runat="server" Text="Spol"></asp:Label></th>
-                    <th><asp:Label runat="server" Text="Rojstvo"></asp:Label></th>
+                    <th><asp:Label runat="server" Text="Starost"></asp:Label></th>
 
                 </tr>
                 <tr>
                     <td><input id="ime_input" class="textInput" type="text" runat="server"/><br /></td>
                     <td><input id="priimek_input" class="textInput" type="text" runat="server"/><br /></td>
                     <td><input id="spol_input" class="textInput" type="text" runat="server"/><br /></td>
-                    <td><input id="rojstvo_input" class="textInput" type="text" runat="server"/><br /></td>
-                    <td><asp:Button ID="b_accept" class="button1" runat="server" OnClick="b_accept_Click" Text="Dodaj potnika" /></td>
+                    <td><input id="rojstvo_input" class="textInput" type="number" runat="server"/><br /></td>
+
+
+                    <%--
+                    <td><asp:DropDownList ID="spol_input" runat="server">
+                           <asp:ListItem Selected="True">Male</asp:ListItem>
+                           <asp:ListItem>Female</asp:ListItem>
+                           <asp:ListItem>Other</asp:ListItem>
+                       </asp:DropDownList>
+                   </td>
+                    --%>
+       
+                    <td><asp:Button ID="b_accept" class="button1" runat="server" OnClick="b_dodaj_potnika" Text="Dodaj potnika" /></td>
                 </tr>
 
             </table>
@@ -182,7 +198,7 @@
                 <p style="text-align:center"><asp:Button ID="b_potrdiNarocilo" class="button1" style="width:200px;" runat="server" OnClick="b_potrdiNarocilo_Click" Text="Potrdi naročilo" /></p>
         </div>
     </form>
-
+        </center>
 
 
 

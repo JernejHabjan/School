@@ -8,8 +8,8 @@
     
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link type="text/css" href="style.css" rel="stylesheet"/>
-     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     
 </head>
 
@@ -97,23 +97,6 @@
 
     <div id="list" class="content" style="display:none; text-align: center;">
         <h1 id="list_title"> LIST </h1>
-        <!--<button onclick="showLocationStatistics()">Show statistics</button>-->
-
-        <div id="rating_distribution" style="width:99%;">
-        </div>
-
-        <table id="acc-table">
-          <tr>
-            <th>Rating/10</th>
-            <th>Name</th>
-            <th>Price/night</th>
-            <th>Distance</th>
-            <th>Time</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </table>
-
     </div>
 
     <div id="description" class="content" style="display:none; text-align: center;">
@@ -145,17 +128,22 @@
     
   </div>
 
-     <!-- ############################################# form display all travels in grid ######################################################-->
+</aside>
 
+     <!-- ############################################# form display all travels in grid ######################################################-->
+<div class="col-12" style="width:100%; overflow-x:scroll; padding-left:10px; padding-right:10px;">
  <form id="form1" runat="server">
-    <asp:GridView ID="GridViewFlights" runat="server" AutoGenerateColumns="False"  DataSourceID="ObjectDataSource1" OnSelectedIndexChanged="GridViewFlights_SelectedIndexChanged" DataKeyNames="orderID">
+    <asp:GridView ID="GridViewFlights" runat="server" AutoGenerateColumns="False"  DataSourceID="ObjectDataSource1" OnSelectedIndexChanged="GridViewFlights_SelectedIndexChanged" onRowCommand="GridViewFlights_OnRowCommand" DataKeyNames="orderID">
         <Columns>
-            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True"/>
-            <asp:TemplateField>
-            <ItemTemplate>                
-              <asp:Button ButtonType="Button" runat="server" CommandName="GridViewFlights_OnRowCommand" Text="TODO-COMMAND ARGUMENT IS 96" CommandArgument="96" />
-            </ItemTemplate>
-          </asp:TemplateField>
+
+            <asp:TemplateField><ItemTemplate>
+            <asp:Button runat="server" class="button1" Text="Odpri" CommandName="Open" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" />
+            </ItemTemplate></asp:TemplateField>
+
+            <asp:TemplateField><ItemTemplate>
+            <asp:Button runat="server" class="button1" Text="Odstrani" CommandName="Remove" OnClientClick = "return confirm('Ste prepričani, da želite odstraniti potovanje?')" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" />
+            </ItemTemplate></asp:TemplateField>
+
             <asp:BoundField DataField="orderID" HeaderText="ID naročila" SortExpression="orderID" />
             <asp:BoundField DataField="fromLocationName" HeaderText="Začetna lokacija odhodnega leta" SortExpression="fromLocationName" />
             <asp:BoundField DataField="toLocationName" HeaderText="Končna lokacija odhodnega leta" SortExpression="toLocationName" />
@@ -202,11 +190,10 @@
     
     </form>
 
+    </div>
 
-
-
-  </aside>
 </div>
+
 
 
 <footer class="col-12">

@@ -26,7 +26,7 @@ namespace RESTService
             }
             return new TravelSendInfo
             {
-                fromLocationName = "NONEEEEE"
+                fromLocationName = orderID
             }; // return empty object
         }
 

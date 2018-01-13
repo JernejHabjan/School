@@ -18,12 +18,9 @@ namespace RESTService
             string sessionUserId = Session["googleID"] as string;
 
 
-
             GoogleConnect.ClientId = "331110486379-5b5815ianb75del9dflgrrqcs1lbtnva.apps.googleusercontent.com";
             GoogleConnect.ClientSecret = "aAIHWqBKYH8ayXelGqEy1foG";
-
             GoogleConnect.RedirectUri = Request.Url.AbsoluteUri.Split('?')[0];
-
    
 
             if (!String.IsNullOrEmpty(sessionUserId) && sessionUserId != "")
@@ -70,12 +67,11 @@ namespace RESTService
                 pnlProfile.Visible = true;
                 btnLogin.Visible = false;
                 
-                Response.Write("Current session googleID: " + Session["googleID"] + "\n");
-                Response.Write("IS USER WRITTEN TO DATABASE?:" + String.IsNullOrEmpty(user.googleID));
+                /*Response.Write("Current session googleID: " + Session["googleID"] + "\n");
+                Response.Write("IS USER WRITTEN TO DATABASE?:" + String.IsNullOrEmpty(user.googleID));*/
 
                 if (String.IsNullOrEmpty(user.googleID))
                 {
-
                     sPersonData.AddUser(new RESTService.User
                     {
                         userID = -1,
@@ -85,10 +81,7 @@ namespace RESTService
                         email = profile.Emails[0].value
 
                     });
-
                 }
-
-
 
             }
             if (Request.QueryString["error"] == "access_denied")

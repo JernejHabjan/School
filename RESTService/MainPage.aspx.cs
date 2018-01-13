@@ -17,23 +17,17 @@ namespace RESTService
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            int orderID = Convert.ToInt32(Session["orderID"]);
-            string googleID = Session["orderID"] as string;
-
-
+            //Session["orderID"] = null;
+            Session["orderID"] = null;
 
             // FOR TEST PURPOSES --- TODO - REMOVE THIS AFTER DEBUGGING
-            orderID = 109;
-            googleID = "104967849801990887085";
-
-
-
+           // orderID = 109;
+            //googleID = "104967849801990887085";
 
             // SET LOGIN TEXT
-            string sessionUserId = Session["googleID"] as string;
+            string googleID = Session["googleID"] as string;
 
-            if (!String.IsNullOrEmpty(sessionUserId) && sessionUserId != "")
+            if (!String.IsNullOrEmpty(googleID) && googleID != "")
             {
 
                 Response.Write("Profile data restored.");
@@ -76,32 +70,60 @@ namespace RESTService
                 // set visibiliy of element to true if admin
                 displayUsersData.Style.Add("visibility", "visible");
 
-
                 // On postback - reload data in gridview when admin selects user and views its previous travels
                 if (IsPostBack)
                 {
                     Bind();
                 }
             }
-
-
             
         }
      
 
         protected void GridViewFlights_OnRowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName != "RemoveOrder") return;
-            int orderID = Convert.ToInt32(e.CommandArgument);
-            // do something
-            Response.Write("Removed order with ID: " + orderID.ToString());
+            //Response.Write("Removed order with ID: " + e.CommandArgument);
 
+            if (e.CommandName == "Open")
+            {
+                GridViewRow gridViewRow = (GridViewRow)((Control)e.CommandSource).Parent.Parent;
+                int rowId = gridViewRow.RowIndex;
+
+                //Hardcoded index 2 for ID_naročila
+                Session["orderID"] = gridViewRow.Cells[2].Text.ToString();
+
+                Response.Redirect("http://asistentslivko.azurewebsites.net/Flight.aspx");
+            }
+            else if (e.CommandName == "Remove")
+            {
+                GridViewRow gridViewRow = (GridViewRow)((Control)e.CommandSource).Parent.Parent;
+                int rowId = gridViewRow.RowIndex;
+                string orderID = gridViewRow.Cells[2].Text.ToString();
+
+                ServiceTravelData sTravelData = new ServiceTravelData();
+                sTravelData.RemoveOrder(orderID);
+
+                Response.Redirect("http://asistentslivko.azurewebsites.net/MainPage.aspx");
+            }
+
+            
+
+            /*if (e.CommandName != "RemoveOrder") return;
+            int orderID = Convert.ToInt32(e.CommandArgument);
+
+            ServiceTravelData sTravelData = new ServiceTravelData();
+            sTravelData.RemoveOrder(orderID.ToString());
+
+
+            Response.Write("Removed order with ID: " + orderID.ToString());*/
         }
+
 
         protected void GridViewFlights_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Response.Write("TODO");
+
         }
+
         private void Bind()
         {
             string selectedGoogleID = userIDDropdownList.SelectedValue;

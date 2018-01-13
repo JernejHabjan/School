@@ -174,7 +174,7 @@ function setRouteInfo(origin, latTo, lngTo, id, display){
             _row.cells[4].innerHTML = convertTime(_min).string;
 
           } else {
-            alert("Directions error: " + status);
+            //alert("Directions error: " + status);
           }
     });
 }

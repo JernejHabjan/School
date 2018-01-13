@@ -109,7 +109,7 @@ function addTableEntry(address, id){
 	_row.insertCell(DISTANCE_ID).innerHTML = 0.0 + "km";
 	_row.insertCell(TIME_ID).innerHTML = "0m";
 
-	_row.insertCell(SHOW_ID).innerHTML = _rowId == 1 ? "" : "<button class='tabs'>Plan Flight</button>";
+	_row.insertCell(SHOW_ID).innerHTML = "<button class='tabs'>Plan Flight</button>";
 	_row.insertCell(REMOVE_ID).innerHTML = "<button>X</button>";
 
 
@@ -276,7 +276,7 @@ function displayRoute(){
             updateDistanceAndTime(response);
             //updateArrivals(response);
           } else {
-            alert("Directions error: " + status);
+            //alert("Directions error: " + status);
 
             //remove last element if no route to it found (overseas)
             /*if(status === "ZERO_RESULTS"){
