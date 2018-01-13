@@ -26,7 +26,7 @@ namespace RESTService
             if (!String.IsNullOrEmpty(sessionUserId) && sessionUserId != "")
             {
 
-                Response.Write("RESTORING PROFILE DATA:");
+                //Response.Write("RESTORING PROFILE DATA:");
                 ServicePersonData sPersonData = new ServicePersonData();
                 User user = sPersonData.ReturnUser(Session["googleID"].ToString());
 

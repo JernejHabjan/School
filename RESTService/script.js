@@ -83,12 +83,25 @@ function setRowListeners(row){
 	});
 
 	row.cells[SHOW_ID].addEventListener("click", function(){
+	    var _table = document.getElementById("point-table");
 		var _index = this.parentElement.rowIndex;
-		setContent(null, `list`);
-		queryList(_index);
+		//setContent(null, `list`);
+	    //queryList(_index);
 
 		var _backButton = document.getElementById("back_route");
 		_backButton.style.display = "inline";
+
+
+        //Sending data to flight planner [Remove numbers and spaces]
+		var from = (_index >= 2 ? _table.rows[_index - 1].cells[2].innerHTML : "").replace(/[0-9]/g, '');;
+		var to = (_table.rows[_index].cells[2].innerHTML).replace(/[0-9]/g, '');;	
+
+		var url = "Flight.aspx";
+		if(from.length > 0 || to.length > 0) url += "?"; //Will have some arguments
+		if(from.length > 0) url += ("from=" + from + "") + (to.length > 0 ? "&" : "");
+		if(to.length > 0) url += ("to=" + to + "");
+
+		location.href = url;
 	});
 
 }

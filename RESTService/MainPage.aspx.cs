@@ -30,7 +30,7 @@ namespace RESTService
             if (!String.IsNullOrEmpty(googleID) && googleID != "")
             {
 
-                Response.Write("Profile data restored.");
+                //Response.Write("Profile data restored.");
                 ServicePersonData sPersonData = new ServicePersonData();
                 User user = sPersonData.ReturnUser(googleID);
                 loginNav.InnerText = " Pozdravljen " + user.name;
@@ -45,7 +45,7 @@ namespace RESTService
             }
             else
             {
-                Response.Write("Login to display additional data");
+                //Response.Write("Login to display additional data");
             }
 
             // setup data table with ids

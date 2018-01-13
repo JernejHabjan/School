@@ -15,12 +15,12 @@ namespace RESTService
         int cena = 0;
 
 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // FOR TEST PURPOSES ------- FIXED orderID AND googleID 
             //Session["orderID"] = 108;
             //Session["googleID"] = "104967849801990887085";
-
 
             // setup data table with ids
             dt.Columns.Add("passengerID");
@@ -50,6 +50,24 @@ namespace RESTService
             if (Session["orderID"] == null || String.IsNullOrWhiteSpace(Session["orderID"].ToString()))
             {
                 GridView2.Style.Add("visibility", "hidden");
+
+                string[] uri = Request.Url.ToString().Split('?');
+                if (uri.Length > 1)
+                {
+                    string[] args = uri[1].Split('&');
+                    for (int i = 0; i < args.Length; ++i)
+                    {
+                        string[] nameVal = args[i].Split('=');
+                        if (nameVal.Length == 2)//Correct format
+                        {
+                            switch(nameVal[0]){
+                                case "from": mestoOdhoda_input.Value = nameVal[1].Replace("%20", " "); break;
+                                case "to": mestoPrihoda_input.Value = nameVal[1].Replace("%20", " "); break;
+                                default: break;
+                            }
+                        }
+                    }
+                }
             }
             else
             {
@@ -66,7 +84,14 @@ namespace RESTService
                 //inputPassenger.Style.Add("visibility", "hidden");
                 //zakljucekPlacila.Style.Add("visibility", "hidden");
             }
+
+            /*mestoPrihoda_input.Value = "ŠČŠŠĐ";
+
+            string odhod = "ŠĐŽĆĐŠĐŠ";
+            mestoOdhoda_input.Value = odhod;*/
         }
+
+
 
 
         /*protected void GridViewPassengers_OnRowCommand(object sender, GridViewCommandEventArgs e)
@@ -209,14 +234,14 @@ namespace RESTService
                     passengerData = passengerString
                 });
 
-                Response.Write("WRITTEN IN DATABASE");
+                //Response.Write("WRITTEN IN DATABASE");
 
                 // TODO - za test je zakomentiran redirect - ko bo končna verzija bo cool
                 Response.Redirect("http://asistentslivko.azurewebsites.net/MainPage.aspx");
             }
             else
             {
-                Response.Write("ERROR - VPIŠITE VSE PODATKE");
+                //Response.Write("ERROR - VPIŠITE VSE PODATKE");
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script> alert('Vpišite vse podatke')</script>");
             }
         }
