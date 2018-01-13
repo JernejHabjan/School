@@ -1,0 +1,215 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="si.roglan.EMP_Seminarska.Nakup">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mesto odhoda"
+                tools:ignore="RelativeOverlap"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="73dp" />
+
+
+            <FrameLayout
+                android:id="@+id/fragment_odhod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mesto prihoda"
+                tools:ignore="RelativeOverlap"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="73dp" />
+
+            <FrameLayout
+                android:id="@+id/fragment_prihod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                >
+
+            </FrameLayout>
+            <!--<fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_width="228dp"
+                android:layout_height="43dp"
+                android:layout_weight="1"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="49dp" />
+            -->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Datum odhoda"
+                tools:ignore="RelativeOverlap"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="141dp" />
+
+            <EditText
+                android:id="@+id/datum_odhoda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="date"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="124dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Razred odhoda"
+                tools:ignore="RelativeOverlap"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="214dp" />
+
+            <Spinner
+                android:id="@+id/razred_odhoda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_dropdown"
+                android:entries="@array/razredi_array"
+                android:spinnerMode="dropdown"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="205dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+
+            >
+
+            <CheckBox
+                android:id="@+id/dvosmerna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dvosmerna"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="285dp"
+                android:layout_centerInParent="true"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/datum_prihoda_view"
+                android:layout_width="162dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Datum prihoda"
+                tools:ignore="RelativeOverlap"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="337dp" />
+
+            <EditText
+                android:id="@+id/datum_prihoda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="date"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="317dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/razred_prihoda_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Razred prihoda"
+                tools:ignore="RelativeOverlap"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="383dp" />
+
+            <Spinner
+                android:id="@+id/razred_prihoda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_dropdown"
+                android:entries="@array/razredi_array"
+                android:spinnerMode="dropdown"
+                tools:layout_editor_absoluteX="134dp"
+                tools:layout_editor_absoluteY="373dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/doloci_potnike_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:text="DOLOČI POTNIKE"
+                tools:layout_editor_absoluteX="125dp"
+                tools:layout_editor_absoluteY="447dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

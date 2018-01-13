@@ -1,0 +1,131 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/placilo_relative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="si.roglan.EMP_Seminarska.Placilo">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ww"
+        android:layout_below="@+id/ww"
+        android:layout_marginTop="17dp"
+        android:text="Dvosmerne karte" />
+
+    <EditText
+        android:id="@+id/kartica_input"
+        android:layout_width="192dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/priimek_placnika"
+        android:layout_below="@+id/priimek_placnika"
+        android:layout_marginTop="16dp"
+        android:width="300dp"
+        android:hint="Vnesite kartico"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="144dp" />
+
+    <EditText
+        android:id="@+id/ime_placnika"
+        android:layout_width="192dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/kreditna_kartica_switch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:width="300dp"
+        android:hint="Vnesite ime plačnika"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="144dp" />
+
+    <EditText
+        android:id="@+id/priimek_placnika"
+        android:layout_width="192dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/ime_placnika"
+        android:layout_below="@+id/ime_placnika"
+        android:layout_marginTop="12dp"
+        android:width="300dp"
+        android:hint="Vnesite priimek plačnika"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="144dp" />
+
+    <TextView
+        android:id="@+id/ww"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="31dp"
+        android:text="Število potnikov" />
+
+    <TextView
+        android:id="@+id/st_potnikov_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ww"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="79dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/dvosnerna_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignStart="@+id/st_potnikov_label"
+        android:text="Ne" />
+
+    <Switch
+        android:id="@+id/kreditna_kartica_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/st_potnikov_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:text="Kreditna kartica"
+        android:textOff="OFF"
+        android:textOn="ON" />
+
+    <Button
+        android:id="@+id/zakljuci_placilo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="79dp"
+        android:text="ZAKLJUČI PLAČILO" />
+
+    <TextView
+        android:id="@+id/cena_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/zakljuci_placilo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:text="TextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cena_display"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:text="Cena" />
+
+</RelativeLayout>
