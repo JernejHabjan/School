@@ -1,0 +1,6 @@
+
+ig8icd32.pdb not loaded
+
+ig8icd32.dll
+no symbol file loaded for SDL2.dll
+glm::detail::compute_inverse ---- file -> func_matrix.inl... metoda notr: compute_inverse ... vzame matriko m.... MOGOČE JE NULL!!!!!

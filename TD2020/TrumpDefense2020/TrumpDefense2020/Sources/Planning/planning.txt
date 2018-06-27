@@ -1,0 +1,165 @@
+https://creately.com/app/#
+
+Application <Class>
+	check requirements <function call>
+	FileManager <instance>
+		readInitFiles <function call>(resolution and other configs)
+	Sound <instance>
+	Loader<instance>
+	Renderer<instance>
+Sound <Class>
+	Loader::SoundLoader::loadSFX <function call>
+	Loader::SoundLoader::loadMusic<function call>
+	
+	fadeOut<function>
+	setChannelVolume<function>
+	
+	//sound manager --play sound on event... todo
+Shader <Class>
+	ProgramIDHashmap <hashmap> //stores ids of different shaders
+	
+Light <Class>
+	init <function:abstract>
+	sendPropertiesToShader<function:abstract> ????
+	setPositon<function:abstract>
+	setDiffuse<function:abstract>
+	setSpecular<function:abstract>
+	PointLight <Class:Light>
+	DirLight <Class:Light>
+	SpotLight <Class:Light>
+	
+Loader <Class>
+	//load into hashmaps in resource Manager
+	TextureLoader<Class:Loader>
+	ModelLoader<Class:Loader>
+	SoundLoader<Class:Loader>
+	ShaderLoader<Class:Loader>
+	
+Requirements checker <Class>
+	check opengl version <static function>
+	check glew version <static function>
+	check if all config and init files exist 
+InputManager <Class>
+	//updates resources
+	readControllsFromFile (example: SDL_SCANCODE_RIGHT:move x : -5) //from user config file
+	gameUpdader.updateApplication() <function call>
+	gameUpdader.updateScene() <function call>
+	
+
+File Manager <Class>
+	FileWrite <function>
+		-config files
+	FileRead <function>
+		-ini files
+		-config files
+		-texture
+		-obj
+Material <Class>
+	readMaterialPropertiesFromFile
+	sendPropertiesToShader??
+	
+	
+Resource Manager <Class>
+	TextureHashmap <hashmap>
+	ModelHashmap <hashmap>
+	SoundHashmap <hashmap>
+	Shader <instance>
+	LightHashmap <hashmap> ?
+	CameraHasmap<hashmap> //call init cam
+	
+	EntityHashmap<hashmap> //stores entities
+	
+	
+	Sound <instance>
+	Renderer <instance>
+	Loader <instance>
+	Matrix <instance>
+	Game updater <instance> //update array of objects as you build something, move something...
+	free <function> //frees resources as they leave scene
+	
+Square <Class>
+	init<function>
+	getPos<function>
+
+Collision Detector <Class>
+	//can improve this with oct tree
+	detectMissileHit <function>
+Pathfind<Class>
+	AStar<Class:Pathfind>
+	LinearPath<Class:Pathfind> //if there is only one path
+	
+	
+	
+Grid <Class>
+	//map
+	initSquares<function>
+	makePathFromFile <function> //creates scripted path
+	makeRandomPath<function>
+	
+	
+Scene Creator <Class>
+	//create appropriate objects from models and textures
+	//read scene info and place objects on map (tower on x=4, y=2,z=0)
+	
+Game Updater <Class>
+	updateScene <Function> //update characters with
+	updateApplication<Function> //volume, exit..
+Renderer <Class>
+	
+	Screen //init screen
+	window
+	glew
+
+	
+	SceneStack <Stack> //rendered top scene and below if opacity of top < 1
+	renderScene <function>
+		sendPropertiesToShader <function>
+Entity <Class>
+	ObjId <int>
+	boundingBox<vector>
+	
+	moveObj <function:abstract>
+    rotateObj <function:abstract>
+    generate mesh <function:abstract>
+
+	getBoundingBox<function>
+	getPosition<function>
+	
+	Building<Class:Entity>
+	Enemy<Class:Entity>
+		name <string>
+		walk<function>
+		generate_mesh <function>
+Matrix <Class>
+	//isti class kot pri trumpDefense2016
+Scene <Class>
+	LoadDisplay <Class:Scene> //prikazes samo sliko in progressBar med loading screenom
+	Level <Class:Scene>
+	Menu <Class:Scene>
+		Main Menu <Class:Menu>
+		Game Menu <Class:Menu>
+	GUI <Class:Scene>
+		
+	
+SceneItems <Class>
+	Button<Class:SceneItems>
+	Progress Bar <Class:SceneItems>
+	Label <Class:SceneItems>
+	
+	
+Camera <Class>
+	updateCamera<function:abstract>
+	setLocation<function:abstract>
+	
+	
+	fixedCamera<Class:Camera>
+	scriptedCamera<Class:Camera>
+	playerFollowCamera<Class:Camera>
+	rtsCamera<Class:Camera>
+	debugCamera<Class:Camera>
+		setSpeed <function>
+		setPitch <function>
+		lookat <function>
+		moveCameraUp <function>
+		lockCamera <function>
+	init cam <function> //read from file type of camera used for this scene

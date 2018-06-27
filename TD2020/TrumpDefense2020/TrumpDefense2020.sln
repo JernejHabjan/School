@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TrumpDefense2020", "TrumpDefense2020\TrumpDefense2020.vcxproj", "{E2C8BFE2-6851-46C5-A080-ACB3DD271E1F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Trump Defense 2020 Installer", "Trump Defense 2020 Installer\Trump Defense 2020 Installer.vdproj", "{DB61EBE7-7CE4-452A-892B-19D087FA0D2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2C8BFE2-6851-46C5-A080-ACB3DD271E1F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E2C8BFE2-6851-46C5-A080-ACB3DD271E1F}.Debug|Win32.Build.0 = Debug|Win32
+		{E2C8BFE2-6851-46C5-A080-ACB3DD271E1F}.Release|Win32.ActiveCfg = Release|Win32
+		{E2C8BFE2-6851-46C5-A080-ACB3DD271E1F}.Release|Win32.Build.0 = Release|Win32
+		{DB61EBE7-7CE4-452A-892B-19D087FA0D2E}.Debug|Win32.ActiveCfg = Debug
+		{DB61EBE7-7CE4-452A-892B-19D087FA0D2E}.Debug|Win32.Build.0 = Debug
+		{DB61EBE7-7CE4-452A-892B-19D087FA0D2E}.Release|Win32.ActiveCfg = Release
+		{DB61EBE7-7CE4-452A-892B-19D087FA0D2E}.Release|Win32.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
