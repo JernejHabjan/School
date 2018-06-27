@@ -1,0 +1,47 @@
+Linearna regresija
+	regresija - cilj napovedovanja zvezne spremenljivke
+	linearna - v ozadju je linearni model (preko polinomov)
+	
+podatki so predstavljeni s pari (vec(x1), y1)(vec(x2),y2)...
+	vec(xn) predstavlja n-to vrstico atributov, yn pa končni atribut v n-ti vrstici
+	pri čemer je yn nedvomno zvezna spremenljivka
+	xn pa so lahko diskretne var pri čemer pričakujemo da so zvezne
+	
+iščemo tako funkcijo h ki preslika xe v y
+
+model je oblike
+	h(vec(x))=β1x1+β2x2+...+βpxp+β0
+		beta predstavlja neznane parametre oz koeficiente
+		-vse je o tem kako naračunamo bete
+		-je optimizacijski problem
+razlika med napovedjo in dejanskim mora biti čim manjša:
+	minβ∑1n(yi−h(vec(x).at(i)))
+	
+pojasnena varianca -> razlika med varianco ki jo mamo v osnovi v y
+	in varianco če jo napovedujemo->>> np.var(y) - np.var(hx-y)
+	--to nam pove nihanje
+
+POLINOMSKA REGRESIJA
+	če podatki niso oblikovani v premici
+	rešitev je polinom
+
+	nimamo več posameznih vektorjev ampak x**2, x**3...
+	x→(x,x**2,x**3,...x**D)=vec(x) 
+		
+	isto kot prej ampak dodamo še stolpec z x**2
+	--ta x**2 je kot atribut..
+	
+	polinom 20 stopnje se preveč prilagaja
+		kako zagotoviti da ne overfita:
+		-kaznujemo modele ki so prekompleksni
+		metod je ogromno, med njimi
+			-regresija Lasso (višine sešteva abs vrednost)
+				uporabi nekaj parametrov -lažje za razumet
+			-regresija Ridge (evklidska razdalja)	
+				ridge naredi mešanico skoraj vseh param
+			bolj smiselna je lasso regresija
+		kaj naredi alpha:
+			mav spremeni
+			
+ANALIZA SENTIMENTA
+	

@@ -1,0 +1,107 @@
+COMMANDS:
+man - manual pages
+less, more - paginate output
+cd - Change Directory
+pwd - show current directory
+ls - list directory content
+cat - output file to stdout (screen)
+echo - output argument to stdout
+env - output environment
+ps - list proceses
+grep - filter text
+ifconfig - show network interfaces
+route - show routes
+arp - show the Address Resolution Protocol table
+sleep - block for N seconds
+kill - kill process
+killall - kill processes with a certain name
+top - display a list of processes
+source - interpret the commands inside a file
+export - set an environment variable
+chown - change owner
+chmod - change permissions
+which - which program would be run
+head - output the first few lines of a file
+tail - output the last few lines of a file
+wc - word count
+bg - run the stopped program in the background
+fg - get the program from the background to the foreground
+
+DIRECTORIES:
+
+cd /SOME_PATH # move to /SOME_PATH 
+cd SOME_PATH # move to $PWD/SOME_PATH
+./ # current directory
+.some_name # a file called .some_name which is hidden
+../ # 1 level "up" (parent directory)
+~ # $HOME
+~/ # $HOME/
+~some_name # the home dir of some_name
+file~ # a file called file~
+f~i~l~e # a file called f~i~l~e
+~- # $OLDPWD
+
+ENVIRONMENT:
+
+PWD # current directory
+OLDPWD # PWD before the last successfull cd
+PATH # a ":" separated list of directories of programs
+   (DOES NOT CONTAIN THE CURRENT DIRECTORY by default)
+DISPLAY 
+
+SYMBOLS:
+>
+  prog1 > file1 # redirect stdout from prog1 into file1
+>> # 
+  prog1 >> file1 # append stdout prog1 to file1
+<
+  prog1 < file1 # redirect file1 to stdin of prog1
+|
+  prog1 | prog2 # redirect stdout of prog1 to stdin of prog2
+A>&B
+  prog1 2> file1 # redirect stderr of prog1 to file1
+  prog1 >&2 # redirect stdout of prog1 to stderr
+  prog1 2>&1 # redirect stderr of prog1 to stdout
+  prog1 2>&1 | less
+  
+& 
+  prog1 & prog2 # |---prog1---| &
+                   |-----prog2------|
+&&
+  prog1 && prog2 # run prog2 after prog1 terminated successfully
+;
+  prog1; prog2 # run prog2 after prog1 (ignore the return code)
+{
+}
+  { prog1; prog2; } # run prog1 and prog2 in a sub-shell
+
+$
+  echo $PATH # echo the_value_in_PATH
+  echo $PWD$PATH # echo the curr. dir + the path
+  
+`
+  `prog1` -> get the output of prog1 into a string
+  export WHERE_I_AM=`pwd`
+  export CURRENT_DATE=`date`
+  
+"
+  "string with escape sequences"
+'
+  'normal(raw) strings'
+
+. # source
+  . file # same as source file
+  
+CTRL+C - break (program)
+CTRL+Z - stop the current program, put it into the background
+CTRL+D - end of file
+CTRL+R - search history
+
+IPs:
+Local networks:
+  192.168.0.0/16, (192.168.0.0 - 192.168.255.255) 
+  172.16.0.0/12, (172.16.0.0 - 172.31.255.255)
+  10.0.0.0/8, (10.0.0.0 - 10.255.255.255)
+Other special networks:
+  127.0.0.0/8 - localnet
+  169.254.0.0/16 - link-local addresses

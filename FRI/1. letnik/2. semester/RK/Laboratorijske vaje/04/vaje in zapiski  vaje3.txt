@@ -1,0 +1,59 @@
+193.2.215.123 /20
+11000001.00000010.1111|0101.01111011 
+
+maska:
+255.255.240.0
+11111111.11111111.1111|0000.00000000	/20 enic
+				12 nicel->(desno od crte je 2^12-2 omrežij za naprave, -2 zaradi broadcasta, št omrežja)
+levo -naslavljanje omrežja
+desno-naslavljanje naprav
+naslov omrežja:
+11000001.00000010.1111|0000.00000000
+193.2.240.0000
+
+broadcast naslov:
+11000001.00000010.1111|1111.11111111
+193.2.255.255
+
+host min = 11000001.00000010.1111|0000.00000001
+host max = 11000001.00000010.1111|1111.11111110
+
+
+
+vaja:
+193.2.129.30/27
+11000001.00000010.10000001.000|11110
+255.255.255.224
+11111111.11111111.11111111.111|00000
+št omrežja:
+
+11000001.00000010.10000001.000|00000
+193.2.129.0/27
+
+omrežn naslov je 1. naslov, broadcast pa zadnji naslov v omrežju(podomrežju)
+
+broadcast:
+11000001.00000010.10000001.000|11111
+193.2.129.31
+
+min:
+11000001.00000010.10000001.000|00001
+max:
+11000001.00000010.10000001.000|11110
+
+USMERJANJE:
+if maska 0-vsi možni ip naslovi ->default ip naslov
+
+paket se usmeri kamor paše in ima najdalšo masko
+
+vaje
+maske s samim 255 - samo ce naslovimo tocno ta naslov (10.1.0.6) gre skoz
+_____________
+wireshark:
+Kakšen je pošiljateljev IP naslov?
+Kakšna je vrednost TTL pri paketu echo request? Kaj pa pri paketu echo reply? ->živlenska doba paketa
+Kakšen je strojni naslov prejemnika echo request?
+Poženite še ukaz ping 8.8.8.8? Kakšen je strojni naslov prejemnika paketa echo request? Katero napravo predstavlja?
+Kakšna je dolžina glave IP? -20B
+Koliko podatkov je v prvem paketu ICMP?-samih podatkov je 32B
+

@@ -1,0 +1,148 @@
+Logični model
+
+1. Popravki konceptualnega modela:
+	- Izbris redundance "Lokacija" v tabeli Skladišče,
+	- Izbris redundance "Vrsta" v tabeli Prebivališče,
+	- Preimenovanje relacije med tabelama Osebje in Vstopnica v "Izda vstopnico",
+	- Sprememba števnosti relacije med tabelama Skladišče in Zaloga hrane tako, da je lahko ena
+		zaloga hrane v točno določenem skladišču in ne v večih
+	- Izbris Dobavitelja iz Zaloga hrane.
+
+2. Izdelava logičnega modela:
+
+	2.1 Za entitetne tipe kreiraj relacije:
+		1:1 povezav ni bilo potrebno popravljati, ker jih v konceptualnem modelu ni bilo.
+				
+		- Pri preslikavi se je med tabelama Zaloga hrane in Naročilo hrane naredila vmesna tabela,
+			saj je bila relacija mnogo proti mnogo,
+		- Enako se je zgodilo za relacijo "ogledam si" med tabelama Živalska vrsta in Ogled,
+		- Enako se zgodi z relacijo "govori" med Osebjem in Jeziki,
+		- V tabeli Žival sem preimenoval atributa v Id oče in Id matere
+		- VSE PRESLEDKE SVA NADOMESTILA S PODČRTAJI pri atributih in v tabelah
+	2.2 Preveri relacije z normalizacijo:
+		Model je že normaliziran.
+		Komentarji:
+		1. normalna oblika:
+			Model je v prvi normalni obliki, saj ima določene primarne ključe in ni podvojitev podatkov v tabelah
+		2. normalna oblika:
+			Model je v drugi normalni obliki, ker je v prvi normalni obliki in nima parcialnih odvisnosti
+				V nobeni tabeli ni množice ključev, ki bi funkcionalno določalo množico atributov, ampak je to 
+				razdeljeno v več tabel
+			Posebna tabela je Žival, saj vsebuje rekurzivne povezave, ki so se pa preslikale v tuje ključe v tabeli.
+		3. normalna oblika:
+			je v 3. normalni ker je v drugi in nima tranzitivnih odvisnosti.
+			Za vse tabele velja, da nimajo identifikatorja ki ni primarni ključ, ki določa drug atribut znotraj tabele.
+			
+	2.3 Preveri relacije s pregledom uporabniških transakcij:
+		Transakcije je možno izvesti, saj se ni zbrisala nobena povezava.
+		Vse poizvedbe delujejo.		
+	
+	2.4 Preveri omejitve integritete:
+		Obveznost atributov sva pregledala že na konceptualnem modelu, tu so se pa dodale samo 
+		vmesne tabele, ki imajo že obvezne ključe.
+		Obveznosti niso nujne pri rekurzivnih povezavah za očeta im mater v tabeli Žival
+		Dodala sva "Check" constraint na spol -> "m" ali "z".
+		Števnost je vredu.
+	
+3. Izdelava fizičnega modela:
+	3.1: Izdelaj načrt osnovnih relacij
+		Imena tabel in atributov sva že prej napisala brez šumnikov in presledkov.
+		
+	3.2: Izdelaj načrt predstavitve izpeljanih atributov
+		CREATE TABLE OGLED_ST_OSEB_MESEC  AS
+			select to_char(DATUM_OGLEDA, 'YYYY-MM') AS MESEC_OGLEDA, COUNT(*) AS STEVILO
+			from OGLED
+			group by to_char(DATUM_OGLEDA, 'YYYY-MM')
+			order by 1;
+		COMMIT;
+		alter table OGLED_ST_OSEB_MESEC
+		   add constraint OGLED_ST_OSEB_MESEC_CONSTRAINT primary key (MESEC_OGLEDA);
+		COMMIT;
+
+	 3.3: Izdelaj načrt splošnih omejitev
+		
+		CREATE OR REPLACE TRIGGER OgledTriger
+		after INSERT
+		ON ogled
+		for each row
+		declare dd varchar2(7);
+		begin 
+			dd :='';
+			select nvl(mesec_ogleda,null) into dd
+				from OGLED_ST_OSEB_MESEC
+				where mesec_ogleda = to_char(:NEW.DAtum_OGLEDA, 'YYYY-MM');
+			if dd is not null then null ;
+			else
+				insert into OGLED_ST_OSEB_MESEC 
+				values(to_char(:NEW.DAtum_OGLEDA, 'YYYY-MM'),0);
+			commit;
+			end if;
+		end;
+		/
+
+		CREATE OR REPLACE TRIGGER UPDATE_IZRACUNAN_ATRIBUT
+		AFTER INSERT
+		ON VSTOPNICA
+		FOR EACH ROW
+		declare 
+		dd VARCHAR2(7);
+		GG NUMBER;
+		begin
+			dd := '';
+			GG := :NEW.ID_OGLEDA;
+			SELECT   to_char(A.DATUM_OGLEDA, 'YYYY-MM') into dd 
+				FROM OGLED A WHERE A.ID_OGLEDA= GG;
+			UPDATE OGLED_ST_OSEB_MESEC 
+				SET STEVILO = STEVILO + 1
+				WHERE mesec_OGLEDA= DD;
+			COMMIT;
+		end;
+		/
+	4: Izdelaj načrt datotečne organizacije ter indeksov:
+		--ANALIZA TRANSAKCIJ----
+			brez |  z    indeksom
+			------------
+			0.07 |  0.07  
+			0.40 |  0.39  
+			0.30 |  0.29  
+			0.09 |  0.09  
+			0.04 |  0.04  
+			0.34 |  0.35  
+			0.40 |  0.32  
+			0.40 |  0.40  
+			0.07 |  0.07  
+			0.06 |  0.05  
+				 	
+		--TRANSAKCIJE ----------
+			v posebnem dokumentu
+			
+		--INDEXI----------------
+			CREATE INDEX STANJE_ZIVALI ON ZIVAL (STANJE); COMMIT;
+				--pri živali je pomembno da vemo njeno stanje za odvzemanje vzorcev in hitro ukrepanje.
+			CREATE INDEX TIP_OSEBJA ON OSEBJE (TIP_OSEBJA); COMMIT;
+				--da lahko osebje hitro dodelimo na primerna delovna mesta.
+			CREATE INDEX DATUM_DOBAVE ON NAROCILO_HRANE (DATUM_DOBAVE); COMMIT;
+				--da hitro zvemo kdaj lahko pričakujemo datum dobave.
+			CREATE INDEX VSTOPNICA_DATUM ON VSTOPNICA (DATUM); COMMIT;
+				--iskanje po datumu je počasnejše, velikokrat pa ravno ta podatek potrebujemo.
+			CREATE INDEX DATUM_OGLEDA ON OGLED (DATUM_OGLEDA); COMMIT;
+				--podobno kot v zgornjem primeru
+	5: Izdelaj načrt uporabniški pogledov:
+	-- POGLED 1:
+		--DROP VIEW VZOREC_VIEW;
+		CREATE VIEW VZOREC_VIEW AS
+		SELECT ZIVAL.IME AS IME_ZIVALI, ZIVAL.IME_PREBIVALISCA, ZIVAL.SPOL, ZIVAL.STANJE, 
+			ZIVAL.TEZA, ZIVAL.DATUM_ROJSTVA, VZOREC.DATUM_VZORCA, VZOREC.KOMENTAR, OSEBJE.IME AS IME_OSEBJA, OSEBJE.PRIIMEK
+		FROM OSEBJE JOIN VZOREC ON (OSEBJE.EMSO = VZOREC.EMSO)
+					JOIN ZIVAL ON (ZIVAL.ID_ZIVALI = VZOREC.ID_ZIVALI);
+		SELECT * FROM VZOREC_VIEW;
+
+	-- POGLED 2:
+		--DROP VIEW OGLED_VIEW;
+		CREATE VIEW OGLED_VIEW AS
+		SELECT IME AS IME_VODICA, PRIIMEK AS PRIIMEK_VODICA, OGLED.NAZIV_JEZIKA AS JEZIK_OGLEDA, DATUM_OGLEDA, ZIVALSKA_VRSTA.IME_VRSTE
+		FROM OSEBJE JOIN OGLED ON (OGLED.EMSO = OSEBJE.EMSO)
+					JOIN JEZIKI ON (JEZIKI.NAZIV_JEZIKA = OGLED.NAZIV_JEZIKA)
+					JOIN OGLEDAM_SI ON (OGLED.ID_OGLEDA = OGLEDAM_SI.ID_OGLEDA)
+					JOIN ZIVALSKA_VRSTA ON (OGLEDAM_SI.IME_VRSTE = ZIVALSKA_VRSTA.IME_VRSTE);
+		SELECT * FROM OGLED_VIEW;

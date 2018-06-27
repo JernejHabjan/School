@@ -1,0 +1,50 @@
+1. postavi linux na fri omrežje (imaš 192.168.182.x)
+2. ustvari uporabnika, prijavi se kot ta uporabnik v poljubno namizje
+3. vsem povj ip, uporabniško ime, geslo, poskrbi da se lahko povežejo preko ssh
+4. na sosedovem zaslonu prikaži sporoèilo
+
+
+ssh -x user@IP
+
+
+sudo apt-get install ssh
+
+ZAGANJANJE KOMPA:
+1. bios/uefi
+2. 	ZAGONSKI NALAGALNIK (BOOT LOADER)
+	-1. sektor na zagonskem disku --->BIOS
+	-program na particiji efi (da zažene komp) ---EFI
+	-program dostopen na naslovu, ta naslov dobite od strežnika BOOT P --->EFI prek MREŽE!!!
+	primer: windows loader, grub, refind, syslinux,....
+	v ram naloži OS, ga zažene
+3. OS (linux je spravljen v vmlinuz.., initramfs (initial ram filesystem)-vsebuje vse driverje da priklopmo korenski imenik diska(podpora za mrežne kartice if over network))
+4. init (systemd)-program z id 1 in zaganja druge programe
+5. uporabniški programi (login, apache....)
+
+
+za vdiranje v program zamenjaš init z "bash"
+-f12 za v bios
+-1 za hdd
+ESCAPE 
+-e da pove kaj laufaš
+	init = bin/bash
+f10 -se zažene
+
+apt-get update
+apt-get intstall e17,,, ali apt-get install fluxbox
+inštaliraš še ->apt-get install openssh-server
+
+
+
+
+tutorial:
+	nastavitev mreže za mrežo od faksa:
+		setting- bridged adapter (povezan vmesnik)
+	na mreži od fakultete - reconnectaš
+	
+	
+	
+export DISPLAY=:0
+xmessage "Zdravo, student"
+
+

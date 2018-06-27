@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">8_Intents</string>
+    <string name="button">GO TO BACON</string>
+    <string name="apples">APPLES</string>
+    <string name="title_activity_bacon">Bacon</string>
+    <string name="go_to_apple">GO TO APPLE</string>
+    <string name="bacon">BACON</string>
+    <string name="name">Name</string>
+</resources>

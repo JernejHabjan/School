@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<title>Moj Planet</title>
+<meta charset="UTF-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link href="src/css/responsive.css" rel="stylesheet">
+<link href="src/css/style.css" rel="stylesheet">
+<link href="src/css/modalPictures.css" rel="stylesheet">
+<link href="src/css/modalButton.css" rel="stylesheet">
+
+<header id='parent' class="col-12" style="padding:0">
+    <h1 id='child' style="width: 300px; height: 70px;">Moj Planet</h1>
+</header>
+
+<main class="row">
+  <nav class="col-2 col-m-2">
+    <a href="index.html">Index</a>
+    <a href="src/html/viri.html">Viri</a>
+    <a href="src/html/avtor.html">Avtor</a>
+  </nav>
+
+  <article class="col-3 col-m-10 leftArticle">
+
+    <div >
+      <form class="radioForm">
+        <h2 style="text-align: center">UGANKA</h2>
+        <fieldset id="radioButtons" class = "big dropContainers" >
+          Ugibanje besede - izberi skupino: <br>
+          <input id="drzave" class="click" type="radio" name="ugib" value="drzave"/>
+          <label for="drzave">Države</label>
+          <input id="mesta" class="click" type="radio" name="ugib" value="mesta">
+          <label for="mesta">Mesta</label>
+          <input id="reke" class="click" type="radio" name="ugib" value="reke">
+          <label for="reke">Reke</label>
+        </fieldset>
+      </form>
+
+      <div class="wrapper">
+        <div id="extender" class="small dropContainers">
+          <form id="nameInputDiv" >
+            <label for="nameInput">Last name</label><br/>
+            <div class="popup" >
+              <span class="popuptext" id="myPopup">Vnesite ime</span>
+              <input id="nameInput" type="text" name="last"/>
+            </div>
+          </form>
+          <br>
+          <br>
+
+          <a class="myQuizBtn">Začni kviz</a>
+        </div>
+        <div id="nameExtender" class="small dropContainers">
+          <label id="nameLabel">Moje Ime</label>
+          <br>
+          <br>
+          <a class="myQuizBtn">Začni kviz</a>
+        </div>
+
+        <div id="quizExtender" class="small dropContainers">
+
+          <div style='display:inline-block'>
+            <div style='display:inline-block; padding:50px'>
+              Hello <b> <span id="nameInputValueNonModal"></span></b>!<br>
+              Na voljo imas <span class='poskusov'></span> poskusov <br><br>
+              Lahko pricnes z ugibanjem<br>
+              <input id='notranjiTextNonModal' type='text'>   <br>
+              <a class='innerButton'>Ugani</a>
+
+              <article class ='wrong'></article>
+              </div>
+
+            <div style='display:inline-block; padding-left:50px'>
+              besede na izbiro so:<br>
+              <table class ='tableId' style='border: 1px solid black; border-collapse: collapse; '></table>
+              </div>
+
+            <div style='display:inline-block; padding-left:50px'>
+              <a class='cheatsButton'>Cheats</a>
+              <a class='sortButton'>Sort</a>
+              </div>
+            </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </article>
+
+  <aside class="col-7 col-m-12">
+    <h2>Zgodovina računalništva</h2>
+    <figure class ="figTempPics"><img draggable="true" ondragstart="drag(event)" id="myImg1" src="src/photos/Abakus.png" alt="Abakus" style="width: 245px;height: 160px"></figure>
+    <figure class ="figTempPics"><img draggable="true" ondragstart="drag(event)" id="myImg2" src ="src/photos/Babbage.png" alt="Babbage" style="width: 245px;height: 160px"></figure>
+    <figure class ="figTempPics"><img draggable="true" ondragstart="drag(event)" id="myImg3" src ="src/photos/IBM-PC.png" alt="IBM" style="width: 245px;height: 160px"></figure>
+    <br>
+      <figure class = "figContainers">
+        <h3>Abakus</h3>
+        <div class="popup" style="float:left">
+          <span class="popuptext" id="myPopup_pic1">Tukaj sodi Abakus</span>
+            <div class ="dropCanvas" id="img1_div" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <figcaption class="small" id="img1_caption" style="text-align: left; padding:2px">
+          The abacus (plural abaci or abacuses), also called a counting frame, is a calculating tool that was in use in Europe, China and Russia, centuries before the adoption of the written Hindu–Arabic numeral system and is still used by merchants, traders and clerks in some parts of Eastern Europe, Russia, China and Africa. The exact origin of the abacus is still unknown. Today, abaci are often constructed as a bamboo frame with beads sliding on wires, but originally they were beans or stones moved in grooves in sand or on tablets of wood, stone, or metal.
+        </figcaption>
+      </figure>
+
+    <figure class = "figContainers">
+        <h3>Babbage</h3>
+        <div class="popup" style="float:left">
+          <span class="popuptext" id="myPopup_pic2">Tukaj sodi Babbage difference engine</span>
+            <div class ="dropCanvas" id="img2_div" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <figcaption class="small" id="img2_caption" style="text-align: left; padding:2px">
+          A difference engine is an automatic mechanical calculator designed to tabulate polynomial functions. The name derives from the method of divided differences, a way to interpolate or tabulate functions by using a small set of polynomial coefficients. Most mathematical functions commonly used by engineers, scientists and navigators, including logarithmic and trigonometric functions, can be approximated by polynomials, so a difference engine can compute many useful tables of numbers.
+        </figcaption>
+      </figure>
+
+      <figure class = "figContainers">
+        <h3>IBM - PC</h3>
+        <div class="popup" style="float:left">
+          <span class="popuptext" id="myPopup_pic3">Tukaj sodi IBM - PC</span>
+            <div class ="dropCanvas" id="img3_div" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <figcaption class="small" id="img3_caption" style="text-align: left; padding:2px">
+          The IBM Personal Computer, commonly known as the IBM PC, is the original version and progenitor of the IBM PC compatible hardware platform. It is IBM model number 5150, and was introduced on August 12, 1981. It was created by a team of engineers and designers under the direction of Don Estridge of the IBM Entry Systems Division in Boca Raton, Florida.
+        </figcaption>
+      </figure>
+  </aside>
+
+
+  <!-- MODAL QUIZ CONTAINER-->
+  <div id="myModalButton" class="modalButton">
+    <div class="modalButton-content">
+      <span class="closeButton">&times;</span>
+      <p id="nameInputShow">Some text in the Modal..</p>
+    </div>
+  </div>
+  <!-- END MODAL -->
+
+  <!-- MODAL PICTURE CONTAINER-->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <img class="modal-content" id="img01" src="src/photos/jernej.jpg" alt="Nothing">
+    <div id="caption"></div>
+  </div>
+  <!-- END MODAL -->
+
+
+
+  <script src="src/scripts/sharedFunctions.js"></script>
+  <script src="src/scripts/dragNdrop.js"></script>
+  <script src="src/scripts/modalButton.js"></script>
+  <script src="src/scripts/modalPictures.js"></script>
+
+</main>
+
+<footer class="col-12 col-m-12">
+  <p>Jernej Habjan</p>
+  <p>63150106</p>
+  <p>Fakulteta za Računalništvo in Informatiko Ljubljana - Spletne Tehnologije 1. domača naloga</p>
+</footer>

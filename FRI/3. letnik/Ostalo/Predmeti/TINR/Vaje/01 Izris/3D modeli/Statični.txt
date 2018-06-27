@@ -1,0 +1,16 @@
+Naloga
+
+Izris 3D grafike je z XNI zelo enostaven. Vse kar potrebujemo je 3D model shranjen v tekstovnem .x formatu. S ContentManagerjem ga naložimo v igro in tako dobimo objekt tipa Model. Z matrikami kamere (view, projection) in postavitvijo v svet (shranjeno v matriko world) tak 3D model izrišemo z ukazom [model drawWithWorld: view: projection:].
+
+Na ta naèin enako kot pri 2D izrisu pripravimo Renderer,  le da namesto s slikami in SpriteBatchom objekte izriše s pripravljenimi 3D modeli.
+
+Navodilo
+
+Posnemite XCode, kjer pokažete vsebino .x modela, ter nato iPhone simulator, kjer je ta model viden v igri.
+
+Posnemite le del ekrana, v katerem sta vidna XCode in simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-izris-3d_modeli-staticni.mov
+(primerno popravite vpisno številko in priimek)

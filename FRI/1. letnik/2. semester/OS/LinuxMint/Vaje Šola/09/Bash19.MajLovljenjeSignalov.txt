@@ -1,0 +1,103 @@
+lovljenje signalov:
+	kako ulovimo ctrl+c:
+	trap "ime funkcije" "prekinitev ki bomo uporablili"
+		trap sorry SIGINT
+		kill -sigusr `pidof -x neki.sh`
+		
+program:
+trap '' INT
+for i in ...
+	sleep 1
+done
+
+naloga1: ZA DN
+	skripta prva.sh
+		#!/bin/bash
+		opozorilo(){
+			echo "program se ne sme zaključiti"
+		}
+		pozeni(){
+			xeyes & # pognali smo uči v ozadju -- ta & je za ozadje
+		}
+		trap pozeni USR1
+		trap opozorilo TERM #ali sigterm -- številke dobimo s trap -l      sigkill nemormo prestrežt
+		i=1
+		while [ $i -lt $1 ]; done
+			echo $i
+			let i++ #poveča sekundo
+			sleep 1
+		done
+
+	potem zalaufamo s ./prva.sh 500
+
+	pgrep prva ->v drugem terminalu najdemo njegov id... ZA DOMAČO NALOGO
+
+	kill -TERM 2897 (2897 dobimo od pgrep)
+	pgrep xeyes ->dobimo pidof od eyes
+
+snov naprej
+lockfile ->semaforji n shit
+#lockfile myscript.lockfile
+ rm -f myscript.lockfile
+
+flock
+	flock 200 ->200 je deskriptor
+	
+________________
+at -ob določenmu času neki izvede
+atq ->at queue
+atrm -> at remove
+
+cron -vsak pondelk itd...
+mount -priklapljanje dat.sistemov
+
+df - disk freeSpace
+du -disk userSize
+
+naloga3:
+	preveri uro in datum in nastavi na napačne vrednosti
+	date #to preveri
+	date -s "2016-05-20"
+	
+naloga4:
+	v dat napišite ukaz ki bo na konec dat status.txt dodat besedilo "trenutno je:" CAS
+	skripta:
+		echo "trenutno je $(date)" >> /boring/neki/status.txt     # DVE PUŠČICE STA NA KONEC DATOTEKE
+	
+naloga5: napišite ukaz ki določen dan izvede ukaz iz ukaz.txt	
+	sudo apt install at ->da naložiš at
+	at "2016-05-25" -f ukaz.txt
+	---atq da pogledamo kdaj je kej
+	atrm pa številka
+naloga 5:
+	ukaz čez 1 min ali nwm kdaj...
+	at "now +1 minute" -f ukaz.txt
+	at "04:00 +10 days" -f ukaz.txt
+naloga 6:
+	at -c 5 ---- 5 je številka timerja
+naloga 7:
+	atrm
+naloga 8:
+	crontab -e 
+	"m h dom mon dow (min hour dayOfMonth...)"
+	če damo 5 * * * * *... bo ob vsaki PETI (5) minuti-- IN NE VSAKIH 5 MIN.. to pa 60/5
+	
+naloga 9:
+	vsako nedeljo 5 min čez vsako sodo uro
+	crontab -e
+	*/2 * 2-4 1,3,4,5 date >> /home/boring/lol.txt
+	
+________________
+snov naprej:
+priklapljanje datotečnih sistemov
+za pogledat naprave:
+	lsblk
+	df
+	
+naloge3:
+1. df
+	df -h -> so MiB
+2. za posamez ni imenik
+	du -H ./
+	du -H ukaz.txt
+	stat -c "%s %n" ukaz.txt

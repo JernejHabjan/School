@@ -1,0 +1,131 @@
+1. Navodila načrtovanja
+	● spiralni model
+	● izbor naprav za interakcijo (katere vhodne naprave imas - fittov zakon- speed, accuracy)
+	● načrtovanje oken in menijev (kompozicija oken-postavitev, meniji,)
+	● izbor grafičnih gradnikov za interakcijo (gumbi(pros-cons)vnosna polja(pros-cons)....)
+	● aranžiranje grafičnih gradnikov za interakcijo (pride v poštev 10. nielsenovo->estetika in minimalistično načrtovanje,  grupiranje(glede na...))
+	● izbor besedila, barv, slik in animacije(barve v kontekstu, primeren kontrast, toplost barv)
+	● povratna informacija in interakcije (zakasnitve 5sec-> se display)
+
+
+2. Principi in navodila za načrtovanje mobilnih app 
+	● principi načrtovanja uporabniških vmesnikov (nielsenovi prinicpi)
+		1. mobilna miselnost
+		2. mobilni kontekst
+		3. globalna navodila
+		4. navigacijski modeli
+		5. uporabniški vnos
+		6. geste
+		7. orientacija
+		8. komunikacija
+		9. začetek
+		10.prvi vtis
+	● principi univerzalnega načrtovanja
+	● principi načrtovanja mobilnih vmesnikov
+	● navodila načrtovanja mobilnih vmesnikov (responsive design...)
+
+
+3. GTK+
+	● hierarhija orodij za razvoj uporabniških vmesnikov
+		hierarhija knjižnic,
+	● knjižnice potrebne za GTK+ uporabniške vmesnike
+	● podatkovni tipi
+	● prevajanje aplikacije GTK+
+	● primer aplikacije GTK+
+	
+		signali, dogodki, containers
+
+
+4. Hevristično vrednotenje
+	● spiralni model (primer spiralnega modela)
+	● hevristično vrednotenje - je metoda preiskovanja in ocenjevanja
+		deluje na: slicah, papirnatih prototipih, delovnih prototipih,...
+	● grupiranje Nielsenovih principov (nauci se grup)
+	● zagotovi naučljivost, upoštevaj pričakovanja (princip najmanjstega presenecenja)
+	● uporabnik je vodja (nadzor in svoboda, vidljivost statusa sistema)
+	● izogibaj se napakam(raje prepoznaj kot si zapomni...)
+	● ohrani preprostost, dobro grafično načrtuj 
+	● primer hevrističnega vrednotenja(ikona-lepa, extPrice -cudna oznaka...)
+	● opisovanje problemov (porocilo...)
+	hevristično testiranje ni isto kot testiranje uporabnikov
+		testiranje uporabnikov je zlati standard za testiranje uporabnost:
+			drazje
+			casovno zamudno...
+
+5. Testiranje uporabnikov
+	● spiralni model načtovanja
+	● testiranje uporabnikov - testiranje uporabniosti
+		test uporabnosti - ISO
+		opazovanje med testom...
+	● etika med testom
+		-brez pritiska, občutek bedn...
+		-bodi spoštljiv - dont moan
+	● vloge pri testiranju uporabnikov
+		uporabnik,
+		pomocnik, moderator
+		opazovalec
+	● dimenzije uporabnosti
+		naucljivost
+		ucinkovitost
+		varnost
+		zadovoljstvo
+	● faktorji uporabnosti
+	● mere zmogljivost
+
+6. Papirnati prototipi
+	● zakaj prototipi
+	● zakaj papirnati prototipi
+		hitrejsi razvoj
+		lazje spreminjanje
+		pozornost je usmerjena na veliko silo
+		neprogramerji v pomoc
+	● natančnost prototipov
+		nizka natancnost - ni detajlov, uporaba cenejših materialov, drugačne tehnike interakcije
+		visoka natancnost -zelo podobno koncnemu izdelku
+		vec dimenzij (sirina ,globina)
+	● primeri
+	● kaj se lahko naučimo iz prototipa
+		konceptualni model
+		funkcionalnosti
+		terminologije
+		vsebine za zaslon
+	ne moremo se naučiti :
+		barv,
+		odzivnih časov,
+		feel -> ucinkovitosti(implikacij Fittovega zakona)
+
+7. Računalniški prototipi
+	● zakaj računalniški prototip
+		visoka natančnost v smislu "look&feel"
+			interakcija z misko in tipkovnico,
+			izgled zalo podoben koncnemu
+		hitrejše kot coding
+		
+	papirnati prototip - nizka natančkost
+	● sekvence slik
+		good:narisati se da karkoli
+		bad: ni vnostnih polj
+	● generatorji vmesnikov
+		vnaprej sestavljene podobe
+		
+8. Izhodni modeli
+	● izhodni modeli
+		komponente
+		osnovni grafični gradniki
+		piksli
+	● risanje
+		osnovni gradnik rekurzivno riše childe
+		naivni ponovni izris: utripa
+		double buffered - da ni utripanj
+	● barvni modeli
+	● rasterizacija
+	● barvanje poligonov
+		
+		
+	
+	
+	
+	
+	
+	
+	

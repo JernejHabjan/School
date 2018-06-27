@@ -1,0 +1,22 @@
+Naloga
+
+Pravila igre v projekt vkljuèimo na treh mestih: v samih objektih scene po potrebi izdelamo odzive na trk in lastno posodabljanje. V posodabljanje stopnje dodamo logiko, ki se tièe posamezne stopnje, v kateri se nahajamo. Poveèini tu dodajamo in odstranjujemo objekte scene v skladu s scenarijem stopnje. Nazadnje v sami komponenti Gameplay pregledujemo glavna pravila igre, ki doloèajo pozitivne in negativne posledice za igralca. V skrajnem primeru igralec pride do konca igre in zmaga ali na drugi strani izgubi vsa življenja in izgubi igro.
+
+Navodilo
+
+Posnemite iPhone/iPad simulator, kjer se vidi izvajanje pravil igre. Lahko gre za pravilno implementiran objekt na sceni, pri èemer se mora obnašanje seveda razlikovati od tega, kar smo sposobni doseèi že s samim nadzorom in fizikalnim pogonom. Za vsak objekt s svojevrstnim obnašanjem, dobite 5 toèk. 
+
+Druga stvar so pravila implementirana na nivoju igre, ki prav tako štejejo med elemente igralnosti. Odvisno od kompleksnoti, lahko za globalna pravila dobite od 5 do 15 toèk.
+
+Stvari v zvezi z dogajanjem v stopnji (resetiranje in nastavljanje zaèetnih položajev, pojavljanje novih nasprotnikov) naèeloma ne spadajo pod oddajo te naloge, temveè jih bo mogoèe oddati pod stopnjami in scenarijem. Osredotoèite se na individualno obnašanje samih elementov na sceni oziroma pravila igre (pogoji za pridobitev toèk/zmago/poraz).
+
+Do roka je potrebno oddati vsaj 1 element, nakar vam bomo oddajo vrnili v osnutek, da boste lahko do konca oddali še ostale. Možno je dobiti najveè 25 toèk.
+
+Pod opombe napišite v alinejah za vsak objekt na sceni in za globalna pravila, kakšno obnašanje ste izdelali. To mora biti potem jasno vidno v samem videu.
+
+Posnemite del ekrana, v katerem je viden simulator. Filmèek naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo). Èe imate veliko število razliènih pravil in vam ne uspe v en video zajeti vsega, oddajte veè datotek (dopolnite poimenovanje, recimo -pravila_igre-zmaga.mov)
+
+Oddate nastale video datoteke (mov/avi) in NE zip/rar z video datotekami.
+
+Poimenovanje: 63080000-priimek-igralnost-pravila_igre.mov 
+(primerno popravite vpisno številko in priimek)

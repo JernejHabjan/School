@@ -1,0 +1,16 @@
+Naloga
+
+Za potrebe izdelave elementov igralnosti se pogosto ukvarjamo s tem, da moramo ob doloèenih dogodkih, recimo ob trkih ali ukazih, ki jih sproži igralec, spreminjati predmete na sceni. Pri tem gre tako za odstranjevanje in dodajanje novih predmetov, kot tudi za spreminjanje lastnosti obstojeèih predmetov. Kakorkoli, za te potrebe mora naš razred za sceno podpirati soèasno sprehajanje èez vse objekte na sceni in dodajanje ter odstranjevanje le-teh.
+
+Pristopov za dosego tega cilja je veè, eden od njih je na vajah prikazana uporaba seznama akcij, ki se naknadno izvedejo enkrat na prehod zanke igre. Uporabite lahko seveda tudi kakšen drug naèin. Naloga je opravljena, ko lahko z vašo arhitekturo dodajate in odstranjujete objekte na sceni med samim igranjem.
+
+Navodilo
+
+Posnemite iPhone/iPad simulator, kjer se med igranjem kakšen predmet doda in odstrani s scene. Igra mora spremembo na sceni seveda upoštevati in se pravilno obnašati.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje: 63080000-priimek-infrastruktura-scena.mov
+(primerno popravite vpisno številko in priimek)

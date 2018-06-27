@@ -1,0 +1,8 @@
+Ko nalagaš Cygwin - priložen morš naložit
+    make, gcc, gcc-g++
+
+    g++ -> gcc-g++; Gnu Compiler Collection(C++)
+    make -> make:the Gnu version of the "make" utility
+
+    možen delujoč link:
+        https://www.youtube.com/watch?v=XjZQVHbu5E4&t

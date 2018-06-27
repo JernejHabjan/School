@@ -1,0 +1,17 @@
+Jernej Habjan 63150106
+
+1. Postavitev http strežnika
+	Naložil sem nginx in v /usr/share/nginx/html popravil html datoteko.
+
+2. postavitev ftp strežnika
+	Poglan sem install vsftpd
+	In za tem spremenil konfiguracije v datoteki:	
+	/etc/vsftpd.conf
+		anonymous_enable=Yes
+		write_enable=YES
+		anon_upload_enable=YES
+	Naredil potrebno mapo
+		sudo mkdir /srv/files/ftp
+		sudo usermod -d /srv/files/ftp ftp 
+	in storitev restartal.
+	Potem sem lahko s filezilla prijavil.

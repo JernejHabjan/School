@@ -1,0 +1,14 @@
+matematika (5-15)
+
+Navodilo
+
+Èe ste med izdelavo svoje igre napisali programsko kodo za kakšen bolj kompleksen izraèun/algoritem (ki ne spada v ostale kategorije, kot npr. simulacija fizike, detekcija kolizije, ali pa precej presega osnovno izvedbo kakšne od teh kategorij), potem kodo dodajte pod opombo in posnemite iPhone-simulator kjer demonstrirate delovanje kode. Odvisno od kompleksnosti izraèuna/algoritma boste dobili od 5 do 15 toèk. Lahko oddate do tri algoritme, v takem primeru za vsakega oddate svoj video.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Pod komentar na kratko napišite za kakšen algoritem gre in dodajte kodo algoritma.
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:
+63080000-priimek-infrastruktura-matematika.mov

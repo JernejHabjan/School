@@ -1,0 +1,74 @@
+chmod u+x filename.sh
+cat filename.sh -> izpis
+gedit
+ln -s ->soft link -> ln Music/ana/lol.txt hardLinkFileName ->pazi na zacetn slash ni ga
+() podlupina
+` ` ->izpis direktno
+info echo
+man echo
+help echo
+ls --help
+nano filename.sh
+touch $(basename "$x") ->bo nardil file z imenom x
+
+
+______read line by line
+IFS=$'\n'
+for next in `cat $a`
+do
+ echo "$next"
+done
+_____
+
+TIME: 
+DATE=`date +%Y-%m-%d`
+echo $DATE
+_____
+
+;; break v SAMO casih
+
+read x
+
+$(expr $x + $y) ali $(($x + $y))
+
+for num in {0..2}; do echo "$num"; done
+
+
+stringZ=abcABC123ABCabc
+echo ${stringZ:7:3}                          # 23A
+sub=${a:0: -3} ->ZADNJI TRIJE
+
+
+x="to je test, 123, 123"
+echo ${x#* } -> je test... (brez To)... desno je space za zvezdico 
+echo ${x##* } -> 123 ->zadnjega po spacu
+echo ${x% *} -> To je test, 123, (brez zadnjega)
+echo ${x%% *} ->To ->samo prvega
+
+sleep 1
+ls -a -> all files in home dir
+mkdir
+pwd
+cp
+
+echo -n $myvar ->ko to laufaš skoz for zanko ti -n dela new line
+
+ls *.sh ->izpiše vse s koncnico sh
+{} združiš ukaz da navzven deluje kot samostojna celota
+zakljucek skripte->exit
+
+-f ->file
+
+-lt ->za cifre
+
+tar-> tar -cvf lol.tar test1.txt (novo ime,kaj)
+      tar -xvf lol.tar (kaj unzipat)
+
+__ basename -vrne notranji file, dirname -direktorij
+preveri ali obstaja datoteka -> 
+if test -f "$1"; then
+	ln "$1" $(basename "$1")
+	echo "povezava narejena"
+else
+	touch $(basename "$1")    //DOMA DAJ $1 V NAREKOVAJE
+fi

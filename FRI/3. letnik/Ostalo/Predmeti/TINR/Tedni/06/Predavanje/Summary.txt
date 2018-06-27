@@ -1,0 +1,7 @@
+
+Po implementaciji dotikov in premikov smo naleteli na trke med objekti. Pri trkih smo obravnavali aproksimacijo objektov, nivojsko aproksimacijo, postopek detekcije trka (testiranje prekrivanja, testiranje preseka, izraèun èasa dotika, izraèun normale, zrcaljenje na osi, teorem loèitvene osi, vsota Minkowskega) in postopkek odziva na trke preko relaksacije in izraèuna fizikalnih kolièin po trku.
+
+V našem fizikalnem pogonu smo implementirali oba koraka za delo s trki, na koncu pa smo povzeli bistvene spremembe v implementaciji.
+
+(MMG: linearni moment <=> linearni impulz <=> sunek sile <=> gibalna kolièina)
+

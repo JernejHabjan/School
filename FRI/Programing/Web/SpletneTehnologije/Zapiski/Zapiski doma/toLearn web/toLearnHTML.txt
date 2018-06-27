@@ -1,0 +1,57 @@
+html toSearch
+
+meta
+blockquote -nova vrstica in zamik
+pre -preformatted
+q -quotation
+kbd -keyboard
+cite -citation
+sup -superscript
+
+seznami def:
+dl -definition list
+dt -definition term
+dd -definition description
+
+
+lastnosti tabele za oblikovanje
+	align (left right center justify)
+	border
+	cellpadding (razmik med celicami)
+	cellspacing
+	title
+	rowspan, colspan (spajanje vrstic in stolpcev)
+
+okvir:
+	<frameset>
+		<frame>
+	lastnosti:
+		src
+		cols -št in velikost kolon
+		rows
+		id
+		class
+form
+	input
+	textarea
+	button
+	select -spustni meni
+	option -opcija v spustnem meniju
+	optgroup -grupiranje opcij v izbirnem seznamu
+	fieldset -povezani elementi v seznamu
+	legend -napis za element fieldset
+	label
+	lastnosti:
+		action -določa kam bodo poslani podatki(URL str:programa)
+		method -HTTP metoda za pošiljanje(get,post)
+		name- ime obrazca
+	lastnosti drugih elementov v obrazcu:
+		type(text,button,color,radio,submit)
+		name
+		id
+		selected -opcija bo izbrana vnaprej pred nalaganjem spletne strani
+		value -vrednost elementa ki bo poslana na strežnik
+		for -določa na kateri element obrazca se nanaša oznaka <label for="m">Moški</label>
+canvas -za risanje grafike z js
+	<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;" />
+vektorska grafika		

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+	function lol(x){
+		alert("neki"+x);
+	}
+	
+//return stuff	
+	function returnSomething(){
+		return "function returns this that says innerhtml";
+	}	
+
+//create object
+	function person(name, age){
+		this.name=name;
+		this.age=age;
+		this.yearsuntilRetire= yearsLeft; //////////! TKO FUNKCIJO POVEŽEŠ Z OBJEKTAM
+	}
+	//or..
+	arr={name:"ana",age:19};
+
+	//method of object
+	function yearsLeft(){
+		var numYears=65-this.age;
+		return numYears;
+	}
+
+//arrays:
+	//arrayi so dinamični tud če jim določš število elementov!!
+	var people = ["lol", "lol1"];
+	var things= new Array(3);
+		things[0]="lol";//itd...
+	//ni treba določt število elementov:
+	var things= [];
+		things[0]="lol";//itd...
+	//CONCAT ARRAYS ->združiš
+	var something= things.concat(people);
+	//join
+	var string1= something.join(); // default da vejco, če daš .join(", ") bo vejca in presledk
+	something.pop(2);
+	something.reverse();
+	something.push("lol");
+	something.sort();
+
+//associative arrays:
+	var bucky1= [];
+		bucky1["somethig"]=2;
+		bucky1["lol"]="ana";
+		
+//math:
+	Math.PI;
+	Math.E;
+
+//date:
+	//na time to dela
+	//setInterval("document.write('say this every 1 sec')", 1000);
+	var now = new Date();
+	var  hours = now.getHours();
+
+//accessing forms:
+	// FORM 2:
+
+	function validator(){
+		if(document.form2.thebox.checked)
+			document.write("yes");
+		else
+			document.write("its not");
+	}
+
+
+</script>
+</head>
+<body ><!--onload="document.write('javascript stopped loading')"-->
+
+<p id="demo"></p>
+
+<!--onMouseOverEvent-->
+<!--
+<button onmouseOver="alert('neki')">hover tutorial</p>
+-->
+
+
+
+
+<!-- bucky's FORM: PAZI TEŽKO -->
+	<form name="jernejForm">
+		Username:<input type="text" />
+		Password:<input type="password" />
+		<input type="submit" value="Submit" />
+	</form>
+
+<!-- making checkbox -->
+	<form name="form2">
+		<input type="checkbox" name= "thebox" />
+		<input type="button" value= "pressme" onClick="validator()" />
+	</form>
+
+
+
+<script type="text/javascript">
+//to more bit
+
+
+//FORM:
+	//določš kero formo boš izbrav
+	var x = document.forms[0].length;
+	var prviElementForme = document.forms[0].elements[0];
+		var prviElementFormeIme = document.forms[0].elements[0].name;
+	//or
+	var element = document.jernejsForm.Username.name;
+
+
+//print stuff and return stuff
+	document.getElementById("demo").innerHTML=returnSomething();
+	document.write("hey now youre a keemstar");
+
+//create object
+	var bucky = new person("ana", 19);
+		bucky.name;
+	//z object initializerjem
+	arr.name;
+	//klic metode objekta:!!!
+	bucky.yearsuntilRetire(); //PAZI!!!
+
+</script>
+
+
+
+<!-- simple form -->
+<form>
+<input type="button" value="touch me" onclick="lol('do it')">	
+<button onclick="lol('do it')">touchme2</button> <!-- single quotation mark -->
+</form>
+
+
+
+
+
+</body>
+</html>

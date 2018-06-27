@@ -1,0 +1,140 @@
+echo - outputs string: -pazi na podpicje
+<?php
+  echo "Hello!";
+?>
+
+zduževanje stringov -> .
+<?php
+   echo "Hello," . " " . "world" . "!";
+?>
+
+variables:
+$myName="lol";
+
+comment: //
+
+if:
+  $myvar=4;
+        if($myvar<3){
+            echo"The condition is true";
+        }
+        else{
+            echo"The condition is false";
+        }
+case:
+$i=1;
+switch($i){
+case 1: 
+echo "lol";
+break;
+default: 
+echo"lolo";
+break;
+
+array: 
+$array = array("Egg", "Tomato", "Beans");
+echo $array[2]
+unset$array [2]); -remove
+}
+add to array: array_push($array,"lol"); 
+length of array: count($array);
+sort: sort($array);
+reverse sort: rsort($array);
+join: join(",",$array);
+
+for:
+for($i=0;$i<10;i++){}
+
+forEach: za for+array:
+foreach ($langs as $lang) {
+              echo "<li>$lang</li>";
+          }
+
+while:
+    $i=0;
+    while($i<3){
+    echo "<p>lol</p>";
+    $i++;
+    }
+
+length:       $length = strlen("david");
+     print $length;
+
+substring: 
+$myname = "David";
+$partial = substr($myname, 0, 3);
+print $partial;
+
+upper and lower:
+$uppercase = strtoupper($myname);
+print $uppercase;
+// prints "DAVID"
+$lowercase = strtolower($uppercase);
+print $lowercase;
+// prints "david"
+
+letter on index:     echo strpos("jernej","r"); -returns on which index is first "r"
+
+round: (na 4 dec v tem primeru), ce noceš roundat, pustiš prazno
+$round_decimal = round(M_PI, 4); 
+print $round_decimal; // prints 3.1416
+
+random:
+// prints a number between 0 and 32767
+print rand();
+// prints a number between 1 and 10
+print rand(1,10);
+
+______________________________________________________________
+
+declare function:
+function name(parameters) {
+  statement;
+}	
+
+exists:
+        $me = new Person("Shane");
+        if (is_a($me, "Person")) {
+          echo "I'm a person, ";
+        }
+        if (property_exists($me, "name")) {
+          echo "I have a name, ";
+        }
+        if (method_exists($me, "dance")) {
+          echo "and I know how to dance!";
+        }
+
+extends:
+        class Square extends Shape {
+        }
+
+final: prevents function to be overwritten
+  final public function drive() {
+    return "I'm drivin' here!";
+  }
+
+dostop do spremenljivke znotraj classa:... pazi na static
+MyClass::$property;
+MyClass::myMethod();
+
+static: isto kot v javi
+______________________________________________________________
+
+dict: *example*
+        $myArray = array(2012, 'blue', 5);
+ 
+        // ...and this is an associative array:
+        $myAssocArray = array('year' => 2012,
+                        'colour' => 'blue',
+                        'doors' => 5);
+            
+        // This code will output "blue"...
+        echo $myArray[1];
+        echo '<br />';
+            
+        // ... and this will also output "blue"!
+        echo $myAssocArray['colour']; ****
+
+
+
+

@@ -1,0 +1,51 @@
+parametri: bes-18 na naslovu 239.255.164.121, vrata 5919.
+
+file->preferences ->netowor->addNatNetwork ->(ime, na področju ki se dodeljujejo naslovi, ali naj obstaja strežnik dhcp)
+		10.0.5.0/24 >spremeniš
+		
+arbiter -nat_network (izberi pravo ime ks ga nastavu), vklopi promiscius mode -> allow all 
+student -nat_network (izberi pravo ime ks ga nastavu), vklopi promiscius mode -> allow all 
+
+student
+	apt-get install dnsmasq, vlc-nox, youtube-dl
+	vim /etc/dnsmasq.conf
+		dodaš
+			dhcp-range=239.255.164.64,239.255.164.194,12h
+			dhcp-option=option:router,*IP_RAČ_KJER_POGANJAMO_VIRTUAL_BOX*
+									192.168.0.101
+	service dnsmasq restart
+	
+vlc ->media -> stream -> add->dodaš vid ->next->ciljpredvajanja(rtp/mpeg transport stream ->add->address,vrata,ime)
+	transkodiranje -> video h.264+mp3(TS)
+		ali
+		nardiš nov format (ime KPOV)
+			mpeg transport stream
+			video codec mPEG-2
+			bitrate na 300kbps
+			vklopimo audio
+			mp3 na 128kbps
+		zdaj lah izberemo v seznamu profil
+		pol skopiramo kodo->
+	cvlc --sout="#transcode{vcodec=mp2v,vb=300,scale=0.25}:rtp{dst=239.255.164.121,port=5919,mux=ts,sap,name=bes-18}" blabla.mp4
+	in klikneš stream
+	
+2. vlc -> v playlist -	vidš svoj pod network
+
+zdownloadaš video
+	youtube-dl https://...
+	spremeniš ime v Nyan.mkv
+
+	cvlc --sout="#transcode{vcodec=mp2v,vb=300,scale=0.25}:rtp{dst=239.255.164.121,port=5919,mux=ts,sap,name=bes-18}" Nyan.mkv
+	
+	
+	
+##TLE POŽENEŠ TEST IN DELA
+
+da vidš kko dela
+
+apt-get install fluxbox xinit xterm rxvt
+startx
+odpremo rxvt terminal
+xhost +
+su student vaje
+apt-get install vlc

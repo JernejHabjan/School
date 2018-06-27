@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>naloga2</title>
+
+    <style>
+        video{
+            width:300px;
+
+        }
+
+        div {
+            width: 500px;
+            height: 300px;
+            background-color: red;
+            position: relative;
+            -webkit-animation-name: example ; /* Safari 4.0 - 8.0 */
+            -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+            animation-name: example;
+            animation: example 5s infinite;
+        }
+
+        /* Safari 4.0 - 8.0 */
+        @-webkit-keyframes example {
+            0%   {background-color:red; left:0px; top:0px;}
+            25%  {background-color:yellow; left:200px; top:0px;}
+            50%  {background-color:blue; left:200px; top:200px;}
+            75%  {background-color:green; left:0px; top:200px;}
+            100% {background-color:red; left:0px; top:0px;}
+        }
+
+        /* Standard syntax */
+        @keyframes example {
+            0%   {background-color:red; left:0px; top:0px;}
+            25%  {background-color:yellow; left:200px; top:0px;}
+            50%  {background-color:blue; left:200px; top:200px;}
+            75%  {background-color:green; left:0px; top:200px;}
+            100% {background-color:red; left:0px; top:0px;}
+        }
+    </style>
+
+</head>
+<body>
+    <figure>
+        <div>
+            <video autoplay>
+                <source src="http://www.w3schools.com/html/movie.mp4" type="video/mp4">
+            </video>
+            lel
+        </div>
+
+
+    </figure>
+</body>
+</html>

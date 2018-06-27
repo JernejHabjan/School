@@ -1,0 +1,38 @@
+PARENTING
+
+iskanje elementov HTML
+	document.getElementById(id)
+	document.getElementsByTagName(name)
+	document.getElementsByClassName(name)
+Spreminjanje elementov HTML
+	element.innerHTML=nova vsebina
+	element.attribute=nova vrednost
+	element.setAttribute(attribute,value)
+	element.style.property=nov stil
+Dodajanje in brisanje elementov html
+	document.createElement(element)
+	document.appendChild(element)
+	document.removeChild(element)
+	document.replaceChild(element)
+	document.write(text)
+Iskanje HTML objektov
+	document.anchors -vrne vse elemente <a> ki imajo ime atributa
+	document.cookie
+	document.doctype
+	document.domain
+	document.forms
+	document.images
+	document.URL
+		primer(x=document.anchors.length;)
+MouseEvents:
+	onclick
+	ondblclick
+	onmouseover
+	onmouseout
+keyboardEvents:
+	onkeydown/onkeyup
+	onkeypress
+FormsEvents:
+	onchange(<input>,<select>,<textarea>)
+	onreset
+	onsubmit

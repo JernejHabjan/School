@@ -1,0 +1,7 @@
+@inproceedings{chaslot2006monte,
+  title={Monte-carlo strategies for computer go},
+  author={Chaslot, GMJB and Saito, Jahn-Takeshi and Bouzy, Bruno and Uiterwijk, JWHM and Van Den Herik, H Jaap},
+  booktitle={Proceedings of the 18th BeNeLux Conference on Artificial Intelligence, Namur, Belgium},
+  pages={83--91},
+  year={2006}
+}

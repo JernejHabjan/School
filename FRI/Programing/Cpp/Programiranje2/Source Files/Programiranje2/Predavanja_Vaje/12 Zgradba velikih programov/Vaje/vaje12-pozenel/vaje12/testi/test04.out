@@ -1,0 +1,18 @@
+--- globina ---
+globina = 3
+--- in-order ---
+Rudolf (5)
+Lev (10)
+Tanja (25)
+Miha (35)
+Ivan (70)
+Vid (80)
+Dusan (90)
+--- level-order ---
+Miha (35)
+Lev (10)
+Vid (80)
+Rudolf (5)
+Tanja (25)
+Ivan (70)
+Dusan (90)

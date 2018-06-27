@@ -1,0 +1,23 @@
+Naloga
+
+Glasba v igri ustvari ustrezno vzdušje in prepreèi monotonost. Èe namesto datotek wav v projekt dodamo glasbo v formatu mp3, jo bo XNI samodejno naložil v obliki podatkovnega tipa Song. Skladbe lahko potem predvajamo s statiènim razredom MediaPlayer.
+
+Tudi pri glasbi moramo paziti na avtorske pravice, tako lahko glasbo:
+
+napišemo/izvajamo sami
+uporabimo skladbe, ki so v javni domeni
+in jih izvajamo sami
+ali pa jih izvaja nekdo drug in dovoljuje njihovo uporabo v drugih projektih; lahko jih dobite na primer na portalu Jamendo (https://www.jamendo.com/en/), NoSoapRadio (https://www.facebook.com/freegamemusic/), kjer so predvsem skladbe za igre; AudioMicro (http://www.audiomicro.com/royalty-free-music) itd.
+Navodilo
+
+Posnemite iPhone-simulator, kjer se med igranjem sliši glasba (vsaj ena skladba). Posnemite dogodek, ko vklopljate in izklopljate glasbo (npr. s klikom na gumb).
+
+Pred snemanjem s Quicktimom ali Screeniumom si namestite Soundflower. Nato pojdite v System Preferences - Sound in pod input tudi izberite Soundflower. Resetirajte simulator in ko boste dali record boste slišali zvoke iz simulatorja, Screenium pa jih bo tudi ustrezno posnel.
+
+Èe imate probleme s snemanjem iz virtualke/hackintosha poskrbite, da boste posneli video na macu na vajah ali v labu.
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje: 63080000-priimek-zvok-glasba.mov 
+(primerno popravite vpisno številko in priimek)

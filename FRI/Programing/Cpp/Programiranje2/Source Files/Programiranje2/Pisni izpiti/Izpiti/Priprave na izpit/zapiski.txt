@@ -1,0 +1,23 @@
+
+filenames and compile:
+	touch 63150106_1.c
+	gcc 63150106_1.c -o 63150106_1; export name=63150106_1; make test
+
+
+/// CONVERT INTEGER TO CHAR ARRAY
+char myarray[10];
+sprintf(myarray, "%lli", i);
+/// CHAR ARRAY TO INT
+sscanf(myarray, "%d", &i);
+
+
+
+#include <math.h> ---- sqrt
+   gcc 63150106_1.c -o 63150106 -lm //tko compilaš če maš math lib not
+
+
+#include <stdbool.h>
+
+isdigit
+
+man 3 printf

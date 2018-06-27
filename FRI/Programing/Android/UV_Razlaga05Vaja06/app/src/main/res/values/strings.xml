@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mobilna aplikacija</string>
+    <string-array name="pretvorba">
+        <item>EUR=>USD</item>
+        <item>USD=>EUR</item>
+    </string-array>
+</resources>

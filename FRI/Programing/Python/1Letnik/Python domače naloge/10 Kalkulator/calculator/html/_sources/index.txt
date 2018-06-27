@@ -1,0 +1,44 @@
+Calculator
+==========
+
+.. contents::
+    :local:
+
+.. currentmodule:: calculator
+
+Reading and parsing of expressions (Grade 6)
+--------------------------------------------
+
+.. autofunction:: to_number
+.. autofunction:: parse
+.. autofunction:: read
+
+
+Expression checking (Grade 7)
+-----------------------------
+
+.. autofunction:: inputs
+.. autofunction:: outputs
+.. autofunction:: check_names
+.. autofunction:: check_operators
+
+
+Evaluation of expressions and lists of expressions (Grade 8)
+------------------------------------------------------------
+
+.. autofunction:: get_value
+.. autofunction:: get_values
+.. autofunction:: compute_expr
+.. autofunction:: compute_list
+
+General evauation of expressions (Grade 9)
+------------------------------------------
+
+.. autofunction:: dict_expr
+.. autofunction:: compute
+.. autofunction:: compute_file
+
+Checking for computability (Grade 10)
+-------------------------------------
+
+.. autofunction:: computable

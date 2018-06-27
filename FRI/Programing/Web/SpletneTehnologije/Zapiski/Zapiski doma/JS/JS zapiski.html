@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script>
+		document.write("hello world");
+		var myvariable;
+		myvariable=5;
+		var myvariable1=false;
+		var words ="lolo";
+		var morewords="lolololo";
+		var sentence=words+morewords;
+		document.write(sentence);
+		myvariable++;
+		//strings are stored as objects
+		var length=words.length;
+		var substring= words.substring(2,3);
+
+		//arrays:
+		var a = new Array(4);//in brackets size of array
+		a[0]="lol";
+		a[2]=1;
+		document.write(a[1]);
+		var b= ["lol",4,"lol"];
+		var c= [2,"lol"];
+
+		//functions
+		function say(who){
+			document.write("lol");
+		}
+		say("bob");
+
+
+		//conditions:
+		var a=5;
+		if(a<20){
+			alert(a);
+		}else{
+			alert ("neki");
+		}
+
+		//for loop
+		for (i=0;i<5;i++){
+			document.write("soething"+i+"<br>"); //pazi break
+		}
+		for (var x in myArray){
+			document.write(myArray[x]);
+		}
+
+
+		//ZAPISKI
+
+		//ARRAY: http://www.w3schools.com/jsref/jsref_obj_array.asp
+		//concat()	Joins two or more arrays, and returns a copy of the joined arrays
+		//every 	Checks if every element in an array pass a test
+		//fill() nadomesti vse v seznamu  s to vrednostjo
+		//forEach() kliče funkcijo za usakga
+		//sort()
+		//toString
+		//join()
+		//indeksOf()
+		//slice() ->vrne nov array odrezan
+		//splice() ->adds or removes elements from array
+		//map()	Creates a new array with the result of calling a function for each array element
+		//pop()	Removes the last element of an array, and returns that element
+		//push()	Adds new elements to the end of an array, and returns the new length
+		//reverse() obrne iteme u arrayu
+
+		//STRING: http://www.w3schools.com/jsref/jsref_obj_string.asp
+		//length
+		//charAt()
+		//repeat() -Returns a new string with a specified number of copies of an existing string
+		//split
+		//toUpper/lower...
+
+		//MATH: http://www.w3schools.com/js/js_math.asp
+		//abs
+		//ceil
+		//floor
+		//log
+		//pow
+		//random -med 0 in 1
+	</script>
+</body>
+</html>

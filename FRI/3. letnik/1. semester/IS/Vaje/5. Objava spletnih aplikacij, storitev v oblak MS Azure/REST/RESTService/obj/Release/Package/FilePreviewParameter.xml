@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="resftufl" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\jerne\\Google\ Drive\\School\\FRI\\3\.\ letnik\\1\.\ semester\\Informacijski\ Sistemi\\Vaje\\5\.\ Objava\ spletnih\ aplikacij,\ storitev\ v\ oblak\ MS\ Azure\\REST\\RESTService\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\jerne\\Google\ Drive\\School\\FRI\\3\.\ letnik\\1\.\ semester\\Informacijski\ Sistemi\\Vaje\\5\.\ Objava\ spletnih\ aplikacij,\ storitev\ v\ oblak\ MS\ Azure\\REST\\RESTService\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+</parameters>

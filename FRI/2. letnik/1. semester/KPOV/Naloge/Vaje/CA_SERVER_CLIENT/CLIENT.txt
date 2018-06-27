@@ -1,0 +1,45 @@
+##NASTAVIŠ NA BRIDGED NETWORK INTERFACE ## ?????????????
+##LOGIN AS ROOT##
+apt-get update; apt-get install easy-rsa openvpn
+mkdir /openvpn-CLIENT
+cd /openvpn-CLIENT
+
+cp /usr/share/easy-rsa/* /openvpn-CLIENT
+
+cd /openvpn-CLIENT
+vim vars
+	export KEY_COUTRY="SI"
+	export KEY_PROVINCE="nekji"
+	export KEY_CITY="eeeerew"
+	..
+	
+	#x509 subject field
+	export KEY_NAME="clientFile"
+	##SHRANIŠ##
+	
+source vars
+./clean-all
+ln -s openssl-1.0.0.cnf openssl.cnf
+./build-req clientFile
+
+##skopiraš keys/clientFile.csr do CA v keys mapo##
+
+##KO CA OBDELA##
+	##sprejmi clientFile.crt, ca.crt v /openvpn-CLIENT/keys
+	
+
+cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /openvpn-CLIENT
+cd /openvpn-CLIENT
+vim client.conf
+	proto na tcp
+	remote spremenimo na ->  remote *JAVEN_IP_OD_CLIENTA* 1194
+								#PRIMER:# remote 193.2.176.216 1194
+	*ZAKOMENTIRAŠ remote-cert-tls server*
+	*ZAKONETIRAŠ cipher AES-256-CBC*
+	*odkomentiraš* comp-lzo
+	ca keys/ca.crt
+	cert keys/clientFile.crt
+	key keys/clientFile.key
+shraniš
+
+(kot root) openvpn --config client.conf

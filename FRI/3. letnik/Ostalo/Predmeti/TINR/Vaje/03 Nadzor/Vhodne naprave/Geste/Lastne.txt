@@ -1,0 +1,14 @@
+Naloga
+
+Zaznavanje doloèenih osnovnih gest (dvojni kliki, potegi, šèipanje) je na sistemu že implementirano in do njih dostopamo preko programskega vmesnika, ostale geste, ki si jih zamislimo sami, pa moramo implementirati roèno s pomoèjo podatkov o dotikih. Tako lahko npr. z risanjem kakšnega vzorca (trikotnik, krog) sprožimo posebno akcijo v igri.
+
+Navodilo
+
+Posnemite iPhone/iPad simulator ali v iPhone/iPad živo, kjer se objekti na sceni spreminjajo glede na geste uporabnika v skladu z željenim uèinkom glede na igralnost vaše igre. Štejejo se geste, ki ne spadajo v skupino osnovnih gest in ste jih morali implementirati sami. Pod komentar napišite za kakšne geste gre in kakšen je njihov uèinek.
+
+Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:
+63080000-priimek-nadzor-geste-lastne.mov

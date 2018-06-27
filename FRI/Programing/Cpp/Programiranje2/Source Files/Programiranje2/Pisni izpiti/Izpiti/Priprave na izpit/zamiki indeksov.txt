@@ -1,0 +1,54 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+int MREZAS = 1000;
+int zamik = 500;
+
+
+
+
+int main(){
+
+
+
+
+    int **ax = malloc(MREZAS*sizeof(int*));
+   ax+=zamik;
+
+    for(int i = -zamik; i < MREZAS-zamik; i++){
+
+        ax[i] = calloc(MREZAS, sizeof(int));
+        ax[i]+=zamik;
+
+    }
+
+
+    ax[-1][-1] = 40;
+
+
+
+
+    //printf("%d",mreza[0][-100]);
+
+
+    //myFree(mreza);
+
+
+
+
+    //free
+
+    for(int i = -zamik; i < MREZAS -zamik; i++){
+        ax[i] -=zamik;
+        free(ax[i]);
+    }
+    ax-=zamik;
+    free(ax);
+
+
+
+
+
+    return 0;
+}

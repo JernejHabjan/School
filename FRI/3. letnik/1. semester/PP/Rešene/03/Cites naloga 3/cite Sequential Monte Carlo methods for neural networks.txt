@@ -1,0 +1,8 @@
+@incollection{de2001sequential,
+  title={Sequential Monte Carlo methods for neural networks},
+  author={De Freitas, Nando and Andrieu, C and H{\o}jen-S{\o}rensen, Pedro and Niranjan, M and Gee, A},
+  booktitle={Sequential Monte Carlo methods in practice},
+  pages={359--379},
+  year={2001},
+  publisher={Springer}
+}

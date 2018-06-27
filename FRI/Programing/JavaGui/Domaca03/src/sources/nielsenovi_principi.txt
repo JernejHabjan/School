@@ -1,0 +1,59 @@
+1. prilagodi se realnemu svetu
+	V uporabniškem vmesniku sem uporabljal slovenske besede ki niso pogovorne in žargonske.
+	
+2. konsistentnost in standardi
+	Uporabniški vmesnik je naèrtovan zelo obièajno. Na vrhu imamo navigacijsko vrstico, pod njo orodno vrstico, 
+	ki vsebuje najbolj pomembne gumbe, pod tem je telo aplikacije in še na dnu je pa statusna vrstica.
+	Ko kliknemo na gumb se izvede doloèena akcija, ali je pa uporabnik upozorjen o napaki.
+	Prav tako ima navigacijska vrstica spustne menije, kateri se spustijo dol.
+	Prikazna okna se pojavijo v ospredje in ne v ozadje, da ga uporabnik ne bi mogel videti.
+	Imam tudi zunanjo konsistentnost, saj imam že od zaèetka gumbe prikazane v orodni vrstici.
+	
+3. pomoè in dokumentacija
+	Pomoè se pojavi ko vpisujemo v polje, namenjeno za vpis številk druge znake. Takrat polje obarva rdeèe.
+	Prav tako se pojavi v polju pošta pomoè, ki nam pove da mesto ne obstaja.
+	
+	Pomoè je prav tako pri shranjevanju datoteke, saj oznaèi z rdeèo barvo vsa polja, ki jih potrebujemo izpolniti za kompletno shanitev datoteke.
+	
+4. uporabnikov nadzor in svoboda
+	Izhodi so oznaèeni s križcem, ki ga ma nenehno na voljo. Prav tako je izgod na voljo pod datoteka-> izhod ali pa kar z bližnjico ctrl+Q
+	Operacije shranjevanja in odpiranja datoteke lahko uporabnik preklièe s pritiskom na gumb cancel ali križec
+	
+5. vidljivost statusa sistema
+	Pri odpretju datoteke se v statusno vrstico izpiše tekst, da je datoteka uspešno prebrana
+	Pri shranjevanju pa pokaže Message Dialog, ki pove da je bila datoteka pravilno shranjena.
+	Ostalih daljših operacij ni.
+	
+6. fleksibilnost in uèinkovitost
+	Imam nastavljene bližnjice za:
+		-odpri -> ctrl+O
+		-shrani -> ctrl+S
+		-izhod -> ctrl+Q
+		-poèisti polja -> ctrl+W (ctrl+W v veliko programih zapre zavihek oziroma nekaj odstrani, zato se mi je zdela primerna izbira)
+
+	fleksibilno je tudi polje "poštna številka" ker ko vpišemo poštno številko ki obstaja, se izpiše tudi njen kraj v polje spodaj.
+	Prav tako berem iz posebne datoteke znamke avtomobilov, ki jih potem dam v spustni meni med znamke.
+	
+7. izogibanje napakam
+	Uporabnik v nekatera polja nemore vnesi napaènih podatkov - polje hišna številka lahko vsebuje številke in znake (195a), zato tam nisem preverjal.
+	Za moè avtomobila imamo spinner, ki je bolj primeren za števila.
+	
+	Avtor pa lahko prav tako svoje delo shrani in ga potem spet odpre, tako da se lahko zavaruje.
+	
+8. raje prepoznaj kot si zapomni
+	Vmesnik ima zelo malo stvari si za zapomniti. To bi bile samo bližnjice gumbov, ki jih pa lahko prav tako pogleda ker se mu pokažejo
+	v spusnem navigacijskem meniju.
+	Napake prikazujem tako, da obarvam napaèno izpolnjena polja in mu ne dam spiska polj, ki so narobe izpolnjena.
+		
+9. javljanje napak, diagnoza,
+	Napake rašujem na razliène naèine.
+	Vèasih izpisujem v statusno vrstico.
+	Vèasih obarvam polja (rdeèe - napaka, rumena - opozorilo).
+	
+	Prav tako je izpis napak dokaj slovnièno pravilen in ni vulgaren.
+	
+10. estetika in minimalistièno
+	Uporabniški vmesnik nima za vsako vnosno polje še posebno polje, kjer bi lahko prav tako vnesel, ampak ima samo eno.
+	Prav tako sem izbral JXDatePicker, ki je minimalistièen kolikor se da za izbiro datuma.
+	Okno se lahko razširi kolikor hoèe in bo vsebina še dokaj centrirana.
+		

@@ -1,0 +1,385 @@
+Ukazi, ki jih bomo uporabljali:
+
+pidof, pgrep
+ps, top, pstree
+jobs, fg, bg
+sleep
+wait
+kill, pkill, killall, nohup
+trap
+nice, renice
+...
+Pogledali si bomo navidezni imenik /proc/PID.
+
+Pred vajami si s pomocjo pomoci v ukazni lupini poglejte, kaj je glavna naloga posameznih ukazov (stikal posameznih ukazov ni potrebno podrobneje poznati, saj jih bomo bolj podrobno proucili, ce jih bomo potrebovali).
+
+ 
+
+PROCESI
+
+Pregled pojmov:
+
+proces ... izvajajoci se program
+
+vecopravilni sistem ... hkrati se izvaja vec procesov
+
+razvršcevalnik ... omogoca delitev procesorskega casa med vec procesov
+
+Pojmi povezani s procesi:
+
+strojna koda
+identiteta procesa (PID, lastnik, skupina procesa)
+okolje procesa (argumenti in okoljske spremenljivke)
+kontekst procesa (stanje, prioriteta, registri, sklad, odprte datoteke, itd.)
+Izpis PIDa procesa: pidof in pgrep
+
+Ugotavjanje PIDov za procese s podanim imenom:
+
+pidof proces … izpiše PID procesa proces, ki ga trenutno izvajajmo.
+
+Stikala pri pidof:
+
+-s … izpiše PID samo enega procesa;
+-o pid … ignorira procese z danim PIDom;
+-x … pregleda tudi procese lupinskih skript.
+
+Primer: (vkljucimo vec terminalov)
+
+pidof bash … izpiše PIDe vseh terminalov;
+pidof –s bash … izpiše samo enega.
+
+Pri pisanju programov želimo, da neke skripte ni mogoce vec zagnati:
+
+if pidof –x –o $$ $(basename $0); then
+  echo "skripta ze tece"
+  exit 1
+fi
+
+Opomba:
+Pri zgornjem primeru imamo opraviti s spremenljivko $$, ki hrani PID procesa, v katerem se spremenljivka klice. Spremenljivka $0 pa nosi ime programa, ki se izvršuje. Da dobimo res samo ime, se klice basename.
+
+
+Ce hocemo iskati PIDe po nekem vzorcu in ne po imenu, uporabimo pgrep.
+
+Stikala:
+
+-u uporabnik … izbiranje po uporabniku;
+-g skupina … izbiranje po skupini;
+-t term … izbiranje po terminalu;
+-P ppid … izbiranje po PPID;
+-n … najnovejši;
+-o … najstarejši;
+-c … izpiše le število izbranih procesov;
+-d niz … za locilo se uporabi niz;
+-l … izpiše tudi ime procesa.
+
+Primeri:
+
+pgrep –nl … izpiše številko in ime zadnjega procesa;
+pgrep –ol … izpiše številko in ime procesa, ki se ustvari kot prvi proces v OSu in je prastarš vseh procesov. Kateri proces je to?
+pgrep –cP 1 … izpiše število procesov, katerih oce je proces INIT;
+pgrep –d ", " –lu root ".*/."
+Izpiše vse procese uporabnika root, ki imajo na predzadnjem mestu poševnico = sistemski procesi, ki se izvajajo na vec procesorjih. Številka oznacuje procesor.
+
+ 
+
+Navidezni imenik /proc/PID
+
+Ko nastane nov proces, se ustvari tudi podimenik v imeniku /proc s število procesa. Vsebina imenika so datoteke s podatki o procesu:
+
+cmdline - ukazna vrstica procesa (argumenti so loceni z znakom \0);
+cwd - simbolicna povezava na trenutni delovni imenik;
+environ - seznam okoljskih spremenljivk in njihovih vrednosti (locilo je \0);
+exe - simbolicna povezava na program procesa;
+stat - informacije o kontekstu procesa;
+status - enako kot stat (bolj razumljivo);
+fd - simbolicne povezave na odprte datoteke;
+task - vsaka nit ima svoj podimenik.
+
+Primeri:
+
+1. konzola: vi pocitnice.txt
+
+2. konzola:
+
+pidof vi
+
+2359
+
+cd /proc/2359
+cat cmdline | tr "\0" " "
+cat environ | tr "\0" "\n"
+readlink exe
+cat status | grep Pid
+
+Informacije o procesih: ps
+
+ps (brez stikal) … izpiše procese trenutnega uporabnika v trenutnem terminalu.
+
+Stikala:
+
+-A ali -e … izpis vseh procesov;
+-C ime … izbira po imenu procesa;
+-U … uporabnik;
+-G … skupina;
+-p … pid;
+-t … terminal;
+-N … negacija izbire.
+
+Stikala za izpis:
+
+-f … polni izpis;
+-l … dolgi izpis;
+-j … izpis opravil v lupini;
+-H … izbira hierarhije
+-o polja … nastavitev izpisa polj (pid, ppid, user, priority, size);
+
+Primer:
+
+ps –u student –o ppid,user,priority,size
+
+Primer izpisa procesov uporabnika student, dodali smo polja navedena s stikalom -o.
+
+Dinamicni izpis procesov: top
+
+Nenehen izpis procesov.
+
+Tipki: q … izhod, h … pomoc.
+
+Izpis hierarhije procesov: pstree
+
+pstree 1
+pstree $$
+
+
+Zagon programa v ospredju ali ozadju
+
+Zaganjanje v ospredju je privzeto (lupina takoj klice wait in caka, da se program konca).
+
+Da program poženemo v ozadju, ga poklicemo z znakom & . Po zagonu procesa (otroka) se izpiše PID in izvajanje se vrne staršu (lupini). Ko se otrok konca, postane t.i. zombi in to sporoci staršu, ki klice funkcijo wait (in oprazuje status), da se je program koncal.
+
+Primer zagona v ozadju:
+
+sleep 5 &
+
+Opomba: proces takoj zaspi za 5 sekund, ker tece v ozadju (znak &), potem se v lupini izpiše številka PID in nadzor se vrne lupini. Ko se proces zakljuci (po 5 sekundah), vrne lupini signal (SIGCHLD). Obvestilo o koncu se bo izpisalo, ko se bo ponovno izpisal pozivnik (pritisnemo tipko Enter).
+
+Izpis tekocih poslov: jobs
+
+Izpis seznama procesov v ozadju v trenutni lupini.
+
+Stikala:
+
+-l … izpiše še PID
+-p … izpiše samo PID
+-n … izpiše samo nove procese (od zadnjega klica ukaza)
+
+Primer:
+
+xeyes &
+xclock &
+sleep 100
+jobs -l
+
+Premik procesa v ospredje ali ozadje
+
+Postavljanje procesa v ospredje: fg
+
+sleep 10 &
+
+[3] 123
+
+fg 3
+
+Postavljanje procesa v ozadje: bg
+
+Cakanje na konec procesa
+
+Ustvarimo dva (speca) procesa in pocakamo na krajšega:
+
+{ sleep 10 & } ; { sleep 5 & }
+
+wait PID-drugega … cakanje na drugega;
+wait … cakanje na vse otroke;
+wait 123; echo $? … izhodni status je 127 = proces nima otrok.
+
+
+ukaz sleep
+
+Uporabimo ga v ukazih, kjer hocemo, da se doloceno opravilo zgodi cez dolocen cas.
+
+Primer: ce želimo, da se nekaj izvrši vsakih 5 minut, v zanko dodamo stavek: sleep 5m.
+
+ 
+
+SIGNALI
+
+Signal je kratko "sporocilo" (oznacimo ga s številom od 1 do 64, odvisno od vrste Unixa), ki ga pošljemo nekemu procesu. Signal lahko posamezen proces pošlje programsko z ustreznim sistemskim klicem. Nekatere signale generirajo dogodki v terminalu (pritisk Ctrl-C, Ctrl-Z), druge dogajanje s procesi (ukinitev).
+
+Vrste signalov
+
+Zacetne številke signalov so rezervirane, njihov pomen je definiran po razlicnih standardih (POSIX, ANSI, 4.2 BSD), pripisana so jim tudi simbolicna imena. Nekaj zanimivejših signalov:
+
+Številka : Oznaka : Privzet odziv      Opis
+
+ 1 : SIGHUP  : exit  Hangup. Signalizira ukinitev pripadajocega terminala. 
+ 2 : SIGINT  : exit  Prekinitev procesa (Ctrl+C). 
+ 3 : SIGQUIT : core   Ukinitev procesa (Ctrl+\). 
+ 4 : SIGILL  : core  Napacen ukaz procesorja. 
+ 8 : SIGFPE  : core  Izjema pri delu s števili v plavajoci vejici. 
+ 9 : SIGKILL : exit  Brezpogojna ukinitev procesa. 
+10 : SIGUSR1 : exit  Prvi uporabniški signal. 
+12 : SIGUSR2 : exit  Drugi uporabniški signal. 
+13 : SIGPIPE : exit  Neuspeh pri pisanju v cev ali vticnico. 
+14 : SIGALRM : exit  Alarm. 
+15 : SIGTERM : exit  Ukinitev procesa. 
+17 : SIGCHLD : ingore Obvestilo staršu o ukinitvi otroka. 
+18 : SIGCONT : ignore Nadaljuje ustavljen proces. 
+19 : SIGSTOP : stop  Brezpogojna (zacasna) ustavitev procesa. 
+20 : SIGTSTP : stop (Zacasna) ustavitev procesa (Ctrl+Z). 
+21 : SIGTTIN : stop  Proces v ozadju skuša brati s terminala. 
+22 : SIGTTOU : stop  Proces v ozadju skuša pisati na terminal.
+
+Rokovanje s signali
+
+V tretjem stolpcu zgornje tabele navajamo tudi privzeti odziv prejemnika na signal. Možni so naslednji odzivi:
+
+core – zapis pomnilniške slike prejemika na disk;
+exit – ukinitev prejemnika;
+ignore – ignoriranje signala; in
+stop – ustavitev prejemnika.
+
+Privzeti odziv na dolocen signal lahko spremenimo tako, da za signal nastavimo svoj rokovalnik. Pri tem za nekatere signale ni mogoce spreminjati rokovalnika, npr. KILL in STOP.
+
+trap rokovalnik INT ... prestrežemo signal INT in poklicemo funkcijo rokovalnik.
+
+
+
+Signali v ukazni lupini
+
+Pošiljanje signalov: ukaz kill
+
+Signal številka NUM lahko pošljemo procesu PID z ukazom kill
+
+kill -NUM PID
+
+Na naslednji nacin pa lahko uporabimo tudi simbolicno ime signala:
+
+kill -s SIG PID
+
+Ce ne podamo vrste signala, se privzame signal SIGTERM. Spisek signalov dobimo z ukazom:
+
+kill -l ali pa trap -l
+
+Primeri:
+
+kill 12345 ... Zaustavitev procesa s PID=12345
+kill -KILL 12345 ... Brezpogojna ukinitev procesa.
+kill -9 -1 ... Ukinitev vseh procesov, ki jih lahko.
+kill %1 ... Zaustavitev opravila št. 1
+
+kill -l 2 ... Zanima nas oznaka signala 2.
+INT
+
+kill -l SIGCONT ... Zanima nas številka signala SIGCONT.
+18
+
+Ukaz kill omogoca le preprosto izbiro procesov z naštevanjem njihovih PIDov. Kadar potrebujemo naprednejšo izbiro, si lahko pomagamo z ukazom
+
+pkill [stikala] vzorec
+
+Delovanje ukaza je podobno kot pri ukazu pgrep za izpis procesov. Kljub temu še enkrat naštejmo podprta stikala:
+
+-signal . . . vrsta signala;
+-u uporabnik . . . izbiranje po uporabniku;
+-g skupina . . . izbiranje po skupini;
+-t term . . . izbiranje po terminalu;
+-P ppid . . . izbiranje po PPID;
+-n . . . izbira najnovejšega procesa;
+-o . . . izbira najstarejšega procesa;
+-v . . . negacija izbire; in
+-x . . . natancno ujemanje vzorca z imenom procesa.
+
+Drug nacin izbire procesov je z ukazom:
+
+killall [stikala] ime
+
+Ukaz pošlje signal procesom, katerih ime je enako podanemu. Pri tem lahko uporabimo stikala:
+
+-I . . . ignoriraj velikost crk;
+-i . . . zahtevana potrditev pred pošiljanjem signala;
+-q . . . ne sporoca napak;
+-r . . . podano ime je regularni izraz;
+-s signal . . . pošiljanje signala; in
+-w . . . pocaka na izbrane procese, da se ukinejo.
+
+Podobno kot kill deluje tudi killall
+
+killall -NUM PROG
+killall -SIG PROG
+
+Kako bi preprecili zapiranje otroka, ce zapremo njegovega oceta? 
+
+
+nohup gedit&
+
+
+
+Prestreganje signalov
+
+V programu lahko uporabimo ukaz trap, da prestrežemo signal. Na ta nacin preprecimo npr. nenaden zakljucek programa, ki ga je povzrocil zunanji signal.
+
+Na primer: ce s pomocjo kombinacije tipk CTRL-C pošljemo prekinitveni signal, ga lahko s pomocjo ukaza trap zaznamo in se odlocimo ali bomo program res zakljucili ali želimo nadaljevati.
+
+sintaksa: trap akcija signal
+
+ukaz trap
+
+seznam vseh signalov: trap -l
+
+Pri pisanju imena signala lahko izpustimo prve tri crke (obicajno SIG).
+
+Primer prestreganja signala:
+
+V spodnji skripti je prekinitveni signal SIGINT (oz. INT ali samo numercno 2).
+
+#!/bin/bash
+# uporaba ukaza trap
+# ulovi signal CTRL-C in izvedi funkcijo sorry():
+trap sorry INT
+
+# funkcija sorry() izpise sporocilo
+sorry()
+{
+echo "Tega ne morete narediti."
+sleep 3
+}
+
+# odstevaj od 10 do 1:
+for i in 10 9 8 7 6 5 4 3 2 1; do
+
+echo "$i sekund do sistemske napake."
+sleep 1
+done
+
+echo "Sistemska napaka."
+
+Ce uporabimo:
+
+trap – INT
+
+s tem resetiramo ukaz trap (povrnemo signal v prvotno stanje).
+
+Ce uporabimo:
+
+trap '' INT
+
+ne bomo reagirali na signal (program se bo nadaljeval, kot da ni bilo signala).
+
+prioriteta ukaza: nice in renice
+
+Ukaz lahko z zvišano ali z zmanjšano prioriteto poženemo s pomocjo ukaza nice. Vecja številka pomeni nižjo prioriteto. Manjša vrednost (negativna) pa pomeni, da ima proces višjo prioriteto pri izvajanju – to pomeni, da mu bo razvršcevalnik namenil vec procesorskega casa. Vrednost lahko zmanjša samo root. Kadar ukaz že tece, lahko spremenimo njegovo prioriteto z ukazom renice.
+Primer: poženemo ukaz sort z nižjo prioriteto, da ne obremenimo sistema:
+nice -n 10 sort input.txt > output.txt
+ce program že tece:
+renice -10 `pidof proces`

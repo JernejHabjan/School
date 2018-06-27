@@ -1,0 +1,100 @@
+# 1. naloga
+
+a)
+Trditev je napačna.
+TCP glava vsebuje polje receive window. Vrednost okna se po vzpostavljeni povezavi lahko spreminja glede na situacijo v omrežju.
+
+b)
+Trditev je pravilna.
+Glede na receive window, lahko A pošlje B samo toliko podatkov, kot je definirano v receive window polju glave.
+
+c)
+Trditev je pravilna.
+TCP timeout je vedno večji od izmerjenega RTT. Če je timeout prekratek, prihaja do nepotrebnega ponovnega pošiljanja podatkov, če je predolg se sistem prepočasi odziva na izgubo segmentov.
+
+d)
+Trditev je napačna.
+"TCP je full-duplex. Številka potrditve v glavi tega segmenta bo številka naslednjega byta, ki ga A PRIČAKUJE od Bja in se ne navezuje na byte, ki jih A pošilja Bju."
+
+# 2. naloga
+
+- Simetrični šifrirni algoritmi imajo en ključ, s katerim šifriramo in dešifriramo podatke (AES, DES, 3DES, Blowfish). Slabost: problematika izmenjave ključa
+- Asimetrični šifrirni algoritmi imajo dva ključa, javnega in zasebnega. Z javnim ključem lahko šifriramo podatke, dešifriramo jih pa lahko samo z zasebnim. (RSA, DSA). Slabost: počasnost
+
+- Avtentikacijski protokoli: Diffie-Hellman, Kerberos, Needham Schroeder uporabljajo kombinacijo asimetričnih in simetričnih algoritmov.
+*** dopolni, še vedno ni razložen postopek in obrazložitev avtentikacije ***
+
+# 3. naloga
+
+Z uporabo conditional GET. V glavi zahtevka je vrstica if-modified-since: datum, čas. Če je datoteka na strežniku spremenjena, jo strežnik pošlje, če je enaka vrne Not Modified.
+
+# 4. naloga
+
+Toplo priporočam, da si še enkrat pogledate oba modela (ISO OSI in TCP/IP). Preletite zapiske od Wild Rose.
+
+a) SMTP: 			Sejna plast			f) BitTorrent:		Aplikacijska
+b) HTTP piškotki: 	Aplikacijska ?		g) Ping:			Omrežna
+c) MIME:			Predstavitvena		h) IEEE 802.15:		Povezavna
+d) UDP:				Transportna			i) enkripcija:		Predstavitvena
+e) RSA:				Predstavitvena		j) IPv6:			Omrežna
+
+# 5. naloga
+
+Glejte prvi niz "Received: from" iz spodnje smeri (od spodaj navzgor).
+Poštni strežnik: meteor.ru, verjetno prihaja iz rusije
+
+# 6. naloga
+	* Knjiga, stran 453, 454.
+
+a)
+Trditev je pravilna. Velja, da se morata sogovornika vnaprej dogovoriti za skupni ključ (shared secret). Zadošča le en, ker gre za simetrično kriptografijo.
+
+b)
+Trditev je napačna. Protokoli tipa izziv-odgovor so imuni na MITM napade, in občutljivi na napad z zrcaljenjem.
+
+c)
+Trditev je napačna. Protokol je še vedno ne-varen, je pa napad nekoliko otežen, saj ne more biti izveden v poljubnem trenutku (napadalec čaka na žrtev začne komunikacijo).
+
+d)
+Trditev je pravilna. *** nisem prepričan, preveri ***
+
+e)
+Trditev je pravilna. Če napadalec dobi ključ (skupne skrivnosti), se lahko kateremukoli od sogovornikov predstavi kot avtentična oseba.
+
+# 7. naloga
+
+a)
+Gre za protokol TLS v1.0, zadnja različica je TLS 1.2.
+
+b)
+Uporablja protokol TCP na transportni plasti zato, ker potrebujemo zanesljivo povezavo.
+
+c)
+	TLS je kombinacija asimetričnega in simetričnega šifriranja (nadgradnja SSLv3)
+	RSA za izmenjavo ključa za simetrično šifriranje
+	128 - bit AES CBC (cipher block chain) za simetrično šifriranje
+	MD5 hashing za avtentikacijo (preverjanje pristnosti)
+
+d)
+lrk.fri.uni-lj.si (glej common name)
+
+e)
+tipični MITM (man in the middle), Phishing (preverja se identiteta strežnika)
+*** dopišite, lažje je najti ranljivosti algoritmov, kot napadov, proti katerim so "imuni". ***
+
+# 8. naloga
+
+* navodila za reševanje te naloge so na koncu L10: http://lrkucilnica.fri.uni-lj.si/T10/T10.html
+https://dl.dropboxusercontent.com/s/xbx25pyt37rr1ri/IMG_20160604_225119.jpg
+* Pri zgornji sliki je rezultat napačen. V zadnjem koraku sem pozabil izvesti permutacijo znotraj S0 in S1.
+
+Odgovor: Niz se kriptira v "0010 1111".
+* preverite rešitev, lahko, da sem se zmotil.
+
+#########################
+Hall of fame
+#########################
+
+Matevž Špacapan
+Žiga Strgar
+Tomaž Lunder

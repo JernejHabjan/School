@@ -1,0 +1,19 @@
+Naloga
+
+Z izdelanimi kontrolami lahko izdelamo menije, ki sestavljajo stanja naše igre. Doloèiti moramo prehode med njimi in se glede na kompleksnost povezav odloèiti za naèin, kako bomo skrbeli za menjavanje med stanji.
+
+Najenostavnejša razlièica je sklad stanj, na katerega nalagamo nova stanja in se nato vraèamo na prejšnja. Aktivno je samo zgornje stanje, nekativna pa vmes odstranimo s seznama komponent, tako da se ne izvajajo.
+
+To je seveda le en izmed veliko pristopov k gradnji uporabniških vmesnikov. Sami lahko izdelate menije na kakršenkoli naèin. Naloga je opravljena, ko imamo pred igranjem vsaj en meni in iz njega pravilno deluje prehod v igranje ter nazaj.
+
+Navodilo
+
+Posnemite simulator, kjer se sprehodite skozi vse menije vaše igre. Za vsakega dobite 5 toèk, skupno najveè 15.
+
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-infrastruktura-meniji.mov
+(primerno popravite vpisno številko in priimek)

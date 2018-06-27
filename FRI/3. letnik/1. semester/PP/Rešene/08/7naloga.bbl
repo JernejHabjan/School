@@ -1,0 +1,21 @@
+\begin{thebibliography}{1}
+
+\bibitem{gelly2011monte}
+Sylvain Gelly and David Silver.
+\newblock Monte-carlo tree search and rapid action value estimation in computer
+  go.
+\newblock {\em Artificial Intelligence}, 175(11):1856--1875, 2011.
+
+\bibitem{uriarte2014game}
+Alberto Uriarte and Santiago Onta{\~n}{\'o}n.
+\newblock Game-tree search over high-level game states in rts games.
+\newblock In {\em Tenth Artificial Intelligence and Interactive Digital
+  Entertainment Conference}, 2014.
+
+\bibitem{uriarte2015automatic}
+Alberto Uriarte and Santiago Ontan{\'o}n.
+\newblock Automatic learning of combat models for rts games.
+\newblock In {\em Eleventh Artificial Intelligence and Interactive Digital
+  Entertainment Conference}, 2015.
+
+\end{thebibliography}

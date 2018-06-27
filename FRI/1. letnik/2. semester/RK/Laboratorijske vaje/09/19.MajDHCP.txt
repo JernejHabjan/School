@@ -1,0 +1,57 @@
+1. naloga -> manually ugasn server pa nazaj pržgi- settingsi se ohranjo pa dela
+	replyi nazaj so po večini unicast
+_____________________________________________________________________	
+2. naloga ->http
+V Wiresharku odprite datoteko http.cap z zajetim HTTP prometom. Odgovorite na naslednja vprašanja:
+
+Kakšen je IP naslov odjemalca za HTTP? Kakšen je IP naslov strežnika HTTP? -10.0.0.200
+Kakšen je TCP port odjemalca za HTTP? Kakšen je TCP port strežnika HTTP? odjemalec: 1062, server 80
+S Follow:TCP stream si oglejte vsebino izmenjanih podatkov med odjemalcem in strežnikom.
+
+	Kako so obarvani podatki, ki jih pošilja odjemalec? RDEČE ODJEMALEC ,MODRO STREŽNIK
+	Kako so obarvani podatki, ki jih pošilja strežnik?
+	Kako strežnik prepozna, da je HTTP zahteva odjemalca zaključena; da je konec opcijskih header polj? ->med glavo in bodyjem je new line
+	Kako odjemalec prepozna, da je strežnik poslal vse podatke HTTP odgovora? new line
+V Wiresharku odprite datoteko http_get.cap z zajetim HTTP prometom. Poiščite vzpostavitev TCP povezave in z izbiro Follow:TCP stream preglejte zahtevo HTTP in odgovor HTTP.
+
+	Se vsebina polj spletnega obrazca prenese z metodo GET, v glavi zahteve HTTP ali v telesu zahteve HTTP? -ali HTTP GET(IMA SAMO GLAVO) ALI HTTP POST (TA IMA BODY)
+			namen je poslati določene parametre--- enkrat smo v body enkrat v urlju
+			requestali smo z GET -vidi se v url vrstici podatki (ampak niso nič manj varni kot v post)
+V Wiresharku odprite datoteko http_post.cap z zajetim HTTP prometom. Poiščite vzpostavitev TCP povezave in z izbiro Follow:TCP stream preglejte zahtevo HTTP in odgovor HTTP.
+
+	Se vsebina polj spletnega obrazca prenese z metodo POST, v glavi zahteve HTTP ali v telesu zahteve HTTP? -v bodyju so parametri
+	Kako strežnik HTTP zazna, da so preneseni vsi podatki s spletnega obrazca?
+	-vidi za length da je 40B!
+V Wiresharku odprite datoteko http_basicauth.cap z zajetim HTTP prometom. Poiščite vzpostavitev TCP povezave in z izbiro Follow:TCP stream preglejte zahtevo HTTP in odgovor HTTP. 
+Poiščite polje Authorization: v glavi HTTP zahteve in vrednost, ki sledi besedi Basic, dekodirajte po metodi Base64. Pri tem si pomagajte z dekoderjem, ki ga piščite na spletu.
+
+	Kakšni sta vrednosti uporabniškega imena in gesla? ->rdeca:kapica (pogooglaš decode base64)
+	S katerim protokolom običajno na spletu zagotovimo varen prenos podatkov med odjemalcem in strežnikom? ->HTTPS
+_____________________________________________________________________
+ŠE FTP
+	
+	V Wiresharku najprej odprite datoteko ftp_active.cap. Poiščite pakete, ki ustrezajo odpiranju prve TCP povezave z odjemalca ftp na strežnik ftp. Z desnim klikom na enega izmed paketov trosmernega rokovanja izberite opcijo Follow:TCP stream. Na ta način definirate filter, ki vam prikaže podatke prenešene preko TCP povezave od odprtja le-te do njenega zaprtja.
+
+	Kdo je pošiljatelj in kdo prejemnik podatkov, ki so obarvani modro? -server modro -ker so server sporočila
+	Kdo je pošiljatelj in kdo prejemnik podatkov, ki so obarvani rdeče?
+Izbrišite nastavljeni filter v Wiresharku in poiščite vzpostavitev druge TCP povezave, zopet z opcijo Follow:TCP stream poglejte vsebino podatkov.
+	-filter->tcp stream eq 3 -> damo tcp follow
+	Kdo je vzpostavil to TCP povezavo odjemalec ftp ali strežnik ftp?
+	Zakaj so paketi obarvani rdeče? -ker jih pošilja odjemalec -upload
+V Wiresharku najprej odprite datoteko ftp_passive.cap. Poiščite pakete, ki ustrezajo odpiranju prve TCP povezave z odjemalca ftp na strežnik ftp. Z desnim klikom na enega izmed paketov trosmernega rokovanja izberite opcijo Follow:TCP stream. Na ta način definirate filter, ki vam prikaže podatke prenešene preko TCP povezave od odprtja le-te do njenega zaprtja.
+
+	Kdo je pošiljatelj in kdo prejemnik podatkov, ki so obarvani modro? ->modro strežnik
+	Kdo je pošiljatelj in kdo prejemnik podatkov, ki so obarvani rdeče?
+Izbrišite nastavljeni filter v Wiresharku in poiščite vzpostavitev druge TCP povezave, zopet z opcijo Follow:TCP stream poglejte vsebino podatkov.
+	->POIŠČEMO FTP-D
+	pod tcp stream eq 3
+	Kdo je vzpostavil to TCP povezavo, odjemalec ftp ali strežnik ftp?
+	Zakaj so paketi obarvani modro? -strežnik poslal
+	DOWNLOAD -> RETR ->DOWNLOAD
+	UPLOAD ->upload
+ZAPISKI:
+
+aktivni - server vedno začne proti nam podatkovno poveavo ->zelo redko, zaradi NATa,FIREWALLA
+pasivni -pogost(zdaj imamo skor sam še pasivnga) ->da jaz requestam za podatke in on (TUKAJ ZAČNEMO MI POVEZAVO)
+SAMO 2 kanala LOČENA
+v enem podatki 

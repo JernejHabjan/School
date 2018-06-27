@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>.::. Galerija Prenosnih Računalnikov ( Notebookov ) .::.</title>
+<style>
+td.sl{
+float: left;
+padding: 10px;
+}
+
+img.slv{
+width:100px;
+height:100px;
+}
+</style>
+<head>
+<script>
+
+function slika(x) {
+  if (document.images){  // če obstaja folder slike
+	switch (x) {
+		case 1: document.images["glavnaslika"].src='slike/dell.jpg' ; 
+		break;
+		case 2: document.images["glavnaslika"].src = 'slike/acer.jpg';
+		break;
+		case 3: document.images["glavnaslika"].src = 'slike/acer-aspire.jpg';
+		break;
+		case 4: document.images["glavnaslika"].src= 'slike/notebook.jpg';
+		break;
+		case 5: document.images["glavnaslika"].src = 'slike/vaio.jpg';
+		break;
+	}
+  }
+}
+</script>
+<body bgcolor="lightgrey">
+<h2 align="center">GALERIJA</h2>
+<center><img src="slike/dell.jpg" width="300" height="300" name="glavnaslika" />
+<br /><br />
+
+<table border=2>
+  <tr><td class="sl">
+      <img class="slv" src="slike/dell.jpg" alt="Notebook 1" onclick="slika(1)" />
+    </td>
+    <td class="sl">
+      <img class="slv" src="slike/acer.jpg" alt="Notebook 2" onclick="slika(2)" />
+    </td >
+    <td class="sl">
+      <img class="slv" src="slike/acer-aspire.jpg" alt="Notebook 3" onclick="slika(3)" />
+    </td>
+    <td class="sl">
+      <img class="slv" src="slike/notebook.jpg" alt="Notebook 4" onclick="slika(4)" />
+    </td>
+    <td class="sl">
+      <img class="slv" src="slike/vaio.jpg" alt="Notebook 5" onclick="slika(5)" />
+    </td>
+  </tr>
+</table>
+</body>
+</html>

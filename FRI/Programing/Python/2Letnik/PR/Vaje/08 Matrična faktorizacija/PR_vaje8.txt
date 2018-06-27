@@ -1,0 +1,96 @@
+
+3. dn
+Nadzorovano modeliranje
+iz atributov napovedaš razred
+kaj se da napovedovati:
+	-žanr
+	-priporočilni filmi 
+	-ocena (hočemo to)
+		ocena je zvezna stvar - uporabimo regresijo
+		lahko bi tudi diskretizirali v navodilih je 0 če >=3, 1 else
+		
+za vsakega uporabnika naredi napoved, kot atribute pa uporabi kako so ostali uporabniki ocenili ta film
+
+katera metod nadzorovanega modeliranja je best:
+	ali regresija ali klasifikacija ali....
+	no free lunch theorem - zato ugotavljamo kateri model je best za ta dataset
+
+	
+	
+1. preobdelava:
+	poskušaj napovedat kašno oceno bo dal uporabnik na podlagi kašno oceno so dal drugi uporabniki
+	zato omejit dataset
+		filmi z vsaj 100 ogledi in izberi njihovo podmnožico ker jih bo šekr vlik
+		uporabnike ki vsaj 100 filmov in tudi tu izberi podmožico teh ker jih bo šekr vlik
+	X =					uporabniki (n)
+					u1	u2	u3...
+		filmi(m)f1
+				f2
+				f3
+		m >> n da bo tabelca pokončna in nbo veliko "atributov"
+		lahko se zgodi da noben izmed uporabnikov ni izbral nobenega filma ki smo jih tu izbrali
+		izberi podmožico podatkov- kašno -> najbolj reprezentativno 
+			naključno izberi pol podmožico
+		
+
+	neznane vrednosti nadomesti z 0-problem ampak dj 0.
+	
+	
+2. REGRESIJA
+	za usakega uporabnika svoj napovedni model!!!
+		zato n mora biti majhna številka - ne preveč ker trajalo, ne premalo ker bo slab model
+	Vzameš matriko X in stolpec uporabnika(i) preimenujemo v y (kot ciljni razred) in vse ostale kot atribute
+		(to je prečno preverjanje vzami enega)
+	Vzameš matriko X in vrstice razbijemo na 75:25 (učna:testna) tako da sta obe množici reprezentativni (random)
+	nakoncu ga preveri s prečnim preverjanjem(cross validation)
+		
+	poročajte o uspešnosti modela... imamo N modelov
+		kot rezultat: damo ali RMSE, MAE.... ampak povprečje modelov, drugače pa histogram teh ocen je best baje
+			če je porazdelitev normalna, poročamo mediano
+			npr MSE ki smo delali na vajah
+		rezultat bo številka, ki bo enota v ratingih
+		
+		za rezultat histogram in poročaj ali modeli dobro napovedujejo (nekatere uporabnike zelo dobro, nekatere zelo slabo..)
+	
+3. KLASIFIKACIJA
+	3.1diskretiziramo
+	3.2 katere mere izbrati za klasifikacijo
+		CA (0 bo velik večinski razred)
+		senzitivnost (good)--to nared
+		specifičnost
+		ROC (best)--to pa čevš znov
+		
+	še vedno prečno preverjanje
+	še vedno za usakega uporanbika svoj model	
+	SAMO Y DISKRETIZIRAMO o x pa nič ne piše
+	
+	ali je klasifikacijski problem lažji od regresijskega?
+		dobimo oceno
+		dobimo procent
+		-- tidve količini težko primerjamo - regresijo in klasifikacijo
+		
+		odgovori namesto tega: - kaj je bolj smiselno (regresija/klasifikacija) -- v tej smeri odgovori
+4. BONUS
+	model uporabi za novega uporabnika
+	ocenimo sami nekaj filmov, potem 
+	
+	še lažje:
+		če damo samo par ocen filmov
+		vse modele se upošteva ampak se napovedi uteži glede na to koliko uspešen je (kakšno napako dela) in pridemo do
+		"ansambel" in tiste modele ki bolje napovedujejo imajo večjo utež
+		--tako dobimo bolj povprečne uporabnike
+	kako najbolje:
+		vsak model se proba napovedat kašne napovedi da- in potem pogledat s katerim se ocene najbolj ujemajo (nične ne upoštevamo)
+	hranjenje modelov-> model.fit -> model je ta model k ga nekam daš
+	
+	
+Do 8.5. VMESNO POROČILO:
+	poročilo na githubu - ugotovitve: kakšni so podatki, vzorci, težave v podatkih, kaj je zanimivega, osnovne statistike, vizualizacije...
+		pogledaš podatke, distribucije, manjk.vrednosti, osamelci, najbolj obetavni atributi.
+	moraš vedt še nadaljne faze do zaključka.
+	
+	
+	
+	
+	
+Nenegativna matrična faktorizacija in priporočilni sistemi

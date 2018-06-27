@@ -1,0 +1,167 @@
+NEUSMERJEN:
+	st vozlisc (od 0 naprej)
+	koliko povezav do polnega grafa ->n + (n-1) + (n-2) ---- = (n*(n-1))/2	
+		in pol od tega odšteješ število povezav
+	štPovezav -> prešteješ
+	stopnja vozlišč
+		0:2 (sama vase ne šteje)
+		1:3
+		2:3
+		3:...
+	OPIS Z:
+	-seznam sosedov -
+		za vsako vozlišče povemo katere sosede ima
+		0: 1,3
+		1:0,2,5
+		2....
+		(seznam seznamov)
+	primerna za povečevanje
+		
+	-matrika sosednosti
+	(vozslišča x vozlišča)
+	  0 1 2 3 4 5 6 7
+	0 0 1 0 1 0 0 0 0
+	1 1 0 1 0 0 1 0 0
+	2 0 1 0 1 1 0 0 0 ... (je simetrična na diagonalo)
+	3
+	4
+	5
+		-se napiše ali je povezano s tem -1 else 0
+	-incidenčna matrika(razmerje med povezavami in ogljišči)
+	(vozlišča x povezave)
+		a b c d e f g h
+	  0 1 1 - - - - - -
+	  1 1 - 1 1 - - - -
+	  2 ...
+	  3
+		pomembna če so koncept povezave
+################
+USMERJEN:
+	st vozlisc
+	st povezav -> max = n^2
+	stopnja vozlisc -> vhodnja stopnja vozlisc + izhodnja stopnja vozlisc
+	  i v (kok jih gre vn pa kok notr
+	0 2 1
+	1 0 3
+	2
+	3
+	4
+	5...
+	  14 14 -> številke se morta ujemati
+	  vsota povezav je 14
+	  
+	OPIS Z:
+	-seznam sosedov
+		0:1,2
+		1:
+		2: 1,4,6
+		3: 0, 2 5 (izhodne ustrezajo tem) -> GLEDAMO IZHODNE POVEZAVE
+		4: ...
+	-matrika:
+		(ni več simetrična)
+		  0 1 2 3 4 5
+		0 - 1 1 - - -
+		1 - - - - - - (VSE IZHODNE POVEZAVE)
+		2 ...
+		3
+		(če gledaš po vrsticah so izhodne povezave) če pa po stolpcih pa vhodne
+	-incidenčna matrika
+		  a  b  c  d  e  f  g  h  i  j .. (14 povezav)(14 izhodnih)
+		0 1  1
+		1 -1   -1
+		2   -1 
+		3  (tiste k grejo not je minus) tiste ki pa vn pa plus
+		4
+		4
+###############
+KVIZ:
+	dan je neusmerjen graf g=(v,e)
+		v=(0,1,2,3,4) e={(0,1)(0,2)(1,2)(1,3)}
+	katere povezave so sosednje povezavi (0,1) - tiste ki se jo dotikajo (0,2, 1,3, 1,2)
+	incidenčne 01 12 13
+	
+	napiši matriko sosednjosti
+	
+	matrika sosednjosti omogoča po obstoju- >da
+	poln graf ki vsebuje povezavo za vsak par vozlišč je redek ->ne
+	
+	matrika sosdjnosti in matrika razdalj in matrika razdalj - za usmerjeno je simetrično -NE
+###############
+DOMAČA NALOGA
+	sprehod -na koliko načinov se da pridet iz enega v drugo vozlisce
+	branje vhoda - 01 pri neusmerjenem = tudi 10
+		lahko so hkrati 01 10 pri neusmerjenem - zafailan
+	značilnosti - info
+		stvozlisc, stPovezav, koliko manjka do polnega grafa
+		vhodna, izhodnja, stopnja
+		vhodna, izhodnja, stopnja
+		vhodna, izhodnja, stopnja
+		vhodna, izhodnja, stopnja.......
+	walks k -> matrika !!!
+		to se nardi z množenjem matrik
+	dfs - začnemo zmeri pr vozliscu 0
+		izpisujemo vstopni vrstni red in izstopni vr red
+	bfs- samo 1 vr red 
+	sp -  -1 če nemormo
+	comp - povezane komponente (gruče točk - islands pr blenderju) -> pa sortej jih po vrst
+		pri directed -> KREPKO POVEZANE - v eno ali v drugo smer
+		
+###############
+NALOGE
+	1. za neusmerjen graf iz naloge 1 dolocite stevilo sprehodov dolzine 2 (3, 18)
+		pojasnite razlike za primer usmerjenega grafa-
+			mi bomo naredl za usmerjen
+		MATRIKA SOSEDNJOSTI
+				  0 1 2 3 4 5 6 7
+				0 - 1 1 - - - - -
+				1 - - - - - - - - 
+				2 - 1 - - 1 - 1 -
+		A=		3 1 - 1 - - 1 - -
+				4 - - - - - 1 - -
+				5 - 1 - - - - - -
+				6 - - 1- - 1 - -
+				7 - - - - - 1 1 -
+		
+		VRSTICA * STOLPEC
+		A^2 =     0 1 2 3 4 5 6 7       0 1 2 3 4 5 6 7        0 1 2 3 4 5 6 7
+				0 - 1 1 - - - - -     0 - 1 1 - - - - -      0 - 1 - - 1 - 1 -
+				1 - - - - - - - -     1 - - - - - - - -      1 - - - - - - - - 
+				2 - 1 - - 1 - 1 - *   2 - 1 - - 1 - 1 -      2 - - 1 ...
+				3 1 - 1 - - 1 - -     3 1 - 1 - - 1 - -   =  3 
+				4 - - - - - 1 - -     4 - - - - - 1 - -      4 
+				5 - 1 - - - - - -     5 - 1 - - - - - -      5 - 6 - 2 - 1 - 4 (lahko je vč kt 1)
+				6 - - 1 - - 1 - -     6 - - 1 - - 1 - -      6 
+				7 - - - - - 1 1 -     7 - - - - - 1 1 -      7 
+		WALKS 32 -> yolo - 31x primnožiš A--- lah bi a2 a4 a8 a16
+		
+	2. DOLOČITE ŠTEVILO TRIKOTNIKOV:
+		naredimo A^3 -> seštejemo elemente po diagonali
+			in to število delimo s 6 ->>>> sumDiag(A^3) / 6
+	
+	3. za usmerjen graf prikažite sledenje v globino in izpiši oboje:
+		na začetku vsa vozlišča označimo kot neobiskana
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

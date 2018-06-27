@@ -1,0 +1,26 @@
+PP P2
+
+	vrste pisav
+		monospaced - koda
+		serifne - serif fonts kjer so linije različno debele (najlažje brat)
+		tehnične - vse isto debele
+		dekorativne - realna, imaginarna št...
+	družine pisav
+		druˇzino pisav sestavljajo pisave, ki so med seboj oblikovno usklajene,
+		loˇcijo pa se po velikosti, teˇzi, ˇsirini in obliki
+	vključevanje slik
+		sliko shraniš kot pdf
+	napake:
+		model CAD
+		in ne - CAD model
+PP P3
+	piši v sedanjiku množine prve osebe
+
+PP P4
+	cite tako da:
+	\cite{idenga, iddruzga}
+
+	pika za citatom
+
+	pred citatom presledek ali swiggly
+

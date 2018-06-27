@@ -1,0 +1,257 @@
+Ukazi, ki jih bomo uporabljali:
+
+obdelava vsebine datotek: sort, shuf, uniq, nl, tr, cut, split, paste, join, column
+analiza vsebine datotek: wc, grep, cmp, diff
+xargs, tee
+Pred vajami si s pomocjo pomoci v ukazni lupini poglejte, kaj je glavna naloga posameznih ukazov (stikal posameznih ukazov ni potrebno podrobneje poznati, saj jih bomo bolj podrobno proucili, ce jih bomo potrebovali).
+
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavje 5 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+ 
+
+OBDELAVA VSEBINE DATOTEK
+
+urejanje po vrsticah: sort
+
+privzeto vrstice danih datotek uredi v narašcujoce leksikografsko. pomembnejša stikala:
+
+-b ... ignoriraj vodilne presledke;
+-d ... ignoriraj vse razen presledkov in alfanumericnih znakov;
+-f ... ignoriraj velikost crk;
+-g ... urejanje splošnih številskih vrednosti, npr. 15=0xF
+-i ... ignoriraj nevidne znake;
+-n ... urejanje številskih vrednosti;
+-R ... urejanje v nakljucnem vrstnem redu;
+-r ... urejanje v nasprotnem vrstnem redu;
+-s ... stabilno urejanje;
+-u ... izpiši samo prvega izmed enakih; in
+-z ... vrstice koncaj z bajtom 0 namesto EOL.
+
+ls -1 > ls.txt ... najprej naredimo neko datoteko
+sort -r ls.txt ... nato pa uredimo vsebino po obratnem vrstnem redu
+
+ 
+
+generiranje nakljucne permutacije: shuf
+
+-e argumenti … namesto datoteke permutiraj vhodne argumente
+-i razpon … permutira števila od-do in
+-n stevilo … izpiše do stevilo vrstic
+
+shuf -e alfa beta gama delta … pomeša argumente
+
+shuf -i 13-666 -n 5 … iz pomešanega zaporedja izpiše prvih 5
+
+ 
+
+odstranjevanje duplikatov: uniq
+
+odstrani zaporedoma enake vrstice
+
+-c … izpiše število ponovitev
+-d … izpiše samo ponavljajoce vrstice
+-i … ignorira velikost crk
+-u … izpiše enolicne vrstice
+
+cat /etc/passwd | cut -d: -f7 | sort | uniq -c  … število uporabnikov, ki uporabljajo doloceno ukazno lupino
+
+ 
+
+oštevilcenje vrstic: nl
+
+nl /etc/passwd
+
+zamenjava znakov: tr
+
+-c … vzemi komplement
+-d … briši znake iz niza
+-s … stisni zaporedne ponovitve
+-t … skrajša
+
+seq 1 10 | tr "\n" ","
+
+1,2,3,4,5,6,7,8,9,10,
+
+seq 1 10 | tr -d 13579 | tr -s "\n "
+
+2 4 6 8 0
+
+ 
+
+delitev datoteke: split [stikala] [datoteka [predpona]]
+
+razdelitev datoteke na na vec delov
+
+privzeto razdeli datoteko v vec datotek (predpona+pripona={aa,ab,ac}) do 1000 vrstic
+
+stikala:
+
+-a dolzina … uporabi pripone podane dolžine
+-d … uporabi številcne pripone
+-l stevilo … razdeli na podano število vrstic
+
+Razdelite zaporedje števil od 1 do 100 v posamezne datoteke dolžine 10 vrstic (-l10), predpona naj bo stevila-, pripone pa naj bodo dvomestna (-a 2) števila (-d).
+
+seq 1 100 | split -d -a 2 -l10 - stevila-
+
+ 
+
+obdelava po stolpcih: cut in paste
+
+izlocanje izbranih stolpcev iz datoteke: cut
+
+-c spisek . . . izloci znake iz podanega spiska;
+-d locilo . . . pri locevanju polj uporabi podano locilo; in
+-f spisek . . . izloci polja iz podanega spiska.
+
+spisek podamo v naslednji obliki:
+
+N … N -to polje (štejemo od 1 naprej);
+N1,N2 … polji N1 in N2;
+N-M … zaporedna polja od N do M ;
+N- … polja od N do konca vrstice; ali
+-M … polja od prvega do M tega.
+izpis imena jedra OS:
+
+uname -a | cut -d" " -f1,3
+
+izpis vseh uporabnikov iz datoteke /etc/passwd:
+
+cut -d: -f1 /etc/passwd
+
+Ce želimo stolpce zlepiti skupaj, uporabimo ukaz paste
+
+cut -d: -f1 /etc/passwd > prvi
+cut -d: -f3 /etc/passwd > tretji 
+paste tretji prvi
+
+ 
+
+naravni stik po dolocenem stolpcu: join
+
+join [-stikala] dat1 dat2
+
+stikala:
+
+-1 številka_stolpca ... stik po podanem stolpcu iz prve datoteke
+-2 številka_stolpca ... stik po podanem stolpcu iz druge datoteke
+-t znak ... doloci locilni znak med stolpci
+
+Stolpca po katerih delamo stik morata biti sortirana.
+
+
+urejanje izpisa v obliki stolpcev: column
+
+Primer:
+ps -e | column ... izpiše rezultat v vec stolpcih (najprej polni prvi stolpec, potem drugi, itd.)
+
+stikala:
+
+-s ... doloci znake, ki se upoštevajo kot locila stolpcev pri stikalu -t
+-t ... ugotovi število stolpcev in izpiše tabelo; meje med stolpci so privzeto presledki
+-x ... najprej polni vrstice
+
+
+
+
+ 
+
+ANALIZA VSEBINE DATOTEK
+
+štetje znakov, besed, vrstic: wc
+
+brez stikal: izpiše število vrstic, besed in bajtov v podani datoteki
+
+stikala:
+
+-c … izpis števila bajtov
+-m … število znakov
+-l … število vrsti
+-L … izpis dolžine najdaljše vrstice
+-w … število besed
+
+izpis število znakov in bajtov je enako za znake ASCII, ki so zapisani z enim bajtom:
+
+echo -n ABC | wc -m -c
+
+3 3
+
+izpis število znakov in bajtov za naše znake, slovenski šumniki so v standardu UTF-8 kodirani z dvema bajtoma
+
+echo -n šcž | wc -m -c
+
+3 6
+
+ 
+
+primerjava vsebine datotek: cmp in diff
+
+primerjava dveh datotek: cmp dat1 dat2
+
+datoteki enaki: ne izpiše nic in vrne status 0
+
+datoteki sta razlicni: izpiše kje je razlika in vrne status 1
+
+stikala:
+
+-s … utišamo izpis
+
+primerjamo datoteki in izpišemo status:
+
+cmp –s dat1.txt dat1.txt ; echo $?
+
+Podobno kot cmp primerja datoteke tudi diff, ki zraven izpiše še vrstice, kjer se datoteki razlikujeta:
+
+diff dat1 dat2
+
+ 
+
+iskanje po vsebini: grep vzorec [datoteka]
+
+išce v datoteki vzorec, ki je lahko niz ali regularni izraz
+
+stikala:
+
+-i … iskanje neodvisno od velikosti crk
+-w … ujemanje s celo besedo
+-l … izpiše samo datoteko v kateri je našel ujemanje in ne vrstic
+-r … preišce datoteke v trenutnem imeniku in vseh podimenikih
+-n … poleg vrstic izpiše še številko vrsti
+-v … izpiše vrstice ki NE vsebujejo podanega vzorca
+-c … izpiše število pojavitev v vrsticah in ne izpis vrstic
+
+poženemo firefox in potem pri izpisu vseh procesov (ps -e) poišcemo samo tistega ki vsebuje besedico firefox:
+
+ps -e | grep firefox
+
+
+
+ 
+
+
+
+izpis v vec datotek: tee
+
+Ukaz bere iz standardnega vhoda in izpisuje na standardni izhod ter datoteke, ki jih podamo kot argumente.
+
+tee dat1 dat2 ... datN
+
+stikala:
+
+-a ... vsebine dadoteke ne prepišemo, ampak vanjo dopišemo
+
+ 
+
+izvajajnje ukaza nad vrsticami iz standardnega vhoda: xargs
+
+xargs ime_ukaza
+
+stikala:
+-0 ... kot locilo med vhodnimi nizi vzame nulti znak (namesto presledka)
+-I zamenjalni_niz ... zamenja pojavitve zamenjalnega_niza v ukazu s posameznimi vhodnimi nizi, ki jih dobi preko standardnega vhoda
+-p ... preden izvede ukaz zahteva potrditev
+
+primer:
+
+echo dat1 dat2 dat3 | xargs cat ... xargs na standardnem vhodu dobi seznam datotek, nad katerimi izvede ukaz cat.
+
+echo dat1 dat2 dat3 | tr " " "\n" | xargs -I {} -p ln -s {} {}_link ... xargs na standardnem vhodu dobi seznam datotek in na posamezni datoteki izvede ukaz ln, ki ustvari simbolicno povezavo s pripono _link na izvorno datoteko.

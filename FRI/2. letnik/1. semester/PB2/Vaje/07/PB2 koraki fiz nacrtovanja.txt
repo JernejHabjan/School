@@ -1,0 +1,69 @@
+analiza transakcij
+	ali se splača pri insertu še index dajat za insertu
+	
+	index požre prostor!
+	
+	indeksiranje:
+		-podatkovno skladišče->poindeksiraj vse-> ker not samo poizvedujemo
+		pa se ponoč delajo inserti
+		-"kje je warehouse"-stran 50, 43, 160.
+		indeksni zapis je sestavljen inz ključa("jure") in kazalca (pointer)
+		B+ index->dinamičn, uravnotežen->zagotavlja da je do kerga kol zapisa enah hitr dostop
+			lah se updata do korena al pa nov nivo
+			št branj je odvisno od height drevesa
+			
+		index gruče->index po poljih po katerih je datoteka urejena.
+		-datoteka ma ima lahko ALI index gruče ALI primarni index
+		
+		gosti index
+		redek index
+		dinamični index
+		statični index
+		
+		če nimaš po primarnem ključu -nared ta index
+		tuji kluč
+		sec indekse po selectu, stikih, grupiranju
+		
+		manjhih relacij ne indeksiramo -> ČE JE TABELA MANJŠA KOT VELIKOST BLOKA
+			SE TKO AL TKO CEV BLOK PREBERE IN POSLEDIČNO CELA TABELA-
+			ZATO NE INDEKSIRAMO TEGA
+		ne indeksiraj pogosto spremenljivih atributov
+		ne indeksiraj selekcije ki vrne skor vedno 95%
+			itaq prebere skor vse, čene pa mora pogledat v index in pol izpisat
+			pa spet v index in izpisat.
+		
+		bitni index-> zgradi toliko atributov kolikor imamo različnih vrednosti v tabeli
+			smiselno, ko različnih vrednosti v atributu napram vseh vrstic je manjše od 0.5%
+			
+	cena poizvedbe-koliko dostopov do diska si porabu za poizvedbo
+		toad for oracle -> not piše
+		
+	rebuild index ->pri isam!
+		tastr index se pobriše in nanov zgradi
+	
+Ocenjevanje velikosti baze:
+	data
+	indexi (en zapis je manjši kot indeks na ta en zapis)
+	meta data ->ali obvezni atrib...-lahko zelo veliki
+	
+načrt uporabniških pogledov
+	navidezna tabela - view ni na disku -> vsakič ko do njega dostopamo se
+	select * from porocilo
+	
+	-materializiran pogled- na disku-se ne kreira vsakič- ampak ga je treba posodablat
+	
+	-z pogledi lahko omejimo kaj uporabniki lahko pogledajo iz baze
+	
+varnost:
+	sistemska-kaj lah delaš nad čem in kdo
+	podatkovna varnost
+	
+	admin option->da lahko to pravico naprej podeljuje
+	
+	
+	
+###KAJ ZNAT:
+ekskuzivno
+pxce
+mrtve zanke
+live lock

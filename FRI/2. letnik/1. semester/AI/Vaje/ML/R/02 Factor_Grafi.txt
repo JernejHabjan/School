@@ -1,0 +1,191 @@
+CLEAR ->    ctrl+L
+copy v konzolo z -control+r
+
+
+
+
+razbiranje iz data.frama:
+	df[c[2,3,5],2]   -- iz 2 3 5 vrstice berem 2 stolpec
+	df[,3] --celotni tretji stolpec
+	df[3,] --celotna vrstica
+	
+dostop do celotnega stolpca:
+	//še neindeksirano:
+	df[,"weight"] --dostop do stolpca "weight"
+	df$weight
+	
+naloga: izpiši povpreèno starost ljudi v data.framu
+	mean(df$age) //damo ji samo stolpec age
+	
+	
+ŠTETJE -> TABLE!!!!
+
+
+	naloga: koliko moških, koliko žensk
+		UPORABNIMO TABLE- >prešteje število argumentov
+		table[df$gender]
+		
+	izpiši moške in ženske ki so in ki niso študente
+		table[df$gender, $student]
+		
+naloga: izpiši študente:
+	df[df$student,] //izbere tiste ki imajo konstanto true--- ki imajo logièno na true
+	
+starejši od 25
+	df[df$age > 25,] //kjer vrne logièni true pol izpiše vrstico
+	
+visoki med 170 in 190
+	df[df$height > 170 & df$height< 190, ]
+	
+vsi študenti ki so nadpovpreèno visoki
+	df[df$student & df$height > mean(df$height)]
+	
+preštej študente
+	sum(df$student)
+
+
+izpiši vse od 1- 10
+	df[1:10,] ---range
+
+
+	
+SORT:
+	x <- c(34,5,3,555,33)
+	sort(x) --uredi
+	order(x) --pove katera permutacija bi uredila --- poglej si doma
+	
+	
+	df[order(df[$age,] -- jih uredi v narašè vrstnem redu !!!!!!!!
+	
+	
+___ MACHINE LEARNING____
+(kako so podatki loèeni - space, tab, vejica....)(ali je dec vejica ali dec pika)(narekovaji dvojni, enojni...)(ali prva vrstica poimenuje atribute)
+
+
+ukazi za branje datotek
+UKAZ ---read.table
+	podamo mu: -ime dat(ime fila (file v delovni mapi---dobiš z getwd() ... uporabiš lahko tudi setwd("c:\\neki\\neki2")... lahko tudi file->change dir v settingsih)ali celotna pot)
+				-ali imamo vrstico z imeni stolpcev
+				-separator
+				(-decimalna vejica)
+				(-znak za komentar.......)
+	
+md<- read.table("movies.txt",sep=",",header=TRUE)
+lahko klièemo tudi read.table(sep=",",file="movie.txt", header=T) --->èe jih poimenujemo argumente lahko podamo v poljubnem vrstnem redu
+	//imajo defaultne nastavitve
+		read.table("movies.txt") --header=false, sep=" "
+		
+VGRAJENI HELP SISTEM:
+	?read.table ----zveš vse privzete nastavitve itd...
+
+
+head(md) ---izpiše zaèetek
+tail(md) --- konec
+summary(md) dobimo tako statistiko
+str(md) ---podatkovni tipi
+names(md) --vrne stolpce
+
+
+
+
+	mpaa -> v R se diskretne sprem. zaklenejo v Factor ->šparamo z ram in da se ne zmotimo
+	--movies niso prav predstavljeni ker so kategorije integerji
+	SPREMENIMO Z ->as.factor()
+					as.integer()
+					as.numeric()
+					as.logical()
+					as.character()
+					as.double()
+					
+		V TEMU PRIMERU
+			md$Action <- as.factor(md$Action) -spremenjen stolpec action
+			... 
+			
+		
+		
+					
+	check  èe je type
+					is.factor()
+					is.integer...
+					
+FOR ZANKA (za spremenit i-ti stolpec)
+	for(i in c("Action", "dve"){
+	}....
+	for(i in 1:10){  //i vzema elemente od 1 do 10
+	}
+	
+naloga: sconvertaj int v kategorijah 
+	for(i in 18:24){
+		md[,i] <- as.factor(md[,i])
+	}
+	
+histogram
+	hist(md$length)
+	boxplot(md$length) --škatla z brki
+	barplot(table(md$Drama)) ---ZA DISKRETNE SPREMENLJIVKE
+	pie(table(md$mpaa)) -piechart
+	
+naloga: KOLIKO JE NADPOVP FILMOV
+	boxplot(md$rating) 
+	mean(md$rating)
+	abline(h=mean(md$rating)) ----HORIZONTALNA ÈRTA NA BOXPLOTU
+
+
+	
+ABLINE
+
+
+
+
+naloga:
+	PRIMER 3: Ali so komedije v povprecju bolje ocenjene od ostalih filmov?
+	
+	# Izberimo komedije
+	comedy <- md$Comedy == "1"
+
+
+	# Izracunajmo povprecno oceno komedij
+	mean(md[comedy,"rating"])
+
+
+	# Izracunajmo povprecno oceno ostalih filmov
+	mean(md[!comedy,"rating"])
+
+
+	še diagram
+	boxplot(rating ~ Comedy, data=md) ...naredi 2 stolpca !!!!!!!!!!!!! TILDA!!!!!
+	ali
+	boxploit(md$rating ~ md$Comedy)
+	
+naloga:
+	# PRIMER 6: Ali so filmi z najvecjim proracunom tudi najbolje ocenjeni?
+	
+	# kar nekaj filmov nima podatka o proracunu (vrednost NA)
+	summary(md$budget)
+
+
+	is.na(md$budget)
+	table(is.na(md$budget))
+	which(is.na(md$budget))
+
+
+	# izberimo samo tiste vrstice, ki vsebujejo podatek o proracunu filma
+	sel <- is.na(md$budget)
+	mdsub <- md[!sel,]
+
+
+	nrow(mdsub)
+	summary(mdsub$budget)
+
+
+
+
+	plot(mdsub$budget, mdsub$rating, xlab="Proracun v $", ylab="Ocena", main="Ocena filma v odvisnosti od proracuna")
+
+
+linearna premica
+	model<-lm(rating ~ budget, md)
+	abline(model)
+	
+cut
+	razrežemo zalogo vrednosti na diskretne vrednosti

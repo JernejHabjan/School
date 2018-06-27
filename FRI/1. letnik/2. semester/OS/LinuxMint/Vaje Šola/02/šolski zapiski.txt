@@ -1,0 +1,421 @@
+2. vaje - datotecni sistem
+
+Ukazi, ki jih bomo uporabljali: ls, tree, pwd, cd, mkdir, rmdir, cp, mv, rm, touch, file, stat, ln, readlink
+
+Pred vajami si s pomocjo pomoci v ukazni lupini poglejte kaj je glavna naloga posameznih ukazov (stikala posameznih ukazov ni potrebno podrobneje poznati, saj jih bomo bolj podrobno proucili, ce jih bomo potrebovali).
+
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavji 4.1 in 4.2 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+ 
+
+2. vaje - povzetek snovi
+
+Izpis vsebine imenika: ls
+
+Ukaz ima veliko stikal, med pomembnejšimi pa je stikalo –l , ki izpiše daljši izpis, ki vsebuje vec informacij o datotekah oz. mapah. Poglejmo si primer in pomen izpisa:
+
+ls -l
+
+brw-r--r-- 1 luka staff     64 Jan 27 05:52 block 
+crw-r--r-- 1 luka staff    255 Jan 26 13:57 character 
+-rw-r--r-- 1 luka staff    290 Jan 26 14:08 compressed.gz 
+-rw-r--r-- 1 luka staff 331836 Jan 26 14:06 data.ppm 
+drwxrwx--x 2 luka staff     48 Jan 26 11:28 directory 
+-rwxrwx--x 1 luka staff     29 Jan 26 14:03 executable 
+prw-r--r-- 1 luka staff      0 Jan 26 11:50 fifo 
+lrwxrwxrwx 1 luka staff      3 Jan 26 11:44 link -> dir 
+-rw-rw---- 1 luka staff    217 Jan 26 14:08 regularfile
+
+Izpis vsebuje osem stolpcev.
+
+Prvi stolpec vsebuje tip datoteke in dovoljenja za njeno uporabo.
+Drugi stolpec vsebuje število trdih povezav na datoteko, ki je v tem primeru vedno enak 1, kar pomeni, da vsebina datoteke dostopna samo pod enim imenom.
+Nato sta stolpca z lastnikom in skupino, katerima pripada datoteka.
+Peti stolpec prikazuje dolžino datoteke,
+Šesti stolpec prikazuje datum in
+Sedmi cas zadnje spremembe datoteke.
+V zadnjem osmem stolpcu pa se nahaja ime datoteke.
+Imena skrith datotek se pricnejo z znakom “.”
+
+Pregled uporabnejših stikal ukaza ls:
+
+-h
+
+Lepši in bolj razumljiv izpis velikosti datotek
+-I
+
+Odstranimo dolocen vzorec datotek iz izpisa, npr. –I*.txt ne bo izpisal datotek s koncnico txt
+-p
+
+Ime imenika se zakljuci z znakom / , da hitreje locimo datoteke od imenikov
+-R
+
+Rekurziven izpis. Izpišejo se tudi vsebine imenikov.
+-S
+
+Uredi po velikosti datotek
+-t
+
+Uredi po casu spremembe datoteke
+-1
+
+Izpis vsake datoteke v svoji vrstici
+-g
+
+Izpis brez lastnika pri uporabi stikala -l
+-G
+
+Izpis brez skupine pri uporabi stikala -l
+--group-directories-first
+
+Najprej se izpišejo imeniki, šele nato datoteke
+Naloga: Izpišite vsebino imenika brez datotek oblike *.txt , urejeno po casu spremembe, kjer se velikosti datotek vidijo v cloveku prijaznejši obliki, imeniki pa se že na pogled hitro locijo od datotek. Pri tem pa nas lastniki in skupine ne zanimajo.
+
+Rešitev: ls –l –t –h –p –g –G –I*.txt
+
+ 
+
+Naslavljanje datotek
+
+Seznam imenikov (vkljucno s ciljno datoteko), ki jih je potrebno obiskati, da prispemo do želene datoteke, se imenuje pot. Locilo med posameznimi imeniki v poti je poševnica (’ / ’). S potjo lahko naslovimo poljubno datoteko v datotecnem sistemu.
+
+Glede na imenik, v katerem pricnemo obiskovanje, poznamo dve vrsti poti:
+
+• absolutno pot in
+• relativno pot
+
+Absolutna pot se pricne s poševnico, prvi imenik, ki ga je potrebno obiskati, pa je korenski imenik datotecnega sistema ‘/’ (ang. root ).
+
+V nasprotnem primeru, t.j. ko se pot ne pricne s poševnico, gre za relativno pot, z zacetkom obiskovanja v trenutnem delovnem imeniku.
+
+Trenutni delovni imenik je eden izmed parametrov vsakega procesa v Linuxu, torej tudi ukazne lupine. Trenutni delovni imenik je pravzaprav absolutna pot do nekega imenika in je vedno predpona vsakega relativnega naslavljanja.
+
+ 
+
+ 
+
+Imeniki
+
+Nacinu hranjenja in organizacije datotek na pomnilnem mediju pravimo datotecni sistem. Ta navadno vsebuje veliko število datotek, zato sorodne datoteke združujemo v skupine, ki jim pravimo imeniki. Datotecni sistem lahko vsebuje veliko imenikov.
+
+Npr. da se trenutno nahajamo v direktoriju /home/Luka/Documents. Kako bi z relativno in absolutno potjo naslovili datoteko neki.c ki se nahaja v nadrejenem direktoriju?
+
+Relativna pot: ../neki.c
+
+Absolutna pot: /home/Luka/neki.c
+
+Opomba: ker se trenutna mapa naslavlja s . , lahko to datoteko relativno naslovimo tudi tako: ./../neki.c , ali pa še bolj zavito: ./../Documents/../neki.c
+
+Izvajanje datotek
+
+Kadar želimo pognati izvršljivo datoteko, lahko napišemo njeno absolutno pot ali pa njeno relativno pot glede na našo trenutno lokacijo:
+
+/bin/ls (absolutna pot)
+
+../../bin/ls (relatitvna pot, ce se nahajamo v imeniku /home/student)Ce napišemo samo ls, potem se najprej preveri, ce je mogoce ukaz vgrajen in se takoj izvede, drugace pa se preveri po vrsti v imenikih, ki so zabeleženi v okoljski spremenljivki PATH (njeno vsebino lahko izpišemo z echo $PATH).
+
+Poleg binarnih izvršljivih datotek (npr. /bin/ls) lahko izvršujemo tudi skripte:
+
+Ustvarimo datoteko skripta.sh (npr. z urejevalnikom besedil gedit) v trenutnem imeniku (ce seveda imamo pravice za ustvarjanje datotek). Vanjo napišimo zaporedje ukazov (prva vrstica je poseben komentar, ki pove s katerim interpreterjem naj se skripta izvede):
+
+#!/bin/bash
+pwd
+ls -la
+echo konec
+
+
+Datoteko naredimo izvršljivo: chmod +x skripta.sh
+
+Datoteko lahko sedaj poženemo tako, da navedemo njeno relativno ali absolutno pot, lahko pa tudi samo ime, ce je imenik,  v katerem se datoteka nahaja, v spremenljivki PATH. Primer klica:
+
+./skripta.sh (relativna pot)
+
+ 
+
+Izpis strukture imenikov: tree
+
+Naloga: izpis imenikov, globine 1, zacenši v korenu
+
+Rešitev: tree –dL 2 /
+
+V Ubuntu ukaz privzeto ni namešcen, zato ga namestimo s pomocjo ukaza: sudo apt-get install tree
+
+ 
+
+ 
+
+Izpis in izbira delovnega imenika: pwd in cd
+
+Ukaz pwd (print working directory) izpiše trenutni delovni imenik lupine. Njegova uporaba je enostavna:
+
+pwd
+
+Vendar obstajata vsaj dve njegovi razlicici. Prva je program /bin/pwd , ki iz izpisane poti odstrani simbolicne povezave. Druga pa je v lupino bash vgrajeni ukaz, ki v izpisu ohrani simbolicne povezave.
+
+Ce želimo primerjati oba ukaza:
+
+ln –s ~ domaci_imenik; cd domaci_imenik
+
+Sedaj lahko opazimo razliko, ce poženemo vgrajeno (pwd) in nevgrajeno razlicico (/bin/pwd).
+
+Delovni imenik lupine lahko zamenjamo z naslednjim ukazom (change directory):
+
+cd [imenik]
+
+Ce imenika ne podamo, se trenutni delovni imenik nastavi na domaci imenik uporabnika. Ukaz je vgrajen v lupino.
+
+cd ali cd ~ … skok v domaci imenik
+cd .. … skok en nivo bližje korenskemu
+cd . … skok v trenutni imenik, se ne zgodi nic
+
+ 
+
+ 
+
+Ustvarjanje in odstranjevanje imenika: mkdir in rmdir
+
+Ustvarjanje in odstranjevanje imenikov izvedemo s pomocjo naslednjih dveh ukazov.
+
+mkdir [-p] imenik
+
+Ukaz mkdir (make directory) ustvari enega ali vec novih imenikov. S stikalom -p zahtevamo, da se ustvarijo tudi imeniki, ki morebiti še ne obstajajo, na celotni podani poti.
+
+rmdir [-p] imenik
+
+Ukaz rmdir (remove directory) odstrani podane imenike, ki morajo biti prazni. Z uporabo stikala -p se odstranijo vsi imeniki na podani poti.
+
+Oglejmo si nekaj primerov ustvarjanja in odstranjevanja imenikov:
+
+> mkdir veselje ... ustvarjanje imenika z imenom veselje
+> mkdir kam so sle … ustvarjanje vec imenikov 
+> mkdir ’vse rozice’ ... ustvarjanje enega imenika 
+> mkdir -p vija/vaja/ven ... ustvarjanje celotne poti 
+> rmdir -p vija/vaja/ven ... odstranjevanje celotne poti
+
+ 
+
+ 
+
+Kopiranje, preimenovanje in odstranjevanje datoteke:
+
+cp, mv in rm
+
+Ukaz cp (copy) kopira datoteko izvor v datoteko ponor. Pri tem ustvari novo datoteko in vanjo prepiše vsebino izvorne datoteke. Njegova uporaba je naslednja:
+
+cp izvor ponor
+
+Ime datoteke lahko spremenimo z ukazom mv (move). Ukaz pravzaprav omogoca vec kot samo enostavno preimenovanje datoteke, saj lahko z njim datoteko premaknemo na popolnoma drugo mesto v strukturi imenikov. Njegova uporaba je sledeca:
+
+mv izvor ponor
+
+Ukaz rm (remove) odstrani podane datoteke. Uporabimo pa ga na naslednji nacin:
+
+rm [-fir] datoteka
+
+Zanimivejša stikala so:
+
+-f ... ignoriraj napake pri brisanju; 
+-i ... zahtevaj uporabnikovo potrditev za vsako brisanje; in 
+-r ... rekurzivno brisanje podimenikov.
+
+Pri uporabi stikal -fr priporocamo izredno previdnost!
+
+Nekaj primerov rokovanja z datotekami:
+
+luka@os:˜>cp naloga.txt nadloga.txt ... kopiranje 
+luka@os:˜>cp /etc/passwd /hacks/passwd.lalg ... kopiranje 
+luka@os:˜>mv skuta.jpg ’skuta in struca.jpg’ ... preimenovanje 
+luka@os:˜>mv ocene.txt /arhiv/ocene-2008.txt ... prestavljanje
+
+ 
+
+ 
+
+Ime datoteke in njen imenik: basename in dirname
+
+Pri obdelavi poti nam veckrat prideta prav naslednja dva ukaza. Uporaba prvega je sledeca:
+
+basename pot [pripona]
+
+Ta ukaz iz podane poti odstrani imenik, ki vsebuje naslovljeno datoteko (ohrani le ime datoteke). Poleg tega odstrani še pripono datoteke, ce je le-ta podana. Nasprotno deluje naslednji ukaz: dirname pot ki iz podane poti odstrani datoteko, t.j. izpiše le imenik, ki vsebuje datoteko. Pri uporabi obeh ukazov ni pomembno, ali naslovljena datoteka obstaja ali ne.
+
+Oglejmo si nekaj primerov uporabe obeh ukazov:
+
+luka@os:˜>basename finance/dohodnina.pdf 
+dohodnina.pdf
+
+luka@os:˜>basename finance/dohodnina.pdf .pdf 
+dohodnina
+
+luka@os:˜>dirname finance/dohodnina.pdf 
+finance
+
+luka@os:˜>dirname dohodnina.pdf 
+.
+
+Pri tem bodimo še posebej pozorni na izpis zadnjega ukaza.
+
+ 
+
+ 
+
+Nastavitev datuma datoteke: touch
+
+Za vsako datoteko se vodita naslednja dva datuma:
+
+• datum zadnje spremembe datoteke; in
+• datum zadnjega dostopa do datoteke.
+
+Naslednji ukaz nam omogoca nastavitev obeh datumov.
+
+touch [-am] [-d datum] datoteka
+
+Ce podana datoteka ne obstaja, potem se ustvari nova datoteka. Uporabimo lahko naslednja stikala:
+
+-a ... nastavitev datuma in casa dostopa; 
+-m ... nastavitev datuma in casa zadnje spremembe; in 
+-d datum ... nastavitev na podani datum.
+
+Ce ne podamo stikal -a ali -m, potem se nastavita oba datuma. Brez stikala -d se privzame trenutni cas.
+
+Tipi datotek
+
+Poleg navadnih datotek in imenikov poznamo še druge tipe datotek. V resnici ni nujno, da datoteka neposredno opisuje neke fizicne podatke na pomnilnem mediju. Z datoteko je lahko predstavljena poljubna naprava, ki je zmožna delovati kot tok podatkov.
+
+Tipi datotek so skupaj z njihovimi oznakami zbrani v naslednji tabeli:
+
+Oznaka
+
+Opis
+
+Primer
+
+-
+
+navadna datoteka
+
+/etc/passwd
+
+d
+
+imenik
+
+/dev
+
+b
+
+blocno orientirana naprava trdi disk
+
+/dev/hda, /dev/sda
+
+c
+
+znakovno orientirana naprava terminal
+
+/dev/tty
+
+l
+
+simbolicna povezava navadno
+
+/usr/src/linux, /vmlinuz
+
+p
+
+pipa
+
+ustvarimo z mkfifo
+
+s
+
+vticnica
+
+mrežna povezava
+
+Zgornje oznake se izpišejo pri uporabi ukaza ls -l . Poleg tega, da se datoteke medsebojno razlikujejo po tipu, se lahko razlikujejo tudi po vsebini podatkov, ki jih lahko datoteka vsebuje. V primeru razlikovanja datotek po vsebini, pa bomo raje govorili o vrsti datotek. Tako npr. poznamo ASCII-tekstovne datoteke, datoteke s programsko kodo, izvajalne datoteke itd. Veckrat je vrsta datoteke podana tako, da je imenu datoteke dodana pripona, ki opisuje vrsto.
+
+Izpis tipa in vrste datoteke: file
+
+Ukaz, ki izpiše tip in vrsto datoteke, je naslednji:
+
+file datoteka
+
+Primeri. Za boljše razumevanje si oglejmo naslednje primere.
+
+luka@os:˜>file /etc/passwd ... navadna tekstovna datoteka 
+/etc/passwd: UTF-8 Unicode text
+
+luka@os:˜>file /dev/tty0 ... znakovno orientirana naprava 
+/dev/tty0: character special
+
+luka@os:˜>file init.sh ... bash-skripta 
+init.sh: Bourne-Again shell script text
+
+ 
+
+ 
+
+Simbolicne in trde povezave
+
+Simbolicna povezava (symbolic link, soft link) je imenski vnos, ki kaže na nek drug imenski vnos. Predstavlja torej povezavo, v dejanskem pomenu besede, na ciljno datoteko. Brisanje simbolicne povezave le-to izbriše, ciljna datoteka pa ostane nedotaknjena. Brisanje datoteke, na katero kaže neka simbolicna povezava, izbriše datoteko, povezava pa ostane in v nadaljevanju kaže na neobstojeco datoteko.
+
+Trda povezava (hard link) je imenski vnos, ki opisuje isto fizicno datoteko, kot nek drug imenski vnos. Predstavlja torej isto datoteko kot ciljna datoteka. Vsaka trda povezava je pravzaprav le dodaten imenski vnos poleg prvotnega. Po stvaritvi trde povezave ni vec prakticne razlikemed ustvarjeno trdo povezavo in originalno datoteko. Ce želimo datoteko dokoncno odstraniti, moramo pobrisati prav vse trde povezave nanjo.
+
+V praksi veckrat zasledimo in uporabljamo simbolicne povezave kot trde.
+
+ 
+
+Ustvarjanje in branje povezave: ln in readlink
+
+Ukaz ln omogoca ustvarjanje simbolicnih in trdih povezav. Njegova uporaba je naslednja:
+
+ln [-s] cilj povezava
+
+Ce podamo stikalo -s, se ustvari simbolicna povezava, sicer pa trda. Pri tem je cilj pot do ciljne datoteke, povezava pa ime novo ustvarjene povezave. Vcasih želimo ugotoviti kam kaže neka simbolicna povezava. To nam omogoca naslednji ukaz:
+
+readlink datoteka
+
+Simbolicno povezavo gesla na datoteko /etc/passwd ustvarimo s prvim ukazom v naslednjem primeru, z drugim ukazom pa izvemo kam kaže ustvarjena povezava:
+
+luka@os:˜>ln -s /etc/passwd gesla ... simbolicna povezava
+
+luka@os:˜>readlink gesla ... branje simbolicne povezave 
+/etc/passwd
+
+ 
+
+Informacije o datoteki: stat
+
+Ukaz stat omogoca izpis informacij o podani datoteki. Uporabljamo ga na naslednji nacin:
+
+stat stikala datoteka
+
+Nekaj zanimivejših stikal:
+
+-L ... sledenje povezavam; 
+-c format ... nastavitev formata izpisa; in 
+-t ... izpis v zgošceni obliki.
+
+Pri prakticni uporabi ukaza je najbolje, da format izpisa poišcemo s pomocjo vgrajenega prirocnika man stat.
+
+Primeri. Nekaj primerov uprabe ukaza.
+
+luka@os:˜>stat /etc/passwd ... privzet izpis informacij 
+File: ‘/etc/passwd’ 
+Size: 2176 Blocks: 8 IO Block: 4096 regular file 
+Device: 801h/2049d Inode: 5892669 Links: 1 
+Access: (0644/-rw-r--r--) Uid: ( 0/ root) Gid: ( 0/ root) 
+Access: 2009-04-16 21:09:01.000000000 +0200
+Modify: 2009-01-28 20:01:04.000000000 +0100 
+Change: 2009-01-28 20:01:04.000000000 +0100
+
+luka@os:˜>stat -t /etc/passwd ... zgošcen izpis informacij 
+/etc/passwd 2176 8 81a4 0 0 801 5892669 1 0 0 1239908941 1233169264 1233169264 4096
+
+luka@os:˜>stat /etc/passwd -c "%n is %F owned by %U and last time changed at %z. Size of file is %s bytes."
+
+/etc/passwd is regular file owned by root and last time changed at 2009-01-28 20:01:04.000000000 +0100. Size of file is 2176 bytes.
+
+ 
+
+Zadnja sprememba: ponedeljek, 2. marec 2015, 12:24

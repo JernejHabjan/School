@@ -1,0 +1,101 @@
+body
+{
+	margin: auto;
+	padding: 20px;
+}
+
+header
+{
+	width: 100%;
+	height: 200px;
+	border: 1px solid black;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	background-color: #21DE70;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 32px;
+}
+nav
+{
+	width: 100%;
+}
+
+section
+{
+	width: 100%;
+	height: 300px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#left
+{
+	float: left;
+	width: 18%;
+	height: 298px;
+	margin-right: 2%;
+	background-color: red;
+	text-align: center;
+	color:blue;
+	font-family: 'Calibri';
+	font-weight: bold;
+}
+
+#right
+{
+	float: right;
+	width: 80%;
+	height: 298px;	
+	background-color: blue;
+	text-align: center;
+	color:white;
+	font-family: 'Calibri';
+	font-weight: bold;
+}
+
+footer
+{
+	width: 100%;
+	height: 100px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: #21DE70;
+	text-align: right;
+}
+
+.menu {
+	font-family: 'Open Sans', sans-serif;
+	font-size:14px;
+}
+
+.menu ul {
+    background: grey;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    padding: 0;
+    border:3px solid #111312;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+
+}
+
+.menu ul li {
+    float: left;
+    border-bottom: 3px solid transparent;
+}
+
+.menu ul:after {
+    content: ""; 
+    clear: both; 
+    display: block;
+}
+
+.menu ul li a {
+    display: block; 
+    padding: 15px;  
+    border-right: 3px solid #fff;
+    color: #fff; 
+    text-decoration: none;
+}

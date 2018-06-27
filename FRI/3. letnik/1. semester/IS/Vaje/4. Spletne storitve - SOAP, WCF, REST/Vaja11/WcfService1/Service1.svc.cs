@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+
+namespace WcfService1
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
+    public class Service1 : IService1
+    {
+        // DA POZENEMO GET DATA GREMO DEBUG > START WITHOUT DEBUGGING > ZBEREMO GET DATA IN POL VPISEMO CIFRO
+        public string GetData(int value)
+        {
+            return string.Format("You entered: {0}", value);
+        }
+        private static List<string> imena = new List<string> { "ana", "anja", "nikica" };
+        private static List<Produkt> produkti = new List<Produkt>
+        {
+            new Produkt( 1, "test1", "mlecniIzdelki"),
+            new Produkt( 1, "test2", "mlecniIzdelki"),
+           
+        };
+
+
+        public string vrniIme(int id)
+        {
+            if ( id < imena.Count)
+            {
+                return imena[id];
+            }
+            else
+            {
+                return "Napaka";
+            }
+        }
+        public List<Produkt> vrniProdukte()
+        {
+            return produkti;
+        }
+
+        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        {
+            if (composite == null)
+            {
+                throw new ArgumentNullException("composite");
+            }
+            if (composite.BoolValue)
+            {
+                composite.StringValue += "Suffix";
+            }
+            return composite;
+        }
+    }
+}

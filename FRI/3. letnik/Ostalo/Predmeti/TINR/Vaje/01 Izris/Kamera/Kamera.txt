@@ -1,0 +1,26 @@
+kamera (10)
+
+Naloga
+
+Pogosto je nemogoèe spraviti celotno igralno podroèje na velikost zaslona. Tako vidimo le del sveta naenkrat. Kateri je to, doloèamo s pomoèjo navidezne kamere. Dodatno lahko kamero izrabimo tudi pri enozaslonskih igrah, recimo za uèinek tresenja ekrana ob eksploziji.
+
+V 2D svetu je najosnovnejša lastnost kamere toèka v katero imamo usmerjen pogled. Iz tega vektorja s pomoèjo metode [Matrix createTranslation:] ustvarimo matriko, ki vse koordinate v svetu pretvori tako, da se bo ciljna toèka sveta pojavila v vidnem polju ekrana. Matriko uporabimo pri klicu [SpriteBatch begin: ... transformMatrix:]. 
+
+Dodatno lahko v 2D svetu s pomoèjo [Matrix createScale:] dosežemo približevanje in oddaljevanje pogleda, z [Matrix createRotationZ:] pa vrtenje celotne slike. Seveda lahko uporabimo vse efekte skupaj, èe tri delne matrike (premik, vrtenje, poveèava) zmnožimo v pravilnem vrstnem redu.
+
+Kamera v 3D svetu deluje drugaèe in je opisana z dvema posebnima matrikama, pogledom (view) in projekcijo (projection). Matriko pogleda obièajno ustvarimo s klicem [Matrix createLookAtFrom: to: up:], projekcijo pa z [Matrix createPerspectiveFieldOfView: aspectRatio: nearPlaneDistance: farPlaneDistance].
+
+Èe za kamero ustvarimo svoj razred, bomo obièajno na njej nastavljali lastnosti kot so pozicija kamere, toèka, ki jo snemamo, in kot pogleda. Na podlagi teh podatkov nato ustrezno izraèunamo matriki view in projection.
+
+Kakorkoli pristopimo k stvari, konèni rezultat izdelave navidezne kamere je, da se pogled na svet v igri lahko spreminja.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer pogled na sceno igre ni statièen.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje: 63080000-priimek-izris-kamera.mov
+(primerno popravite vpisno številko in priimek)

@@ -1,0 +1,17 @@
+Naloga
+
+Izkaže se, da je sprememba premikanja pri prehodu iz 2D v 3D zelo enostavna. Razlog leži v tem, da je že vsa matematika za 2D fiziko sestavljena kot kombinacija izraèunov v dveh enodimenzionalnih oseh. Tako je zelo enostavno vsem izraèunom poleg osi x in y dodati še tretjo os z.
+
+V praksi to pomeni, da vse vektorje tipa Vector2 zamenjamo z Vector3. Izraèuni pozicije glede na hitrost, pospeške in sile se bodo avtomatièno izšli tudi v 3D. Podobno velja pri detekciji trkov, le pri z osmi poravnanimi telesi moramo dodati kodo, ki uporabljene raèune izvaja tudi po z-komponenti vektorjev. 
+
+Navodilo
+
+Posnemite iPhone simulator, kjer se predmeti premikajo v vseh treh dimenzijah 3D prostora.
+
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-fizika-3d-premikanje.mov
+(primerno popravite vpisno številko in priimek)

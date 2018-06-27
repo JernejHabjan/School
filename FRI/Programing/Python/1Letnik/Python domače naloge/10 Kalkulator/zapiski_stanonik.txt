@@ -1,0 +1,43 @@
+# F1 dokumentacija
+
+#to_number("42") dobimo 42
+#isdigit
+#123 -> x
+#4,5,6 -> y
+#x and y -> d
+#x or y -> etg
+#parse(s)
+#vrne ("efg","or"(operator,če ni operatorja vrne set),("x","y") terka
+#("x","set",(123
+#read(..)
+
+#ocena 7
+#inputs(..) vse kar je na levi strani
+#outputs(desna stran)
+#check_names(..) (pogleda,,,če se input == output(če se input nekoč pojavi kot output)#množice!
+#check_operators( x lshift 3 (premakne za 3 v desno)
+# rshift (v levo)
+# x<<3 x>>2
+
+#ocena 8
+#get_value(v,vars)..(slovar-vars) {"x":153,"etg":12}
+#če je kjuč vrtne vredost v slovarju..drugae pa sam kjuč
+#(42,"x") vrneš (42,153)
+
+#compute_expr(op.args) (so številke)
+#"and" , (7,42) dobiš združiš z operatorjem
+#lshift (15,2) vrni 15<<2
+#negacija le en argument,ste isto
+
+#compute_list(exprs)
+#x and y -> d.......naredi slovar...grš čez seznam ...računaš x...pošli (levi del)get_values(..)..
+#get_values(..) compute_expr(..)
+
+
+
+
+
+#ocena 9
+#če niso urejeni podatki...compute(name,expr,....).rekurzija!!..
+
+#ocena 10...a shrani v b...12 shrani v a...ugotivi če se da izračunati

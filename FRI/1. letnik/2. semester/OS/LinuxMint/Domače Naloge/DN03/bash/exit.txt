@@ -1,0 +1,21 @@
+exit:
+
+	trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT #kill -- -$$ sends a 
+		SIGTERM to the whole process group, thus killing also descendant
+	trap 'kill $(jobs -p)' EXIT #kills only background jobs
+	
+	
+	
+	
+	opozorilo(){
+			echo "program se ne sme zaključiti"
+		}
+		pozeni(){
+			xeyes & # pognali smo uči v ozadju -- ta & je za ozadje
+		}
+		trap pozeni USR1
+		trap opozorilo TERM
+		
+		
+	
+	kill -TERM ((((pgrep $$))))) #nekok oklepaje ---da ubije skripto 

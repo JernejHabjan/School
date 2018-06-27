@@ -1,0 +1,113 @@
+Vaje - OpenLDAP
+
+Danes bomo na vajah namešcali OpenLDAP.
+
+Zaženite eno od obicajnih virtualk.
+
+Najprej bomo namestili sam LDAP strežnik.
+
+apt-get install slapd
+Sedaj se zacne zaresno delo. Ker OpenLDAP konfiguracijo hrani v objektu, ki je sam zapisan v bazi, moramo še eno podatkovno bazo vanj dodati tako, da uvozimo .ldif datoteko. V tej datoteki bomo nastavili ime domene, za katero bo strežnik skrbel, lokacijo same baze na disku ter geslo administratorja.
+
+Hash za geslo administratorja izracunate z ukazom:
+
+slappasswd
+Za imenik, v katerem je baza, je pomembno, da lahko po njem piše uporabnik openldap. Poleg tega je treba poskrbeti, da pisanja ne bo preprecil apparmor. Popravite datoteko /etc/apparmor.d/usr.sbin.slapd tako, da dodate vrstico na vižo
+
+/POT/DO/BAZE/** rwk,
+Nato koncno ustvarite .ldif s konfiguracijo za OpenLDAP:
+
+dn: olcDatabase=hdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcHdbConfig
+olcDatabase: hdb
+olcDbDirectory: /POT/DO/BAZE
+olcSuffix: dc=MOJA,dc=DOMENA,dc=SI
+olcAccess: {0}to attrs=userPassword,shadowLastChange by self write by anonymous auth by dn="cn=admin,dc=MOJA,dc=DOMENA,dc=SI" write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by self write by dn="cn=admin,dc=MOJA,dc=DOMENA,dc=SI" write by * read
+olcLastMod: TRUE
+olcRootDN: cn=admin,dc=MOJA,dc=DOMENA,dc=SI
+olcRootPW: {SSHA}tXp--TULEJEDOLGHASH--1+Yj
+olcDbCheckpoint: 512 30
+olcDbConfig: {0}set_cachesize 0 2097152 0
+olcDbConfig: {1}set_lk_max_objects 1500
+olcDbConfig: {2}set_lk_max_locks 1500
+olcDbConfig: {3}set_lk_max_lockers 1500
+olcDbIndex: objectClass eq
+Konfiguracijo uvozite, pri cemer se na LDAP strežnik ne povežete prek mreže, temvec "naokoli" (s pomocjo stikala -Y EXTERNAL:
+
+sudo ldapadd -Y EXTERNAL -H ldapi:/// -f example.ldif
+
+Nato bomo ustvarili .ldif z zacetnimi podatki za našo domeno:
+
+# Create top-level object in domain
+dn: dc=MOJA,dc=DOMENA,dc=SI
+objectClass: top
+objectClass: dcObject
+objectclass: organization
+o: Example Organization
+dc: MOJA
+description: Na FRI imamo fine domene
+
+# Admin user.
+dn: cn=admin,dc=MOJA,dc=DOMENA,dc=SI
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+userPassword: secret
+
+dn: ou=people,dc=MOJA,dc=DOMENA,dc=SI
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=MOJA,dc=DOMENA,dc=SI
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=john,ou=people,dc=MOJA,dc=DOMENA,dc=SI
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: janez
+sn: Novak
+givenName: Janez
+cn: Janez Novak
+displayName: Pucljev Janez
+uidNumber: 1000
+gidNumber: 10000
+userPassword: password
+gecos: Janez Novak
+loginShell: /bin/bash
+homeDirectory: /home/john
+shadowExpire: -1
+shadowFlag: 0
+shadowWarning: 7
+shadowMin: 8
+shadowMax: 999999
+shadowLastChange: 10877
+mail: janez.novak@gmail.com
+postalCode: 31000
+l: Podbreznik
+o: Example
+mobile: +386 (0)6 xx xx xx xx
+homePhone: +386 (0)5 xx xx xx xx
+title: System Administrator
+postalAddress: 
+initials: JD
+
+dn: cn=example,ou=groups,dc=MOJA,dc=DOMENA,dc=SI
+objectClass: posixGroup
+cn: example
+gidNumber: 10000
+Podatke uvozimo:
+
+sudo ldapadd -x -D cn=admin,dc=TOLE,dc=SPREMENI,dc=PO,dc=PAMETI -W -f TOLE_TUDI.ldif
+Nato lahko namestimo še spletni vmesnik za pregledovanje LDAP podatkovnih baz:
+
+apt-get install phpldapadmin
+Popravimo datoteko s konfiguracijo, kjer zamenjamo example.com s svojo domeno:
+
+/etc/phpldapadmin/config.php
+Vmesnik je potem dostopen na http://localhost/phpldapadmin.

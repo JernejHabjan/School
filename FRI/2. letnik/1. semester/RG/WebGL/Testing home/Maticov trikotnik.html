@@ -1,0 +1,177 @@
+<html>
+<head> 
+	<script id="vShader" type="vertex-shader">
+	attribute vec3 vertex; 
+	
+	void main(){
+		gl_Position = vec4(vertex, 1.0); 
+		//vertex position naštimamo samo na isto kot vhodne parametre.. 
+		//gl_Position = vertex.xyz / vertex.w;
+		//probi spremenit w ... to je una 1.0 nakonc
+	}
+	</script>
+	
+	<script id="fShader" type="fragment-shader">
+
+	void main(){
+		gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0); //barvo usazga pixla setas na CYAN
+	}
+	</script>
+
+	<script >
+		var gl = null; //opengl context object prek kerga se kličejo use funkcije povezane z webGLjem
+		
+		
+		/*************BUFFER INIT *************/
+		var VBO;
+	
+		function initBuffers(){
+			var vertices = [ //nardimo en array k ma use vertexe za triangle
+				-0.5, -0.5, 0.0, 
+				0.0, 0.5, 0.0, 
+				0.5, -0.5, 0.0
+			];
+ 
+			VBO = gl.createBuffer(); //u VBO naložiš id nouga buffer
+			gl.bindBuffer(gl.ARRAY_BUFFER, VBO); //bindaš ta buffer kot ARRAY_BUFFER
+			gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //poveš kere podatke daš not 
+		}
+		
+		/***********END BUFFER INIT*************/
+		
+		/***********SHADERS*********************/
+		
+		var program; //id shader programa
+		
+		function loadShader(s){
+			var sString = document.getElementById(s); 
+			//dobiš vsebino skripte k je zgori z idjem k ga dobiš kt parametr spodi k ustvarš program
+			
+			if(!sString){ // če je empty all neki pol bv
+				alert("shader source script not found");
+				return;
+			}
+			
+			//convertamo vsebino skripte v string k ga lah prebere webGL da ga uporab za shader kodo
+			var sourceString = "";
+			var child = sString.firstChild;
+			while(child){
+				if(child.nodeType == 3){ //nimam fucking pojma zakva 3 ampak ni vazn
+					sourceString += child.textContent;
+				}child = child.nextSibling;
+			}
+			
+			var sh; //glede na to kasn tip shaderja se u "sh" shran id nouga shaderja
+			switch(sString.type){
+				case "fragment-shader" : sh = gl.createShader(gl.FRAGMENT_SHADER); break;
+				case "vertex-shader" : sh = gl.createShader(gl.VERTEX_SHADER); break;
+				default: alert("shader type not recognized"); break;
+			}
+			
+			//shaderju dodaš vir kode k smo ga prej nardil k smo skripto od zgori pretvorl u string
+			gl.shaderSource(sh, sourceString);
+			
+			//k maš kodo not lah shader compilas
+			gl.compileShader(sh);
+			
+			//se checkas da ni nobenih errorjeu in ce so ksni jih lepo izpise :DD
+			if(!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){
+				alert(s + ": " + gl.getShaderInfoLog(sh));
+			}
+			
+			return sh; //ne pozabt fucking returnat idja k ga rabš za pol attachat h programu -_-
+		}
+		
+		function loadProgram(){
+		
+			//z zgorno funkcijo nalozimo oba shaderja k jih rabmo 
+			//tle nimas kej za zbirat oba morta bit alpa nuben xd
+			var fShader = loadShader("fShader");
+			var vShader = loadShader("vShader");
+			
+			//ustvarmo nou program in dodamo shaderja
+			program = gl.createProgram();
+			gl.attachShader(program, vShader);
+			gl.attachShader(program, fShader);
+			
+			//program se linkamo da ga lah gpu uporab in pol checkamo če je use gut
+			gl.linkProgram(program);
+			if(!gl.getProgramParameter(program, gl.LINK_STATUS)){
+				alert("error creating program");
+			}
+		}
+		
+		/***************END SHADERS **************/
+		
+		/***************CONTEXT CREATION ***********/
+		function initContext(context){
+			try{
+				//probamo dobit context za webgl iz obeh avaible sourcou
+				gl = context.getContext("webgl") || context.getContext("experimental-webgl");
+			}catch(e){}
+		
+		    if(!gl){
+				gl = null;
+				alert("webgl unsupported");
+			}
+		}
+		
+		/*************END CONTEXT CREATION **********/
+	
+		function initWebGL(){
+		    //v c dobimo canvas v katerem bo naš context za risat n shit
+			c = document.getElementById("context");
+			
+			//klicemo use init funkcije
+			initContext(c);
+			loadProgram();
+			initBuffers();
+			
+			if(gl){
+				//setamo kok je ns screen velk .. poglj si na netu kok dela 
+				gl.viewport(0, 0, c.width, c.height);
+				
+				//default barva color bufferja nastavljena na rdečo
+				gl.clearColor(1.0, 0.0, 0.0, 1.0);
+				draw();
+			}
+		
+		}
+		
+		function draw(){
+			//pr usakmu klicu mormo spraznt color buffer da lahko na novo narišemo sceno
+			gl.clear(gl.COLOR_BUFFER_BIT);
+			
+			//uporabimo nas shader program
+			gl.useProgram(program);
+		
+			//lokacija atributa v vertex shaderju ki ga bo dobil vsak vertex
+			var vertex = gl.getAttribLocation(program, "vertex");	
+			
+			//nastavimo vertex kot attrib array
+			gl.enableVertexAttribArray(vertex);
+			
+			//bindamo buffer iz katerega bomo jemali podatke
+			gl.bindBuffer(gl.ARRAY_BUFFER, VBO);
+			
+			//naštimamo pointer kako bomo brali podatke iz bufferja
+			//(lokacija, stevilo podatkov, tip podatka, normalizacija, offset med branji, začetni offset)
+			//s temi zadnimi parametri je loh mau drugac k na normal openGLju ampak skor da bi mogl bit tole zgori 
+			gl.vertexAttribPointer(vertex, 3, gl.FLOAT, false, 0, 0);
+			
+			//
+			gl.drawArrays(gl.TRIANGLES, 0, 3);
+			
+			
+			//requestamo klic funkcije draw usake 33.3ms
+			setTimeout(function(){requestAnimationFrame(draw);}, 1000 / 30 ); 
+		}
+		
+	</script>
+</head>
+
+<body onload="initWebGL()" style="background-color:#00ff00">
+<canvas id="context" width="500" height="500"> </canvas>
+
+</body>
+</html>

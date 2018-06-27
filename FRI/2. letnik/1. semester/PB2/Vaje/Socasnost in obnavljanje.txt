@@ -1,0 +1,24 @@
+-soèasni dostop -da se poveèa uèinkovitost
+-po commitu - spremembe v bazi postanejo vidne drugim transakcijam
+-rollback - nekje sredi transakcije -> vse operacije razveljavit ki so se zgodile-da pridemo
+	v zadnje velavno stanje
+	
+-zaporedniški izmenièni razpored -> niso vsi izmenièni razporedi ok->to lahko dosežemo z:
+	-zaklepanjem
+		-izmenièno
+		-ekskluzivno(nben ne more drug zaklent)
+		
+		èe je deljeno zaklepanje -> ga lahko ekskluzivno zakleneš èe že ni zaklenen
+		
+problem PXC in PSC -> lahko pride do mrtve zanke
+	prepreèevanje nastopa mrtve zanke 
+		(dobita neko èasovno znaèko ko gresta 1. v izvajanje-- ko gre 2., 3., v izvajanje gre s prvoto èasovno znaèko not)
+		-> èakaj ali izdihni
+		-> rai ali èakaj
+	ubijemo starejšo ker je izvedla veè operacij kot mlada
+	
+KVIZ----------
+	1. preslikava iz konceptualnega v logièni.
+	2. te naloge iz soèasnega dostopa 
+------------
+

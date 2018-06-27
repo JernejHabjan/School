@@ -1,0 +1,25 @@
+a)
+	vrstni red izpadanja za m=6, n=20
+	5, 11, 17, 3, 10, 18, 6, 14, 2, 13, 4, 16, 9, 7, 1, 8, 15, 12, 0, 19
+
+b) implementiral sem algoritem, ki gre skozi otroke toliko časa, dolker jih
+	polovico ni izločenih.
+	po tem se tisti otroci odstranijo (se naredi nov array in tastare prepišem)
+	podobno se to zgodi tudi na tej polovici itd do števila npr 20 kjer je pa seznam
+	že dovolj majhen
+	
+	časovna kompleksnost:
+		seznam se vedno zmanjšuje na polovici -> zato logn * prepišemo logn elementov
+		-> log^2 n
+		izločiti pa moramo N otrok, pri katerih moramo iti log^2n krat čez while zanko
+		ki povečuje temp_m
+		rezultat -> n* log^2 n
+	KODA V PRILOGI -> randm je nastavljen na FALSE zato se ne bo izvajal random M
+		
+c)  
+	časovna kompleksnot je podobna kot zgoraj, vendar M zakomplicira zadevo
+	če bi bil M lahko še večji kot sem omejil tu (100), bi se notranja while
+	zanka izvajala dlje časa -> N časa
+	potem bi pa prišli do časovne kompleksnosti N**2
+	
+	KODA V PRILOGI -> randm je nastavljen na TRUE

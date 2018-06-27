@@ -1,0 +1,24 @@
+-izpiše statistiko besed v podanem besedilu:
+-kolikokrat se beseda v besedilu pojavi
+-kolikšen del besedila pokrije (v odstotkih) 
+-Omejite se samo na črke
+-med malimi in velikimi črkami ne razlikujte
+
+-Besedilo podajte skripti kot argument.
+
+- Izpisan seznam naj bo urejen po velikosti:
+  max ponovitev prvo
+	¸isto št ponovitev-> po dolžini besede(daljše najprej)
+		else: pa po abecedi.
+-stikalo l-> izpis omejiš na _ št znakov
+-stikalo n-> izpis omejiš na _ št ponovitev
+-neznano stikalo: "Napaka: neznano stikalo ime_stikala."
+    + zaključek z ustreznim statusom
+-Vrstni red stikal je poljuben
+-dat ne obstaj: izpiše napako na standardni izhod za napake:
+    "Napaka: datoteka ime_datoteke ne obstaja."
+    in se zaključi z ustreznim statusom
+
+
+
+-shranite v UTF8 kodnem naboru na Linuxu

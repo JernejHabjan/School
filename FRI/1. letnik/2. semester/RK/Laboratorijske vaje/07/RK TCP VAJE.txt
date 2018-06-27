@@ -1,0 +1,108 @@
+﻿izvorna, ponorna vrata -> identifikator procesa
+flag -> ack na 1 -> je številka potrditve +1 potrjeno
+		syn -> pošleš za request
+1. vzpostavitev povezave
+	trosmerno rokovanje -vedno rabmo eksplicitno potrditev
+	a-odjemalec, b-strežnik
+	a) syn
+	b) ack
+	b) syn (b-ja lah hkrat)
+	a) ack
+
+	naloga 1:
+		S programom Putty smo se povezali na telnet strežnik in zajeli promet v datoteko telnet.cap. Odgovorite na spodnja vprašanja:
+
+		Kateri trije paketi predstavljajo vzpostavitev povezave? Zapišite zaporedno številko paketa.
+		gledamo zastavice [SYN] [SYN,ACK][ACK] , lahko v flags pogledamo, seq ->sekvenčna št 
+		Kako so nastavljene zastavice v paketih, ki predstavljajo vzpostavitev povezave? Zapišite zaporedno številko paketa in vrednosti zastavic.
+		na 1 -> tiste k so na vrhu
+		Kakšna je absolutna (ne relativna) sekvenčna številka prvega paketa trosmernega rokovanja?
+			wireshark začne kot relativni začetek (0)
+			označiš polje seq number -> in piše v tem primeru "90 c1 dd 17"-> to številko si je zmisnu
+			-vsak ima drugačno -server pa client 
+			syn + seq number!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			nazaj pošlje seq+1
+			TCP NE ZAČNE Z 0!!!
+		Kakšna je absolutna (ne relativna) sekvenčna številka drugega paketa trosmernega rokovanja?
+
+2. prenos podatkov
+	potrjujemo ack+1 (300+1)
+	naloga2:
+		S programom Wireshark odprite še datoteko tcp_pcattcp_n1.cap. Odgovorite na spodnja vprašanja:
+		Katere pakete potrjuje paket št. 12? Napišite številke paketov.
+			potrjuje vse ki je sekvenčna št strogo manjša, potrjuje samo tiste, ki jih je poslala druga stran
+			v tem primeru je to 192.168.0.102 - pogledamo po ip
+			pogledamo njegov ack -> 5841 -> POTRJUJE STROGO MANJŠE
+			nanovo potrjuje št 9 in 10 -ker strogo manjše in še niso bili potrjeni z moje strani
+			-prvo sfiltriraš da gledaš svoj naslov
+			-potem gledaš manjše, ki pa še niso potrjeni
+		Katere pakete potrjuje paket št. 14? Napišite številke paketov.
+		Koliko bajtov podatkov se prenese v paketu št. 9?
+		Koliko bajtov podatkov se prenese v paketu št. 10?
+		- pogledaš pod data, oz odšteješ ack med sabo-DUNNO! OZ ODŠTEJEŠ SEQ NUMBERJE KER POVE KOLIKO PODATKOV JE NOTR
+	
+2.2 ponovno pošiljanje
+	TCP TIMER -> še enkrat pošlje če ni ack, drgač ga skensla
+	timer ni fiksn
+	duplikat potrditve -> še enkrat ack1 -> ker še ni dobil paketa 2
+		pošlje duplikate od zadnje ki more bit
+	-fast retransmit -> ko dobimo (3... lahko manj) iste potrditve, lahko pošlemo izgubljeni paket še enkrat in ne na koncu ko bi se šele iztekel timer
+	selective ack:
+		KO ENKRAT DOBI PAKET, POTRDI ZA VSE, KI SO BLI DUPLIKATI ->ack 12 ack 13 ack 13,,ack 13 ack 16!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	2,4,8... toliko paketkov se pošlje
+2.4 flow control
+	rwnd (recieve window) -> lah mi pošlješ __ Bajtov- poveš drugi strani kok maš še placa v bufferju
+	Pošljem lahko, če: LastByteSent – LastByteAcked <= rwnd !!!!!!!!!!!
+	ko potrdimo, še eksplicitno napišemo plac
+	-Pošilja po 1 B podatkov in čaka na ACK -> da se ne čakata 1 druzga(če so se zgubil paketi)
+	naloga3:
+		V programu Wireshark odprite datoteki pcattcp_retrans_r.cap in telnet.cap ter odgovorite na spodnji vprašanji:
+
+		Kakšen sta največja in najmanjša velikost sprejemenga okna pri računalniku z naslovom 192.168.0.102 v prometni datoteki pcattcp_retrans_r.cap?
+		sfiltriraš naslov, potem pogledaš win=17520..
+			ip.addr == 192.168.0.102
+		Kakšna je največja velikost sprejemnega okna, ki jo pošlje strežnik z naslovom 212.235.189.147 v datoteki telnet.cap?
+		14,620
+2.5 Congestion Control
+	cwnd -> congestion window
+	zabili bomo omrežje in ne drugo stran
+	če ne bomo zabili omrežja in drugo stran, potem lahko pošljemo, če je pa 0-> pa počakat
+	Kako ugotavljam zamašitve: !!!!!!!
+		izgubljeni segment = pošiljam prehitro, zmanjšam hitrost
+			timeout – za segment se je iztekel časovnik- hitrost začnemo z 0
+			3x DUP – fast-recovery -malo zmanjšaš hitrost
+		sprejeta potrditev = vse OK, hitrost povečam
+	ŠTARTI:
+		TCP1 -> ko se neki zgubi, se začne s slow startom
+		slow start -> če se izgubi kakšen paket vmes, se malo upočasni
+		congestion avoidance -> počasneje povečuješ št segmentov -> ko prideš do meje, ne dajat *2 ampak +10
+		fast recovery ->slow start do ene meje(eksponentno), potem congestion avioidance(linearna) 
+						ko pride do trojnih duplikatov, damo na polovico okno in potem spet naprej s congestion avoidance
+						ko se timer sproži pa pojdi v slow start
+						
+		naloga4:
+			mejo izračunamo -> pogledamo prejšni dogodek in polovico tega
+			Kakšna je vrednost ssthresh pri pošiljanju 18. skupine segmentov?
+				21
+			Kakšna je vrednost ssthresh pri pošiljanju 24. skupine segmentov?
+				prb 15
+			Pri katerih skupinah prenosov se začne TCP slow start?
+				pri 1 in 23
+			Po 26. skupini prenosov prejmemo 3x podvojeno potrditev. Kako se nastavita velikost zamašitvenega okna in ssthresh?
+				3x podvojeno potrditev -> ostali so bili še potrjeni
+				meja -> od tega/2 in potem congestion avoidance
+			Kaj se je zgodilo po prenosu 16. skupine segmentov?
+				3x duplikat -> ker šli na polovico in potem congestion avoidance
+			Kaj se je zgodilo po prenosu 22. skupine segmentov?
+				TIMEOUT!!!!!
+			Kakšna je vrednost ssthresh na začetku?
+				32 - ko gremo iz slow start v congestion avioidance
+			V kateri skupini prenosov se pošlje 70. segment TCP?
+				6-7 (ker 1, 1+2, 1+2+3, 1+2+3+4....)
+3. rušenje prenosa
+	reset - neha pošiljat potrditve povezave
+	
+UDP
+	samo izvorna in ponorna vrata
+			
+			

@@ -1,0 +1,119 @@
+﻿zaščita  uporebe detotek:
+
+dovoljenja Read, Write, eXecute
+
+ukazi:
+->chown,
+->chgrp,
+->chmod
+
+chmod ->(change mode) - omogoči izvajanje operacij R,W,X
+	sklope označimo zaporedoma z oznakami u, g in o... ali a, ki označi vse tri
+	uporaba: chmod [-R] [augo][+-=][rwxs] datoteka
+		[augo][+-=][rwxs] -> podajanje dovoljenj v simbolni obliki
+			a ... vsi uporabniki (angl. all);
+			u ... lastnik datoteke (angl. user);
+			g ... uporabniki, ki pripadajo isti skupini kot datoteka (angl. group);
+			o ... ostali uporabniki (angl. other);
+			+ ... dodajanje dovoljenj;
+			- ... odvzemanje dovoljenj;
+			= ... nastavljanje dovoljenj;
+			r ... dovoljenje za branje;
+			w ... dovoljenje za pisanje;
+			x ... dovoljenje za izvajanje;
+			
+			t ... lepljivi bit (angl. sticky bit).
+	uporaba2: chmod [-R] vrednost datoteka
+			vrednost -> osmiško število s tremi števkami (lastnik,skupina,ostali uporabniki -->1 (2)^0 za zvajanje, 2 (2)^1 za pisanje in 4 (2)^2 za branje)
+				 -tako da je RW =6
+			primeri -> >chmod u=rwx struca.jpg ... dovoljenja za lastnika
+				   >chmod g+r kruha.jpg ... dodajanje branja za skupino
+				   >chmod 755 igra.sh ... številčna oblika dovoljenj 
+				   >chmod -R o+r naloge ... ostali uporabniki, rekurzija
+				   >chmod 1777 imenik/ ... dovoljena za imenik, lepljivi bit
+		
+
+chown ->(change owner) - omogoči spreminjanje ownerja datoteke v rootu
+	uporaba: chown [-R] [lastnik][:][skupina] datoteka -> [-R] da  se rekurzivno nastavijo dovoljenja v vseh podimenikih
+	konkreten primer: luka@os:˜ >chown jure slika.jpg ... uporabnik 
+			  luka@os:˜ >chown jure:uporabniki slika.jpg ... uporabnik in skupina
+chgrp ->(change group)
+	uporaba: chgrp [-R] skupina datoteka
+
+____________________________________
+
+spremenljivke:
+
+-ni treba definirati podatkovnega tipa
+primer: #!/bin/bash
+	x=12  (PO ENAČAJU NI PRESLEDKOV!!!)
+	echo "Vrednost spremenljivke x je $x"
+	
+	ux=UNIX
+	echo ${ux}a
+	echo "$ux"a
+	
+zbrisati spremenljivko: unset  ->primer: unset ux
+
+vgrajene spremenljivke:
+	$_  Zadnji argument predhodno izvedenega ukaza, le ob zagonu skripta vsebuje polno ime skripta.
+	$#  Število podanih argumentov.
+	$0  Ime skripte.
+	$1, $2, …  Argumenti skripte. Uporaba, npr. ${10}
+	$?  Izhodni status zadnjega (v ospredju) izvedenega ukaza.
+	$$  PID lupine. V podlupini ( ) vrne PID lupine in ne podlupine.
+	$!  PID procesa, ki je bil zadnji zagnan v ozadju.
+	$*, $@  Vsi argumenti skripte skupaj.
+	$-  Opcije podane lupini, ki poganja skripto.
+	
+spremenljivke okolja:
+	man bash -> pod razdelkom Shell Variables
+	
+ENAKOSTI MED NIZI, ŠTEVILI:
+	preverjanje enakosti med nizi
+
+	x = y : preverimo če je niz x enak nizu y
+	x != y: preverimo če x ni enak y
+	-n x : preverimo če x ni ničeln (null)
+	-z x : preverimo, če je x ničeln (null)
+
+	preverjanje enakosti med števili
+
+	x -eq y : preverimo ali je x enak y
+	x -ne y : preverimo ali je x različen od y
+	x -gt y : preverimo ali je x večji kot y
+	x -ge y : preverimo ali je x večji ali enak kot y
+	x -lt y : preverimo ali je x manjši od y
+	x -le y : preverimo ali je x manjši ali enak od y
+
+stikala za preverjanje datotek:
+
+-e datoteka Ali datoteka obstaja? 
+-d datoteka Ali je datoteka imenik? 
+-f datoteka Ali je datoteka navadna datoteka? 
+-s datoteka Ali velikost datoteke ni enaka 0?
+-b datoteka Ali je datoteka bločno-orientirana? 
+-c datoteka Ali je datoteka znakovno-orientirana? 
+-h datoteka Ali je datoteka simbolična povezava? 
+-L datoteka Ali je datoteka simbolična povezava? 
+-r datoteka Ali lahko datoteko (kot trenutni uporabnik) beremo?
+-w datoteka Ali lahko v datoteko (kot trenutni uporabnik) zapisujemo?
+-x datoteka Ali lahko datoteko (kot trenutni uporabnik) poganjamo?
+
+Primer uporabe:
+
+test -d ~/vaje/ && echo "imenik obstaja" || echo "imenik ne obstaja"
+
+NAREKOVAJI:
+dvojni narekovaji " " ->Običajno označujejo niz znakov
+enojni narekovaji ' ' ->Če imamo spremenljivko znotraj dvojnih narekovajev, se spremenljivka zamenja z svojo vrednostjo.
+						Če imamo spremenljivko znotraj enojnih narekovajev, se dobesedno izpiše ime spremenljivke.
+enojni narekovaji nazaj ` ` ->Enojni narekovaji nazaj se uporabljajo namesto \$( )
+							->Ukaz se izvede v podlupini in vse kar izpiše se shrani v začasno spremenljivko
+							->PRIMER:\$!/bin/bash
+									echo "Jaz sem `whoami`"
+
+									ali
+
+									$!/bin/bash
+									echo "Jaz sem $(whoami)"

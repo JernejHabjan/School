@@ -1,0 +1,34 @@
+Navodilo
+
+Oddajte izvorno kodo svoje igre ter ostalo gradivo, ki je potrebno za objavo.
+
+Oddati je potrebno celoten imenik vašega projekta skupaj s knjižnicami in pogoni, ki ste jih uporabili. Pred tem v projektu in knjižnicah pobrišite imenike z imenom "build", èe jih imate.
+
+Pred oddajo še enkrat preverite, èe igra ustreza Applovim zahtevam: http://developer.apple.com/appstore/guidelines.html
+
+Poleg izvorne kode pripravite še metapodatke o igri (ime, opis, kategorizacija, podprte naprave itd.) in posnetke zaslona. Podrobnosti najdete tukaj: Navodila za objavo na App Store. Metapodatke o igri zapišite v tekstovno datoteko "podatki.txt".
+
+Vse nize v igri in opis igre preverite še enkrat, da ne bo pravopisnih in slovniènih napak.
+
+Oddajte loèeno:
+
+igro in vse knjižnice, ki jih uporabljate, vse skupaj stisnjeno v zip (ali rar)
+slikovno gradivo skupaj s tekstovno datoteko, vse skupaj stisnjeno v zip (ali rar)
+Poimenovanje: 
+63080000-priimek-app_store-igra.zip
+63080000-priimek-app_store-gradivo.zip 
+(primerno popravite vpisno številko in priimek)
+
+Primer:
+
+63080000-priimek-app_store-igra.zip
+|- vaša_igra/
+|- pogon/
+|- XNI/
+|- ...
+
+63080000-priimek-app_store-gradivo.zip
+|- podatki.txt
+|- slika1.png
+|- slika2.png
+|- ...

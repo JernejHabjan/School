@@ -1,0 +1,1 @@
+gcc -o naloga06 naloga06.c $(pkg-config --cflags --libs gtk+-3.0) -rdynamic

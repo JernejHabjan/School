@@ -1,0 +1,134 @@
+﻿razlika med DELETE, TRUNCATE, DROP
+	DELETE: The DELETE command is used to remove rows from a table. A WHERE clause can be used to only remove some rows.
+	 If no WHERE condition is specified, all rows will be removed. After performing a DELETE operation 
+	 you need to COMMIT or ROLLBACK the transaction to make the change permanent or to undo it. Note that this operation will cause all DELETE triggers on the table to fire.
+	TRUNCATE: TRUNCATE removes all rows from a table. The operation cannot be rolled back
+	 and no triggers will be fired. As such, TRUCATE is faster and doesn't use as much undo space as a DELETE.
+	DROP:The DROP command removes a table from the database. All the tables' rows, indexes and privileges will also be removed.
+	 No DML triggers will be fired. The operation cannot be rolled back.
+
+
+Kreiranje tabele...
+	CREATE TABLE TableName
+	({colName dataType [NOT NULL] [UNIQUE]
+	[DEFAULT defaultOption]
+	[CHECK searchCondition] [,...]}
+	[PRIMARY KEY (listOfColumns),]
+	{[UNIQUE (listOfColumns),] […,]}
+	{[FOREIGN KEY (listOfFKColumns)
+		REFERENCES ParentTableName [(listOfCKColumns)],
+		[ON UPDATE referentialAction]
+		[ON DELETE referentialAction ]] [,…]}
+	{[CHECK (searchCondition)] [,…] })
+
+
+
+#rating integer not null default 10;
+
+#INSERT INTO Jadralec(jid, ime, rating, starost)
+ VALUES( 29,'Borut', 1, 33.0);
+ 
+#dodati priimek jadralcem -> ALTER TABLE jadralec add column priimek varchar(10);
+ 
+#brisanje tabel-> drop table (rezervacijo zbrišemo prvo->vmesna tabela ki ima tuje kluče)
+ praznjenje tabel -> DELETE FROM ... where...
+ 
+#workbench -> where barva is null AND cid >0;!!!!! za brisat
+ 
+#indeksi -> uporablja binarno drevo -> za O(logn)
+#indeksi wastajo prostor, ko dodamo vrednost se more vse spet sortat(če posodabljaš skoz se ne splača)
+#porazdelitev podatkov-> če je veliko različnih podatkov se bolj splača indeksiranje, else ne
+#CREATE [UNIQUE] INDEX ime_indeksa
+     ON ime_tabele (ime_atributa1 [ASC|DESC],
+	 ime_atributa2 [ASC|DESC],
+	 ... );
+
+#indeks po x
+	(indeks po y)->ne dela ker se where x..
+	where x=7
+
+VAJE
+#1
+	#Definirajte pogled MladoletniJadralci, ki vsebuje samo jadralce mlajše od 18 let.
+	#DROP VIEW IF EXISTS MladoletniJadralci
+	USE sandbox;
+	CREATE VIEW MladoletniJadralci
+	AS SELECT *
+	   FROM jadralec j
+	   WHERE j.starost<18;
+	 -tko izpišemo view->
+	SELECT * FROM MladoletniJadralci;
+
+#2
+	#Definirajte pogled StatistikaColnov, ki bo za vsak čoln izpisal osnovne
+	 podatke (šifra, ime, dolžina), število rezervacij, število različnih jadralcev, 
+	 ki so ga rezervirali in povprečni rating jadralcev, ki so ga rezervirali.
+
+	#če že obstaja damo ALTER-- pa de ne brišemo
+	CREATE VIEW StatistikaColnov(sifra,ime,dolzina,st_rez,st_jad,povp_rating)
+	AS SELECT c.cid, c.ime, c.dolzina, COUNT(*), COUNT(DISTINCT r.jid), AVG(j.rating) #avg ni good
+	   FROM coln c JOIN rezervacija r USING(cid) JOIN jadralec j USING(jid) #da dela count dobr
+	   GROUP BY c.cid, c.ime, c.dolzina; #kako je z groupby
+	SELECT * FROM StatistikaColnov;
+
+#3
+	#Definirajte pogled StatistikaAlians, ki bo za vsako alianso izpisal osnovne podatke 
+	 alianse (šifra, ime), število igralcev, število naselji in število vseh prebivalcev.
+	CREATE VIEW StatistikaAlians(sifra,ime,st_igralcev,stevilo_naselij,st_preb)AS
+	SELECT a.aid,a.alliance, COUNT(DISTINCT i.pid), COUNT(*), SUM(n.population) #pazi distinct pid
+	FROM aliansa a JOIN igralec i USING(aid) JOIN naselje n USING(pid)
+	WHERE a.aid!=0 #PAZI NEPRAZNE!
+	GROUP BY a.aid, a.alliance; 
+	SELECT * FROM StatistikaAlians;
+
+#2.1
+	#kreirajte indekse	
+	#Po tabeli rezervacij pogosto preiskujemo po atributih jid in cid posamezno,
+	 ter po (jid, cid) skupaj. Kreirajte ustrezne indekse!
+	CREATE INDEX po_jid ON rezervacija(jid);
+	CREATE INDEX po_cid ON rezervacija(cid);
+	CREATE INDEX po_jid_cid ON rezervacija(jid,cid);
+
+#2.2
+	#Kreirajte novo tabelo, ki ne vsebuje mladoletnih jadralcev!
+	CREATE TABLE polnoletni AS
+	SELECT *
+	FROM jadralec
+	WHERE starost>=18;
+
+#2.3
+	#Leto je naokoli, postarajte jadralce!
+	#Update -> za postarati
+	#tuki dobimo error zarad tega k nam ne dovol...
+	#edit preferences pa sklopš.. ampak WHERE jid>0 je workaround
+	UPDATE jadralec SET starost= starost+1 WHERE jid>0;
+
+#2.4
+	#Izbrišite jadralce, ki imajo rating pod 5!
+	#delete briše vrstice, drop je pa d dropneš tabelo
+	DELETE FROM jadralec
+	WHERE rating <5 AND jid>0;
+
+#2.5
+	#Tine, ki ima 19 let in ocenjen rating 8 je danes prvič rezerviral čoln „Bavaria“ 
+	 ter hkrati opravil registracijo jadralca. Dodajte ga v tabelo jadralcev!
+	#vstaviti ->insert into
+	#da smo na naslednji indeks dali to
+	INSERT INTO jadralec  VALUES((SELECT MAX(j.jid)+1 FROM jadralec j),"Tine",8,19); 
+	INSERT INTO rezervacija VALUES(
+					(SELECT MAX(j.jid) FROM jadralec j), #brez +1 ker se kar nemu doda
+					(SELECT c.cid FROM coln c WHERE c.ime = "Bavaria"),
+					curDate(),null);
+                
+#2.6
+	#Jadralsko društvo je ugotovilo, da bi radi jadralcem omogočili
+	 rezervacijo čolnov za več dni skupaj. Dopolnite tabelo rezervacij tako, 
+	 da bo to omogočala. Za jadralce, ki že imajo rezervacijo se privzame, 
+	 da so rezervacijo opravili samo za en dan.
+	#ALTER TABLE rezervacija DROP COLUMN st_dni;->toj naredu d jo je zbrisu zarad drugih
+	ALTER TABLE rezervacija ADD COLUMN st_dni INTEGER DEFAULT 1;
+	SELECT * FROM rezervacija;
+
+
+
+

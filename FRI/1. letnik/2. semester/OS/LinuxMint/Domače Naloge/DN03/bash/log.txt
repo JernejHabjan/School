@@ -1,0 +1,13 @@
+LOG:
+	TIME:
+	{ time sleep 1 ; } 2> time.txt
+
+	date +%s%3N ---to daš v zgorne curly brackete?
+
+	KANONIČNA:
+	za vsak program vrstico s kanonično potjo do programa vključno s stikali
+	
+	ps -ef | grep MOJPID ----tako dobiš kanonično pot do procesa?
+	
+	
+	PA ŠE CIFRE OD PIDOV ločeno s presledki

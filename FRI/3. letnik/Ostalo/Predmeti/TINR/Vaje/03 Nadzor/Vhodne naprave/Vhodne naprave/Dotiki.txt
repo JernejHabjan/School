@@ -1,0 +1,16 @@
+Naloga
+
+Zdaj je potrebno v igro dodati interaktivnost, tako da glede na dotike uporabnika spreminjamo vrednosti lastnosti objektov scene. Najenostavnejši primer je, da na lokacijo dotika nastavimo lokacijo želenega objekta na sceni. Ko imamo izdelan tudi osnovni fizikalni pogon, ki premika objekte na sceni glede na hitrost, lahko namesto spreminjanja pozicije objektov glede na dotike spreminjamo hitrost objekta.
+
+Naloga je opravljena, ko se objekti na sceni spreminjajo glede na dotike uporabnika v skladu z željenim uèinkom glede na igralnost vaše igre.
+
+Navodilo
+
+Posnemite iPhone simulator, kako s kliki miške (simuliranimi dotiki) vplivate na sceno igre.
+
+Posnemite le del ekrana, v katerem je viden iPhone simulator. Filmèek naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje: 63080000-priimek-nadzor-vhodne_naprave-dotiki.mov 
+(primerno popravite vpisno številko in priimek)

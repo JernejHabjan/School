@@ -1,0 +1,22 @@
+Naloga
+
+Ko ste se odloèili, kakšno igro bi radi razvijali, je vaša naloga, da svojo idejo predstavite. Dokumentu, ki opisuje samo bistvo igre na ponavadi ne veè kot eni ali dveh straneh, se reèe koncept igre (angl. game-concept document).
+
+Sama vsebina je precej odvisna od tega, komu bi radi predstavili svojo idejo. Tokrat nas zanimajo predvsem konkretni elementi igralnosti in ne tržno promocijsko gradivo z hvaljenjem o najboljši grafiki in z nemogoèimi obljubami.
+
+Uporabite predlogo (koncept igre - predloga.doc), ki zajema vse smiselne stvari za okvire našega predmeta. To je tudi vsa dokumentacija, ki jo potrebujete za izdelavo prototipa, kar bo vaša naloga v prvem delu predmeta.
+
+Navodilo
+
+Koncept igre oddajte v obliki PDF!
+
+Poimenovanje datoteke: 63100000-priimek-koncept_igre.pdf
+
+(ustrezno popravite vpisno številko in priimek)
+
+
+Pri oddajanju katerekoli naloge vam ni potrebno klikniti gumba za oddajo v ocenjevanje, saj oddane naloge potem ni možno veè spreminjati in jo moram roèno vrniti v osnutek, èe jo želite popraviti ali dopolniti. Zato pustite oddano nalogo kot osnutek. To velja tudi za vse naslednje naloge.
+
+Opomba
+
+Pri izbiri iger naèeloma niste omejeni (razen predvsem s težavnostjo), vendar pa bomo igre, ki bodo preveè podobne tistim iz lanskih let, zaradi podobnosti težje spravili na App store (npr. lahko še vedno naredite igro, kjer se dirka z avtomobili, samo naj se razlikuje od obstojeèe, èe želite priti na App Store). Èe želite narediti predelavo kakšne znane igre, je potrebno paziti, da se dovolj razlikujeta (ime, grafika, sobe in podobno), saj je tudi v tem primeru ne moramo objaviti na App store. Na vajah bomo delali primere na igrah Arkanoid/Breakout in zraèni hokej, tako da teh si teh dveh ni možno izbrati, saj bi bile naloge potem prelahke.

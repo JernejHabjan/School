@@ -1,0 +1,29 @@
+//LINUX
+
+compile:
+	g++ hello.C -o hello
+	potem pozene z:
+	./hello
+	pozenemo z argumenti:
+	./hello "ana"
+
+
+//testiranje
+
+	//1 nacin
+	//make test name=vsota   //ime .c fila je tle vsota
+
+	//2 nacin
+	//export name=vsota
+	//make test
+
+	//testiranje posameznih primerov
+	//  ./vsota < test01.in ... in vidis kaj je output
+
+	//datoteke morajo biti prav poimenovane v linuxu ko testas�
+
+	//na vajah -> acc student, pass vaje
+
+
+//nov način
+    echo "4343 7" | ./pretvorba

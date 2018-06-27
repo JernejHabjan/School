@@ -1,0 +1,31 @@
+\select@language {english}
+\select@language {slovene}
+\contentsline {chapter}{Povzetek}{}{chapter*.2}
+\select@language {english}
+\contentsline {chapter}{Abstract}{}{chapter*.3}
+\select@language {slovene}
+\contentsline {chapter}{\numberline {1}Uvod}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Realno-\IeC {\v c}asovne strate\IeC {\v s}ke igre}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Izdelava strate\IeC {\v s}ke igre}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Celostni pogon Unreal Engine 4}{3}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}Trump Defense 2020}{4}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Izzivi realno-\IeC {\v c}asovnih iger}{5}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}Obstoje\IeC {\v c}a dela na podro\IeC {\v c}ju umetne inteligence v realno-\IeC {\v c}asovnih igrah}{6}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Strategija}{7}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Taktika}{7}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Reakcijski nadzor}{7}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Celostni pristopi}{8}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.4}Odprta vpra\IeC {\v s}anja o umetni inteligenci v realno-\IeC {\v c}asovnih igrah}{8}{section.2.4}
+\contentsline {chapter}{\numberline {3}Algoritmi}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Monte-Carlo drevesno preiskovanje}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}UCB1, CAB, Naive MCTS}{9}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Nevronske mre\IeC {\v z}e}{10}{subsection.3.1.2}
+\contentsline {chapter}{\numberline {4}Implementacija algoritmov}{11}{chapter.4}
+\contentsline {section}{\numberline {4.1}implementacija naklju\IeC {\v c}nosten algoritma}{11}{section.4.1}
+\contentsline {section}{\numberline {4.2}implementacija MCTS}{11}{section.4.2}
+\contentsline {section}{\numberline {4.3}sprememba preiskovalnega parametra pri ocenjevanju}{11}{section.4.3}
+\contentsline {chapter}{\numberline {5}Ovrednotenje rezultatov}{13}{chapter.5}
+\contentsline {section}{\numberline {5.1}Simulacija igre ra\IeC {\v c}unalnika proti ra\IeC {\v c}unalniku}{13}{section.5.1}
+\contentsline {section}{\numberline {5.2}Igranje ra\IeC {\v c}unalnika proti \IeC {\v c}loveku}{13}{section.5.2}
+\contentsline {chapter}{\numberline {6}Zaklju\IeC {\v c}ek}{15}{chapter.6}
+\contentsline {chapter}{Literatura}{17}{chapter.6}

@@ -1,0 +1,16 @@
+Naloga
+
+Za fizikalno pravilno spremembo rotacije pri trkih moramo v izraèun vpeljati kolièine kot so vztrajnostni moment, kotni pospešek in navor. Ker pa je navor odvisen od roèice, ki jo predstavlja vektor med središèem rotacije in toèko trka, moramo po novem pri detekciji trka izraèunati tudi slednjo. Na podlagi le-te lahko dodatno popravimo hitrosti obeh predmetov (zdaj nas zanimajo hitrosti lokalnega dela telesa v toèki trka) ter pri izraèunu impulza sile upoštevati vztrajnostna momenta teles.
+
+Na ta naèin z novo izraèunanim impulzom poleg posodobitve hitrosti centra mase teles ustrezno spremenimo še kotne hitrosti.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer se kotne hitrosti predmetov èimbolj fizikalno pravilno spreminjajo glede na trke.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-fizika-trki-odboji-sprememba_rotacije.mov
+(primerno popravite vpisno številko in priimek)

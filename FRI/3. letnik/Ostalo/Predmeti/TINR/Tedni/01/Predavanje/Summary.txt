@@ -1,0 +1,6 @@
+Glavne vsebinske toèke so tokrat bile:
+knjižnice/ogrodja/pogoni za igre na razliènih nivojih,
+navidezni svet igre,
+sestavni deli igre,
+glavna zanka igre,
+dokument koncepta igre (GCD).

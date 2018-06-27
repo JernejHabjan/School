@@ -1,0 +1,4 @@
+Ko vnašaš rezultat, moraš prvo dati nižjo vrednost (npr z1=-1+2i , z2= 3+3i)
+Uèilnica ne razume ulomkov, sqrt, sin
+Rezultate se vnaša kot decimalno število zaokroženo na pet decimalk npr 1.23457
+V Chromu dela vejica za decimalna mesta

@@ -1,0 +1,69 @@
+2. dn
+	1. del - iskanje osamelcev
+		primer osamelca - eni uporabniki dajejo zelo dobre ocene filmom drugi pa zelo slabe ocene
+			
+		
+		prvo pogledamo kako so ocene porazdeljene in iz porazdelive vn osamelce (ocenit katera se najbolj prilega tem podatkom)
+			porazdelitve- gledamo distribucijo ocen - povprečje in standardni odklon
+		vsak film skompresiraš v številko in potem gledaš porazdelitev in potem gledat kje je standardni odklon največji
+			ta številka -> standardni odklon
+			
+			
+		film.ocena -> povp ocena, standardni odklon(če je normalno porazdeljen)
+		vsi standardni odkloni vseh filmov -> naredimo histogram -> zanima nas 5% ki je najbolj na desni -> največji standardni odklon
+		
+		zanima nas film z max standardnim odklonom
+		
+	2. del - gručenje
+		100 najbolj gledanih filmov -> 100 največkrat ocenjenih
+		
+		izmed teh filmov poiščeš gruče
+		
+		lahko bi gručil na podlagi vseh uporabnikov
+		razdaljo med filmov bi definirali ALI
+			- da primerjamo kateri je ocenil film
+			- da primerjamo ocene ki so ocenili film
+			
+		da priporočamo uporabniku film glede na podlago ostalih uporabnikov
+		
+		zreducirati moramo uporabnike ali vse uporabnike
+		 (ali samo tiste ki so ocenili...)
+		 
+		 
+		koliko skupin je med izbranimi - silhuetni score (tega dj.. kmeans je optional)
+										- kmeans
+										  (ker jih je samo 100 lahko oba uporabimo)
+									--vizualizirati in argumentirati
+									
+	2 tedna časa
+
+#########################################################################################333333333333333
+
+5. vaja - hierarcy
+	.tab -> orangov file
+	LINKAGE
+		linkage funkcija -> notri navedemo single, complete, ward.....(best sta ward in average)
+		metric -> euclidean, cityblock, cosine, jaccard(za preseke med množicam)
+			sch.dendogram -> notr ima še color_threshold=1.5 -> da poveš do km obarvat
+		
+		princip metljic -> vsi primeri znotraj clustra so zelo podobni, potem pa dolga razdalja do druge skupine
+			"daljši je ročaj in manjše so ščetine boljše je"
+		
+		cityblock vs euclidean:
+			kvadrat v evklidski napako zelo razpihne (kot MAE in RME)
+			(imamo en atribut k ma vrednosti čist druge - število okončin.. ki da z euclidean prevelk poudarek)
+			
+	FCLUSTER
+		nastavljamo parameter T - da dobimo cluster na izhodu
+			ta T lahko najdemo iz dendograma - razdalja??????
+			
+		adjusted_mutual_info_score - pokaže kakšno je prekrivanje med pričakovanim skupinam in gručam
+			če je cifra visoka - good //karkoli blizu enke je good
+			-to lahko naredimo samo če imamo classe - mav useless ker mamo drug machine learning
+			
+	SILHUETE
+		spreminjamo T, method, cityblock
+		trojna zanka in v vsaki zanki spreminjamo neki izmed tega
+		
+		silhuette_samples -> da zveš za vsak primer kok ma score
+			

@@ -1,0 +1,210 @@
+link in html to CSS in <head></head>: <link type="text/css" rel="stylesheet" href="stylesheet.css" /> //stylesheet.css je ime dokumenta
+External style sheets:
+	//dela za več datotek
+	
+Overriding Styles:
+	//Overriding styles from external style sheet:
+	//nardiš v html filu v headu:
+		<style type="text/css">
+			h1{color:green;} //overridaš h1 iz external style sheeta
+		</style>
+
+p {font-family: Tahoma, Verdana, sans-serif; /* default colors: ce nima na rac Tahoma, apply verdana... ce ne te pa sans-serif.*/
+    color: blue;
+    font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	text-align: right;
+	text-indent: 20%;
+	text-indent: 300px; /*da prvo vrstico mav zamakne*/
+}
+
+comment: /*      */
+
+style more than 1 element:
+	h1,p{ something something}
+style 1 element in sentence (SPAN):
+	span{bacground-color:green}
+	<p>i love <span>carrots</span>
+hex: h2 {
+	color: #FF7256;
+	}
+
+/* v bodyju spremeniš bg color..*/
+setting bg color,height,width
+	BACKRGOUND:
+		background-color:#cc0000;
+		background-image:url(myface.png); //tko spremeniš bg image k se repeata
+			//not to repeat:
+			background-repeat:no-repeat;
+			//repeat only x.. isto za y
+			background-repeat:repeat-x;
+		background-position: 10px 10px; //x in y
+	height:100px;
+	width:100px;
+	border: 3px solid black; //////LAH TUD VEČ V VRSTO
+	text-decoration:none;
+
+//padding, border, margin	
+	//padding - med textom in ostalm:
+		h2{background-color:yellow;
+			padding-top:30px;
+			padding-bottom:20px;
+		  }
+	//border outlines the padding:
+		h2{		background-color:yellow;
+				padding-top:30px;
+			border-color:red;
+			border-width:3px;
+			border-style:dashed;
+			border-top-color:green;
+			border-top-style:dotted;
+			border-top-width:4px;
+		}
+	//margin area outside of border and margin (outlines entire area)
+		//by default paragraphs have margin between them
+		p{background-color:orange;
+			margin:1px;
+			margin-top:30px;
+		}
+//styling links:
+	4 states of link (first visited, when link clicked, when hover over link, when mouse clicked and on link)
+	<a href="google.com">button</a>
+	a:link{color:red;
+		text-decoration:none;
+	}
+	a:visited{color:green
+	}
+	a:hover{background-color:blue;
+		color:white;
+		text-decoration:underline;
+		font-weight:bold;
+	}
+	a:active{bacground-color:orange;
+	}
+	
+oblikovanje tabele:
+	td{
+	 border: 1px dashed blue;
+	}
+	table{
+	 border: 1px solid black;   
+	}
+	tr{bacground-color:yellow;
+	}
+	
+unordered list:
+	ul{list-style-type:square;
+		list-style-type:circle;
+		list-style-type:katakana;
+		list-style-image:url(check.png) //check.png morš met v svojmu direktoriju
+		border:1px solid red;
+		list-style-type:none; //in še popravš padding d bo na levo:
+		padding:0;		
+	}
+div (division - to place elements exactly where you want them)- some kind of box:
+	div{border:2px solid red;
+		position:absolute; //PAZI TO
+		width:300px;
+		top:40px; //zamakneš za tok
+		left:34px; //zamakneš za tok
+		}
+	<div>it says something</div>
+style using classes: 
+	//v css filu:
+		.redText{ color:red;}
+		.greenText{color:green;}
+	//v html filu:
+		<p class="redText"> text must be red</p>
+		<p class="greenText"> text must be green</p>
+CLASS VS ID:
+	//CLASS CAN BE USED FOR MULTIPLE ELEMENTS WHERE ID ONLY FOR ONE
+ID:
+	//v css filu:
+		#bobby{border:2px solid red;
+			position:absolute;
+			top:14px;
+			left:24px;
+			}
+		#hubert{border:2px solid green;
+			position:absolute;
+			top:1px;
+			left:2px;
+			}
+	//v html filu:
+		<div id="bobby"> bobby is something</div>
+		<div id="hubert"> hubert is something else</div>
+Style CHILD SELECTOR: (head je parent styla, html je parent heada, html je parent bodyja)
+	//v css filu:
+		p > a {color:red;} //PAZI TO!!!
+		h3 > a {color:green;}
+	//v html filu:
+		<a href "google.com">google</a>
+		<p><a href "google.com">google</a></p>
+		<h3><a href "google.com">google</a></h3>
+Pseudo elements:
+	p:first-letter{color:green;} //dodamo style prvi črki v paragraphu
+	<p> something</p>
+ABSOLUTE, RELATIVE, FIXED POSITIONING:
+	Absolute positioning:
+		#apples{border:2px solid red;
+		position:absolute; //ne skrbi a je kšn element že na tej lokacij... pač ga prekrije
+			//it makes problems of overlapping
+		width:150px;
+		height:175px;
+		top:30px;
+		left:15px;
+		}	
+		<div id="apples">something</div>
+	Relative positioning:
+		#apples{border:2px solid red;
+			position:relative; //ne premakne ga od levo gor 30px dol in 15 desno ampak od kjer bi bil po defaultu
+				//it makes problems of gaps
+			width:150px;
+			height:175px;
+			top:30px;
+			left:15px;
+			}	
+		<p id="apples">something</p>
+	Fixed positioning:
+		#apples{border:2px solid red;
+			position:fixed; //TUD ČE SCROLLAŠ OSTANE NA ISTMU MESTU
+			width:150px;
+			height:175px;
+			top:30px;
+			left:15px;
+			}	
+		<p id="apples">something</p>
+max width and height:
+	min-width
+	min-height
+	max-width:200px;
+	max-height:200px;
+
+button:
+	div{
+		height: 50px;
+	width: 120px;
+	border-color: #6495ED;
+	background-color: #BCD2EE;
+	border-radius:5px; - to round button
+	margin:auto;	   - set button on middle of screen
+	text-align:center;
+	}
+
+
+paint dolocenega gnezdenega naslova:
+	div div div h3 {
+		color:red;
+	}
+
+border okrog vsega:
+	*{
+	 border:1px dashed #3A5FCD;   
+		
+	}
+	
+MARGIN: AUTO -> da se prilaga parentu
+
+
+FLOAT:LEFT

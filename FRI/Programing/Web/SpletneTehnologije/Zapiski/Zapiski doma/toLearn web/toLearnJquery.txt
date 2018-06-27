@@ -1,0 +1,43 @@
+namestiš v glavi:
+	<head>
+	<script src="jquery-1.12.0.min.js" />
+	</head>
+direktna namestitev v dokument
+	<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" />
+	</head>
+
+sintaksa:
+	$(selector).action()
+	selectorji:
+		"p"
+		".test" -class
+		"#test" -id
+		"*" -vsi
+		"this" -trenuten
+		"p:first" -prvi p
+		"ul li:first" -prvi li od prvega ul
+		"[href]" -vsi z atributom href
+		"tr:odd" -vsi lihi
+		"tr:even" -vsi sodi
+metode: (so znotraj dogodka)
+	$(function(){
+		//metode jQuery
+	});
+	primer:
+		$("p").click(function(){
+			//akcija
+		});
+	primer2:
+		$(document).ready(function(){
+			$("p").click(function(){
+				$(this).hide();
+			});
+		});
+EFEKTI:
+	opisani v ST 3_js,jQuery
+	
+	primer css efekta:
+		$(document).ready(function(){
+			$("tr:even").css("background-color","yellow"); //even pomen usako sodo
+		});

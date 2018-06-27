@@ -1,0 +1,109 @@
+\naslovI{Histogram besed}
+
+\besedilo
+
+Napišite program, ki za podano besedilo izpiše $n$ najbolj pogostih besed.
+Besede morajo biti izpisane v padajočem vrstnem redu glede na število
+pojavitev, zraven besede izpišite njeno frekvenco. Če se več besed
+pojavi v besedilu enako pogosto, jih uredite po abecedi.
+
+Nalogo bomo reševali po korakih. Imeli bomo
+tri (pod)naloge. Za vse naloge imate ločene teste.
+
+\subsubsection*{Naloga1}
+Preberite besede (uporabite \texttt{\%s} pri \texttt{scanf}) in jih izpišite.
+Pri tem upoštevajte:
+\begin{itemize}
+ \item Vsa ločila je potrebno izločiti (uporabite funkcijo ispunct). Ena beseda
+ima lahko tudi več ločil.
+ \item Velike in male črke se obravnavajo enako. Tako se
+v frazi "Gori na gori gori" beseda "gori" pojavi 3x, čeprav je 1x zapisana z
+\% veliko začetnico in 2x z malo.
+ \item Lahko predpostavite, da bodo v besedilih le ASCII znaki.
+\end{itemize}
+
+\subsubsection*{Naloga2}
+Isto kot naloga1, vendar se vsako besedo izpiše le enkrat. Če se beseda v
+tekstu ponovi, je ne izpisujte.
+
+\subsubsection*{Naloga3}
+Rešite celotno nalogo. Namig: uporabite še eno tabelo za štetje besed, ki bo imela enako število elementov, kot jih ima tabela z besedami.
+
+\vhod
+
+V vhodnih podatkih bo najprej napisano zahtevano število najbolj pogostih besed,
+sledi besedilo. Vhodni podatki se nahajajo v direktoriju \texttt{tests}.
+
+\begin{primerVhod}
+5
+Levo, pa desno, pa spet levo in potem naravnost do semaforja, kjer zavijes spet
+levo. Pa pazi na pesce!
+\end{primerVhod}
+
+Vhodne besede ne bodo daljše od $10^5$ znakov.
+Besedilo je lahko poljubne dolžine.
+
+
+\izhod
+
+Izhodne datoteke za posamezne naloge se nahajajo v direktorijih \texttt{out1-3}.
+
+\subsubsection*{Naloga1}
+
+\begin{primerIzhod}
+levo
+pa
+desno
+pa
+spet
+levo
+in
+potem
+naravnost
+do
+semaforja
+kjer
+zavijes
+spet
+levo
+pa
+pazi
+na
+pesce
+\end{primerIzhod}
+
+\subsubsection*{Naloga2}
+
+\begin{primerIzhod}
+levo
+pa
+desno
+spet
+in
+potem
+naravnost
+do
+semaforja
+kjer
+zavijes
+pazi
+na
+pesce
+\end{primerIzhod}
+
+\subsubsection*{Naloga3}
+
+Vsako najbolj pogosto besedo skupaj s frekvenco izpišite v svoji vrstici, ki se
+mora zakljuciti z izhodnim znakom za novo vrstico
+'\textbackslash n'.
+
+\begin{primerIzhod}
+levo 3
+pa 3
+spet 2
+desno 1
+do 1
+\end{primerIzhod}
+
+
+

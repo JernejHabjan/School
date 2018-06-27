@@ -1,0 +1,81 @@
+
+.selector {
+    background-color: #c0c0c0;
+    min-height: 100px;
+
+}
+
+#leftRightMover {
+    width: 100%;
+    /* overflow-x: hidden;          TO DELA TEŽAVE  KER JE POL PREŠIROK*/
+}
+
+#divContainer {
+    display: inline-flex;
+    position: relative;
+}
+
+.button5 {
+    background-color: white;
+    width: 40px;
+    color: black;
+    border: 1px solid #555555;
+    height: 100%;
+    z-index: 10;
+    position: absolute;
+}
+
+.button5:hover {
+    background-color: #555555;
+    color: white;
+}
+
+.round {
+    margin-right: 5px;
+    margin-left: 5px;
+
+    overflow: hidden;
+    width: 100px;
+    height: 120px;
+
+}
+
+.round a {
+    z-index: 10;
+    display: block;
+
+    height: 10%;
+    /* Stretch
+          height: 100%;
+          width: 100%; */
+    min-width: 100%;
+    min-height: 100%;
+
+}
+
+
+.round img {
+    z-index: 10;
+    display: block;
+    height: 60px;
+}
+
+
+
+
+.round:hover {
+
+    cursor: pointer;
+    transform: scale(2, 2);
+    transform-origin: 0 0;
+    transition: 50ms ease-in-out;
+
+}
+
+
+
+
+
+
+
+

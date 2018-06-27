@@ -1,0 +1,218 @@
+install.packages(c("CORElearn", "adabag"))
+
+
+KOMBINIRANJE ALGORITMOV ZA STROJNO UÈENJE:
+_______________________________________________________________________________________________
+//ni nujno da se rezultat izboljša
+
+
+
+
+set.seed(8678686) ---da vsi iste št
+
+
+
+
+sel <- sample(1:nrow(vehicle), size=as.integer(nrow(vehicle)*0.7), replace=F)
+		vzorec--- kero vrstico, koliko (tukaj 70%)
+	
+learn <- vehicle[sel,] //iz vzorca uèno
+test <- vehicle[-sel,] //minus... da vse ostalo
+
+
+
+
+table(learn$Class)
+table(test$Class) ---v obeh je približno enako po vseh razredih razporejeno
+
+
+source("mojefunkcije.R") ---da prebere tvoj file kjer maš funkcije not  !!!!
+
+
+GLASOVANJE:
+modelDT <- CoreModel(Class ~ ., learn, model="tree")
+modelNB <- CoreModel(Class ~ ., learn, model="bayes")
+modelKNN <- CoreModel(Class ~ ., learn, model="knn", kInNN = 5) 
+	dobimo 3 razliène modele
+
+
+		TOÈNOSTI:
+			1.
+				predDT <- predict(modelDT, test, type = "class")
+				caDT <- CA(test$Class, predDT)
+				caDT
+			2.
+				predNB <- predict(modelNB, test, type="class")
+				caNB <- CA(test$Class, predNB)
+				caNB
+			3.
+				predKNN <- predict(modelKNN, test, type="class")
+				caKNN <- CA(test$Class, predKNN)
+				caKNN
+				
+	GLASOVANJE:
+	napovedi združimo v 1 tabelco
+		pred <- data.frame(predDT, predNB, predKNN)
+		pred
+		
+		FUNKCIJA --- ZAZNAMO NAJBOLJŠO NAPOVED IZ ENE SKUPNE TABELE
+				
+			voting <- function(predictions)
+			{
+				res <- vector()
+
+
+				for (i in 1 : nrow(predictions))  	
+				{
+					vec <- unlist(predictions[i,])
+						res[i] <- names(which.max(table(vec)))
+				}
+
+
+				factor(res, levels=levels(predictions[,1]))
+			}
+		
+			voting se izboljša
+
+
+____________________________________________________			
+UTEŽENO GLASOVANJE... GLAS RAZDELI PO RAZREDIH
+	predDT.prob <- predict(modelDT, test, type="probability") //probability
+	predNB.prob <- predict(modelNB, test, type="probability")
+	predKNN.prob <- predict(modelKNN, test, type="probability")
+
+
+# sestejemo napovedane verjetnosti s strani razlicnih modelov
+pred.prob <- caDT * predDT.prob + caNB * predNB.prob + caKNN * predKNN.prob   //UTEŽI IN toènost modela
+pred.prob ---dobimo koliko verjetnost imajo
+
+
+# izberemo razred z najvecjo verjetnostjo!!!!!
+predicted <- levels(learn$Class)[apply(pred.prob, 1, which.max)] --za vsako vrstici klièe which.max
+
+
+CA(test$Class, predicted) --weighted voting
+v tem primeru da slabši result zato ga zavrnemo
+____________________________________________________
+STACKING -moramo imeti dovolj uènih primerov
+
+
+uèno množico vržemo v modele
+imamo še VALIDACIJSKO MNOŽICO ki damo modelom
+naredimo nov model s tem da uporabimo classe iz validacijske množice...
+
+
+testno množico vržemo modelom da da mnenja
+nekdo pol še mnenja upošteva da dobimo konèen rezultat
+
+
+
+
+KODA:
+	stacking.learn <- function(formula, train.data, validation.data, n = 50, model = "tree")
+	{	
+		examples <- nrow(train.data)
+		
+		tier1.models <- list()
+
+
+		for (i in 1:n)
+		{
+			# bootstrapping
+			sel <- sample(examples, examples, T)
+			tmp.train <- train.data[sel,]
+
+
+			tier1.models[[i]] <- CoreModel(formula, tmp.train, model = model)		
+		}
+
+
+		class.name <- all.vars(formula)[1]
+
+
+		tier2.train <- list(validation.data[class.name])
+
+
+		for (i in 1:n)
+		{
+			predicted <- predict(tier1.models[[i]], validation.data, type = "class")
+
+
+			tier2.train <- c(tier2.train, list(predicted))
+		}
+
+
+		tier2.train <- as.data.frame(tier2.train)
+		names(tier2.train) <- c("target", paste("model",1:n,sep=""))
+		
+		tier2.formula <- as.formula(target ~ .)
+
+
+		tier2.model <- CoreModel(tier2.formula, tier2.train, model = model)
+		
+		res <- list()
+		res$tier1.models <- tier1.models
+		res$tier2.model <- tier2.model
+		res$tier2.train <- tier2.train
+		res
+	}
+	stacking.predict <- function(model, data)
+	{
+		tier2.data <- list()
+
+
+		n <- length(model$tier1.models)
+
+
+		for (i in 1:n)
+		{
+			predicted <- predict(model$tier1.models[[i]], data, type = "class")
+			tier2.data <- c(tier2.data, list(predicted))
+		}
+
+
+		tier2.data <- as.data.frame(tier2.data)
+		names(tier2.data) <- paste("model",1:n,sep="")	
+
+
+		tier2.data <- cbind(target = 0, tier2.data)
+
+
+		predicted <- predict(model$tier2.model, tier2.data, type = "class")
+		predicted
+	}
+
+
+
+
+	st.model <- stacking.learn(Class ~ ., learn, learn, n=50)
+	st.pred <- stacking.predict(st.model, test)
+
+
+	CA(test$Class, st.pred)
+____________________________________________________
+TEDVA NI DOBR KOMBINIRAT:
+___________________________________
+NAKLJUÈNI_GOZDOVI
+library(randomForest)
+
+
+rf <- randomForest(Class ~ ., learn)
+predicted <- predict(rf, test, type = "class")
+CA(test$Class, predicted)
+
+
+
+
+
+
+____________________________________________________
+BOOSTING -moèan, lahko se pa overfitta
+
+
+
+
+
+
+
+

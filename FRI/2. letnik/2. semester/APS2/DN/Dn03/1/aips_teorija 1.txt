@@ -1,0 +1,33 @@
+1. b)
+	Opis operacije zlivanja skrivljenih kopic:
+		opisal bom nerekurzivno zlivanje saj je lažje za pojasniti:
+		1. razrežemo drevo od korena, tako da je vsak element od korena desno sam
+		(tako da ima root samo leve otroke ali pa je brez otrok)
+		2. uredimo drevesa v naraščajočem vrstnem redu glede na njihov root ključ
+		3. združujemo drevesa od največjega (od desne) proti najmanjšim (proti levi)
+		
+	
+	personal zapiski za skew insert (da jih imam na kupu)
+		pogleda v korenu v katero podvejo spada
+		ko prideš v list:
+			 -switcha lev in desn poddrevo
+			 - to dela rekurzivno do root (v rootu tud switcha lev in desn poddrevo)
+
+1. c)
+	MIN MAX heap -> razlika od običajne dvojiške kopice
+	razlika:
+		-je implicitna podatkovna struktura
+		-find je v konstantnem času namesto O(n)
+		-vsak node na lihem nivoju je manjši kot otroci, vsak na sodem pa večji
+	funkcije:
+				worst:
+		insert  O(lgn)
+		delete  O(lgn)
+		build   O(n)
+		find	O(1)
+		delMin	O(lgn)
+		
+		
+	Koda je v prilogah
+	njena časovna zahtevnost za poljuben i je pa O(1) saj vse kar naredi je 
+		da izračuna logaritem števila ter ga z modulom zdeli.

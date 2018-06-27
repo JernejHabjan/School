@@ -1,0 +1,6 @@
+CREATE TABLE `user` 
+(
+  `username` VARCHAR(30) NOT NULL PRIMARY KEY,
+  `email` VARCHAR(200) NOT NULL,
+  `password` VARCHAR(128) NOT NULL
+);

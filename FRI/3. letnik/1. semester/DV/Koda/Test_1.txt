@@ -1,0 +1,21 @@
+# Test_s1
+# Ukazi: addu, andi, lui, srl, sw, bgtz
+
+# Registri:
+# R1= 0x8
+# R2= 0x2
+# R3= 0x3 
+# R24= 0x0
+
+start:
+	addu $4,$1,$2
+	sw $4,0($24)
+	sw $3,1($24)
+	andi $5,$2,2
+	lui $6,1
+razlicen:
+	srl $6, $6, 1	
+	bgtz $6,razlicen
+	sw $6, 1($24)
+konec:
+	bgtz $4, konec

@@ -1,0 +1,144 @@
+POGLEJ SI REGE*XP,RLIKE REGEXP_LIKE !!!!!!!!!!!!!!!!!!!!!!!
+REGEXP '^b....*$'
+RLIKE '^b[a-z]{4}[a-z]*$'
+
+
+INTERSECT NE DELA, DAŠ is in neki and neki
+MINUS NE DELA -> DAŠ not in
+
+ROUND
+ANY da primerja med vsem
+
+
+SELECT stavek…
+SELECT [DISTINCT | ALL]
+{* | [columnExpression [AS newName]] [,...] }
+FROM TableName [alias] [, ...]
+[WHERE condition]
+[GROUP BY columnList]
+[HAVING condition] ->uporablja samo za groupby
+[ORDER BY columnList] 
+
+select MAX(starost) AS max_starost
+from jadralec -> naredi novo tabelo
+
+groupby starost desc
+limit 1 -> poiščeš najstarejšega
+
+groupby rating
+having count(*) >1
+
+where not exists(select c.cid
+				from coln cid...)
+
+any==some, all
+
+string se primerja v enojnih narekovajih
+
+_____________
+fucked -rezervirali vse čolne
+SELECT j.ime
+FROM jadralec j
+WHERE NOT EXISTS ( SELECT coln.cid
+				FROM coln
+				MINUS
+				select r.cid
+				FROM rezervacija r
+				WHERE r.jid=j.jid
+				)
+_____________
+
+ORDER BY j1.rating; ->ima še asc, desc
+ORDER BY DELA TUDI ZA VEČ STVARI
+
+lahko sta dve iste -> FROM  jadralec j1, jadralec j2!!!!!!
+
+SIMILAR TO something
+IS [NOT] NULL
+
+'%neki%' se uporabljajo samo pri like
+WHERE j1.ime LIKE 'B_____%' -> začne z B in vsaj 5 črk!!!!!!!!! LIKEEEEE!!!!!!
+ZNAK % USTREZA NIČ ALI VEČPOLJBNIM ČRKAM
+ZNAK _ USTREZA NATANKO ENI POLJUBNI ČRKI
+
+UNION ->združi (rdec ali moder coln)
+UNION ALL
+INTERSECT ->presek -> rdeč in moder
+MINUS ali EXCEPT(razlika -)
+IN, NOT IN(tabela)
+ALL, ANY
+EXISTS, NOT EXISTS
+UNIQUE ->enoličnost elementov v tabeli
+
+vendar nikoli zelenega ->MINUS
+
+______________
+
+
+SELECT jadralec.ime --Pogojnistik
+FROM jadralecJOINrezervacijaON(rezervacija.jid = jadralec.jid)
+WHERE rezervacija.cid = 103;
+
+SELECT jadralec.ime --Pogojnistiks sestavljenimpogojem
+FROM jadralecJOINrezervacijaON(rezervacija.jid = jadralec.jidAND
+rezervacija.cid = 103);
+
+
+
+_____________
+ROUND(rating/starost,2)
+SELECT ime, ROUND(rating/starost)
+from jadralec
+-_____________
+§ UNION (unija),
+§ INTERSECTION (Presek)
+§ DIFFERENCE (EXCEPT) (Razlika) 
+
+
+Če uporabimo CORRESPONDING	BY, se operacija izvede samo nad
+poimenovanimi stolpci
+§ Če uporabimo samo CORRESPONDING brez BY člena, se operacija
+izvede nad skupnimi stolpci.
+§ Če uporabimo ALL, lahko rezultat vključuje tudi dvojnike 
+
+
+
+PRIMER ANY, ALL
+
+where x<ANY(SELECT y...);
+where x<ALL(SELECT y...);
+
+primer ANY ->rating mora biti višji od vsaj enega Henrika
+SELECTj.jid
+FROMjadralecj
+WHEREj.rating> ANY
+	(SELECTj2.rating
+	FROMjadralecj2
+	WHEREj2.ime='Henrik');
+
+max rating ->PRIMER Z ALL
+SELECTj.jid
+FROMjadralecj
+WHEREj.rating>= ALL
+(SELECTj2.rating
+FROMjadralecj2);
+
+BETWEEN:
+BETWEEN DATE('2006-06-21') AND DATE('2006-09-23')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

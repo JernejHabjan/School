@@ -1,0 +1,24 @@
+Naloga
+
+Veliko število agentov je možno spisati v obliki enostavnih odzivnih agentov, ki vsakiè znova izvedejo popolnoma enak algoritem za odloèanje. Odloèitev je torej popolnoma neodvisna od prejšnjih odloèitev ali stanja agenta.
+
+Vèasih za dosego želenega obnašanja to ni dovolj in moramo razlièna obnašanja razdeliti v stanja, ki jih agent izvaja èez serijo veèih ciklov igrine zanke. Obnašanje agenta v tem primeru realiziramo s konènim avtomatom stanj.
+
+Prvi korak je definiranje vseh stanj, katera obièajno shranimo v konstante enum. V konstruktorju oziroma po potrebi v reset-metodi objekta nastavimo spremenljivko trenutnega stanja na zaèetno vrednost, torej stanje, v katerem se mora agent nahajati na zaèetku.
+
+V metodi update nato glede na trenutno stanje izvedemo enega od razliènih obnašanj, za kar obièajno skrbi stavek switch, ki poklièe obnašanja spisana v posameznih podprogramih. Vsak tak podprogram izvede potrebno logiko, kot pri enostavnem odzivnem agentu. Dodatno mora vsebovati še logiko, ki pod doloèenimi pogoji spremeni trenutno stanje in s tem pove agentu, da naj v naslednjem ciklu zaène z izvajanjem drugaènega obnašanja.
+
+S tako izdelanim konènim avtomatom prehajanja med stanji agenta lahko veè preprostih obnašanj enostavnih agentov združimo v kompleksnega agenta, ki zna spreminjati (izbirati) algoritem, po katerem se odziva.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer agent spreminja svoje obnašanje glede na dogodke v svetu.
+Pod opombe naštejte stanja, skozi katera prehaja agent. V stavku ali dveh opišite njihovo delovanje, kar naj bo tudi dobro vidno v videu.
+Za nalogo je dovolj, da predstavite enega agenta, ki uporablja stanja.
+
+
+Posnemite le del ekrana, v katerem je viden iPhone simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje: 63080000-priimek-ui-odzivni_agenti_s_stanji.mov 
+(primerno popravite vpisno številko in priimek)

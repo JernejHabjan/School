@@ -1,0 +1,21 @@
+Naloga
+
+Da bo nadalnje delo potekalo karseda tekoèe, si bomo vnaprej pripravili èimveè vsebin - vsaj tiste, za katere lahko vnaprej predvidevamo, da jih bomo potrebovali. Seveda se bomo marsikaj nauèili, sproti spremenili ter naknadno dodali. Važno je, da imamo osnovo, s katero lahko zaènemo izdelavo prototipa.
+
+Uporabite lahko veè pristopov:
+
+Zaèasna grafika (angl. mock-up): Poženemo poljubni program za grafièno oblikovanje (rasterski ali vektorski, primera zastonjskih, odprtokodnih sta Gimp in Inkscape) in èimhitreje narišemo vse potrebne slike. Na koncu ne bo problem zamenjati zaèasne grafike s konèno grafiko, ki jo lahko za nas recimo naredi tudi kakšen oblikovalec (èe ste oboje v enem, še toliko bolje). Nekaj zaèasne grafike za zgled ali direktno uporabo v vašem projektu najdete tukaj.
+Grafika iz starih iger: Na medmrežju je ogromno izvirnih slik vzetih iz starih iger, kar lahko s pridom izkoristimo. Èe delamo predelavo, najprej preverimo, èe najdemo grafiko iz igre, ki jo želimo predelati. Kasneje lahko po potrebi grafiko poveèamo (èe delamo predelavo z boljšo loèljivostjo) ali prebarvamo (veè barv kot v osnovni verziji). Tudi èe ne gre za predelavo, si lahko zaèasno sposodimo grafiko iz starih iger, le zavedati se moramo, da za njeno uporabo nimamo pravic in jo je potrebno na koncu prav tako zamenjati.
+Zastonjske zbirke grafike: Marsikateri oblikovalec je dal prosto na voljo bolj ali manj zakljuèene zbirke grafike, ki se ponavadi držijo neke skupne teme. Odlièen primer je recimo Danc, ki je, poleg "tile-setov", o témi pridobitve grafiènega materiala tudi spisal nekaj zanimivih èlankov. Vse to na tej povezavi. Drug zelo obsežen vir je grafika ustvarjena za tekmovanje TIGSource Assembly. Tule boste našli resnièno ogromno zbirko zelo raznovrstnih stilov. Za kaj veè pa Google. Prednost tega pristopa je, da ima naša igra že takoj konèni videz, slabost pa, da redko dobimo vse potrebne grafike, ki bi v celoti delovale enovito.
+Na ta naèin si pripravite celotno grafiko za vaš prototip (eden ali veè slikovnih atlasov).
+
+Navodilo
+
+Slike morajo biti v formatu png. Lahko imajo prosojnost že v samem alpha kanalu, uporabne pa bodo tudi slike, pri katerih je ena barva nadomestek za prozorno (èe se boste podali na lov za t.i. "sprite sheeti", bo to velikokrat rožnata). Format gif ni v redu. Posamezne slike animacij naj bodo postavljene na eni sliki po principu slikovnega atlasa.
+
+Stranice slik morajo biti potence števila 2, recimo 256x256, 128x512 in podobno. Najveèja možna velikost teksture je 2048x2048 (na starejših iPhone-ih 1024x1024).
+
+Celotno vsebino zazipajte in oddajte zip arhiv.
+
+Poimenovanje: 63080000-priimek-infrastruktura-vsebine.zip
+(primerno popravite vpisno številko in priimek)

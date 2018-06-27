@@ -1,0 +1,20 @@
+postavš se v C:/Android/sdk/platform-tools
+adb start-server
+//adb tcpip 5555
+adb connect 192.168.1.64:5555    (adb connect _IPFONA_:_PORT_)
+
+
+
+če refusa:
+	connect via usb
+	ping device usb
+	adb kill-server
+	adb usb
+	adb tcpip 5555
+	adb connect _IP_:5555
+	
+	
+	
+	
+OZ NOV PATH:
+C:\Users\jerne\AppData\Local\Android\sdk\platform-tools

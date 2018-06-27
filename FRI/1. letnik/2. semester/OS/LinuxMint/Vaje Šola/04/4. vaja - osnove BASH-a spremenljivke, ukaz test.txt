@@ -1,0 +1,148 @@
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavje 2 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+Spremenljivke
+
+Spremenljivkam v BASH-u ni potrebno posebej definirati podatkovnega tipa, deklariramo pa jih enostavo tako, da jim priredimo vrednosti. Podatkovni tip vseh spremenljivk je niz znakov. Spremenljivko deklariramo in/ali ji priredimo vrednost s prireditvenim stavkom:
+
+ime_spremenljivke=vrednost
+
+#!/bin/bash
+x=12
+echo "Vrednost spremenljivke x je $x"
+
+Spremenljivki x smo priredili vrednost 12.
+
+Pri tem je zelo pomembno, da pred in po enacaju ni presledkov (sicer bash skuša zagnati ukaz x)!
+
+Vrstica z echo izpiše vrednost spremenljivke (pred spremenljivko mora biti znak $, da se namesto imena izpiše njena vsebina).
+
+Spremenljivke v programu uporabljamo na naslednja dva nacina:
+
+${var}
+$var
+
+Navadno se uporablja krajši nacin, vcasih pa smo prisiljeni uporabiti daljšega:
+
+ux=UNIX
+echo ${ux}a
+echo "$ux"a
+
+Podatek, ki ga spremenljivka vsebuje, mora biti združljiv z operacijo, ki jo izvajamo nad spremenljivko. Npr. pri seštevanju mora spremenljivka vsebovati znakovni niz, ki predstavlja število.
+
+Ce želimo spremenljivko zbrisati, uporabimo ukaz unset, npr., ce bi želeli odstraniti spremenljivko ux:
+
+unset ux
+
+Vgrajene spremenljivke
+
+Nekatere spremenljivke so rezervirane in vrnejo posebne vrednosti:
+
+$_  Zadnji argument predhodno izvedenega ukaza, le ob zagonu skripta vsebuje polno ime skripta.
+$#  Število podanih argumentov.
+$0  Ime skripte.
+$1, $2, …  Argumenti skripte. Uporaba, npr. ${10}
+$?  Izhodni status zadnjega (v ospredju) izvedenega ukaza.
+$$  PID lupine. V podlupini ( ) vrne PID lupine in ne podlupine.
+$!  PID procesa, ki je bil zadnji zagnan v ozadju.
+$*, $@  Vsi argumenti skripte skupaj.
+$-  Opcije podane lupini, ki poganja skripto.
+
+spremenljivke okolja
+
+Nekatere spremenljivke se nastavijo ob zagonu lupine. V pomoci man bash jih najdemo pod razdelkom Shell Variables.
+
+Okoljske spremenljvke lahko uporabljamo kot ostale spremenljivke, npr. ce želimo izpisati vrednost okolijske spremenljivke SHELL:
+
+echo $SHELL
+
+Ukaz test
+
+Ukaz test s pomocjo statusa vrne rezultat evalvacije posameznega izraza (mu ga podamo z argumenti).
+
+preverjanje enakosti med nizi
+
+x = y : preverimo ce je niz x enak nizu y
+x != y: preverimo ce x ni enak y
+-n x : preverimo ce x ni niceln (null)
+-z x : preverimo, ce je x niceln (null)
+
+preverjanje enakosti med števili
+
+x -eq y : preverimo ali je x enak y
+x -ne y : preverimo ali je x razlicen od y
+x -gt y : preverimo ali je x vecji kot y
+x -ge y : preverimo ali je x vecji ali enak kot y
+x -lt y : preverimo ali je x manjši od y
+x -le y : preverimo ali je x manjši ali enak od y
+
+stikala za preverjanje datotek:
+
+-e datoteka Ali datoteka obstaja? 
+-d datoteka Ali je datoteka imenik? 
+-f datoteka Ali je datoteka navadna datoteka? 
+-s datoteka Ali velikost datoteke ni enaka 0?
+-b datoteka Ali je datoteka blocno-orientirana? 
+-c datoteka Ali je datoteka znakovno-orientirana? 
+-h datoteka Ali je datoteka simbolicna povezava? 
+-L datoteka Ali je datoteka simbolicna povezava? 
+-r datoteka Ali lahko datoteko (kot trenutni uporabnik) beremo?
+-w datoteka Ali lahko v datoteko (kot trenutni uporabnik) zapisujemo?
+-x datoteka Ali lahko datoteko (kot trenutni uporabnik) poganjamo?
+
+Primer uporabe:
+
+test -d ~/vaje/ && echo "imenik obstaja" || echo "imenik ne obstaja"
+
+narekovaji
+
+poznamo tri vrtste narekovajev:
+
+dvojni narekovaj: "
+enojni: '
+enojni narekovaj nazaj: `
+dvojni narekovaji " "
+
+Obicajno oznacujejo niz znakov (presledki npr. so v tako lahko del niza in ne razmejitveni znak med argumenti).
+
+Niz znotraj dvojnih narekovajev se obravnava kot en argument:
+
+borutb$ mkdir pozdravljen svet
+borutb$ ls -F
+pozdravljen/ svet/
+
+Tukaj smo ustvarili dva imenika: ukaz mkdir vzame prvi niz kot prvi argument in drugi kot drugi argument. Ce bi pognali z narekovaji:
+
+borutb$ mkdir "pozdravljen svet"
+borutb$ ls -F
+pozdravljen svet/
+
+enojni narekovaji ' '
+
+Ce imamo spremenljivko znotraj dvojnih narekovajev, se spremenljivka zamenja z svojo vrednostjo.
+
+Ce imamo spremenljivko znotraj enojnih narekovajev, se dobesedno izpiše ime spremenljivke.
+
+#!/bin/bash
+x=5 # prenastavimo x na 5
+# uporabimo dvojne narekovaje 
+echo "Uporaba dvojnih narekovajev, vrednost je \$x"
+# uporaba enojnih naekovajev 
+echo 'Uporaba enojnih narekovajev, vrednost je \$x'
+
+Enojni narekovaji ravno tako ohranjajo presledke in se jih lahko uporablja za nize:
+
+mkdir 'operacijski sistemi'
+
+enojni narekovaji nazaj ` `
+
+Enojni narekovaji nazaj se uporabljajo namesto \$( ). Ukaz se izvede v podlupini in vse kar ukaz izpiše, se shrani v zacasno spremenljivko, ki jo lahko potem takoj uporabimo, npr.:
+
+\$!/bin/bash
+echo "Jaz sem `whoami`"
+
+ali
+
+$!/bin/bash
+echo "Jaz sem $(whoami)"
+
+Dodatna literatura, s pomocjo katere lahko nadgradite svoje znanje, je Bash Reference Manual, kjer si lahko preberete poglavja 3.4, 3.7.2.

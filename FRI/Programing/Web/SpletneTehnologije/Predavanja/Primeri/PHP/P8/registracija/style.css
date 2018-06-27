@@ -1,0 +1,48 @@
+body
+{
+	margin: auto;
+	padding: 10px;
+  margin-top: 20px;
+  width: 420px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.label
+{
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+}
+
+.validate
+{
+  font-weight: bold;
+  color: red;
+  font-size: 16px;
+}
+
+.hide
+{
+  display: none;
+}
+
+input
+{
+  padding: 5px;
+}
+
+input:hover
+{
+  border: 2px solid red;
+}
+
+#btnHolder
+{
+  float: right;
+}
+
+form
+{
+  height: 130px;
+}

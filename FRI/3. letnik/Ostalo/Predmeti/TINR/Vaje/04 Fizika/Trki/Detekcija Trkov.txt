@@ -1,0 +1,25 @@
+Naloga
+
+S postavljeno arhitekturo fizikalnega pogona nam preostane le še jedro: implementacija algoritmov za detekcijo prekrivanja dveh geometriènih oblik. Kot reèeno, moramo za vsak razlièen par oblik spisati svoj algoritem, velja pa tudi, da recimo algoritem za detekcijo prekrivanja kroga in konveksnega veèkotnika že sam po sebi vsebuje detekcijo krog-pravokotnik in krog-polravnina. Pravokotnik je namreè konveksni veèkotnik, detekcija pa ne more delovati brez tega, da bi vsako od stranic veèkotnika obravnavali kot polravnino.
+
+Je pa vsekakor res, da èe kompleksnejših oblik ne potrebujemo, so algoritmi med bolj specifiènimi oblikami, recimo detekcija krog-krog ali med dvema z osmi poravanima pravokotnikoma, veliko bolj preprosti kot recimo prekrivanje dveh poljubnih konveksnih veèkotnikov (namig, separating axis-theorem).
+
+Navodilo
+
+Posnemite iPhone simulator, kjer se vidi detekcijo trkov. Ni nujno, da se po trku zgodi fizikalni odboj, dovolj je, èe se z objektom nekaj zgodi, recimo izgine, se poveèajo toèke, spremeni barvo itd. Iz videa naj bo zelo jasno, za kakšen geometrijski lik gre. Torej predvsem hoèem videti detekcijo z oglišèi, kar loèi pravokotnike od delcev (krogov). Po potrebi lahko uporabite PrimitiveBatch iz projekta Artificial I, da izrišite linije ali kroge okoli objektov in postane jasno vidno, s kakšnimi liki se dogaja detekcija.
+
+Pod opombe napišite, katere pare oblik obravnavate. Vrednotenje je sledeèe, najveè je možno zbrati 40 toèk. (AAB=axis-aligned box, AAHP=axis-aligned half-plane, HP=half-plane (poljubno rotirana polravnina))
+
+delec-delec: 5
+delec-AAHP/HP/AAB: 5
+AAB-AAB: 5
+delec-konveksni veèkotnik/pravokotnik (poljubno rotiran, ne AAB!): 10
+konveksni veèkotnik-konveksni veèkotnik/pravokotnik-pravokotnik: 15
+Èe imate kakšen svoj geometrijski lik, ki ni opisan zgoraj ga prav tako dodajte pod opombe in bom ustrezno vrednotil. Kot reèeno pa 5. toèka že pokriva 3. in 4. že 2. Torej, èe v vašem pogonu deluje delec-delec, delec-convex in convex-convex, že dobite vseh 40 toèk.
+
+Posnemite le del ekrana, v katerem je viden iPhone simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo). Èe imate veliko število razliènih oblik in vam ne uspe v en film zajeti vse, oddajte veè datotek (dopolnite poimenovanje, recimo -detekcija-delec-delec.mov)
+
+Oddate nastale video datoteke (mov/avi) in NE zip/rar z video datotekami.
+
+Poimenovanje: 63080000-priimek-fizika-trki-detekcija.mov
+(primerno popravite vpisno številko in priimek)

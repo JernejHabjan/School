@@ -1,0 +1,126 @@
+#!/bin/bash
+
+readFile(){ #v seznam prebere besede
+	#LANG=sl_SI.UTF-8
+	stBesed=0
+	datoteka=$1
+	while read line; do
+		for word in $line; do
+			temp=""
+			for((j=0; j< ${#word}; j++)); do #crko za crko
+				substr=${word:j:1}
+				substr="${substr,,}" #v lowercase  -pogledu na netu... change na tr optional 
+				if [[ $substr != "." && $substr != "," && $substr != ":" && $substr != ";" && 						$substr != "«"&& $substr != "»" ]]; then #sfiltrira slabe znake
+					temp+=$substr
+				fi
+			  done
+			seznam[stBesed]=$temp
+			(( stBesed++ ))
+		done
+	done < "$datoteka"
+	
+	#_______________________je narjen array
+	# preštejemo št ponovitev s pomočjo sorted
+	sorted=($(printf '%s\n' "${seznam[@]}"|sort|uniq)) #dunno but works
+	#sorted->spravljene sortirane, uniq besede
+
+	k=0
+	for word in ${sorted[*]}; do #prešteje št ponovitev
+		count=0
+		for word1 in ${seznam[*]}; do
+		    if [[ $word == $word1 ]]; then
+			(( count++ ))
+		    fi
+		done 
+		sezPonovitev[k]="$count ${#word} $word" # v sez ponovitev da št ponovitev in besedo
+
+		(( k++ ))
+
+	done
+	#DO TU preštete ponovitve______________________
+	
+
+	# IZPIS PROCENTA PONOVITVE________________________
+	LC_NUMERIC=C #da mi dela s piko, ker drugače je 2,343
+	for((i=0; i<${#sezPonovitev[@]}; i++)); do
+		Ponovitev=$(echo "${sezPonovitev[i]%% *}")
+		ponovitevProcent=$(echo "$Ponovitev * 100/$stBesed" | bc -l)
+		ponovitevProcent=${ponovitevProcent::-18}  #odstrani zadnjih 18 ker printf %.2f ni delal -.-
+		#do tu prešteje št ponovitev_____
+		array2[i]="${sezPonovitev[i]} $ponovitevProcent%" #nafukaš izpis v nov seznam 	
+		
+	 done
+	
+
+	#sort po vsem_________
+	IFS=$'\n'
+	sortedarray2=($(sort -k1,1nr -k2,2nr -k3,3<<<"${array2[*]}")) #DELAAAAAAAA !!! ;DDDDDDDDD
+	unset IFS
+	#_____________________		
+	
+	#IZPIS:______________ NORMAL ->podaš sortedarray2
+	for((i=0; i<${#sortedarray2[@]}; i++)); do
+		echo ${sortedarray2[i]} | cut -d " " -f-1,3- # izpise brez dolzine besed
+		
+	done
+	exit 0
+	#____________________
+	
+
+	#IZPIS:______________ SWITCH L ->podaš sortedarray2
+	#SPREMENIŠ ARRAY na samo tiste ki imajo dolžino ___ neki
+	#if [[ ${sortedarray2[i]} | cut -d " " -f 2 == ŠTEVILKADOLŽINE ]]
+		#pol izpišeš vrstico 
+		#echo ${sortedarray2[i]} | cut -d " " -f-1,3-
+	#exit 0
+
+
+
+
+	#IZPIS:______________ SWITCH N ->podaš sortedarray2
+	#SPREMENIŠ ARRAY na samo tiste ki imajo ponovitev ___ neki
+	#if [[ ${sortedarray2[i]} | cut -d " " -f 1 == STEVILKAPONOVITEV ]]
+		#pol izpišeš vrstico 
+		#echo ${sortedarray2[i]} | cut -d " " -f-1,3-
+	#exit 0
+}
+
+noFlagsRead(){
+  for((i=0; i<${#seznam[@]}; i++)); do
+	echo ${seznam[i]}
+  done
+
+}
+
+
+flag(){
+  case "$1" in 
+	-l)
+            echo "Mora biti: "$2"-znakov."
+	    readFile $3
+        ;;
+        -n) 
+	     echo "Mora biti: "$2"-ponovitev."
+	     readFile $3
+        ;;
+        *)
+	    echo "Napaka: neznano stikalo $1.">&2; exit 1; #se menja $2 in &2
+        ;;
+  esac 
+}
+
+checkRead(){
+   if ! [ -r "$1" ]; then
+	echo "Napaka: datoteka $1 ne obstaja.">&2; exit 1 #DELA
+   fi
+}
+
+
+stArg=$#
+case "$stArg" in
+	0) echo "Kot argument skripti $(basename $0) morate podati ime vaše skripte."; exit 1;;
+	1)checkRead $1; readFile $1;;
+	3)checkRead $3; flag $1 $2 $3;;
+	5)checkRead $5; flag $1 $2 $5; flag $3 $4 $5;;
+	*)echo "Too many args.";;
+esac

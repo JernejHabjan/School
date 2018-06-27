@@ -1,0 +1,4 @@
+da ti dodeli ip - restartaš komp
+
+povezava ssh preko ipv6
+	ssh -6 markokos97@fe80::e.....:5686%enp0s3

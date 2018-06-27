@@ -1,0 +1,14 @@
+V paperju postav vprašanje kko težko je človekurešt tak problem, in pojasni kako si človek sestavi svoj drevo.
+experienced player razišče samo majhno drevo (meaningful tree)
+
+pojasni kaj je game tree (cev tree) - vse možnosti stanja, pri računalniškem razreševanju je pa le del game treeja search tree
+
+ljudje se zanašajo da ta prostor zmanjšajo na podlagi svojega predznanja in izkušenj. Ljudje sestavijo v glavi "Meaningful search tree"
+
+meaningful trees are subtrees of complete game trees in imajo neke svoje hevristične ocene
+
+meaningful moves at level L in the meaningful tree
+	move je meaningful če je njegov score večji kot pričakovan ali če je naša napaka pri scoru giba manjša od pričakovane nasprotnikove napake
+	
+da lahko oceniš problem v meaninfgul treejih, narediš množico atributov in jih oceniš
+	te atributi so bili taki ki so zgenerirani v meaningful treeju in taki, ki so specifični za konkretno pozicijo

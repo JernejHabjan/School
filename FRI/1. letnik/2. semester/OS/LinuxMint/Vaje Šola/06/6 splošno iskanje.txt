@@ -1,0 +1,79 @@
+Splošno iskanje: find
+
+Iskanje datotek v strukturi imenikov omogoca ukaz find, katerega uporaba je v praksi lahko precej zapletena, osnovni nacin pa je sledec:
+
+find [stikala] [imenik] [izraz]
+
+V osnovnem nacinu delovanja ukaz v hierarhiji imenikov (s korenom v podanem imeniku) išce datoteke, ki ustrezajo kriteriju opisanim s podanim izrazom. Delovanje ukaza lahko spremenimo z nekaterimi stikali, omenimo le nekatera zanimivejša stikala:
+
+-P ... ne sledi simbolicnim povezavam (privzeto delovanje);
+-L ... sledi simbolicnim povezavam;
+-H ... ne sledi simbolicnim povezavam, razen ce je povezava podana kot argument ukaza;
+-depth ... obdela poddirektorije preden obdela sam direktorij;
+-maxdepth globina ... obdela le poddirektorije do podane globine; 
+-mindepth globina ... obdela le poddirektorje vsaj na podani globini
+
+Sledenje simbolicnim povezavam pomeni, da se pri iskanju upošteva datoteka na katero kaže povezava, nesledenje pa pomeni upoštevanje same povezave. Izraz, ki ga podamo ukazu find opisuje kriterije po katerih išcemo datoteke. Gre za logicni izraz, sestavljen iz osnovnih izraz. Celoten izraz pa je pravzaprav opisan s stikali. Oglejmo si najprej stikala, ki opisujejo osnovne izraze:
+
+-false ... neresnicno;
+-true ... resnicno;
+-name vzorec ... ime datoteke ustreza podanemu vzorcu;
+-iname vzorec ... ime datoteke ustreza podanemu vzorcu (neobcutljivo na velikost crk);
+-empty ... datoteka je prazna (in je navadna datoteka ali imenik);
+-size n[cwbkMG] ... velikost datoteke je n, pri cemer je enota podane velikosti lahko naslednja: b – 512-bajtni bloki, c – bajti, w – dvo-bajtne besede, k – kilobajti, M – megabajti in G – gigabajti;
+-type tip ... datoteka je podanega tipa;
+-perm dovoljenja ... datoteka ima podana dovoljenja (številcno ali simbolicno);
+-amin n ... zadnja uporaba datoteke je bila pred n minutami;
+-atime n ... zadnja uporaba datoteke je bila pred n dnevi;
+
+Obstajajo še druga stikala, ki pa si jih lahko pogledamo v prirocniku man.
+
+Zgledi:
+
+Osnovna uporaba za iskanje datoteke v trenutni mapi in podmapah:
+
+Pred tem naredimo:
+mkdir backup 
+touch MyCProgram.c backup/MyCProgram.c
+
+find -name "MyCProgram.c" 
+./backup/MyCProgram.c 
+./MyCProgram.c
+
+sudo find / -name passwd
+./usr/share/doc/passwd 
+./usr/bin/passwd 
+./etc/pam.d/passwd 
+./etc/passwd 
+...
+
+Iskanje v korenskem imeniku in do dva nivoja nižje (root – nivo 1, dva podimenika – nivo 2 in nivo 3):
+
+sudo find / -maxdepth 3 -name passwd 
+./usr/bin/passwd 
+./etc/pam.d/passwd 
+./etc/passwd 
+...
+
+Ce želimo na najdenih datotekah, katerih imena se koncajo z nizom tmp ( neodvisno od velikih in malih crk), izvesti dolocen ukaz (npr. ls), uporabimo stikalo –exec:
+
+sudo find / -iname *tmp –type f –exec ls –l {} \;
+
+(znaka \; zakljucita argumente ukaza ki ga želimo izvajati)
+
+Kaj se zgodi, ce namesto ukaza ls uporabimo ukaz touch ?
+
+Ce pa želimo iskati samo datoteke, ki ne ustrezajo iskalnemu pogoju, pa uporabimo stikalo –not.
+
+Na primer:
+
+find -maxdepth 1 -not -iname "MyCProgram.c" 
+. 
+./MybashProgram.sh 
+./create_sample_files.sh 
+./backup 
+./Program.c
+
+Dodatno si še poglejte:
+
+http://www.grymoire.com/Unix/Find.html

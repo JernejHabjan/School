@@ -1,0 +1,14 @@
+Naloga
+
+Èe imamo na sceni res malo objektov nam lahko obièajna tabela zadošèa, kadar pa je teh objektov veè, jih je boljše urediti v ustrezne strukture, s katerimi se hitrejše in bolj uèinkovito izvajajo operacije na sceni, kot na primer detekcija trkov, izris vidnih objektov itd. V osnovni razlièici simuliramo trke med objekti tako, da se sprehajamo èez celotno sceno in delmo detekcijo vsakega objekta z vsakim. Ker pa je izraèun trka precej èasovno zahteven, je boljše, da delamo detekcijo samo med objekti, za katere sploh obstaja potencialna možnost, da so trèili - z ustrezno organizacijo scene (mreža, graf, drevo) potem delamo detekcijo trka samo med sosednjimi objekti.
+
+Navodilo
+
+Posnemite iPhone/iPad simulator, kjer demonstrirate, kako je hierarhièno urejena scena hitrejša in bolj uèinkovita kot scena brez hierarhiène ureditve. Posnemite najprej igro s preprosto sceno, potem pa zamenjajte na hierarhièno urejeno - vmes prikazujte performace. Pod opombe na kratko opišite, kakšno organizacijo scene uporabljate.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:
+63080000-priimek-infrastruktura-scena-hierarhicno_urejena.mov

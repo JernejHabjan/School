@@ -1,0 +1,147 @@
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavji 2.6 in 5.2 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+ 
+
+Program v lupini z uporabnikom komunicira preko naslednjih vmesnikov:
+
+· standardni vhod (angl. standard input) z oznako stdin in datotecnim deskriptorjem 0,
+· standardni izhod (angl. standard output) z oznako stdout om datotecnim deskriptorjem 1 in 
+· standardni izhod za sporocila o napakah (angl. standard error) z oznako stderr in datotecnim deskriptorjem 2.
+
+
+Preusmerjanje vhoda in izhoda
+
+Standardni vhod programa ukaz preusmerimo na datoteko z imenom datoteka na naslednji nacin:
+
+ukaz < datoteka
+Datoteka z ustreznim imenom mora obstajati, sicer preusmerjanje ne uspe. Preusmeritev standardnega vhoda pomeni, da bo program podake bral iz preusmeritvene datoteke namesto iz konzole (tipkovnice).
+
+Standardni izhod programa ukaz preusmerimo na datoteko z imenom datoteka na naslednji nacin:
+
+ukaz > datoteka
+Na ta nacin izpis programa ujamemo v datoteko, pri tem se obstojeca vsebina datoteke izgubi oz. se ustvari nova datoteka, ce le-ta še ne obstaja. Ce ne želimo izgubiti obstojece vsebine, ampak želimo izpis dodati na koncu datoteke, potem uporabimo:
+
+ukaz >> datoteka
+Primeri:
+
+echo "primer besedila" > dat.txt … zapis niza v datoteko 
+cat < dat.txt … datoteka kot standardni vhod ukaza cat 
+echo "dodamo na konec">>dat.txt … dodamo niz v datoteko 
+cat < dat.txt … izpis datoteke
+
+ 
+
+Cevovod
+
+Ucinkovit nacin medsebojnega sestavljanja ukazov omogoca uporaba cevovoda: 
+ukaz1 | ukaz2
+
+Standardni izhod programa ukaz1 se poveže na standardni vhod programa ukaz2. To pomeni, kar prvi program izpiše, se pojavi kot vhod drugega programa.
+
+Možno je seveda sestavljati poljubno dolge cevovode. Izhodni status cevovoda je enaka izhodnemu statusu zadnjega programa. Vsi programi, ki so del cevovoda, se izvajajo vzporedno. Vsak program je samostojen proces, izvajan v pod-lupini.
+
+Primer: 
+ls | sort -r ... izpis vsebine imenika v nasprotnem abecednem redu
+
+Poimovan cevovod (named pipe)
+
+Poimenovan cevovod ustvarimo z mkfifo poimenovan_cevovod.
+Poimenovan cevovod lahko potem uporabimo s pomocjo preusmerjanja standardnega vhoda in izhoda, na primer:
+
+cat > cev
+cat < cev
+Splošno preusmerjanje
+
+V bash je možno narediti splošno preusmerjanje, t.j. preusmerjanje iz poljubnega deskriptorja na nek že obstojec deskriptor. Na primer, z 
+ukaz 1>datoteka
+
+naredimo preusmerjanje deskriptorja 1 na datoteko datoteka, kar je popolnoma enakovredno preusmerjanju standardnega izhoda. Namesto deskriptorja 1 v splošnem lahko uporabimo poljuben deskriptor.
+
+Ce preusmerimo deskriptor 2, s tem torej preusmerimo standardni izhod za napake. Pri tem lahko uporabimo oba nacina uporabe datotek:
+
+ukaz 2>datoteka 
+ukaz 2>>datoteka
+
+Vcasih želimo hkrati preusmeriti standardni izhod in standardni izhod za napake. Uporabimo 
+ukaz &>datoteka ali ukaz 1>datoteka 2>&1
+
+Primer: 
+ls *.txt &> /dev/null && echo "so txt datoteke" || echo "ni txt datotek"
+
+kjer gre pravzaprav za dve preusmeritvi, prva je preusmeritev standardnega izhoda, druga pa preusmeritev standardnega izhoda za napake na že preusmerjeni standardni vhod.
+
+Vrsti red preusmeritev je pomemben, ker se preusmeritve izvedejo od leve proti desni. Zgornji primer v nasprotnem vrstnem redu ne bi deloval. Iz zgornje preusmeritve 2>&1 je razviden tudi pomen operatorja &. Brez njega bi šlo za preusmeritev standardnega izhoda za napake na datoteko z imenom 1.
+
+Preusmerjanje vhoda lupine
+
+Nacin preusmerjanja, imenovan tukaj-dokument (angl. here document), zacasno poveže trenutni vhod lupine s standardnim vhodom programa. Pri tem preusmeritev velja le toliko casa, dokler se v trenutnem vhodu ne pojavi vrstica, ki se zacne s podanim locilom. Takšno preusmeritev naredimo z:
+
+ukaz << locilo
+
+Ce se lupina nahaja v neinteraktivnem nacino, torej ce izvaja neko skripto, potem je vhod lupine v resnici besedilo, ki se nadaljuje za ukazom do zakljucne vrstice. Pri tem se pogosto uporablja ukaz cat. Oglejmo si naslednji primer.
+
+cat<<KONEC 
+Tukaj lahko napišemo poljubno besedilo. 
+KONEC LONEC 
+Lahko v vec vrsticah, dokler se ne pojavi vrstica oblike: 
+KONEC
+
+Kaj se v resnici zgodi? Ko se izvede cat<<KONEC, se opravi opisana preusmeritev, dokler v sledeci vrsticah ne nastopi ustrezno locilo. Torej se vse nadaljnje vrstice do vrstice, ki vsebuje le KONEC, preusmerijo na standardni vhod ukaza cat. Ta ukaz pa na standardni izhod izpiše svoj standardni vhod, torej gre preprosta za vec vrsticni izpisa poljubnega teksta.
+
+Pri tem se moramo zavedati, da se znotraj preusmerjenega besedila izvede razširitev spremenljivk. Da se to ne zgodi, lahko preprecimo na tri nacine: 
+locilo damo v enojne narekovanje, npr. 'KONEC', 
+pred locilo danomo nazaj-poševnico, npr. \EOF, 
+pred vsako uporabo razširitve spremenljivke navedemo nazaj-poševnico, t.j. pred vsemi znaki $, npr. \$1.
+
+Soroden nacin, imenovan tukaj-niz (angl. here string), razširi nek niz in ga dostavi programu na standardni vhod. Strogo gledano ne gre ravno za preusmerjanje vhoda lupine, vendar je uporaba zelo sorodna zgoraj opisanem nacinu. 
+ukaz <<< niz
+
+Podani niz se razširi in dostavi programu ukaz na standardni vhod. 
+cat <<< niz
+
+Dodatna literatura, s pomocjo katere lahko nadgradite svoje znanje, je Bash Reference Manual, kjer si lahko preberete poglavje 3.6.
+
+ 
+
+ukaz cat
+
+izpis vsebine ene ali vec datotek na standardni izhod
+
+pomembna stikala: 
+-b . . . oštevilcenje nepraznih vrstic
+-n . . . oštevilcenje vseh vrstic
+-s . . . stisk zaporednih praznih vrstic 
+-E . . . na koncu vsake vrstice bo dodan znak $ 
+-T . . . prikaz tabulatorjev z znakom ^I
+-v . . . prikaz neizpisljivih znakov
+-A . . . enakovredno -vET
+-e . . . enakovredno -vE 
+-t . . . enakovredno -vT
+
+pregled vsebine datoteke: more in less
+
+more /etc/passwd ... lahko se premikamo nazaj, zakljucimo s tipko q
+
+less /etc/passed ... lahko se poljubno premikamo ("more is less")
+
+izpis dela datoteke: head in tail
+
+head [-c stevilo] [-n stevilo] [-q] datoteka … izpiše sprednji del datoteke
+
+tail [-c stevilo] [-n stevilo] [-q] datoteka … izpiše zadnji del
+
+-c stevilo … izpiše podano število bajtov 
+-n stevilo (okrajšava -stevilo) … izpiše podano število vrstic 
+-q … ne izpisuje imen ko podamo vec datotek
+
+seq 1 100 | head -n 2 … prvi 2 vrstici 
+seq 1 42 | tail -2 … zadnji 2 vrstici
+
+pri head lahko uporabimo negativno število (od konca proti zacetku): 
+seq 1 100 | head -n -7 … vse razen zadnjih 7 vrstic
+
+pri tail lahko uporabimo +stevilo (zahtevamo izpis od tega stevila naprej):
+seq 1 666 | tail -n +665 … zacnemo z 665. vrstico 
+seq 1 100 | tail -n +50 | head … vrstice 50 do 59
+
+Zadnja sprememba: torek, 31. marec 2015, 18:46

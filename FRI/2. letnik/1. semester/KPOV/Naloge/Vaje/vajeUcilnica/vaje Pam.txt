@@ -1,0 +1,36 @@
+				VAJE PAM
+
+Ideja vaj: poskrbeti, da se lahko na računalnik v lupino ali grafično okolje prijavite prek radiusa. Spoznati PAM. Nastaviti radius strežnik tako, da bo lahko avtentikacijske zahteve pošiljal naprej drugim strežnikom.
+
+Če gre kaj narobe, si lahko verjetno pomagate z navodili, kako priti v zaklenjen računalnik na učilnici pod "Zagon računalnika".
+
+Za avtentikacijo prek PAM s pomočjo radius boste potrebovali primeren PAM modul:
+
+	sudo apt-get install libpam-radius-auth
+PAM module lahko sicer praviloma vklapljate in izklapljate z relativno prijaznim orodjem, v katerem opcije vklapljate/izklapljate s preslednico (space), med polji pa se premikate s TAB:
+
+	sudo pam-auth-update
+Na žalost radius avtentikacijski modul ni tako prijazen. Najprej morate popraviti konfiguracijsko datoteko za pam_radius_auth, v kateri nastavite svoj strežnik, popravite nastavljeno skrivnost ter zakomentirate neobstoječ strežnik:
+
+	sudo gedit /etc/pam_radius_auth.conf
+Avtentikacijo prek radiusa (povzeto po originalnih navodilih) vklopite tako, da spremenite:
+
+	sudo gedit /etc/pam.d/common-auth
+Pametno je, da imate pred shranjevanjem te datoteke nekje odprt vsaj en terminal, kjer ste root (s sudo su). Če bo šlo kaj narobe in bo sudo prenehal delovati, boste tako še vedno lahko popravili morebitne napake.
+
+Datoteko spremenite tako, da pravi odsek spremenite v:
+
+	# here are the per-package modules (the "Primary" block)
+	auth    sufficient  pam_radius_auth.so debug try_first_pass
+	auth    [NEKAJ TU VMES] pam_unix.so nullok_secure
+Kaj pomeni vsaka vrstica v tej datoteki in kaj naj bi bilo [NEKAJ TU VMES], si lahko preberete v uradni dokumentaciji PAM. Branje v tem primeru TOPLO priporočam.
+
+Ko ste popravili konfiguracijo PAM, morate popraviti še konfiguracijo radius strežnika. Knjižnica PAM je namreč tako prikladna, da jo uporablja tudi freeradius. Da ne bi prišlo do ciklične soodvisnosti, popravite /etc/pam.d/radiusd tako, da zakomentirate vse vrstice, ki vsebujejo @include.
+
+Nato podobno, kot ste pri prejšnji vaji, dodajte novega uporabnika, ki naj ima takšno ime, kot eden od ostalih uporabnikov na vašem sistemu.
+
+	sudo gedit /etc/freeradius/users
+Če bo šlo vse po sreči, se boste sedaj lahko prijavili v konzoli z geslom, ki je spravljeno v nastavitvah freeradius strežnika. Preklopite v konzolo (ctrl+alt+F1) in se poizkusite prijaviti z uporabnikom, ki obstaja v radius konfiguraciji. To, ali vam avtentikacija deluje, lahko preverite tudi tako, da odprete nov terminal ter v njem preizkusite ukaz sudo, npr:
+
+	sudo ls
+Delovati bi moralo geslo, zapisano v radius konfiguraciji.

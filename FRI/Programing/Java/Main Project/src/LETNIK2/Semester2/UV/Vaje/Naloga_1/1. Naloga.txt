@@ -1,0 +1,45 @@
+1. naloga
+
+Z integriranim razvojnim okoljem NetBeans realizirajte graficni vmesnik v graficnem okolju Swing, ki temelji na glavnem oknu (JFrame). Glavno okno vsebuje naslednje komponente:
+
+vrsticni menu (JMenuBar) z mo?nostmi Datoteka, Izbire1, Izbire2 in Pomoc (ki so kaskadni gumbi, katerim sledijo izvlecni menuji (JMenu)),
+orodno vrstico (JToolBar),
+delovno podrocje glavnega okna (JPanel), ki vsebuje vec podob, na?tetih spodaj, in
+statusno vrstico (JLabel).
+Delovno podrocje glavnega okna (JPanel) vsebuje naslednje podobe:
+    polje za vnos teksta (JTextField),
+    tri izkljucujoca stikala (JRadioButton)
+    ukazni gumb (JButton),
+    kombiniran izvlecni seznam (JComboBox),
+    kro?no polje (JSpinner),
+    stikalo (JCheckBox) in
+    vrstico za sporocila (JLabel).
+
+Podcrtane crke v imenih mo?nosti so mnemoniki, ki jih morate tudi realizirati.
+
+Menu Datoteka naj vsebuje mo?nosti Odpri (klic dialoga za izbiro datoteke (JFileChooser)),
+Pobriši (pobriše vsebino vrstice za sporocila in statusne vrstice) in
+Izhod (konca program).
+Vsem opcijam menuja Datoteka dodajte tudi ustrezne bli?njice (npr. Ctrl+O, Ctrl+C in Ctrl+Q). Menu Izbire1 naj vsebuje toliko koncnih izbir,
+kot je crk v va?em imenu, pri tem pa naj bo i-ta koncna izbira v tem menuju sestavljena iz imena tega menuja (Izbire1) in i-te crke va?ega imena.
+Primer: ce je nekomu ime Janez, ima menu pet koncnih izbir, prva koncna izbira je "Izbire1 J", druga koncna izbira je "Izbire1 A",
+tretja koncna izbira je "Izbire1 N",cetrta koncna izbira je "Izbire1 E" in peta koncna izbira je "Izbire1 Z", pri cemer so podcrtane crke v oznakah izbir spet mnemoniki.
+Podobno realizirajte tudi menu Izbire2, ki pa naj vsebuje toliko koncnih izbir, kot je crk v va?em priimku, koncne izbire pa naj bodo narejene tako kot pri menuju Izbire1,
+pri cemer uporabite ime tega menuja (Izbire2) in j-to crko va?ega priimka pri tvorjenju j-te koncne izbire tega menuja. Implementirajte tudi orodno vrstico (JToolBar),
+ki naj vsebuje vse koncne izbire iz menujev Izbire1 in Izbire2 (npr. "Izbire1 J", "Izbire1 A", ...). Vmesnik naj vsebuje tudi statusno vrstico, ki naj bo oznaka (JLabel),
+v katero se naj ob izbiri mo?nosti iz menujev Izbire1 in Izbire2 (ali iz orodne vrstice) doda ustrezna crka na konec obstojecega teksta.
+
+V delovnem podrocju glavnega okna implementirajte polje za vnos teksta (JTextField), kombiniran izvlecni seznam (JComboBox),
+ki naj v eni od svojih koncnih izbir vsebuje kraj va?ega prebivali?ca, izkljucujoca stikala (JRadioButton) "Dodaj", "Odstrani prvega" in "Odstrani izbranega",
+ukazni gumb (JButton) "Izvedi izbrano akcijo", kro?no polje (JSpinner), stikalo (JCheckBox) "Prepovej dvojnike" in vrstico za sporocila (JLabel).
+Ob pritisku na gumb "Izvedi izbrano akcijo" naj se izvede akcije glede na izbrano izkljucujoce stikalo. V primeru da je izbrano izkljucujoce stikalo "Dodaj",
+naj se vsebina polja za vnos teksta doda kot nov element v kombiniran izvlecni seznam ce
+    1) polje za vnos teksta ni prazno in
+    2) ce ?e ne obstaja zapis s tako vsebino v kombiniranem izvlecnem seznamu ali pa so dvojniki dovoljeni.
+Pritisk na gum "Izvedi izbrano akcijo" naj ob izbranem izkljucujocem stikalu "Odstrani prvega" oziroma "Odstrani izbranega" povzroci odstranitev prvega
+oziroma izbranega elementa iz kombiniranega izvlecnega seznama, ce ta ni prazen. V vrstico za sporocila naj se izpisuje,
+katera operacija se trenutno izvaja, npr. "Dodajam", "Odstranjujem prvega", "Odstranjujem izbranega". S stikalom (JCheckBox) "Prepovej dvojnike" pa
+nadziramo dodajanje podvojenih elementov v kombiniran izvlecni seznam. Ce je to stikalo izbrano, je dodajanje elementov, ki so ?e v seznamu, prepovedano,
+sicer pa je dovoljeno. Kro?no polje naj hrani cela ?tevila med 0 in 20.
+Ob spremembi izbrane vrednosti v kro?nem polju naj se v vrstico za sporocila izpi?e element iz kombiniranega izvlecnega seznama, ki se nahaja na izbranem polo?aju,
+oziroma "Ni elementa", ce v seznamu ni toliko elementov. Za prikaz in grupiranje vseh teh komponent uporabite vsebovalnik plo?ca (JPanel).

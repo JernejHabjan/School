@@ -1,0 +1,3 @@
+Danes smo se posvetili oblikovanju igralnosti, primarno skozi psihološki vidik snovanja le-te. Podali smo nekaj definicij igralnosti, povedali, kako jo lahko merimo, na katere pojme pri snovanju moramo biti pozorni ter kako lahko igro obvladujemo. S tehniènega vidika smo si pogledali delitev pravil igre na splošna pravila igre in pravila integrirana v objekte igre ter registriranje komponent na premico izvajanja. 
+
+V implementaciji smo dodali primer pravil igre na obeh nivojih (ter posodobili fizikalni pogon).

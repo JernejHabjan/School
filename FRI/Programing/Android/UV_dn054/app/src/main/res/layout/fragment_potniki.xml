@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/potniki_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="si.roglan.uv_dn05.Potniki">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/kupi_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="37dp"
+        android:text="KUPI" />
+
+    <Button
+        android:id="@+id/button_dodaj_potnika"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Dodaj potnika" />
+
+    <TableLayout
+        android:id="@+id/table_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/w"
+                android:layout_width="80dip"
+
+                android:layout_height="wrap_content"
+                android:text="Ime"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:text="Priimek"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:text="Spol"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:text="Rojstvo"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

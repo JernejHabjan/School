@@ -1,0 +1,118 @@
+Namen današnjih vaj je, da postavite RADIUS strežnik ter stran, ki se bo prek njega avtenticirala.
+
+Za zacetek namestite strežnik ter apache modul, ki ga zna uporabljati:
+
+sudo apt-get install freeradius libapache2-mod-auth-radius
+Ce slucajno niste opravili vaj v zvezi s SNMP, boste morda morali namestiti še apache:
+
+sudo apt-get install apache2
+Sedaj, ko je programska oprema namešcena, se lahko lotite konfiguracije. Konfiguracijske datoteke za freeradius so v /etc/freeradius. Za zacetek v datoteki /etc/freeradius/clients.conf spremenite skrivnost (secret) s "testing123" v nekaj drugega (npr. SKUPNASKRIVNOST).
+
+Nato je cas, da ustvarimo uporabnika. To storimo s primerno predelavo datoteke /etc/freeradius/users. Naprimer:
+
+brunhilda  Cleartext-Password := "GesloValkirije", Auth-Type := Local
+    Reply-Message = "Pozdravljena, junakinja med bojevnicami!"
+Reply-Message v principu ni potreben, je pa lepo videti neko sporocilo v odgovoru strežnika.
+
+Lahko tudi ustvarite uporabnika, ki ima isto uporabniško ime, kot eden od ostalih uporabnikov na sistemu.
+
+mojuser  Cleartext-Password := "MojeGeslo", Auth-Type := Local
+Tukaj boste naleteli na problem, saj vam bo strežnik avtentikacijo skoraj vedno zavrnil. Freeradius namrec po privzetju vsakega uporabnika "preveri" tudi tako, da pogleda, ce uporabnik slucajno ne obstaja v /etc/passwd. Ce uporabnik obstaja, se geslo preveri. Za to pocetje poskrbi radius modul unix. Da bi ga izklopili, morate popraviti konfiguracijsko datoteko:
+
+sudo gedit /etc/freeradius/sites-enabled/default
+kjer zakomentirajte vrstico "unix".
+
+Nato se lotimo konfiguracije strežnika Apache. Za zacetek je potrebno vklopiti modul za avtentikacijo prek Radiusa. Kako se modul imenuje, lahko ugotovite tako, da pogledate, kateri moduli s podobnim imenom imajo konfiguracijske datoteke v /etc/apache2/mods-available:
+
+ ls /etc/apache2/mods-available/*radi*
+Modul nato vklopimo (zatipk je nameren; a2enmod, Apache 2 Enable Module je napisan pravilno):
+
+sudo a2enmod auht_raduis
+Nato moramo samo še ustvariti spletno stran in skonfigurirati apache, da bo za omejevanje dostopa do le-te uporabil freeradius:
+
+sudo gedit /etc/apache2/sites-available/default
+Na primerno mesto v konfiguracijski datoteki dodajte konfiguracijo za radius modul (spodnja konfiguracija je skopirana iz datoteke z dobro razlago vseh uporabljenih nastavitev):
+
+<IfModule mod_auth_radius-2.0.c>
+    AddRadiusAuth localhost:1812 SKUPNASKRIVNOST 5:3
+    AddRadiusCookieValid 5
+</IfModule>
+
+<Location /radius/>
+    AuthType Basic
+    AuthName "RADIUS authentication for localhost"
+    AuthBasicProvider radius
+    AuthRadiusActive On
+    require valid-user
+</Location>
+Vec o konfiguraciji si lahko preberete na domaci strani modula.
+
+Nato je potrebno ustvariti imenik, iz katerega bomo stregli strani, do katerih omejujemo dostop. Imenik naj bo podimenik /var/www, kjer so obicajno spravljene datoteke, ki jih apache servira:
+
+mkdir /var/www/radius
+V ta imenik potem spravite poljubno .html datoteko, ki jo poimenujte kot index.html. Lahko uporabite kar index.html v /var/www, vendar ga predelajte tako, da ga boste lahko locili od originala. Stran bi morala biti dostopna na http://localhost/radius/, pri cemer bi strežnik od vas moral zahtevati uporabniško ime in geslo.
+
+Po konfiguraciji ne pozabimo ponovno zagnati obeh strežnikov:
+
+sudo service apache2 restart
+sudo service freeradius restart
+Ce (ko) gre nekaj narobe, je potrebno ugotoviti, kaj. Apache sporocila o napakah zapisuje v datoteko /var/log/apache2/error.log:
+
+sudo tail -f /var/log/apache2/error.log
+Da bi preverili, ali RADIUS strežnik deluje, lahko uporabimo ukaza radtest in radclient:
+
+radtest <username> <password> <server address> <port> <shared secret>
+ali
+
+radclient -f filename <server address> <acct|auth|status|disconnect> <secret>
+filename je neka naša datoteka v kateri so zbrani atributi, ki bodo poslani na RADIUS strežnik s tem ukazom. Primeri so v datoteki "users".
+
+Program radclient lahko namesto z datoteke argumente prebere tudi iz standardnega inputa:
+
+echo 
+    "User-name := <user name>, 
+    Password := <password" 
+    | radclient <server address
+    <acct|auth|status|disconnect> <secret>
+Ce se radius strežnik ne uspe ponovno zagnati z ukazom
+
+sudo srevice freeradius restart
+, ga lahko poizkusite zagnati v konzoli in tako ugotoviti, kaj je šlo narobe:
+
+sudo freeradius -X
+Pogoste napake vkljucujejo nepotrebne prelome vrstic, manjkajoce in odvecne vejice, manjkajoce presledke pred odgovorom v datoteki users.
+
+Da bi omogocili predajanje avtentikacije sosedu, morate popraviti še /etc/freeradius/proxy.conf in /etc/freeradius/client.conf
+
+VI popravite proxy.conf:
+
+home_server hs_anvilania {
+    type = auth+acct
+    ipaddr = IP_SOSEDA
+    port = 1812
+    secret = testing123
+}
+
+home_server_pool pool_anvilania {
+    type = fail-over
+    home_server = hs_anvilania
+}
+
+realm anvilania {
+    pool = pool_anvilania
+    nostrip
+}
+SOSED v proxy.conf ustvari domeno "anvilania"
+
+realm anvilania {
+}
+SOSED v client.conf nastavi novega AAA klienta (vas), ki bo lahko dostopal do AAA strežnika
+
+client VAS_IP {
+    secret = tesitng123
+}
+SOSED doda novega uporabnika v /etc/freeradius/users
+
+"Dot" Cleartext-Password := "Polka"
+    Reply-Message = "If at first you don't succeed, %{User-Name}, blame it on your parents!"
+Ce ste z vajo zakljucili, se lahko zabavate z branjem dokumenta, v katerem je opisano, kako je postavljen Eduroam.

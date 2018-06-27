@@ -1,0 +1,15 @@
+63150106 Jernej Habjan
+
+1. Korenski strežnik:
+	Glavni routing je potekal na dveh korenskih strežnikih, katera sta tudi poskrbela za routing do
+	vsakega od odjemalcev ("lokalni" strežnik, CA, odjemalec).
+	Routing je potekal glede na vpisne številke študentov, 
+	Od korenskih strežnikov smo dobili ipje in "routing" nastavitve preko vpn.
+
+2. "Lokalni" strežniki:
+	Za usmerjanje so morali omogočiti ip_forwarding -> net.ipv4.ip_forward=1 ter osvežiti nastavitve.
+	Strežniki so morali v /etc/openvpn/server.conf nastaviti:
+		route 10.0.0.0 255.0.0.0 10.X.Y.1
+	kar pomeni, da strežnik sporoči klientom, naj ves promet za 10.0.0.0 preusmeri
+	preko tega omrežja, korenski strežnik pa bo klientu na tem strežniku sporočil, naj promet posreduje 
+	najprej do njih.

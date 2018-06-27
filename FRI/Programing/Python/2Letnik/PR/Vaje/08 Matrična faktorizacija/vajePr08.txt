@@ -1,0 +1,21 @@
+matrična faktorizacija
+
+	delamo clustering po dveh dimenzijah hkrati.
+	K-means isto naredi clustering ampak tudi če ga poženemo prvo po stolpcih, drugič po vrsticah po 2x pognan neodvisno. pri matrični
+	faktorizaciji se pa odvisno clustera W in H hkrati.
+	
+	lahko gledamo na to kot enoten model, ki ovrednoti poljubno kombinacijo (film, user)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

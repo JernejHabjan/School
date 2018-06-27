@@ -1,0 +1,110 @@
+f= g+h
+g -> cost do noda (ponavad number of squares)
+h -> cost od goala do konca
+notr je evklidska razdalja
+
+
+H->heuristic ->prvo to
+	lahko calculataš na več načinov
+	"manhattan formula -"ne gre čez diagonalo"
+G-> da gre od noda do sosednjega (do 8 sosednjih-tudi diagonale)
+
+ SQRT(2)*razdalja_do_dotikalnih_nodu ->tko se izračuna razdaljo do diagonalnih_nodu, brez d greš korent use...
+ recmo si določš heuristic value za dotikaln_nod -> 10... pol je diagonaln_node =14
+ 
+parentamo enmu nodu vse sosedne node ->damo v open list
+starting node damo v closed list
+pol calculatamo f+g za use open node
+-pol uporabš node z najmanšmu f ->ga dodaš v closed list
+ pol mormo prevert use prejšne node -calculate G value: 7:30 na tutorialu
+	vzamemo g value noda na kermu smo
+	prištejemo movement costu tistega ki je sosednji(če dotikalni=10, čene pa 14) in open node tega noda na kermu smo
+	in pol prevermo ali je tanov value... njegov value manš kot cost od "soseda"
+	-če je tanov value manjš ali enkak
+		reparentamo sosedn node na tega k smo zdj
+to ponavlamo dokler ni neki ...maybe f==1-pol gremo direkt do konca
+	pol izrišemo pot po najmanših f costih (maybe f costs)
+
+java koda:
+http://www.codebytes.in/2015/02/a-shortest-path-finding-algorithm.html
+
+
+
+
+// A*
+initialize the open list
+initialize the closed list
+put the starting node on the open list (you can leave its f at zero)
+
+while the open list is not empty
+    find the node with the least f on the open list, call it "q"
+    pop q off the open list
+    generate q's 8 successors and set their parents to q
+    for each successor
+    	if successor is the goal, stop the search
+        successor.g = q.g + distance between successor and q
+        successor.h = distance from goal to successor
+        successor.f = successor.g + successor.h
+
+        if a node with the same position as successor is in the OPEN list \
+            which has a lower f than successor, skip this successor
+        if a node with the same position as successor is in the CLOSED list \ 
+            which has a lower f than successor, skip this successor
+        otherwise, add the node to the open list
+    end
+    push q on the closed list
+end
+__________________________________________________________________
+WIKIPEDIA PSEUDOCODE:
+
+function A*(start, goal)
+    // The set of nodes already evaluated.
+    closedSet := {}
+    // The set of currently discovered nodes still to be evaluated.
+    // Initially, only the start node is known.
+    openSet := {start}
+    // For each node, which node it can most efficiently be reached from.
+    // If a node can be reached from many nodes, cameFrom will eventually contain the
+    // most efficient previous step.
+    cameFrom := the empty map
+
+    // For each node, the cost of getting from the start node to that node.
+    gScore := map with default value of Infinity
+    // The cost of going from start to start is zero.
+    gScore[start] := 0 
+    // For each node, the total cost of getting from the start node to the goal
+    // by passing by that node. That value is partly known, partly heuristic.
+    fScore := map with default value of Infinity
+    // For the first node, that value is completely heuristic.
+    fScore[start] := heuristic_cost_estimate(start, goal)
+
+    while openSet is not empty
+        current := the node in openSet  the lowest fScore[] value
+        if current = goal
+            return reconstruct_path(cameFrom, current)
+
+        openSet.Remove(current)
+        closedSet.Add(current)
+        for each neighbor of current
+            if neighbor in closedSet
+                continue		// Ignore the neighbor which is already evaluated.
+            // The distance from start to a neighbor
+            tentative_gScore := gScore[current] + dist_between(current, neighbor)
+            if neighbor not in openSet	// Discover a new node
+                openSet.Add(neighbor)
+            else if tentative_gScore >= gScore[neighbor]
+                continue		// This is not a better path.
+
+            // This path is the best until now. Record it!
+            cameFrom[neighbor] := current
+            gScore[neighbor] := tentative_gScore
+            fScore[neighbor] := gScore[neighbor] + heuristic_cost_estimate(neighbor, goal)
+
+    return failure
+
+function reconstruct_path(cameFrom, current)
+    total_path := [current]
+    while current in cameFrom.Keys:
+        current := cameFrom[current]
+        total_path.append(current)
+    return total_path

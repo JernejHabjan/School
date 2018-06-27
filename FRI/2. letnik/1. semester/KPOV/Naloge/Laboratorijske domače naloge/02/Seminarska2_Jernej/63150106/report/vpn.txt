@@ -1,0 +1,28 @@
+Jernej Habjan 63150106
+
+1. Ponovno o zgradbi omrežja:
+	Tu moram še povedati, da routing poteka zelo čudno, saj je vsak (tako server kot CA kot client) povezan direktno 
+	na korenski strežnik, kot tudi morda na svoj "lokalni" strežnik (CA, client). Po eni strani je to dobro, saj sta CA in client
+	vedno dosegljiva, tudi če njun "lokalni" strežnik ni vpostavljen.
+
+2. Priprava config datotek:
+	Tu je bilo za vsakega od vlog malo drugače (client, CA, server).
+	Seveda nam je prijazni kolega Metod Medja že pripravil nekatere config datoteke (server.conf in client.conf).
+	CA in client sta lahko uporabila samo client.conf in v njo vpisala ime svojega "lokalnega" strežnika, potem pa to
+	konfiguracijo skopirala v root.conf in vanj zapisala naslov (domeno) javno dostopnega strežnika (v mojem primeru fri1.medja.net)
+	Strežnik je pa lahko uporabil samo eno datoteko (saj uporablja samo 1 povezavo do korenskega strežnika - Server.conf)
+	Strežnik je v tej config datoteki nastavil ip omrežja, v katerega pripada. 
+	Vsak je pa moral popraviti seveda še ime datotek (ca, cert, key).
+	Nekatere datoteke sem moral iz svoje mape skopirati v /etc/openvpn. Za CA so te datoteke:
+	cert.crt, privkey.key, root.crt 
+	in obe config datoteki client.conf in root.conf.
+	Stežnik je moral skopirati še dh parametre, oba svoja certifikata ki jih je dobil od svoje CA.
+	
+3. Povezava na omrežje:
+	Postopek je bil lahek, saj so vse datoteke že pripravljene.
+	Prvo sem se moral prijaviti na korenski strežnik (root.conf)
+		openvpn --config root.conf
+	Za tem sem bil prvi pravi CA prijavljen na root strežnik (#proud_AF)
+	Potem (ko je bil priključen na omrežje tudi moj "lokalni" strežnik) sem se lako priključil tudi na svoj strežnik.
+		openvpn --config client.conf
+	In s tem sem bil priključen na omrežje. Deloval je ping do korenskega in do mojega strežnika.

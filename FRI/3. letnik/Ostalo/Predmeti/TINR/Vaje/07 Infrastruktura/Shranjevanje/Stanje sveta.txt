@@ -1,0 +1,17 @@
+Naloga
+
+Stanje igre, oziroma spremenljivke, ki doloèajo stanje igre (pozicije, hitrosti objektov; toèke, življenja) shranimo v podatkovno strukturo, kot je na primer slovar. Ko imamo pripravljeno podatkovno strukturo uporabimo NSKeyedArchiver in NSKeyedUnarchiver, da v datoteko (pot dobimo s pomoèjo NSSearchPathForDirectoriesInDomains) shranimo in na drugi strani iz nje naložimo podatke. Tako dosežemo, da se stanje igre ohrani tudi po tem, ko zapremo aplikacijo.
+
+Stanje igre bomo shranjevali predvsem ob posebnih dogodkih, kot je prekinitev igre ali pošiljanje igre v ozadje. Èe uporabimo vzorec opazovalca, bomo metodo za shranjevaje prijavili na takšne dogodke (primerki razreda Event, ki so definirani v razredu Game). Primer prijave na dogodek, ki se proži ob pošiljanju aplikacije v ozadje:
+
+[self.game.deactivated subscribeDelegate: [Delegate delegateWithTarget: savingClassInstance Method:@selector(SavingMethod  ... ];
+
+
+Navodilo
+
+Posnemite simulator, kjer pokažete, da se po zaprtju aplikacije igra nadaljuje od tam, kjer je bila prekinjena. To demonstrirate tako, da igro med igranjem zaprete s klikom na gumb iPhone ter ustavite proces aplikacije z dvoklikom na gumb iPhone ter držanjem na ikoni pognanega progama spodaj (ker sicer zaradi veèopravilnega opercijskega sistema aplikacija ostane odprta v ozadju). Nato še enkrat poženite aplikacijo in pokažite, da se igra nadaljuje od tam, kjer je bila prekinjena.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Poimenovanje:
+63080000-priimek-infrastruktura-shranjevanje-stanje_sveta.mov

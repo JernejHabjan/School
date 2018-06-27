@@ -1,0 +1,27 @@
+MORMO ZNAT 4 STRATEGIJE
+MORMO ZNAT RELACIJSKO ALGEBRO (Projekcija -> select)
+
+POGLEJ SI SLAJDE K ZAENKRAT ŠE NISO NA UČILNC
+
+dekompozicija - analiza (preveri sintakso in semantiko) ali so atributi v bazi...
+			  - gradnja drevesa  -levo uravnotežena drevesa / desno (postopno dodajanje)
+			  - formuliranje poizvedb --graf povezav (graf povezav relacij -> za vsako tabelo se nariše svoje vozlišče in rezultat in se pogleda v sql... - če je nepovezano je napačno formulirana poizvedba)
+			  
+	preveranje sintaktične pravilnosti -> pogledamo varchar(30) --nekje pa piše bool v drugi tabeli -> NAROBE
+	preverjanje semantične analize -> naredimo vozlišča in povezujemo -> če ni povezan graf -> fail (glej slajde || spovn se s predavanj)  (morali bi guests povezat z bookingom)
+optimizacija: 12 hevrističnih pravil- NI TREBA ZNAT
+	strategije: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ZA KOLOKVIJ ---GLEJ SLAJDE
+	1.
+	selekcijo izvedi čim prej (daj selekcijo čim bolj dol)
+	2.
+	ZDRUŽI KARTEZIJSKI PRODUKT IN SELEKCIJO V EKVISTIK KJER LAHKO
+	3.
+	manjše tabele ki so manjše daj nižje (da ko so stiki so majhni)
+	4.
+	podobna kot prva ampak za prokcije
+	
+	
+sočasnost
+grafi
+obnavljanje
+semantično pravilno in optimizacija

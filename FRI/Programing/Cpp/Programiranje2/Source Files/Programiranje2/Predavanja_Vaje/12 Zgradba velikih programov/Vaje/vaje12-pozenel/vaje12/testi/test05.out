@@ -1,0 +1,20 @@
+--- globina ---
+globina = 4
+--- in-order ---
+Ana (1)
+Kajetan (2)
+Samo (3)
+Barbara (5)
+Toni (7)
+Vida (8)
+Damijan (13)
+Severin (21)
+--- level-order ---
+Vida (8)
+Kajetan (2)
+Severin (21)
+Ana (1)
+Barbara (5)
+Damijan (13)
+Samo (3)
+Toni (7)

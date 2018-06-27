@@ -1,0 +1,6 @@
+
+Da smo zakljuèili debato o loèitvi pogona, smo XNI nadgradili s pogonom Express, ki vsebuje nespecifièen del naše igre: nespecifièen del scene, izrisa, matematike in fizike. V naš projekt smo dodali razred za (arhitekturno loèen, komponentni) fizikalni pogon, ki uporablja Express. Nato smo obdelali tradicionalne/skoraj tradicionalne/ToBe tradicionalne vhodne (nekatere tudi vhodno-izhodne) naprave v igrah. Z vidika dotikovnega vmesnika smo zaznali dotike ter dodali premikanje brez fizike (recimo premikanje igralca) ter z njo (recimo premikanje žoge).
+
+Napovedali smo tudi predavanje iz industrije v sredini decembra.
+
+Implementacija je poleg arhitekturnih prijemov obsegala delo z dotiki in premikanje.

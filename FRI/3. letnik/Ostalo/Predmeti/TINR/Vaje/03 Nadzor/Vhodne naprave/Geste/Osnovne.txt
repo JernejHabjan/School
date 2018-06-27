@@ -1,0 +1,11 @@
+Navodilo
+
+Posnemite iPhone/iPad simulator ali v iPhone/iPad živo, kjer se objekti na sceni spreminjajo glede na geste uporabnika v skladu z željenim uèinkom glede na igralnost vaše igre. Med osnovne geste se štejejo dvojni kliki, tresenje, potegi (angl. drag) s prstom v razliène smeri (vodoravno, navpièno, prosto), šèipanje (angl. pinch), podrsanje (angl. flick); lahko so v eno-, dvo- ali veèprstnih izvedbah.
+Naloga je opravljena, ko boste implementirali vsaj eno osnovno gesto (pod komentar napišite, za katero gesto gre).
+
+Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:
+63080000-priimek-nadzor-geste-osnovne.mov

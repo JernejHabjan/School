@@ -1,0 +1,14 @@
+
+2. naloga 23_junij_2016 - pokritje kvadratov --- done ... dobra naloga - alociraš od minus do plus, prštevaš ++ na indexe,
+	pol greš pa čez vrstice pa ax[i][j] ki ma številko recmo 7 - daš v nov array na 7. index pa pol to sortaš
+
+3. naloga 23_junij_2016 finish... nevem how
+
+
+DONE - 3. naloga 30_avgust_2016 --- tipična rekurzija - skakanje žabe
+
+2. in tretja naloga 3. junij 2015
+
+
+27.8.2015 3. naloga #### DONE!!!! DOBRA REKURZIJA!!!! NARED JO - tabela in dobit minimum vsoto
+

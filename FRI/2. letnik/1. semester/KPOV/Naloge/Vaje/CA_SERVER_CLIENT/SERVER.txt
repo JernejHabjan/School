@@ -1,0 +1,52 @@
+##NASTAVIŠ NA BRIDGED NETWORK INTERFACE ## ?????????????
+##LOGIN AS ROOT##
+apt-get update; apt-get install easy-rsa openvpn
+mkdir /openvpn-SERVER
+cd /openvpn-SERVER
+
+cp /usr/share/easy-rsa/* /openvpn-SERVER
+cd /openvpn-SERVER
+vim vars
+	export KEY_COUTRY="SI"
+	export KEY_PROVINCE="nekji"
+	export KEY_CITY="eeeerew"
+	..
+	
+	#x509 subject field
+	export KEY_NAME="servercek"
+	##SHRANIŠ##
+source vars
+./clean-all
+./build-req --server servercek
+
+##skopiraš keys/servercek.csr do CA v keys mapo##
+
+##KO CA OBDELA##
+	##sprejmi servercek.crt, ca.crt v /openvpn-SERVER/keys
+
+	
+cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz /openvpn-SERVER
+gunzip server.conf.gz 
+
+vim server.conf
+	proto na tcp
+	ca keys/ca.crt
+	cert keys/servercek.crt
+	key keys/servercek.key
+	dh dh1024.pem ---- spremenimo na-> dh dh2048.pem
+	*odkomentiraš* client-to-client   ---da lah clienta pingata med sabo
+	*odkomentiraš* comp-lzo
+shranš
+source vars
+./build-dh
+cp keys/dh2048.pem /openvpn-SERVER/dh2048.pem
+
+
+(kot root) openvpn --config server.conf
+---tukaj server naj bi laufal---
+	
+##VKLOPI PORT FORWARDING##
+virtualka -> network -> nat -> advanced -> vklopiš port forwarding
+		 hostport 1194 gre na guest port 1194
+
+###clienta naj bi se lahko pingala med sabo###

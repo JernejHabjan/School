@@ -1,0 +1,47 @@
+Rešitve:
+1: -Za transportni protokol lahko SOAP uporablja tudi SMTP
+   -Sporočila so zapisana v obliki XML
+   
+2:	1-sporočilo
+	2-algoritem za kriptiranje
+	3-kriptirano sporočilo
+	4-algoritem za dekriptiranje
+	5-sporočilo
+	6-prejemnikov javni ključ
+	7-prejemnikov zasebni ključ
+	
+3: a
+4: Overitelj izdaja digitalna potrdila na osnovi overovitve identitete stranke, npr z osebnim dokumentom
+5:	-sistem je predrag
+	-sistem zagotavlja več informacij kot je potrebno za učinkovito upravljanje
+	
+6:	-Varni časovni žig dokazuje, da je elektronski dokument obstajal v trenutku, navedenem v časovnem žigu.
+	-Varni časovni žig dokazuje, da se elektronski dokument od časa žigosanja ni spremenil.
+	-Varni časovni žig dokazuje, da je vsebina elektronskega dokumenta resnična.
+7: NB > 0
+8:	-hranjenje pravno veljavnih dokumentov
+	-zagotavljanje avtentičnosti dokumentov tudi v prihodnje
+	-časovni žig
+9:	1-podatkovna skladišča in drugi viri
+	2-izbira
+	3-ciljni podatki
+	4-prevedba
+	5-podatki v obliki za odkrivanje zakonitosti
+	6-odkrivanje zakonitosti
+	7-posamezne zakonitosti, povezave
+	8-interpretacija in povezovanje
+	9-informacije za učinkovito odločanje
+
+10:	-več tisoč do več deset tisoč transakcij na dan
+	-normalizirana
+	-tudi do več tisoč uporabnikov
+	-podatki so zapisani v atomarni obliki
+	-čim manjše število podvojenih podatkov
+
+11:c
+12:Predstavitvena raven, Procesna raven, Podatkovna raven
+13:	-za kriptiranje in dekriptiranje uporablja isti ključ
+	-ključ mora ostati poznan le udeležencema v komunikaciji
+
+14:O visoko strukturiranem procesu govorimo takrat, ko so vsi njegovi koraki natanko definirani in razumljivi. Natanko je določeno kako jih je potrebno izvesti, prav tako pa je moč ugotoviti, kako uspešna je bila izvedba.
+15: 1-storitveni posrednik, 2-storitveni ponudnik, 3-uporabnik storitve

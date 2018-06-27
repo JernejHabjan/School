@@ -1,0 +1,452 @@
+##### Vaje01 #####
+    Label for:
+        <input id="zenski" type="radio" name="spol" value="zenski">
+        <label for="zenski">Ženski</label>
+
+    Subscript/Superscript
+        <sub> / <sup>
+
+    Non breakable space
+        &#8239;
+
+    Sredina dokument
+        width: 70%;
+        margin: auto;
+
+    Tekst v obrobi
+        <fieldset>
+        	<legend>Add a new participant</legend>
+        </fieldset>
+
+##### Vaje02 #####
+    #svg html5 css3
+
+    //html5 novelties - poglej na slajdih
+
+    //smenantični elementi - elementi s pomenom ->divi ki imajo imena
+
+    //media queries
+        @media not | only mediatype and (media feature){
+            css code;
+        }
+
+        @media only screen and (max-width: 500px) {
+         body {
+         background-color: lightblue;
+         }
+        }
+
+        default mora biti za mobilne uporabnike in šele potem za web ker imajo mobiji omejen
+    //flexible media
+        img, video, canvas {
+         max-width: 100%;
+         height: auto;
+        }
+    //grid
+    //grid za mobile devices in tablice
+
+    /* This ensures the padding and border are included
+    in the total width and height of an element. */
+    * {
+      box-sizing: border-box;
+    }
+
+
+    //oblivanje teksta
+        float: left;
+
+    //značka article
+        <article> - da tekst lepo breaka na koncu
+
+    //svg
+        <figure> -- wrappaš sliko, illustrations, diagrams, code listings v figure
+        <svg>  -- container for svg graphics
+        <figcaption> -napišeš ime
+
+        //shapes
+            <rect>
+            <eclipse>
+            <path>
+    //video
+        <video>  -- wrappaš ga v <figure> tag !! remember
+
+    //animacije -- skopiraš
+
+##### Vaje03 #####
+    #js, narejena vaja v jQuery!!
+
+    //z javascript lahko manipuliramo DOM(document object model)
+    DOM je struktura ki jo naredi po tem ko naloži spletno stran
+    Dom is a standard ofr how to get, change, add or delete HTML elements
+    BOM (browser object model)
+        means to access some functions via functions from JS
+
+    //javascrpit ponavadi naložimo na koncu strani pred zaključkom body da je stran bolj hitra
+
+
+    #pazi težka vaja -> težak jQuery
+
+    //dl dt dd
+        <dl> -description list
+        <dd> -descrptption
+        <dt> -description term
+        //example
+        <dl>
+          <dt>Vsebina:</dt>
+          <dd><input id="todoContent" placeholder="Tukaj vnesi vsebino TODOja." /></dd>
+
+    //wrap funkcije v variable in klicanje tega variable objekta na documentReady
+
+    //barva teksta
+        //prvo dodamo besedilo z jQuery v takem formatu
+            <li class="item item-red">uztr</li>
+        //potem imamo pa css element
+            ul#todoList li.item-red {
+              color: black;
+            }
+
+    //jQuery set !!!!
+        text -> nastavi samo tekst
+        html -> upošteva recmo <b>neki</b> da označi z debelo
+        val -> nastavi nekaj v input fieldu itd
+
+    //jQuery spreminjanje atributov:
+        $("button").click(function(){
+            $("#w3s").attr({
+                "href" : "https://www.w3schools.com/jquery",
+                "title" : "W3Schools jQuery Tutorial"
+            });
+        });
+
+
+    //DOMAČA NALOGA 1:
+        DAL SEM KODO ZA GUMB S SKRIPT V <FORM> IN SE JE AVTOMATSKO ZAPIRALA:
+        KO SEM DAL IZ FORM SE NI ZAPRLA -> DAJ V DIV!!!
+
+    //ZA UPORABO JQUERYJA ->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    /*
+
+        const a = 10
+        undefined
+        a = 20
+        VM99:1 Uncaught TypeError: Assignment to constant variable.
+            at <anonymous>:1:3
+        (anonymous) @ VM99:1
+        let b = 10
+        b = 20
+        const numbers = [1,3,5,6]
+        console.log(numbers)
+        for(let i = 0; i < numbers.length; i++){
+            console.log(numbers[i])}
+
+        for(let number of numbers)console.log(number)
+
+        numbers.forEach(x=> console.log(x**2))
+
+        numbers.map(x=> x**2)
+        [1, 9, 25, 36]
+        document.head
+        <head>​…​</head>​
+        document.getElementById("first");
+        <input id=​"first" type=​"text" name=​"first" autofocus>​
+        document.getElementById("first").value;
+        ""
+        document.getElementById("first").value = "lel";
+        "lel"
+        document.getElementById("role")
+        <select id=​"role" name=​"role">​…​</select>​<option>​Lecturer​</option>​<option>​Teaching assistant​</option>​<option selected=​"selected">​Student​</option>​</select>​
+        document.getElementsByTagName("option")
+        [option, option, option]
+        for(let option of document.getElementsByTagName("option")) console.log(option.innerText)
+
+        const button = document.getElementsByTagName("button")[0]
+
+        button.onclick = event =>console.log("button clicked");
+        event =>console.log("button clicked")
+
+        DOM->>>
+        window
+        Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+        window.screen
+        Screen {availWidth: 341, availHeight: 131, width: 341, height: 131, colorDepth: 24…}
+        window.localStorage
+        Storage {length: 0}length: 0__proto__: Storage
+
+    */
+
+##### Vaje04 #####
+    #http
+
+    default port = 80
+    http pove kašna sporočila mora generirati client ko dela requeste
+              kakšna sporočila mora generirat server ko odgovarja na ta sporočila
+    http je brezstanjski protokol
+        vse http seje(zahteva odgovor) so medseboj popolnoma neodvisne
+        če 3x recmo zahtevaš eno stvar... bo server usakič vzpostavlov in rušiv povezavo
+
+
+    request
+        request line -> tipmetode, tip_resourca(URI), protocol version
+        request headers -> request modifiers, client info and possible body content
+    response
+        status line -> including the messages proticil version oand succes or error code
+        Response headers-> server information, entity metainformation, and possible entity-body content
+
+    metode
+        get - dobit
+        post - dat na server
+        put - updatat
+        delete -delete
+
+    kaj mora spletni strežnik narest:
+        čakamo da se kdo na strežnik poveže -> funkcija accept()
+        save the requests -> preberemo zahtevo, damo dat, naredimo odgovor(na socket)
+        zapremo socket
+
+    vrste procesiranja:
+        Serial processing: - en request at a time (slow, good for teaching)
+        Parallel requests(pre-fork): stopnja paralelosti je parameter. ko se en connecta, štartamo nov proces ki handla ta request
+                    število procesov ki jih naekrat poganjamo je omejeno
+        Parallel requests(event based): -pri NodeJs
+            -1 proces ki čaka da se clienti povežejo
+            -selector, ki skoz gleda sockete in kdaj je pripravljen na pisanje/branje
+                s tem zvemo kdaj je na voljo in ne čaka
+    COMPILING:
+        putty
+            localhost
+            8080
+            raw
+
+            close window on exit -> daš ne
+
+            in tle not pišeš request
+        CURL
+            s powershell do bin/curl
+            pol pa
+            .\curl.exe localhost:8080 -v
+
+            .\curl.exe localhost:8080/index.html -v
+        browser:
+            localhost:8080/index.html
+
+##### Vaje05 #####
+    #PHP
+    -php naj bi se izvajal vse v strežniku in potem pošljemo clientu
+    -vsi if,for,while... stavki so case INsensitive
+    -imena spremenljivk pa so različne spremenljivke
+
+    primer:
+    <?php
+        echo ("Hello ");
+        echo "World!";
+    ?>
+
+    running php scripts
+        - iz cmd
+        - play v IDE
+        - preko prehoda - na strežnik poziv http katero skripto naj požene, požene in pošlje rez.
+        - uporaba interaktivna konzola -> php -a //to nben ne počne
+    php ima default parametre
+
+    #PONOVITEV HTTP
+        KAM DATI DATOTEKE DA JIH XAMPP ZAZNA
+        - c:/xampp/htdocs -> sem notri daš mapo
+
+##### Vaje06 #####
+
+    kaj moramo poslati v get:
+        destination
+        metodo (get)
+        parametre(firstName,lastName)
+
+        potem lahko pridobivamo parametre
+        echo $_GET["Last-Name"]
+    pri post
+        vse lahko ostane enako
+        -parametri niso zapisani v URL
+
+    #### Database management systems ####
+        XAMPP in MariaDB
+        Storage engine-pove kako se naj podatki zapišejo
+            XtraDB, InnoDB
+            Aria, MyISAM -brez triggerju, foreign key constraints
+        to connect
+            mysql -u <username> -p
+
+        narediti database studentu:
+        1 CREATE DATABASE web_store ;
+        2 CREATE USER 'student '@'localhost ' IDENTIFIED BY ' password123 ';
+        3 GRANT ALL ON web_store .* TO 'student '@'localhost ';
+
+        #connect to mysql with PHP
+            old way - mysql_connect()
+                      mysql_selectdb()
+                      mysql_query()
+
+            new way -PHP data objects
+                -povemo kateri gonilnik bomo uporabili in vse funkcije ostanejo iste
+                -tako lahko ez preklapljamo med bazami
+                -objektno usmerjen
+                PDO PHP <-> DB DRIVER <-> DATABASE
+
+                KODA NA SLAJDIH "st-pdo.pdf"
+
+                pozicijski parameter -> ?
+                    prepare(" SELECT id , joke_text FROM jokes WHERE joke_text LIKE ?");
+                    bindValue(1, "% chuck %");
+                    -to naredi da ne konkateniramo od userja - da ne pride do injecta?
+                    -lahko namesto bindValue uporabimo bindParam
+                        vežemo na parameter, ki še ni nujno da že obstajajo
+                        ni nujno da je že definirana sprem.
+                        bindParam(": joke_text ", $text );
+                        $text = " All arrays Chuck Norris
+
+        XAMPP in MariaDB
+            localhost:8080/phpmyadmin
+
+##### Vaje07 #####
+    #HTTP
+    Da imamo vpostavljeno "sejo" - HTTP cookies in PHP seje
+    HTTP protokol nima seje
+    HTTP cookie je shranjen na clientu.
+        V zaglavju server pošilja cookie -> cookie: mycookie=value
+
+        Client lahko spremeni ta cookie, lahko jih ignorira, lahko spremeni imena, niso namenjene za velike količine podatkov
+
+    PHP seja:
+        stežnik vsakemu odjemalcu dodeli ID - PHPSESSIONID
+        Odjemalec nosi sam identifikator in ne podatkov, tako da jih ne more spremeniti.
+        Vos data je na serverju kot en globalni slovar, kjer je vrednost ID in value podatki.
+        session_start()
+
+        Številka seje je varnostno občutljiv podatek
+
+
+##### Vaje08 #####
+    MVC
+    Kako razbiti kodo na module in določiti vmesnike kako delati z moduli
+    Problem je kako izboljšati preglednost programske kode (ni hitreje ampak
+    da polepšamo orgarnizacijo kode)
+    3 skupine modulov:
+        Model handles data and buisness logic - npr studis(za beleženje..)
+            -classes, scripts (delo s podatkovnimi bazami)
+        View presents the data to the user - prikaz
+            -HTML, XML, Json podatke
+        Controller - prejme od model in posreduje viewu
+            -javascript, jquery..
+            -odločiti se kateri model prebrat, katere podatke pridobit in poslat
+            to viewu
+            -controller je posrednik med tem ko se View in Model ne vidita
+    Ponavadi dodamo Router:
+        -predstavlja enotno točko vhoda v našo app(na katerem url naslovu se bo
+        izvedel kateri kontroler)
+        -je datoteka skozi katero vedno dostopamo app
+
+
+    Prednosti in slabosti:
+        -bolj se znajdeš
+        -code reuse je lažje dosegljiv
+        slabosti:
+        -struktura je bolj kompleksna
+        -requires practice
+
+
+##### Vaje09 #####
+    AJAX - asinhroni javascript in XML
+    Pri php se cela stran osveži, z javascript lahko spremenimo le del strani, če podatke že imamo.
+    Da ni treba refreshat stran da pokaže podatke
+
+    event occurs->event funkcija->send request->php na strežniku-> strežnik odgovori z XML(ponavadi z HTML)->
+        z javascriptom obdelati->pokažemo podatke
+
+##### Vaje10 #####
+    Validacija podatkov:
+        pogledamo če je @ v mailu
+        pogledamo če so številke veljavne
+        lahko nam razkrijejo podatkovno bazo
+        preverjati mormo obvezno:
+            GET, POST, COOKIE; SERVER
+    sql injection
+        username ' OR '--- za OR bo vedno false ker bo prazen niz in bo optimizan
+    executing javascript in places we didnt plan:
+        cross-site scripting attack(XSS)
+        napadalec podtakne snippet kode na stran
+        preverjanje na 2 mestih:
+            -na odjemalcu:
+                uporablamo html obrazce in javascript
+                ni dovolj na odjemalcu
+            -na strežniku
+                res validiramo na serverju!!!! ker lahko z curl pošlje kaj
+                cast(int)
+                    is_numeric($input)
+                    intval, floatval
+                filtracija (ki ven pomeče vse html značke):
+                    htmlspecialchars($input) ... to je v php --ne izvede html kode
+                    strip_tags($input) --znacke ven pomece
+                imamo dve funkciji za delat validacije:
+                    filter_input()
+                    filter_input_array()
+    pitfals of $_SERVER["PHP_SELF"]
+        javascript v urlju in ga zalaufamo v browserju
+        napadalec pošlje zraven urla še pač javascript kodo
+        in če direktno uporabimoo $_SERVER["PHP_SELF"] se namesto tega
+        inserta koda
+
+        obramba:
+        htmlspecialchars
+        basename(__FILE__)
+        ... ne smemo izpisati  $_SERVER["PHP_SELF"]
+
+##### Vaje11 #####
+    Real time web applications
+
+    Ajax polling
+        da uporabniku ni treba samo refreshat sita
+        ideja: da javascript vsake n sekund preverja ce so novi podatki in potem osvezi
+        slabo ker refreshamo če je prazno
+    Long polling
+        je še vedno pollling
+        ko bo strežnik prejel request bo čakal če ni novih sporočil.. bo takoj odgovoril ko bo
+        strežnik prejel nov podatek
+        če čakamo odgovor novega zahtevka ne pošljemo
+        slabo: za vsak podatek smo morali še eksplicitno prašati
+    Server-sent events:
+        (prišlo z html5)
+        client pošlje request,
+        vse v nadaljevanju je odgovor
+        odjemalec dobi takoj posodobitev ki je na voljo in ni client eksplicitno prašal
+        slabost: enosmerna komunikacija
+    Web socket
+        (prišlo z html5)
+        začetna komunikacija navadni http zahtevk, kjer pove da bi se začel pogovarjati z web socketom
+        na socketu se začne po binarni dvosmerni komunikaciji
+        dobra stvar: močni komunikacijski kanal, učinkovit - binaren
+        slaba stran: je kompleksna, rabimo svoj protokol, apache tega ne podpira...
+    Server-sent events: client
+        good enuff za realtime app - za igre ne
+            const source = new EventSource("/path/to/stream-url");
+            source.onopen = function () { ... };
+            source.onerror = function () { ... };
+            source.addEventListener("event_name", function (event) {// ce imas tocni ime
+             processFoo(event.data);
+            });
+            source.onmessage = function (event) { //uporabis tega ali zgornjega
+             log_message(event.id, event.data);
+             if (event.id == "CLOSE") {
+             source.close();
+             }
+            }
+
+    Server-sent events:server
+        na strežniku pišemo podatke v telu, nakoncu 2 new lina
+        Each data has unique id - da vemo da je prejel
+
+
+    Če hočemo optimalno, se skripta ne sme nikoli končati- to je problem za stack
+        apache za vsakga clienta svoj proces(pre-fork)
+    SSE na pravi način: NodeJS
+        blocking način: ko čakamo z read dokler ni podatkov
+        neblocking način: pokliče se funkcija ko dobimo data in potem preberemo
+

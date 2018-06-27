@@ -1,0 +1,52 @@
+arbiter nat intnet
+vpnclient1 intnet
+
+apt-get update
+student vaje login
+v home dir:
+cat 06...
+vim client.ovpn
+	proto udp
+	secret 
+	prtisneš dvopičje :
+	.!ls
+	 tko da je 
+	 secret *FILE*
+	remote *IPARBITRA*  --enp0s8
+	dev tap
+shranš
+
+greš na root
+apt-get update
+apt-get install openvpn uml-utilities nfs-kernel-server smbclient
+
+cd /home/student
+openvpn --config ./client.ovpn
+greš alt+f3
+
+login as root
+ifconfig tap0 10.168.165.162 netmask 255.255.255.0
+
+
+mkdir /home/test
+mkdir /home/test/8k0HR9oI
+cd /home/test/8k0HR9oI
+	smbclient -L *IPARBITRA*
+	
+	
+	mount -t cifs -o ip=*IPARBITRA*,sec=none //simplearbiter/secretshare /mnt
+	cp /mnt/* .
+	
+	___make files avaliable over nfs-kernel-server
+	vim /etc/exports
+		dodaš
+			/home/test/8k0HR9oI *(ro)
+			shran
+	service nfs-kernel-server restart
+	
+	vpišeš enp0s3
+	
+	
+	
+	
+	

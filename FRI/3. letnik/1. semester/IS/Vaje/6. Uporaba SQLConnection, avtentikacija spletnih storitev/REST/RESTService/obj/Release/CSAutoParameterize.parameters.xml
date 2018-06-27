@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SQLConnectionDBConnectionString-Web.config Connection String" description="SQLConnectionDBConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=sqlconnectiontest.database.windows.net;Initial Catalog=SQLConnectionDB;User ID=darkneess10;Password=YrnY.Hab96991" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\jerne\\Google\ Drive\\School\\FRI\\3\.\ letnik\\1\.\ semester\\Informacijski\ Sistemi\\Vaje\\6\.\ Uporaba\ SQLConnection,\ avtentikacija\ spletnih\ storitev\\REST\\RESTService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLConnectionDBConnectionString']/@connectionString" />
+  </parameter>
+</parameters>

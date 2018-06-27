@@ -1,0 +1,274 @@
+﻿1F
+2C
+3C
+
+
+
+1.
+a) DELA
+SELECT AlbumID, Price
+FROM Price;
+b) DELA
+SELECT AlbumID, Price
+FROM Price
+WHERE Price IS NOT NULL;
+c) DELA
+SELECT AlbumID, st_medijev,Medium FROM (
+	SELECT AlbumID, NumberOfDiscs AS st_medijev, Medium , Price/NumberOfDiscs AS razmerje
+	FROM Price JOIN DiscNumber  USING (albumID)
+				  JOIN Medium 	    USING(AlbumID) 
+				  JOIN MediumNames USING (MediumID)
+	GROUP BY AlbumID
+	ORDER BY razmerje) AS T;
+d) DELA
+SELECT MIN(Year), MAX(Year)
+FROM Year;
+e) DELA
+SELECT AuthorID, AuthorName, COUNT(AlbumID) AS st_albumov
+	FROM Author JOIN AuthorNames USING (AuthorID)
+	GROUP BY AuthorID, AuthorName
+	ORDER BY st_albumov DESC;
+f) NE DELA
+DELIMITER //
+	DROP PROCEDURE IF EXISTS avgPric //
+	CREATE PROCEDURE avgPric()
+	BEGIN
+	
+	
+	SELECT Label, ((SELECT AVG(Price)
+				FROM Price JOIN Album USING(AlbumID) JOIN Label USING(AlbumID))-(AVG(Price))
+			   ) as Razlika_Te_minus_povprecna,
+				
+				(SELECT AVG(Price)
+				FROM Price JOIN Album USING(AlbumID) JOIN Label USING(AlbumID)) as povpNasploh,
+				 
+				AVG(PRICE) AS povpPosamezni
+	
+	
+		FROM Price JOIN Album USING(AlbumID) JOIN Label USING(AlbumID) JOIN LabelNames USING(LabelID)
+		GROUP BY LabelID
+	
+		HAVING COUNT(AlbumID) >= 10 #ZAENKRAT IZPIŠE UNE NAJDRAŽJE
+		ORDER BY Razlika_Te_minus_povprecna DESC; #ZAENKRAT TO
+	END //
+	DELIMITER ;
+CALL avgPric();
+g) DELA
+SELECT COUNT(*) AS dodatna_dolocila
+FROM Album
+WHERE AlbumName LIKE '%[%]';
+h) DELA
+DROP PROCEDURE IF EXISTS Priporocam;
+DELIMITER $
+CREATE PROCEDURE Priporocam(IN isci VARCHAR(50))
+BEGIN
+	
+	SELECT a.AlbumID, a.AlbumName, (SELECT recommended.AlbumName
+												FROM Album recommended
+												WHERE r.RecommendationID=recommended.AlbumID) AS RecommendedAlbum
+		FROM Album a JOIN Recommendation r USING(AlbumID)
+		WHERE UPPER(a.AlbumName)=UPPER(isci);
+END $
+DELIMITER ;
+CALL Priporocam("Bert Jansch - Black Swan");
+i) DELA (maybe)
+SELECT DISTINCT aN2.AuthorName AS Recommended
+FROM AuthorNames aN1 JOIN Author a1 ON(aN1.AuthorID=a1.AuthorID) 
+			JOIN Recommendation r1 		ON(a1.AuthorID=r1.AlbumID)
+			JOIN Recommendation r2 		ON(r1.RecommendationID=r2.AlbumID) 
+			JOIN Author a2 				ON(r2.RecommendationID=a2.AlbumID)
+			JOIN AuthorNames aN2 		ON(a2.AuthorID=aN2.AuthorID)
+WHERE aN1.AuthorName="U2";
+j) MAYBE
+Alter table Recommendation add index(AlbumID);
+
+
+2.
+a) DELA
+DROP TABLE IF EXISTS razsirjeni_izvajalci;
+DROP VIEW IF EXISTS razsirjeni_izvajalci;
+CREATE VIEW razsirjeni_izvajalci AS
+	SELECT AuthorID, AuthorName, COUNT(AlbumID) AS st_njegovih_albumov
+	FROM Author JOIN AuthorNames USING(AuthorID)
+	GROUP BY AuthorID;
+SELECT * FROM razsirjeni_izvajalci;
+b) DELA
+DROP TABLE IF EXISTS razsirjeni_izvajalci;
+DROP VIEW IF EXISTS razsirjeni_izvajalci;
+CREATE TABLE razsirjeni_izvajalci AS
+	SELECT AuthorID, AuthorName, COUNT(AlbumID) AS st_njegovih_albumov
+	FROM Author JOIN AuthorNames USING(AuthorID)
+	GROUP BY AuthorID;
+SELECT * FROM razsirjeni_izvajalci;
+c)
+DROP TRIGGER IF EXISTS on_Razsirjeni_izvajalci_Update
+DELIMITER $
+CREATE TRIGGER on_Razsirjeni_izvajalci_Update
+AFTER UPDATE ON Album
+FOR EACH ROW
+BEGIN
+	UPDATE Razsirjeni_izvajalci SET 
+		AuthorID = NEW.AuthorID AND
+		AuthorName = NEW.AuthorName AND
+		st_njegovih_albumov = (SELECT COUNT(AlbumID)
+									FROM Author JOIN AuthorNames USING(AuthorID)
+									WHERE NEW.AuthorID=AuthorID
+									GROUP BY AuthorID)
+											
+	   WHERE AuthorID = OLD.AuthorID;
+END $
+DELIMITER;
+#_________________________________________
+DROP TRIGGER IF EXISTS on_Razsirjeni_izvajalci_Insert
+DELIMITER $
+CREATE TRIGGER on_Razsirjeni_izvajalci_Insert
+AFTER INSERT ON Album
+FOR EACH ROW
+BEGIN
+	INSERT INTO  Razsirjeni_izvajalci VALUES( 
+		NEW.AuthorID,
+		NEW.AuthorName,
+		st_njegovih_albumov = (SELECT COUNT(AlbumID)
+											FROM Author JOIN AuthorNames USING(AuthorID)
+											WHERE NEW.AuthorID=AuthorID
+											GROUP BY AuthorID);
+END $
+DELIMITER;
+#_________________________________________
+DROP TRIGGER IF EXISTS on_Razsirjeni_izvajalci_Delete
+DELIMITER $
+CREATE TRIGGER on_Razsirjeni_izvajalci_Delete
+AFTER DELETE ON Album
+FOR EACH ROW
+BEGIN
+	DELETE FROM Razsirjeni_izvajalci WHERE AuthorID = NEW.AuthorID;
+END $
+DELIMITER;
+3.
+DROP TABLE IF EXISTS GroupedData;
+CREATE TABLE GroupedData AS
+
+	SELECT AlbumID, y.Year, p.Price, NumberOfDiscs, MediumID
+	FROM Year y JOIN Price p USING (AlbumID) JOIN DiscNumber USING (AlbumID)  JOIN Medium USING (AlbumID);
+	
+SELECT * FROM GroupedData;
+
+#ODSTRANI TABELE KI JIH NE POTREBUJETE VEČ TER NASTAVITE MANKAJOČE OMEJITVE PRIMARNIH IN TUJIH KLUČEV
+
+
+
+
+
+
+
+4.
+
+import pyodbc
+import time
+
+def clearTables():
+        string0= "DROP TABLE IF EXISTS ExtraData"
+        y.commit()
+        y.execute(string0)
+
+        string0= "DROP TABLE IF EXISTS ExtraDataNames"
+        y.commit()
+        y.execute(string0)
+
+def prva():
+        query= "SELECT AlbumName FROM Album WHERE AlbumName LIKE '%[%]%';"
+        y.execute(query)
+
+        result=y.fetchall()
+
+
+        for r in result:
+                cool=0
+                for crka in r:
+                        seznam=crka.split("[")
+                        beseda=seznam[1][:-1]
+                        seznam2=beseda.split("]")
+                        beseda2=seznam2[0]
+                        if beseda2 not in MyList:
+
+                                MyList.append(beseda2)
+
+        MyList.sort()
+        for element in MyList:
+                print(element)
+        print("PRVA FINISHED")
+        time.sleep(1)
+
+def druga():
+
+        string = "CREATE TABLE ExtraDataNames(ExtraID int, ExtraName varchar(50),  PRIMARY KEY (ExtraID)  )"
+        y.commit()
+        y.execute(string)
+
+        i=1
+        for dodatnoDolocilo in MyList:
+                print('INSERT INTO ExtraDataNames(ExtraID, ExtraName) values ({0},{1})'.format(i, dodatnoDolocilo))
+                y.execute("INSERT INTO ExtraDataNames(ExtraID, ExtraName) values (?,?)", (i, dodatnoDolocilo))
+                i+=1
+        y.commit()
+        print("###############################")
+        print("#ExtraDataNames TABLE FINISHED#")
+        print("###############################")
+        time.sleep(1)
+
+def tretja():
+        string = "CREATE TABLE ExtraData(AlbumID int , ExtraID int, FOREIGN KEY (AlbumID) REFERENCES Album(AlbumID),FOREIGN KEY (ExtraID) REFERENCES ExtraDataNames(ExtraID)   )"
+        y.commit()
+        y.execute(string)
+
+        dictionary={} #NAREDIMO DICT
+        i=1
+        for dodatnoDolocilo in MyList:#MAMO DICT INDEX PA DODATNO DOLOCILO
+                dictionary[str(i)]=dodatnoDolocilo
+                i+=1
+
+        #DOBIT VSE ALBUM ID
+        query= "SELECT AlbumID, AlbumName FROM Album;"
+        y.execute(query)
+        result=y.fetchall()
+        dictionary2={}
+        for r in result:
+                beseda2=""
+                seznam=r[1].split("[")
+                if len(seznam)>1:
+                        beseda=seznam[1][:-1]
+                        seznam2=beseda.split("]")
+                        beseda2=seznam2[0]
+                        print(beseda2)
+                else:
+                        beseda2="NULL"
+
+
+                dictionary2[str(r[0])]=beseda2
+
+
+        #INSERT V TABELO
+        for key1, value1 in dictionary2.items(): #skoz vse
+                for key2, value2 in dictionary.items(): #skoz imena
+                        if value1==value2:
+
+                                statement='INSERT INTO ExtraData(AlbumID, ExtraID) values ("'+key1+'", "'+key2+'")'
+                                print(statement)
+                                y.execute(statement)
+
+        y.commit()
+
+        print("##########################")
+        print("#ExtraData TABLE FINISHED#")
+        print("##########################")
+        time.sleep(1)
+
+#______________________________________________________________________
+c=pyodbc.connect('DSN=seminarskafinal; UID=root')
+y=c.cursor()
+clearTables()
+MyList=[]
+prva()
+druga()
+tretja()
+c.close()

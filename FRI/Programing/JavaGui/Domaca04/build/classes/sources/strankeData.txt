@@ -1,0 +1,2 @@
+anakondic;;;ana;;;;kondic;;false;true;Clio;Ljubljana;Ljubljana;Majhen;bencin;Gotovina;false;18;
+nekibla;;;neki;;;;bla;;false;true;Clio;Ljubljana;Ljubljana;Majhen;bencin;Gotovina;false;18;;;

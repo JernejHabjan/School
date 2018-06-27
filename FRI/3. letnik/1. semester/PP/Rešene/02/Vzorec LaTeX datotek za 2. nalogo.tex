@@ -1,0 +1,76 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}   % omogoča uporabo slovenskih črk kodiranih v formatu UTF-8
+\usepackage[slovene]{babel}    % naloži, med drugim, slovenske delilne vzorce
+
+\usepackage{graphicx} % omogoča vključevanje slik
+
+
+\title{Upraba Monte-Carlo drevesnega preiskovanja v strateških igrah}
+\author{Jernej Habjan\\
+jh0228@student.uni-lj.si\\
+\ \\
+možni MENTOR: doc. Matej Guid \\
+Fakulteta za računalništvo in informatiko Univerze v Ljubljani
+\date{\today}         
+}
+
+
+\begin{document}
+\maketitle
+
+\section{Motiv za diplomsko nalogo}
+Igranje realno-časovnih strateških iger je za računalnik velik problem, saj je možnosti v vsakem trenutku tako veliko, da računalnik preprosto ne more preiskati celotnega prostora.
+\section{Cilj diplomske naloge}
+Cilj diplomske naloge je implementacija in vrednotenje algoritma Monte-Carlo drevesno preiskovanje (glej sliko  \ref{fig:monteCarlo}) na igri Trump Defense 2020, narejeni v pogonu Unreal Engine 4.
+
+\section{Celostni pogon Unreal Engine 4}
+Unreal Engine 4 je odprtokodni program podjetja Epic Games, ki je namenjen hitri izdelavi računalniških iger. Obstajajo še drugi celostni pogoni kot je Unity.\\
+Razliko med tema pogonoma je dobro predstavil Marko Kladnik \cite{diplomaUnityUnreal}.\\
+Unreal Engine 4 omogoča hitro ustvarjanje iger s pomočjo posebnih diagramov (angl. blueprint) in hkrati podpira programski jezik C++, ki ga uporabimo za hitro izvedbo velikega števila matematičnih izrazov.
+
+\section{Monte-Carlo drevesno preiskovanje}
+Algoritem se uporablja za preiskovanje prostora možnosti, ki ga lahko posamezni osebki v igri izberejo.
+Tako kot je Nejc Ilenič uporabil Monte-Carlo drevesno preiskovanje pri reševanju igre Scotland Yard\cite{diplomaMonteCarlo}, ga uporabljamo na igri Trump Defense 2020.\\
+Algitem deluje v štirih korakih vidnih na spodnji sliki:
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{MonteCarloTreeSearch}
+	\end{center}
+	\caption{Koraki algoritma izbira, širitev, simulacija in vračanje}
+	\label{fig:monteCarlo}
+\end{figure}
+
+Algoritmi ki se naučijo igranja so naprimer nevronske mreže ali globoke nevronske mreže, ki pa so zelo računsko potratne, vendar vračajo izjemne rezultate. Nevronske mreže je uporabila Andreja Kovačič za prepoznavanje prometnih znakov \cite{diplomaNevronskeMreze}.\\
+Z inteligentnimi agenti in detekcijo sosednosti se pa je ukvarjal Rok Oblak \cite{diplomaAgenti}, ki je uporabil pogon Unity.
+\section{Preizkus rešitve}
+Rešitev vrednotimo v primerjavi z drugimi hevrističnimi algoritmi in spošno delovanje igre in moč računalnikovega igranja proti človeškim igralcem.
+
+\begin{thebibliography}{9}
+	
+\bibitem{diplomaUnityUnreal}
+Marko Kladnik.
+Primerjava igralnih pogonov Unity in Unreal Engine.
+Diplomska naloga, Fakulteta za računalništvo in informatiko, Univerza v Ljubljani, 2015.
+
+\bibitem{diplomaMonteCarlo}
+Nejc Ilenič.
+Drevesno preiskovanje Monte Carlo pri namizni igri Scotland Yard. 
+Diplomska naloga, Fakulteta za računalništvo in informatiko, Univerza v Ljubljani, 2015.
+
+\bibitem{diplomaNevronskeMreze}
+Andreja Kovačič.
+Detekcija prometnih znakov s konvolucijskimi nevronskimi mrežami.
+Diplomska naloga, Fakulteta za računalništvo in informatiko, Univerza v Ljubljani, 2017.
+
+\bibitem{diplomaAgenti}
+Rok Oblak.
+Simulacija množic heterogenih agentov v realnem času.
+Diplomska naloga, Fakulteta za računalništvo in informatiko, Univerza v Ljubljani, 2014.
+\end{thebibliography}
+
+\end{document}  
+
+
+
+

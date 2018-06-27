@@ -1,0 +1,37 @@
+Naloga
+
+Ob zakljuèku izdelave igralnosti nam preostane, da s pravili igre, elementi igralnosti in scenarijem ustvarimo stopnje naše igre. Skozi njih bo igralec naletel na razliène ovire, nasprotnike in izzive ter tako doživel raznoliko in celovito igralno izkušnjo.
+
+Naloga stopnje je za najosnovnejše zahteve sama po sebi že opravljena, imamo pa tu priložnost, da v našo igro dodamo veè vsebine in podaljšamo zanimivost igranja.
+
+Navodilo
+
+Posnemite iPhone simulator in (delno) odigrajte vašo igro. Èe imate ustvarjenih veè stopenj (ali eno daljšo, v kateri se skozi èas spreminja dogajanje), posnemite vsako v svojo datoteko. Glede na število oziroma kompleksnost prikazanih stopenj boste dobili oceno od 5 do 20 toèk (za vsak zaslon z razlièno oblikovano vsebino dobite do 5 toèk).
+
+
+Posebna navodila za snemanje!!! Posnetek stopenj je konèni prikaz vaše igre in ga bomo uporabili za pripravo skupne montaže izdelanih iger pri predmetu. Poskusite èimbolje zajeti igranje igre. Uporabite veèjo loèljivost in snemajte tako, da bo èim bolj naravno število slièic na sekundo ter uporabite manj izgubno kompresijo, oz. upoštevajte spodnja navodila za snemanje:
+
+Napotki so za Screenium*, v vašem programu poskusite doseèi isti rezultat.
+
+*novejše razlièice Screeniuma so zaèele uporabljati vodni žig namesto èasovne omejitve snemanja videa, zato jih ne uporabljajte
+
+Odprite Screenium in nastavite:
+Video
+Compression Mode: Lossless Video (kompresirali bomo ob shranjevanju)
+Mouse
+Mouse Pointer Capturing: izklopite Capture Mouse Pointer.
+Mouse Click: izklopite Visualize Mouse Clicks.
+Mouse Buttons Names: izklopite Display Button Names.
+Zaènite snemati s klikom na Fixed Area
+Pod Width in Height nastavite roèno, da bo zajeta slika igre
+Zaženite vašo igro in šele ko je že uspešno pognana (v glavnem meniju) zaženite Record.
+Pojdite skozi menije v igro in igrajte prvo stopnjo ca. 30 sekund (lahko veè ali manj, èe je to smiselno; npr. pri igrah s kamero in veèjimi stopnjami).
+Ko je video posnet, izberite Export, preverite da je kljukica na Video in popravite Settings... pri Video:
+Compression Type zamenjajte na MPEG-4 Video
+Compressor Quality povlecite na Best
+Data Rate pustite na vsaj Restrict to 6400 kbits/sec
+Stisnite OK, shranite in ponovite za vse ostale stopnje, èe jih imate.
+Oddate nastale video datoteke (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-infrastruktura-stopnje.mov
+(primerno popravite vpisno številko in priimek)

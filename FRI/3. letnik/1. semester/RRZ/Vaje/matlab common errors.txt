@@ -1,0 +1,19 @@
+A .* B - elementwise multiplication
+indexi od 1 naprej
+matrike so prvo vrstice, pol stolpci A(y,x) - lih obrnen
+multiline comment
+	%{
+	gfgs
+	%}
+comment -> %
+podpičje na koncu supressa print
+
+
+functions:
+	function [output1, output2] = functionName  (input1, input2)
+		output1 = input1 + 1;
+		output2 = input2 + output1;
+	end
+	
+	
+class(B) - izpiše type variabla

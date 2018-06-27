@@ -1,0 +1,73 @@
+Na prejšnjih vajah ste s sosedom vzpostavili navidezno lokalno omrežje. Pri tem ste si morali s sosedom izmenjati kljuc, s katerim ste potem kodirali ves promet. Slabost tovrstne izmenjave kljucev je predvsem v tem, da lahko napadalec, ki je zajel kriptiran promet, nato pa pridobil še kljuc, dekodira vse zajete podatke, tudi tiste, ki jih je dobil v preteklosti. Vcasih je tudi težko vzpostaviti varen kanal, po katerem lahko potem prenesemo kljuc.
+
+Prenašanju kljucev po varnih kanalih se lahko izognemo z uporabo asimetricne kriptografije. Kot bonus dobimo možnost vzpostavitve VPN med vec kot dvema racunalnikoma.
+
+Navodila v tej nalogi so povzeta po dveh dokumentih z domace strani openvpn. Kot obicajno so zatipki namreni:
+
+Navodila za vzpostavitev VPN
+Navodila za ustvarjanje in podpisovanje kljucev
+Ce ste manjkali na prejšnjih vajah, namestite openvpn:
+
+sudo apt-get install openvpn
+Ce bi radi pogledali, katere datoteke na sistemu pripadajo nekemu paketu, lahko poizkusite z:
+
+sudo dpkg -L IMEPAKETA
+npr.:
+
+sudo dpkg -L openvpn
+Poleg paketa openvpn pride nekaj skript, ki olajšajo ustvarjanje in podpisovanje kljucev. Nahajajo se v /usr/share/doc/openvpn/examples/easy-rsa. Z uporabo teh skript boste najprej ustvarili CA (certificate authority), da boste lahko podpisovali certifikate strežnika in klientov. Najprej naredite nov imenik in vanj skopirajte skripte:
+
+mkdir openvpn-ca
+cp -r /usr/share/doc/openvpn/exapmles/easy-rsa/2.0/* openvpn-ca
+cd openpvn-ca
+Nato popravite nastavitve v datoteki vars:
+
+gedit vars
+Nastavitve, ki jih morate popraviti, se nahajajo na koncu datoteke. Nastavite nekaj podobnega (seveda po pameti):
+
+export KEY_COUTNRY="SI"
+export KEY_PROVNICE="LJ"
+export KEY_CITY="Ljubljana"
+export KEY_ORG="VeseliLemingi"
+export KEY_EMAIL="student@gmail.com"
+Nato lahko naložite spremenljivke in ustvarite certifikatno avtoriteto:
+
+. ./vars
+./build-ca
+Ko ste ustvarili certifikatno avtoriteto, lahko naredite kljuc svojega strežnika:
+
+./bulid-key-server VESELISTREZNIK
+Ce vas build-key-server vpraša za geslo, lahko pustite prazno.
+
+Ko ste ustvarili kljuc za strežnik, morate ustvariti še par števil, ki jih potrebujete za izmenjavo s skrivnosti po protokolu, ki sta si ga izmislila Diffie in Hellman.
+
+./build-dh
+Nato si v trenutni imenik skopirajte datoteko s primerom konfiguracije openvpn strežnika in jo popravite:
+
+cp /usr/share/doc/openvpn/exapmles/sample-config-files/server.conf.gz ./
+gunzip server.conf.gz
+gedit sevrer.conf
+V tej datoteki predvsem odkomentirajte opcijo "client-to-client" ter popravite nastavitvi "key" in "cert", da bosta nastavljeni na keys/VESELISTERZNIK.key in keys/VESELISTERZNIK.crt. Nastavite tudi to, da sta datoteki s "ca" in "dh" spravljeni v "keys/"
+
+Bravo! Skonfigurirali ste strežnik. Zaženite ga:
+
+sudo openvpn --config server.conf
+Sledi konfiguracija klientov. Dogovorite se z vsaj dvema sosedoma, da boste pri vsakem ustvarili certifikat, s katerim se klient predstavi strežniku. Najprej sosedom pošljite datoteko ca.crt. Lahko odprete nov terminal, nato pa iz imenika, kjer ste ustvarjali konfiguracijo, skopirate ca.crt:
+
+scp keys/ca.crt username_soseda@IP_SOSEDA:
+Seveda naj vam sosed (klient) vendarle zaupa in vpiše geslo. Potem na klientu ustvarite zahtevo za podpis certifikata. V direktoriju s skriptami openvpn poženite:
+
+./build-req mojcertifikat
+Skripta build-req bo ustvarila skriven kljuc, ki bo spravljen v keys/mojcertifikat.key. Ustvarjen bo tudi zahtevek za izdelavo podpisa certifikata v keys/mojcertifikat.csr. To datoteko spravite na racunalnik, na katerem je CA. Nato certifikat podpišite:
+
+cd keys
+../sign-req mojcertifikat
+Dobljeno datoteko "mojcertifikat.crt" spravite nazaj na klienta. V direktorij s kljuci na klientu skopirajte primer datoteke - client.conf, ki jo najdete poleg server.conf.gz. Nato ga popravite in nastavite:
+
+remote nastavite na IP strežnika
+cert nastavite na mojcertifikat.crt
+key nastavite na mojcertifikat.key
+Potem zaženete openvpn:
+
+sudo openvpn --config client.conf
+Ce gre nekaj narobe pri podpisovanju klientovega certifikata, je mogoce, da boste morali iz datoteke keys/index.txt odstraniti vnos s kljucem klienta. Probleme imate lahko tudi, ce niste lastnik datoteke ~/.rnd - v tem primeru pac izvedite "sudo chown jazst.jazst ~/.rnd".

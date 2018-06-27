@@ -1,0 +1,38 @@
+Arhiv vsebuje nekaj primerov aplikacij zgrajenih v okolju GTK
+
+1. primer_0.c  Primer se prevaja takole: 
+
+./com_gtk primer_0
+
+Primer demonstrira: gradnjo okna ustreznih dimenzij, nastavitev širine
+roba okna na 5 pikslov, gradnjo gumba, instalacijo dveh signalov
+(odzivnih funkcij) za aktivacijo gumba in za zaprtje aplikacije ter
+signale.
+
+2. primer_1.c  Primer se prevaja takole:
+
+./com_gtk primer_1
+
+Primer demonstrira: gradnjo okna ustreznih dimenzij, instalacijo
+signala (odzivne funkcije) za zaprtje aplikacije in instalacijo
+dogodka (odzivna funkcije), ki se obnaš kot dispečer dogodkov.
+
+Naloga: V funkciji EventHandler spreminjajte vrnjeno vrednost (TRUE
+ali FALSE) in preučujte obnašanje aplikacije.
+
+3. primer_01.c  Primer se prevaja takole:
+
+./com_gtk primer_01
+
+Primer je razširitev primera primer_0.c. Dodana je še ena odzivna
+funkcija (dogodek), katere naloga je razvrščati dogodke.
+
+Naloga: V funkciji EventHandler spreminjajte vrnjeno vrednost (TRUE
+ali FALSE) in preučujte obnašanje aplikacije.
+
+4. primer_2.c  
+
+./com_gtk primer_2  Primer se prevaja takole:
+
+Primer demonstrira delo z vsebovalniki.
+

@@ -1,0 +1,187 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <style>
+    div#todoCreateContainer {
+      border: 1px solid black;
+      border-radius: 10px;
+      padding-left: 5px;
+    }
+
+    div#todoCreateContainer h3 {
+      color: green;
+    }
+
+    div#todoCreateContainer dt {
+      font-weight: bold;
+    }
+
+    input#todoContent {
+      border: 1px solid gray;
+      width: 80%;
+    }
+
+    div#todoListContainer {
+      border: 1px solid black;
+      border-radius: 10px;
+      padding-left: 5px;
+      margin-top: 10px;
+    }
+
+    ul#todoList li.message {
+      font-style: italic;
+    }
+
+    ul#todoList li.item {
+      cursor: pointer;
+    }
+
+    ul#todoList li.item:hover {
+      text-decoration: line-through;
+      background-color: yellow;
+    }
+
+    ul#todoList li.item-black {
+      color: black;
+    }
+
+    ul#todoList li.item-red {
+      color: red;
+    }
+
+    ul#todoList li.item-blue {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div id="todoCreateContainer">
+    <h3>Dodaj nov element na seznam opravil</h3>
+
+    <dl>
+      <dt>Vsebina:</dt>
+      <dd><input id="todoContent" placeholder="Tukaj vnesi vsebino TODOja." /></dd>
+
+      <dt>Barva:</dt>
+      <dd>
+        <select id="todoColor">
+          <option value="black">Črna</option>
+          <option value="red">Rdeča</option>
+          <option value="blue">Modra</option>
+        </select>
+      </dd>
+
+      <dt></dt>
+      <dd>&nbsp;</dd>
+
+      <dt></dt>
+      <dd><button id="todoCreateButton">Dodaj</button></dd>
+    </dl>
+  </div>
+
+  <div id="todoListContainer">
+    <h3>Trenutno na seznamu opravil</h3>
+    <ul id="todoList"></ul>
+  </div>
+
+  <script>
+    // Definiramo razred za funkcionalnost TODOjev.
+    var TODO = (function() {
+      /*
+       * Inicializiramo našo instanco.
+       */
+      function TODO() {
+        var self = this;
+        this.todoList = [];
+
+        // Pripnemo event listenerje na ustrezne elemente.
+        $('#todoCreateButton').click(function () {
+          var content = $('#todoContent').val();
+          var color = $('#todoColor').val();
+          // Dodamo element na seznam TODOjev.
+          self.add(content, color);
+          // Resetiramo vsebino vmesnika za dodajanje.
+          $('#todoContent').val('');
+          // Fokus ponovno na element za vnos vsebine.
+          $('#todoContent').focus();
+        });
+
+        $('#todoContent').keypress(function (event) {
+          // Zanimajo nas samo pritiski na tipko enter.
+          if (event.which != 13)
+            return;
+
+          event.preventDefault();
+          $('#todoCreateButton').click();
+        });
+
+        // Fokusiramo polje za vnos novega TODOja.
+        $('#todoContent').focus();
+
+        this.render();
+      }
+
+      /**
+       * Dodajanje novega TODOja na seznam.
+       */
+      TODO.prototype.add = function (text, color) {
+        this.todoList.push({
+          content: text,
+          color: color
+        });
+        this.render();
+      };
+
+      /**
+       * Odstranjevanje obstoječega TODOja s seznama.
+       */
+      TODO.prototype.remove = function (index) {
+        if (index < this.todoList.length) {
+          this.todoList.splice(index, 1);
+        }
+
+        this.render();
+      };
+
+      /**
+       * Izris TODO seznama.
+       */
+      TODO.prototype.render = function () {
+        var self = this;
+        var container = $('#todoList');
+        // Pobrišemo vsebino kontejnerja.
+        container.empty();
+
+        if (this.todoList.length > 0) {
+          // Narišemo ustrezne elemente.
+          for (var index = 0; index < this.todoList.length; index++) {
+            var item = this.todoList[index];
+            var renderedItem = $('<li class="item item-' + item.color + '">' + item.content + '</li>');
+
+            // V kolikor uporabnik klikne na TODO element, se le-ta pobriše. Ker prenašamo
+            // spremenljivko index v closure jo bindamo na novo spremenljivko s pomočjo funkcije.
+            (function (index) {
+              renderedItem.click(function () {
+                self.remove(index);
+              });
+            })(index);
+
+            container.append(renderedItem);
+          }
+        } else {
+          // Dodamo sporočilo, da na seznamu ni nobenih opravil.
+          container.append('<li class="message">Na seznamu ni nobenih opravil.</li>');
+        }
+      };
+
+      return TODO;
+    })();
+
+    // Kreiramo instanco našega TODOja.
+    $(document).ready(function () {
+      var todo = new TODO();
+    });
+  </script>
+</body>
+</html>

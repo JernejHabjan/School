@@ -1,0 +1,3 @@
+v dedovanju
+	mutually exclusive oblkukanje -> ne more biti oboje
+	complete- da se oseeb delijo VSE na childe

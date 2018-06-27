@@ -1,0 +1,21 @@
+setup orange - orange3-Network z anaconda...
+py -3 -m Orange.canvas
+
+/// NAVODILA
+network generator widget:
+	scale free 
+	we set aprox number of nodes ->50	
+network clustering 
+connect network clustering to -network explorer:
+
+network analisys - it will look at graph and will calculate number of parameters
+	-- we ticked the "degree" checkbox and neigbour nodes
+		--pove koliko povezav je s sosedi in pol te naprej
+	pol smo tabelo vn potegnil da smo prikazali
+	that way we can see which nodes are central nodes
+	
+	
+for movie lens:
+	how to calculate distance between 2 users:
+		euclidean distance - without ratings = 0
+	naredimo user user tabelo distanc

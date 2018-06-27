@@ -1,0 +1,795 @@
+IZPITNA VPRAŠANJA
+    1.kakšen model uporabljamo pri spletnih straneh/aplikacijah
+        -odjemalec/strežnik ali DVONIVOJSKA ARHITEKTURA ali zahteva/odziv
+    2.kaj je strežnik
+        je programska aplikacija ali proces ki nudi storitve
+    3.razlika med odjemalcem in uporabnikom
+        z odjemalcem komuniciramo z uporabniškim vmesnikom (front-end -> čelni računalnik)
+    (back-end -> zaledni računalnik)
+    4.Izvajanje aplikacij:
+        -samo na strežniku
+        -samo na clientu
+        -na obeh
+    5.kaj je vključeno pri trinivojski spletne rešitve/sistema
+        -odjemalec
+        -aplikacijski strežnik
+        -podatkovni strežnik (zmanjša obremenjenost app strežnika, poveča varnost podatkov)
+    6.kaj se zgodi če strežnik ni na voljo
+        -če podatkovni ni na voljo ne dobimo data
+        -če aplikacijski ni na voljo dobimo napako
+        pošljemo zahtevo, če odgovora ni v časovnem intervalu bo proces zaključen ali pa poslati še enkrat
+    7.splet je dokumentno porazdeljen sistem (datoteke so lahko na različnih strežnikih)
+    8.koliko korakov je potrebnih za izvedbo zahteve, če naša spletna app potrebuje samo datoteke oz skupek datoteke
+        3 koraki:
+            zahteva
+            dostava doc iz datotečnega sistema
+            vrnitev v odgovoru
+        imeli 3 slike
+            programska app ki je že prevedena na strežniku ->servlet (java)
+            programska app ki je že prevedena na clientu -> applet (java)
+    9.appleti si poljubni programi iz področij math/fizike/machine learning ki je samostojna aplikacija kamor
+        vstavlamo cifre, dobimo grafe, rezultate itd...
+    10.kaj je pomembno da podamo v prvih dveh vrsticah
+        URI (identifikator), URL (locator)
+        tip zahteve
+        verzija http
+    11. pri php postincrement in preincrement
+        napiši ali je rezultat pravilo ALI napiši koliko je rez ++a + a++
+##### 01. Predavanje 20.02.2017 #####
+    # ocene, definicija spleta in interneta, basic html,css značke #
+
+    //ocene
+        if(6 || 7): ustni izpit;
+    //internet vs splet (pazi izpit):
+        Internet je množica naprav povezane v LAN, te pa v WAN
+            prednosti:
+                izmenjavanje in širjenje informacij.
+            slabosti:
+                kraja podatkov, problemi z zasebnostjo, sledenje.
+        Splet je ena od storitev interneta, ki omogoča dostop do storitev.
+            WWW je le del spleta, med njimi tudi SMTP, instantna sporočila, FTP itd.
+    //posebne HTML in CSS značke:
+        non breakable space -> &#160; &nbsp
+
+##### 02. Predavanje 22.02.2017 #####
+    # css3, html5 #
+    //html5
+        blokovski elementi
+            <footer>
+            <header>
+            <main>
+            <nav>
+            <section>
+
+    //posebne značke:
+        span -> <span color="red">my text</span>
+        target atributi (primer -> input:hover):
+            :hover
+            :checked
+            :empty
+
+
+##### 03. Predavanje 27.02.2017 #####
+    # js, jQuery #
+    //js
+        html 5 - ni potrebno določiti tipa skripte
+
+        4 + false = 4
+        4 + true = 5
+        4 + "1" = "41"
+        1 * "5" = "5"
+
+        == ->primerja po vrednosti
+        === -> primerja po tipu in vrednosti -> "3" === 3 ---vrne false
+
+        getDay() - ničti dan je nedelja
+
+##### 04. Predavanje 01.03.2017 #####
+    # js
+    //html dom (document object model) !!!
+        je standard za pridobivanje, spremninjanje, dodajanje, brisanje elementov HTML
+        drevesna struktura dokumenta HTML
+            primer: (kaj lahko vključimo v glavo -> title, links, scritps, meta...)
+            do vseh vozlišč je možno dostopati z javascript!
+
+    //iskanje HTML elementov
+        documet.anchors.length -> vrne koliko vrstic je določenih z <a>
+        document.URL -> vrne vse URL-je na strani kot array
+    //zamenjava vsebine onClick
+        <h1 onclick = "this.innerHTML= 'Ooops'">klikni na tekst </h1>
+
+    //sprememba css
+        document.getElementById(id).style.property = newStyle
+
+    //kaj se lahko naredi če napišemo preveč teksta z javascript (IZPIT)
+        - lahko prekrijemo spodnji element in ga ne moremo klikniti/viditi
+
+##### 05. Predavanje 06.03.2017 #####
+    #jquery
+    //nauči se definicije ki so na začetku vsakega predavanja za izpit
+    //kaj omogoča jquery
+    //vključimo
+        tako da uvozimo knjižnico kot link <script src=""></script>
+    //metode so znotraj
+        #(document).ready(function(){  //koda  });
+    //posebne značke
+        $("[href]" - vsi elementi z atributom href
+        $("ul li:first") -prvi element znotraj ul
+    //efekti
+        .fadeTo("slow", 0.15) //med 0 in 1
+        $(selector).hide(speed, callback) --- callback kaj se zgodi po hidu
+        .attr() -pridobimo povezavo za href
+        #("ol").prepend("<li>neki</li>");
+    //primer na izpitu
+        #(document).ready(function(){
+         $("p").click()(function(){ //--pazi neki tazga je -poglej si
+                $("p").hide();
+            });
+         });
+    //css
+        $("#neki").css("color","red").slideUp(2000).slideDown(2000); //pobarva red in gre gumb gor dol
+            --spreminnanje css -"lastnost" "dvopicje" "vrednost"
+                        "vejca" "lastnost" "dvopicje" "vrednost"
+            --spreminjanje 1 lastnosti css: -"lastnost","vrednost"
+        //razlicno obarvane tabele
+            $("tr:even").css("background-color","yellow");
+    //append() remove() -> iz fielda in v field
+    //Mobile -> dodaš libe kot meta!!!!!!!
+        //-----------ZLOADI NOVE SLAJDE ->>>> NA TEH TASTARIH NI MOBILE
+##### 06. Predavanje 08.03.2017 #####
+    #http
+
+    //5 situacij kako se lahko ločijo server od clienta
+        -aplikacija se izvaja na strežniku (slajdi a,b)
+        -aplikacija se izvaja na odjemalcu (slajdi d,e)
+        -aplikacija se izvaa deloma na odjemalcu deloma na strežniku (slajdi c)
+        Za spletno aplikacijo bi izbrali primer C
+
+    //splet:
+        dokumentno zasnovan porazdeljen sistem
+        obsežen porazdeljen isstem model-odjemalec
+        URL(uniform resource locator) - referenca dokumenta
+        //poglej si shemo
+            -čez OS gre zahteva in odgovor v brskalnik /strežnik
+
+        kako povemo brskalniku kako naj pošlje http zahtevo
+            QR koda
+
+    //arhitekturni pogled
+        servlet -> prevedeni program na strežniku (običajno v javi)
+        applet -> prevedeni program prenesen v brskalnik (client) in ga ta požene (običajno v javi)
+
+
+    //URI - Uniform resource identified
+        če pošiljamo pismo rabimo - priimek, ime, naslov
+    //URN unifor mresource naem
+    //URL
+        -kombinacija ipja s številko vrat
+        -uporaba DNSja
+        -uporaba DNSja in porta
+
+    //Naloga brskalnika
+##### 07. Predavanje 13.03.2017 #####
+    #P6 Ogrodje(Framework), Bootstrap (ne bo na izpitu) - slajdi na učilnici novi
+
+    Framework z odzivnim oblikovanjem w3.css
+    Bootstrap (front-end framework
+        html in css templates
+    import bootstrap
+        -css
+        -jquery lib
+        -bootstrap javascript lib
+    bootstrap grid
+        razredi
+            xs for phones
+            sm for tables
+            md for desktops
+            lg for larger desktops
+        pravila
+            gnezdenje containerjev ni dovoljeno
+            vsebina mora biti znotraj kolon in samo kolone so lahko takojšni otroci vrstic
+            <div class ="container">
+                <div class ="row">
+                    <div class="col-*-*"></div> //namesto col-*-* > col-sm-4 je primer
+                </div>
+            </div>
+    primer
+        <href
+        <href
+        <href
+        .bg-1{ background-color: red;
+                color: black;
+         }
+         <div class="container-fluid bg-1 text-center"> //več classov!!!!!
+        Gumb-><a href="#" class = "btn btn-default btn-lg">
+        <span class ="glyphicon glyphicon-search"></span> search</a> <---gumb ima vkljčeno ikono s span
+
+##### 08. Predavanje 15.03.2017 #####
+    #PHP
+
+    imamo 4 enote preko katerih potujejo naše zahteve s podatki
+        web browser
+        the internet
+        web server at server.com
+        disk drive at server.com
+        --in gre skozi 7 korakov (glej slajde ST 5_PHP.pdf stran 3
+        -- so še 4 koraki če imamo še bazo (SQL)
+
+    //php konstante
+        vedno globalne
+        se začnejo s črko
+        sintaksa -> define(name. value, case-sensitive)
+            case sensitive je po defaultu false
+        primer:
+            <?php
+            define ("GREETING","Welcome");
+            ?>
+    //spremenljvike
+        začnejo z $
+    //konkatenacija
+        echo "lolek " . "bolek";
+    //operacije v izpisu
+        echo ($a + $b);
+    //tipi spremenljivk
+        lokalne
+        globalne - izven funkcij
+            primer:
+                zunaj funkcije
+                    $x = 4
+                znotraj funkcije
+                    $GLOBALS['y'] = 5;
+        statične - znotraj funkcij ampak jo lahko večkrat kličemo in povečujemo
+        superglobalne -> za izmenjavo podatkov med clientom in strežnikom
+    //spreminjanje podatkovnega tipa
+        settype($variableToChange,'new type');
+    //foreach
+        foreach($array as $value){ //code }
+    //funkcije
+        function somefunction($arg1, $arg2){}
+    //asociativno polje
+        $character = array("name" => "bob", "name2" => "bob2");
+        foreach($character as $c =>$value){ echo "$c . $value <br>" }
+
+        primer2 - 2d!!!
+           foreach($characters as $c){
+               while(list($k, $v) = each($c){
+                   echo $k. "...". $v . "<br>";
+               }
+               echo "<br>";
+           }
+
+    //gradnja šahovnice
+        non breakable space -> &#160;
+
+
+
+##### 09. Predavanje 22.03.2017 #####
+    #Php naprej
+
+    ternary operator -> neki? neki1: neki2;
+
+    class:
+        class myClass{
+            public$color = "silver"
+        }
+        $object1 = new myClass();
+        $object1 ->color = "red" //tako spreminjamo property
+    funkcije:
+        #cash = sprintf("neki"); -> shranimo sformatiran izpis
+        getdate() //današji dan
+            0čti dan je nedelja
+        file_exists()
+        is_file()
+        is_dir()
+        touch("myfile.txt");
+        fopen("text.txt","r") //branje
+        fopen("text.txt","w") //write
+        fopen("text.txt","a") //add
+
+
+
+    php obrazci:
+        imajo imena:
+            name="user"
+
+
+##### 10. Predavanje 27.03.2017 #####
+
+PHP in podatkovne baze
+standard ki omogoča zapis podatkov -> XML, JSON
+
+XML - označevalni jezik z značkami vmes in na koncu
+	- je format podatkov
+	- je berljiv
+	- uporabljen za posredovanje podatkov
+	- elementi imorajo meti root pred vsemi drugimi elementi
+	- značke so case sensitive
+	- vsi elementi morajo biti pravilno gnezdeni(zaključevanje značk)
+
+	standardi:
+		xml ajax - asynchronous javascript and xml
+		xml dom - document object model
+		...
+
+	drevo - kdo uporablja DOM!!!!!!!
+		-uporablja ga javascript
+
+	brskalniki imajo vgrajen XMLHttpRequest (zahteva xmlhttp)
+		uporabljen je za izmenjavo podatkov s strežnikom
+			ažurira spletno stran, zahteva podatke, sprejme podatke, v ozadju pošilja podatke
+
+		var xmlhttp = new XMLHttpRequest()
+		pošiljanje zahteve strežniku
+			open(method, url, async) //method-get,post, url-lokacija dat na strežniku, async -true (sinhrono) ali false(ne)
+			send(string)
+		onreadystatechange - se javi če se kj naredi
+
+		ko readyState == 4 && status == 200 je odgovor pripravljen
+
+	AJAX - če uporabimo asinhronsko
+		- omogoča izmenjavo in uporabo podatkov ki so v xml dokumentu.
+		- uporablja XMLHttpRequest
+		- uporablja javascript
+
+		Delovanje ajaxa
+			xhttp = new XMLHttpRequest();
+			xhttp.open("GET","ajax_info.txt,true);
+			xhttp.send();
+
+	JSON - javascript object notation
+		- enostavnejši in manjša količina podatkov je shranjena
+		- je hitrejši
+
+
+
+SPLETNE APLIKACIJE
+	web page - dokument html
+	web portal
+	web application
+
+    kaj je www.fri.uni-lj.si
+        je spletni portal, ker nimamo možnosti nakupovanja, poizvedovanja
+
+    5 KORAKOV -> PAZI IZPIT!
+    1. raziskava (pridobivanje podatkov), cilji, planiranje:
+        kaj so cliji?
+            komu je predstavitev namenjena
+            ciljne stranke, produkt...
+        kako bo app pomagala doseči cilje?
+            pospešitev prodaje, ustvarjanje blagovne znamke
+        Načrtovanje vsebije, njeno organziranje in urejanje
+            vsebina mora imeti informacijo za uporabnika ki jo išče
+    2 Zemljevid spletišča (sitemap)
+        kazalo spletne strani
+        organizacijski načrt vsebine na spletu - diagram poteka
+            shema kako zgleda navigation, kaj not sodi...
+            lahko shemo povežemo s črtami
+    3 Skelet (Wireframe)
+        osnutek spletne strani
+        postavitev tipov vsebine
+        razmestitev elementov
+
+    4 Načrtvanje
+        modeli splete strani v photoshopu
+        izgledi spletnih strani
+        barvna paleta
+    5 Razvoj
+        pretvorba modela v html in css, javascript...
+        testiranje funkcionalnosti
+            različni brskalniki
+            različni os
+            velikost devicov
+
+
+    Informacije o uporabnikih
+        http je protokol brez stanj
+        rešitev problema:
+            cookies
+            sessions
+
+        Piškoti
+            shrani se informacija o uporabniku
+            če delamo z datotekami se cookies shranijo v $_FILES
+            brisani morajo biti z enakimi parametri kot so bili ustvarjeni
+
+            setcookie(name, value, expire, path, domain, secure, httponly) //prvadva sta obvezna ostali ne
+                value - tekst do 4k teksta
+                expire -time+360 //podano v sekundah
+                path - pot cookija na strežniku
+            primer:
+                setcookie("username","Hannah", time()+60*60*24*7,"/") //7 dni
+                if (isset($_COOKIE["username"])) $username = $_COOKIE["username"];
+
+        Sessions
+            uporabniku se določi identifikator
+            uporabljene so za shranjevanje in pridobivanje informacij povezanih z ID
+            $_SESSION
+            stanje seje je shranjeno v začasni datoteki ali podatkovni bazi
+                session_set_save_handler()
+
+##### 11. Predavanje 29.03.2017 #####
+    SPLETNE STORITVE -> ST_8_Spletne tehnologije slajdi
+        SOAP (simple object access protocol)
+        REST (Representational state transfer)
+    spletna storitev -> programski sistem razvit za podporo spletne interakcije
+        uporabnik          <-- html --> spletna aplikacija
+        spletna aplikacija <-- xml  --> spletna storitev
+        gre za komunikacijo med dvema računalnikoma ali dvema procesoma
+
+    SOAP:
+        aplikacijski komunikacijski protokol - deluje med aplikacijami
+        sintaksa je XML doc s 4 elementi
+            1. envelope(ovojnica) element -identificira XML dokument kot sporočilo SOPA
+                zgradba envelopa:
+                    a) imensko področje
+                    b) body
+            2. header element - vsebuje nforacijo glave
+                opcijski element (pri html tud ni treba - je tud opcijski)
+                vsebina ni predpisana
+                -določa kako naj prjemnik obdela sporočilo soap
+            3. body element - vsebuje informacijo klica in odgovora
+                telo SOAP vključuje podatke za izmenjavo
+            4. fault element - vsebuje napake in statusno informacijo
+                napake sporočila
+    REST
+        protokol http je uporabjen za izvedbo klicev med aplikacijami/stroji
+        REST uporabi protokol HTTP za izvedbo operacij (CRUD)
+            -create, read, update, delete
+        REST deluje neodvisno od okolja, jezika...
+
+        Rest odgovor - XML zapis podatkov
+                     - JSON
+        realni primeri:
+            twitter ima REST API
+
+        REST_AJAX
+            če je poslana zahteva z XMLHttpRequest
+            prvo request open in potem reuqest send
+
+
+##### 12. Predavanje 03.04.2017 #####
+    #MOBILNI SPLET
+    Kaj je mobilna naprava? - NA IZPITU
+        -prenosna in osebna naprava
+        -skoraj ves čas z nami
+        -nostavna in hitra za uporabo
+        -povezana v omrežje (internet)
+
+    #SPLETNO NAČRTOVANJE
+        programska arhitektura:
+            je proces za določanje strukturiranje rešitve ki zadošča:
+                tehničnim in operativnim zahtevam
+                optimizira običajne atrubute kvalitete
+        kaj so zahteve kvalitetnih atributov za aplikacijo?
+            -varnost
+            -zmogljivost
+            -skladnost
+            -internacionalizacija
+            -konfiguracija
+
+        Arhitektura in snovanje(5 točk)
+            1. Identifikacija arhitekturnih ciljev
+                -naloge in omejitve
+                -identifikacija ciljev arhitekture
+                -komu je namenjena
+                -identifikacija omejitev
+                -določitev časovnega obsega aktivnosti
+            2. ključni scenariji
+                -primer uporabe(use case)
+                -scenarij
+                -identificirati različne ključne scenarije za določitev arhitekture
+                -UML DIAGRAM -> IZPIT -ST_10 9. stran
+            3. pregled aplikacije
+                -izgled
+                -tip aplikacije
+                -shema
+            4. ključna vprašanja
+                -authentication users
+                -protecting sensitive data
+                -handling exceptions
+                -validating input
+                -encrypting
+            5. različica rešitve
+                -kreiranje osnovne izvedbe arhitekture
+                -dodajanje podrobnosti
+                -pregled področij
+
+            Primer: (restavracija)
+                ključni scenariji UML diagram -> povezave med osebjem in strankami
+                (kuhar sporoči natakarju kdaj bo jed pripravljena)
+                (uporabnik naroči hrano natakarju)
+
+            Nivojska arhitektura
+                logično združevanje komponent v nivoje
+                    predstavitveni nivo
+                    poslovni nivo
+                    podatkovni nivo
+
+##### 13. Predavanje 05.04.2017 #####
+    pomembno je zavarovati zahtevo in odgovor
+    zaupnost in integriteta, ni možno zanikati, authentication, avtorizacija,
+        razpoložljivost,zasebnost
+
+    šifriranje, dešifriranje
+        simetrična kripto(DES, AES)
+        asimetrična (RSA, privatni D, javni E)
+
+        digitalni podpisi zagoravlja integriteto, se neda zanikati, overjanje
+            zanaša se na hash algoritme MD5, SHA1
+        certifikati in javni ključi
+            X.509 -vzpostavitev varne SSL povezave
+
+
+    VPRAŠANJE Z VARNOSTI NA IZPITU
+	
+##### 14. Predavanje 10.04.2017 #####
+	#SEMANTIČNI SPLET
+	semantični splet je zamisel spleta, kako splet narediti prijaznejši uporabniku
+	splet povezanih podatkov gre za skladiša povezanih podatkov kot slovarji, imajo pravila za ravnanje s podatki
+		
+	primer- knjige so razvrščene po kodah -> iščemo lahko po URN!!!!!!!!
+
+	Kaj sestavlja semantični splet:
+		-pomensko označevanje - semantic mark-up
+		-inteligentni programski agenti -ki obdelujejo spletne strani
+			vloga agentov:
+			-avtonomnost - deluje brez posredovanja človeka 
+			-socialna zmožnost - deluje z drugimi agenti in človekom --- IZPITTT!!!!!
+			-reaktivnost/odzivnost -dojemanje okolja in spremembe (požar...) in se odzivat
+			-pro-aktivnost - sposobnost izražati ciljno usmerjenega obnašanja
+			-časovna kontinuiteta -vseskozi delajoči procesi
+			-ciljna orientiranost - sposobnost obravnavati kompleksne naloge
+			-mobilnost - sposobnost agenta da se premika po omrežju
+			-odkritost - nenamerno razširja napačne informacije
+			-naklonjenost - predpostavka da agent hoče izvest kar zahtevamo od njega
+			-razumnost - predpostavka da bo agent deloval tako da bo dosegel svoj cilj
+			-prilagodljivost - prilagoditve navadam uporabniku
+		-ontologije -computational ontologies - dogovorjeno razumevanje stvari ki naredi vsebino razumljivo tudi strojem
+			ontologije so ustvarjalci pojmov
+			združijo znanje ekspertov v takšno obliko
+			-ontologija predstavlja graf pomenskih povezav med pojmi
+			-zapisana v računalniško razumljivi obliko
+			-ontologije - predstavitve opisa znanja
+				-EER diagrami -relacijski diagrami
+				-konceptualni grafi
+				
+			Ontologije- formalna prdstavitev --- IZPIT --- nariši ontologijo v obliki konceptualnega grafa
+				-Slajdi 11 - Semantični splet - str 16
+	
+	
+	Delovanje agenta primer:
+		ima aktiven pomnilik kjer si shranjuje stanja pri zaznavanju, 
+		planiranju, akcije
+		
+	Zakaj semantično označevanje
+		- da programski agenti ugotovijo ali je najden del informcije uporaben
+	kako semantično označevanje
+		- z zapisom meta podatkov
+		
+	RDF - resource description framework:
+		podatkovni modela RDF
+		-objektno zasnovan model
+		-funkcionalen podatkovni model
+		-RDF razlikuje med
+			-entitetami z identifikatorji UID
+			-trditvami veljavne med entitetami
+			
+		-vsi te zapisi so v dokumentih v značkah podobno kot XML
+
+	PRIMER: Ontologije, RDF in OWL
+							   FRI
+								|
+				---------------------------------				
+				|          |         |           | 
+			 zaposleni   študenti   programi   laboratoriji
+			 |       |
+		 pedagogi   sluzbe
+		 |   |   |  |
+		prof as ..  ....
+		
+		Realcia med razredi:
+			:TeachesIn(:AcademicStaff, :Course)
+			primer-  :TeachesIn(:Mira Trebar, :ST)
+			:To(:X, :Y)
+	
+		2.Narišite graf RDF za razdere profesor, študent, predmet če velja
+			profesor X je vodja lab HW in predava predmeta ORA in MA
+			student A poslusa predmet MA na programu RI
+			student B jev vpisn v HW in poslusa predmet MA
+			uporabite ramerja
+			:Leads
+			:TeachesTo
+			:TeachesIn
+			:EnrolledIn
+			:RegisteredTo
+			:OfferedBy
+								X
+			:A			--------------------------	
+		registeredTo-   |:TeachesIn |:TeachesIn   |:Leads		
+	:RI---:OfferedBy--(:MA)		  (:ORA)		(:HW) ------:EnrolledIn--:B
+						|												  |
+						------------------------:RegirestedTo--------------
+						
+##### 15. Predavanje 12.04.2017 #####
+	Summary
+	1. Uvod
+	splet se ves čas spreminja - od katerega leta naprej(splet/internetno omrežje, pojav)?
+	še na drugih področjih kje se tok razvija? moorov zakon
+	razvijalci morajo biti proaktivni-potrebno je:
+		-učenje novih tehnologij in programskih jezikov
+		-prilagajanje na spremembe
+		-sprejemati nove izzive
+	kaj to vključuje
+		prilagoditve obstoječih orodij za izpolnitev poslovnih zahtev
+		testiranje spletne strani za ugotavljanje tehničnih problemov (predvidit določene tehnične težave - umre človk in nemore napotnice oddat....)
+		optimizacija in skaliranje za učinkovitejšo izvajanje zaledne strani
+
+	katero je matematično orodje za zasnovo vezij?
+		boolova algebra
+		
+	html je označevalni jezik
+	css je olepševalni jezik
+	js je skriptni programski jezik
+	
+	
+##### 16. Predavanje 29.05.2017 #####
+	GET:
+    - za dobivanje informacij od serverja
+    - zahtevki GET niso za spremembe stanja streznika
+    - mora biti varna -> ne sme povzrocati sprememb na strezniku (vsebina brisala, posodobila itd.) - lahko le beremo podatke z GET
+    - zahtevki bi morali biti indenpotentni - ce poslemo request 1x ali 10xkrat je odgovor isti
+
+    POST:
+    - parametri niso zapisani v URL-ju, ampak v telesu zahtevka
+    - POST zahetvkov se ne vidi v brskalniku
+    - streznik naj vzame podatke, ki so v zahtevku in jih dati npr. v bazo ali kaj drugega
+
+    - poglej linke za vec informacij o  POST in GET
+
+
+    VARNOST SPLETNIH APLIKACIJ:
+
+    -
+    - kontrola: - tisto kar manjka (npr. if stavek manka)
+    - tehnicni ucinek: - ti nekdo zbrise podatkovno bazo (ucinek)
+
+    - primeri napadov:
+      - SQL injection -> uporabi API od PDO-ja vedno :)
+
+    - http vedno brez stanja, kar pomeni, treba poslati vse informacije za zahtevo zraven
+    - obcutljive podatke je zaradi tega treba zavarovati -> vse prek https (SSL)
+    - stevilka seje je zapisana v POSKOTKU, lahko pa tudi v parametru zahtevka
+
+    XSS CROSS-SITE SCRIPTING:
+    - to je izvajanje javascripta na brskalniku (svoja koda)
+    - z javascript kodo dobis SESSIONID iz cookija legitimnega uporabnika -> napadalec da SESSIONID v svoj cookie in dobi
+      nadzor nad to sejo
+    - FB in Google preverjata IP od racunalnika in sporocita naj se spet vpise uporabnik ce je kaj cudno
+
+    - zascita za to:
+      - CSP content security policy -> dovolis le doloceno vsebino za vnos
+
+    INSECURE DIRECT OBJECT REFERENCES:
+    - gledas glede uporabnika, kaj lahko pokazes in kaj ne (pri tebi POST lahko vidi le registriran uporabnik)
+
+    SENSITIVE DATA EXPOSURE:
+    - v log dobis senstivine podatke
+
+    - braniti se proti SENSITIVE DATA EXPOSURE:
+      - ce podatke posiljas prek mreze, imas SSL
+      - gesel v bazo ne shranjujemo v cistopisu ampak z hashom (npr. MD5, SHA)
+      - uporabimo enosmerno zgoscevalno funkcijo:
+        - SHA1: - slabost -> iz dveh vhodnih podatkov lahko dobimo en izhodni (kolizije)
+                - pomeni, en uporabnik se lahko prijavi z dvema razlicnima gesloma
+                - lahko naracunamo vse kombinacije gesel
+                - uporabi password_verify v svoji aplikaciji
+
+    3.Ura:
+
+    - vedno preverjas ce ima uporabnik pravico za dostop do funkcije -> ko za POST gledas, ce je uporabnik prijavljen
+
+    CROSS SITE REQUEST FORGERY (CSRF):
+    - prisilis nekoga da ti naredi stvar (vpise oceno za tebe, "kot da bi upravljal tvojo misko")
+    - npr. das sliko v salo z src="delete in se nekaj", nato brskalnik proba naloudat sliko, v resnici zbrise stvari
+
+    - branimo proti temu:
+      - uporabimo lahko CAPTCHA, a mora biti bolj userFriendly
+      - pravilno: - gledas, ce je uporabnik odprl obrazec za brisanje, nato dovolimo brisanje, ce ga ni odprl, preprecimo
+
+
+    EVERYONE USES VULNERABLE LIBRARIES:
+    - uporaba ranljivih knjiznic ni priporocljiva
+
+    UNVALIDATED REDIRECTS AND FORWARDS:
+    - ne validiras redirecta -> uporabnika lahko preusmeris na drugo stran
+    - v emailu zaden del uradne spletne strani je zlobna spletna stran
+      - lahko fishing izvajamo
+
+    - obramba:
+      - spletna aplikacija validira ves link spletne strani!
+
+    UNVALIDATED FORWARD ILLUSTRATED:
+
+
+    - poglej stran OWASP -> pogledas stvari, boljse kodo dati pregledati nekomu, da pregleda luknje
+    - drustvo za spletno varnost
+	
+##### 17. Predavanje 08.06.2017 #####
+
+    Pregled:
+        1. Razlika med spletom in internetom
+
+            Internet: Definicija, omrežje, komunikacija, protokoli, storitve
+            Splet: definicija, zgodovina-razvoj, stran, spletišče, aplikacija, jeziki: označevalni, skriptni, programski, tehnologije
+            -splet je povezava ljudi (za splet potrebujemo brskalnik),
+            -internet je pa povezava računalnikov
+            Internet je lahko sistem, proces, program, aplikacija...
+            Internet je lahko povezan sistem računalnikov,
+            Skype je na internetu
+            Internet v smislu porazdeljenega sistema:
+                Internet stvari - manjši sistemčki
+                    porazdeljen sistem računalnikov in naprav
+            Splet v smislu porazdeljenega sistema:
+                Dokumenti - FTP
+        2. Razlika med js in jquery,
+        3. Internet-> definicija, omrežje, komunikacija, protokoli, storitve
+        4. Kakšna je komunikacija
+            odjemalec(zahtevo)
+            strežnik(odgovor)
+        5. HTTP
+            razlike med http 1, 2,3
+            zahteve
+        6. Kateri skriptni jeziki:
+            js, php, py
+        7. Tehnologije: programski jeziki, knjižnice,
+        8. Kaj je v zahtevi
+            v prvi vrstici:
+            Tip zahteve, pot(url), verzija
+            2 ali 3 vrstice
+            ni odgovora - če je dol padu
+            timeout
+        9. kaj je v odgovoru
+        10. razlike med URI, URL, URN
+            universal resource identificator/location/name
+                identificator = location+name
+        11. HTML:
+            opis vsebine ki bo predstavljena na spletni strani
+        12. CSS:
+            omogoča oblikovanje
+        13. DOM
+            Document object model
+        14. Jquery mobile
+            kaj omogoča
+        15. Mobilni splet:
+            katere naprave so mobilne:
+                tiste brez kabla
+
+        16. Varnost:
+            Napadi, varnostne zahteve
+            (z vaj in s predavanj!!)
+
+            zaupnost, integriteta, zanikanje, overjanje, avtorizacija, razpoložljivost, zasebnost
+            vnesimo pin : overjanje
+            simetrično, asimetično RSA
+
+        17. Spletne aplikacije
+
+        18. Kaj je xml - SOAP ga uporablja
+            xml je označevalni, razširljiv jezik podoben htmlju, ki ima razširljive značke
+            WSDL  je jezik ker ima nakoncu L
+            UDDI
+        19. SOAP, XML, WSDL, SOAP, UDDI, REST
+        20. Semantični splet:
+            Definicija, koncept, označevanje, programski agenti, ontologije, tehnologije: XML, RDF, OWL, arhitektura
+
+        21. Programski agenti -koncept:
+            vse kar iščemo je označeno ...
+
+        RDF -- F stands for Framework
+        OWL
+
+
+
+
+
+

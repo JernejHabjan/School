@@ -1,0 +1,54 @@
+tools and how to run
+
+	numpyle
+	jupyter notebook
+
+	zdownloadaš jupiter notebook
+
+
+
+	mapa for notebook
+
+	nardiš na desktopu folder
+	bližnco
+	spremeniš startIn property do tega folderja
+	greš na učilnco in zdownloaaš vaje 1
+	odzipaš v mapo
+	
+zaganamo s shift+enter
+
+
+# Izračunaj povprečno januarsko temperaturo v Stockholmu
+mean(data[data[:,1] == 1][:,3])
+
+# Pošči mesec in leto, kjer smo beležili največjo temperaturo.
+
+
+# Izpiši vsako leto, ki ima večjo povprečno temperaturo od prejšnjega
+for i,j in yearly_temps.items():
+    if (i > 1800 and(j > yearly_temps[i-1])):
+        print(i)
+    
+	
+# Poišči 10 najtoplejših let
+# 
+
+x =[(j,i) for i,j in yearly_temps.items()] #spremeni v list ali tuple
+y = sorted(x)
+z = y[-10:] #zadnjih 10
+z
+
+
+
+
+# Nariši sliko, ki povzame zgornje podatke.
+# Pomagaj si s sloverjem yearly_temps.
+# Os x: leta
+# Os y: povprečna temperatura za vsako leto
+# ...
+
+a = list(yearly_temps.keys())
+b = list(yearly_temps.values())
+plt.figure()
+plt.plot(a,b)
+plt.show()

@@ -1,0 +1,16 @@
+Naloga
+
+Poleg pravil igre, ki doloèajo zakonitosti v našem svetu, se igralnost doseže še z pripovedniško zmožnostjo iger, ki je vzporedna knjigam in filmom. Razvoj zgodbe v igrah najveèkrat izdelamo z vnaprej pripravljenimi dogodki, ki se sprožijo ob doloèenem èasu. Seveda ni nujno, da take animacije po scenariju skrbijo za napredovanje po zgodbi. Vèasih, kot v primeru uvodnih in odjavnih sekvenc, zgolj pripomorejo k boljšemu vzdušju igre. Hkrati ni nujno, da med izvajanjem scenarija igralec ne more nièesar poèeti – v primeru vesoljskih streljaèin se prihajanje nasprotnikov izvaja v obliki scenarija, seveda globoko povezanega z oblikovanjem samih stopenj.
+
+Za nalogo je potrebno izdelati kakršnokoli proženje dogodkov skozi èas. Obièajno to naredimo tako, da dogajanje razdelimo na posamezna stanja, med katerimi potem (linearno) prehajamo. Pri prehodu v novo stanje vzpostavimo potrebne zaèetne vrednosti, med izvajanjem stanja pa pregledujemo, èe je izpolnjen pogoj za napredovanje v naslednje stanje. Torej v ozadju zopet stoji preprost konèni avtomat.
+
+Navodilo
+
+Posnemite iPhone simulator, ko se v vaši igri izvaja vnaprej pripravljen scenarij. Èe imate ustvarjenih veè sekvenc, posnemite vsako v svojo datoteko. Za nalogo velja do 5 elementov scenarija.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastale video datoteke (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-igralnost-scenarij.mov
+(primerno popravite vpisno številko in priimek)

@@ -1,0 +1,42 @@
+Navodila za 3. domačo nalogo
+V okviru tretje domače naloge samostojno izdelajte spletno aplikacijo. Temo aplikacije izberite sami, pri čemer pa tema ne sme biti spletna trgovina oz. tema, ki se od spletne trgovine bistveno ne razlikuje.
+
+Temo domače naloge je potrebno skupaj s kratkim opisom in zasnovo predlagane rešitve prijaviti na učilnici. Vsak študent mora nato nalogo dokončati, oddati na učilnici in zagovarjati na vajah.
+
+Aplikacija mora biti realizirana s tehnologijama PHP in MySQL, po potrebi pa so uporabljene tudi ostale tehnologije, ki so bile predstavljene na predavanjih in vajah (HTML, CSS, JavaScript, jQuery, AJAX in druge). Pri izdelavi si lahko pomagate z uporabo obstoječih knjižnic in ogrodij kot so Bootstrap, Symphony, Zend in podobno.
+
+Obseg aplikacije je poljuben, a pazite, da boste aplikacijo zmožni realizirati v podanem času. Vaša aplikacija naj minimalno vsebuje naslednje:
+
+Registracija in prijavo uporabnikov: Aplikacija naj smiselno podpira tako anonimne (brez prijave) kot tudi prijavljene uporabnike tj. določene akcije (npr. ogled vsebine) lahko izvede vsak uporabnik, druge (npr. dodajanje in urejanje) pa le prijavljen. Prav tako poskrbite, da se bo v aplikacijo mogoče registrirati.
+Preverjanje vhodnih podatkov: V aplikaciji skrbno preverjajte vnose, ki jih dobite od odjemalcev, in v primeru napačnih podatkov uporabnika ustrezno obvestite.
+Uporaba podatkovne baze: Uporabite SUPB MySQL (ali MariaDB) z vsaj dvema tabelama. Tabeli naj bosta v relaciji, podatkovna baza pa naj bo normalizirana do tretje normalne oblike.
+Urejen vmesnik: Uporabite razpoložljive tehnologije (CSS, JS, jQuery, AJAX) in oblikujte uporabniku prijazen vmesnik.
+Ustrezna uporaba zahtevkov HTTP: Zahtevki, s katerimi dostopate do vaše aplikacije naj bodo skladni s priporočili standarda HTTP.
+Oddaja
+Nalogo boste oddali preko spletne učilnice v dveh fazah.
+
+Faza 1: Prijava teme in oddaja osnutka (rok: 8. 5. 2015)
+
+	Oddaja naj vsebuje dokument PDF (največ 2 strani formata A4), v katerem navedite naslednje informacije:
+
+	Ime aplikacije;
+	Kratek opis problema in rešitve (predstavljena aplikacija naj bo zastavljena v takem obsegu, da jo boste zmožni v danem času realizirati);
+	Zasnovo podatkovne baze: navedba tabel z atributi in povezavami;
+	Strukturo spletnega mesta t. i. "sitemap";
+	Enostavne skice uporabniških vmesnikov t. i. "wireframes" v poljubnem orodju. Pri vsaki skici jasno navedite h kateremu delu strukture strani spada.
+	Za osnutek prejmete do 2 točki.
+
+Faza 2: Oddaja naloge in zagovor (rok: 29. 5. 2016)
+
+	Zagovor domače naloge bo potekal na laboratorijskih vajah, oddaja kode pa preko učilnice.
+
+	Rok za oddajo naloge na učilnici je 29. 5., zagovori pa bodo potekali na vajah v prvem tednu junija.
+
+	Za implementacijo prejmete do 14 točk.
+
+	Pri kreiranju arhiva naredite naslednjo strukturo:
+
+	code/ -- Mapa, ki vsebuje programsko kodo vaše aplikacije (datoteke PHP, HTML, JS in druge);
+	db.sql -- Datoteka, ki vsebuje strukturo in podatke za podatkovno bazo. Datoteko lahko ustvarite z aplikacijo phpMyAdmin;
+	README.txt -- Datoteka, v katero zapišite uporabniška imena in gesla nekaj uporabnikov, da bomo lahko vašo aplikacijo preskusili. V datoteko zapišite tudi morebitna dodatna navodila, ki so potrebna, da se vaša aplikacija zažene (npr. če vaša aplikacija uporablja kakšne dodatne module na strežniku ipd).
+

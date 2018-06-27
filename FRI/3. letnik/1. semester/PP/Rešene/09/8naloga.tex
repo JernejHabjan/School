@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}   % omogoča uporabo slovenskih črk kodiranih v formatu UTF-8
+\usepackage[slovene]{babel}    % naloži, med drugim, slovenske delilne vzorce
+
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+
+\title{Uporaba in analiza Monte-Carlo drevesnega preiskovanja na strateški igri}
+\author{Jernej Habjan\\
+jh0228@student.uni-lj.si\\
+\ \\
+predvideni MENTOR: doc. dr. Matej Guid \\
+Fakulteta za računalništvo in informatiko Univerze v Ljubljani
+\date{\today}         
+}
+
+\begin{document}
+\maketitle
+
+\section{Opis raziskovalne metode, ki je primerna za predlagano diplomsko temo}
+
+
+Pri uporabi algoritma v realno-časovni igri bom uporabil študijo izvedljivosti.
+Algoritem Monte-Carlo drevesno preiskovanje je že dokončan algoritem, ki se uporablja pri starteških igrah kot naprimer šah.
+Tak algoritem, lahko uporabim pri realno-časovni strateški igri, vendar ga moram razširiti na več akcij vsako potezo.
+Implementacija algoritma v igro bo študija izvedljivosti, ki bo pokazala rezultate hevrističnega algoritma za nadomestek tradicionalno-programirane umetne inteligence in s tem dokazala možno implementacijo tega algoritma v preproste nove strateške igre.
+
+\section{Dela s podobno raziskovalno metodo}
+
+
+Gal Kos je za diplomsko delo predstavil dogajanje v bojišču v okolju Unity~\cite{bojisce}. Sprva je moral dobiti informacije o enotah in standardih in jih aplicirati v okolje Unity. Soočen je bil tudi s prikazom 3D višinskih slik za generiranje 3D terena.
+Njegovo delo je razdeljeno na pridobivanje standardov, kart in ostalih informacij, implementacijo aplikacije za 3D vizualizacijo na bojišču, kjer je te enote in sisteme prikazal in s tem dokazal prikaz kompleksnega sistema v okolju Unity.
+
+Rok Oblak pa je bil postavljen z izzivom iskanja ustrezne stopnje kompleksnosti simuliranja agentov. Prav tako je tudi on to apliciral na celostni pogon, in sicer v Unity.
+Za diplomsko delo je predstavil množico heterogenih agentov, kot zaznavanje okolja, izogibanje oviram itd.
+Njegovo delo pa je razdeljeno na predstavitev okolja Unity, predstavitev navigacije in model agenta, implementacije agentov, končnih avtomatov v pogon in predstavitev rezultatov~\cite{heterogeni}.
+
+
+Žiga Pirih pa je za diplomsko delo predstavil skladbe v 3D prostoru in je sprva pregledal teoretično podlago in obstoječe rešitve, potem pa izvedel vizualizacijo s tremi glavnimi deli: računanjem podrobnosti med skladbami, izdelavo 3D prostora ter prenašanje, pretakanje in predvajanje skladb v programu. S tem je predstavil skladbe kot sprehod po virtualni pokrajini in odkrivanje novih skladb na podlagi njihovih medsebojnih podobnostih. Prav tako je tudi on to predstavil v orodju Unity, za prenos skladb pa je uporabil programski jezik Python. Izvedel je študijo izvedljivosti in s tem dokazal da lahko s tako vizualizacijo ugotovimo podobnosti med skladbami~\cite{viz}.
+\section{Seznam literature}
+
+\bibliographystyle{plain}
+\bibliography{literatura}
+
+\end{document}  
+
+
+
+

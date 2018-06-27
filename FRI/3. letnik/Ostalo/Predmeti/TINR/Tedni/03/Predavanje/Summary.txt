@@ -1,0 +1,28 @@
+
+Glavne obdelane toèke:
+- drobovje glavne zanke
+- glavna zanka v XNI
+- pristopi za uèinkovito izvajanje glavne zanke
+- igre in objekti (OOP)
+- delo z vsebinami v XNI in XNA (cevovod vsebine)
+- od slike do slikovnega atlasa in optimizacije izrisa
+- animacijski pristopi in osnovni pojmi animacije.
+
+Praktièno smo v kodi naredili:
+- izris
+- animacijo
+- zaèetek arhitekturne loèitve pogona igre od igre same (objekti).
+
+Povzetek dela v kodi:
+
+- Kako izrisati sliko z XNI?
+•Dodaj atlas v Assets mapo
+•Implementiraj razred Sprite: tekstura, okvir, izhodišèe (glede na okvir) (loèevanje pogona igre od igre same)
+•Naloži slike v loadContent metodi
+•Bodi data-driven glede koordinat v atlasu
+•V metodi drawWithGameTime klièi nad objektom spriteBatch metodo draw s parametri
+
+- Kako animirati z XNI?
+•Za lepo arhitekturo implementiramo razred AnimatedSprite (hranjenje okvirjev, trajanje; inicializacija, dodaj okvirje, doloèanje prikaznega okvirja v danem trenutku)
+•Definiramo objekt, ki bo poskrbel za animacijo
+•Iz tega objekta dobi ustrezen okvir za prikaz v metodi drawWithGameTime

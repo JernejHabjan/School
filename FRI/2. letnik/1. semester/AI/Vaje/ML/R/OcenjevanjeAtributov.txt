@@ -1,0 +1,79 @@
+model ki iz opisa gobe zve ali je užitna ali ne
+
+
+INF PRISPEVEK -vsaka atribut zase
+1. primer
+		koliko inf o razredu dodatno zvem, èe vem vrednost enega atrib.
+		katera lastnost najbolj pripomore k inf prispevku
+	//SORTIRANJE ATRIBUTOv!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
+	sort(attrEval(edibility ~ ., mr, "InfGain"), decreasing = TRUE)
+	//sortirali smo od najbolj pomembnega atributa dol
+
+		
+	dt <- CoreModel(edibility ~ ., mr, model="tree", selectionEstimator="InfGain") //zgradimo drevo
+	plot(dt, mr)
+2. primer: PRIMER FAILA INF PRISPEVKA -XOR
+
+
+quadrant <- read.table("quadrant.txt", sep=",", header=T)
+summary(quadrant)
+
+
+
+
+plot(quadrant, col=quadrant$Class) //NARIŠE V KVADRANTU!!!!!!!
+plot(quadrant$a1, quadrant$a2, col=quadrant$Class) //nariše samo prvega
+
+
+TOJ XOR PROBLEM
+___________
+RELIEFF
+___________
+
+
+PRIMER 3:
+INFORMACIJSKI PRISPEVEK BODO IDJE OCENILI ZELO DOBRO... !!!PAZI.. "id doloèa pozicijo igralca"
+	TO JE SLABO KER SI GA ZAPOMNI---ZADNIÈ SMO GA ODSTRANILI----OVERFIT!!!!!
+	
+GAIN RATO ga tudi slabo oceni
+
+
+RELIEFF .... ga dobro oceni... da ID-ju vrednost 0
+
+
+
+
+____________________________________________________________________________
+ODSTRANJEVANJE SLABIH ATRIBUTOV ALI # Izbira podmnozice atributov
+--- na primeru students
+res <- errorest(studytime ~ ., data = student, model = mymodel, predict = mypredict, target.model="tree")
+	//TO NAREDI 10x PREÈNO PREVERJANJE
+dobimo slab esult
+
+
+----izberemo samo najpomembnejše atribute in naredimo model ->FILTER METODA
+---DA TO NE DELAMO SAMI:::::
+source("wrapper.R") //tle not je ta wrapper
+WRAPPER METODA:  wrapper(student, className="studytime", classModel="tree", folds=5)
+//parametri: dataset, ciljni razred(koliko èasa se èlovek uèi), kateri model nas zanima, folds=5-da 5x preèno preverja
+DOBIŠ KERA KOMBINACIJA ATRIB JE BEST
+
+
+
+
+____________________________________________________________________________
+SEMINARSKA:
+ne zanima mapiranje klubov v zmagovalca --TOJ KOT ID
+NAMESTO IMENA KLUBOV OPIŠEMO 
+zmogljivosti domaèe ekipe, zmogljivosti gosta, zmagovalec (to so množice atributov)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+zmoglj domaèina- iraèunamo iz odigranih tekem
+pogledam prejšne tekme ko so igrali te igralci in kako so se konèale(deleži zmag, povp št košov, pop št košov ki nasprotniki..)
+IZ PODATKOV HOÈMO DOBIT IME EKIPE.... 
+
+
+ATRIBUTI morajo biti izraèunani iz preteklosti !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+in pol izberemo uporabne atribute in odstranimo slabe

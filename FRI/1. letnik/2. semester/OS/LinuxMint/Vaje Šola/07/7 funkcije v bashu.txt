@@ -1,0 +1,150 @@
+Funkcije
+
+Funkcije omogocajo, da razdelimo program na dele. Lahko izvršijo doloceno akcijo, lahko pa tudi vracajo vrednosti.
+
+V BASH-u lahko definiramo funkcije, ki jih potem uporabljamo enako kot ostale ukaze. Funkcije je potrebno definirati preden jih uporabimo. Obstajata dva nacina definiranja funkcij:
+
+function ime_funkcije { ukazi }
+
+ime_funkcije () { ukazi }
+
+
+Funkcijo poklicemo preprosto po imenu (kot ostale ukaze):
+
+ime_funkcije
+
+V tem primeru se funkcija izvede v isti lupini. Lahko pa jo izvedemo v podlupini in tudi shranimo izpise funkcije (kot pri ostalih ukazih):
+
+(ime_funkcije)
+
+izpis=$(ime_funkcije)
+
+
+Primer definicije in klica funkcije:
+
+#!/bin/bash
+# funkcija hello() samo izpise sporocilo
+
+hello()
+{
+  echo "Si v funkciji hello()"
+}
+
+echo "Klicanje funkcije hello()..."
+# klic funkcije hello():
+hello
+echo "Si iz funkcije hello()"
+
+
+Funkcija mora biti definirana preden jo klicemo!
+
+2. primer:
+
+#!/bin/bash
+# admin.sh – administrativno orodjel
+# funkcija nov_uporabnik() ustvari nov uporabniski racun
+
+nov_uporabnik()
+{
+  echo "Priprava na dodajanje novega uporabnika..."
+  sleep 2
+
+  read ime
+  sudo adduser $ime # izvrsi program adduser
+}
+
+echo "1. Dodaj uporabnika"
+echo "2. izhod"
+echo "vnesi izbiro: "
+read choice
+case $choice in
+  1) nov_uporabnik # klic funkcije nov_uporabnik()
+     ;;
+  *) exit
+     ;;
+esac
+
+Za izvršitev tega programa moramo biti root (zahteva ukaza adduser).
+
+Argumenti, ki jih podamo funkciji, so znotraj funkcije dostopni z enakim mehanizmom kot argumenti skripte ($1, $2 itd.). 
+Funkcijo zakljucimo z ukazom return:
+
+return [vrednost]
+
+Izhodni status funkcije bo podana vrednost, ce pa le-ta ni podana, bo status enak izhodnemu statusu zadnjega ukaza. V klicocem programu izhodni status funkcije preberemo v spremenljivki $?.
+
+Primer funkcije, ki izracuna fakulteto:
+
+function factorial {
+  if (( $1 <= 1 )); then
+    return 1
+  else
+    factorial $(( $1 - 1 ))
+    return $(( $1 * $? ))
+  fi
+}
+
+factorial $1
+echo $?
+exit
+
+Vendar pa prek statusa (ki je omejen na vrednosti od 0 do 255) ne smemo vracati rezultatov funkcije. Rezultat funkcije lahko izpišemo na standardni izhod, funkcijo klicemo v podlupini in nato prestrežemo izpis te funkcije:
+
+#!/bin/bash
+function fakulteta {
+  if (( $1 <= 0 )); then
+    echo 1
+  else
+    rez=`fakulteta $(( $1 - 1 ))`
+    echo $(( $1 * $rez ))
+  fi
+} 
+
+echo `fakulteta $1`
+exit
+
+
+Vidljivost spremenljivk
+
+#!/bin/bash
+function funkcija () {
+
+  a=vrednost1
+
+}
+
+echo $a     # spremenljivka a ni definirana
+funkcija
+echo $a     # spremenljivka a vsebuje vrednost1
+
+
+Ce želimo, da spreminjanje vrednosti spremenljivke a ni vidna izven funkcije, jo deklariramo kot local ali pa poženemo funkcijo v podlupini.
+
+#!/bin/bash
+function funkcija () {
+
+  local a=vrednost1
+
+}
+
+echo $a     # spremenljivka a ni definirana
+funkcija
+echo $a     # spremenljivka a ni definirana
+
+
+#!/bin/bash
+function funkcija () {
+
+  a=vrednost1
+
+}
+
+echo $a     # spremenljivka a ni definirana
+(funkcija)
+echo $a     # spremenljivka a ni definirana
+
+Ce želimo, da je spremenljivka (in njena trenutna vrednost) vidna kot okolijska spremenljvika v programih, ki so potomci naše lupine, potem uporabimo export:
+
+export ime_spremenljivke
+
+Vendar pa se vrednost prenese ob zagonu programa in se ne spreminja, ce se spremeni njena vrednost v izvorni lupini.  Prav tako se nobena sprememba v programih, ki so potomci izvorne lupine, ne vidi v ostalih programih in izvorni lupini.

@@ -1,0 +1,40 @@
+﻿PASSWORD RESET, REGEX, COMPILE C, VIM, 
+
+
+spremeniš pass na arbiterju
+	sudo reboot 
+	tester
+	ko maš nastavljeno za boot prtisneš "e"
+	
+	spremeniš 53d r0 na 
+	53d rw init=/bin/bash
+	
+	f10
+	
+	passwd
+	123456
+	mount -o remount,ro /
+	
+	pol pa machine- reset
+	
+pol se loginaš z root 123456
+
+login na studentu kot STUDENT:
+	student
+	vaje
+	
+texteditor: vim
+
+regex da spremeniš vse Q W X v nč
+:s/[QWX]//g
+
+:syn on -da obarva
+
+esc :wq
+
+
+compile ta C:
+	gcc jiikt.c -o PzETqGGb.txt
+	
+	
+ALT+F2 te da na login

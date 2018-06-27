@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">9_Send_Broadcast_Intents</string>
+    <string name="tutorial_37">TUTORIAL 37</string>
+    <string name="send_broadcast">Send broadcast</string>
+</resources>

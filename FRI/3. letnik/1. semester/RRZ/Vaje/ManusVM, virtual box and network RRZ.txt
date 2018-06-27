@@ -1,0 +1,79 @@
+
+
+na Chromu kjer je N številka roke ko si povezan na omrežje Turtlenet
+rokaN.local
+
+
+za shutdown - na pagu je desno zgori knof on off, ki požene shutdown rasperry pie in pol počakaš, sklopš motor, in šele pol iz štroma
+sklaplajne motorja je oks
+
+
+
+v matlabu za rokaN.local -- na windows ne dela v matlabu ampak bi rabu vedt ip - kako zvohat prek chroma IP
+
+
+VirtualBox: manus vm:
+inštaliraj še extensione- za host - će hočmo npr povezat s kamero
+
+virtualka naj bi laufala v ozadju
+
+	MORMO MET BRIDGED !!!!!!!!!!!!!!
+
+updataš virtualko lah
+
+ip lah zvemo spodi v virtualki k smo v meniju
+	in pol se v matlabu / chromu connectamo na ta ip
+ko kamero vklopmo ne smemo mountat kot usb device ampk kot webcam
+
+
+če kamero pol lah naprintaš na a4 list ke ma sam 2 markerja, kamero postavl in lah doma testaš
+
+network:
+	name :turtlenet
+	password: t00rtlenet
+	
+	
+	
+KAKO FIXAT TO NA CHROMU:	
+https://superuser.com/questions/440464/pc-version-of-google-chrome-doesnt-recognize-local-domain-name
+en prav da dam spredi http:
+	http://roka1.local
+	
+sam zdj mam tle not napisane localhost dnsje za roke: pazi delete this????
+	C:\Windows\System32\drivers\etc
+	ipconfig /flushdns
+	ping roka1.local
+
+
+	
+http://192.168.1.140/index.html roka6
+
+
+
+
+arp –a ----- to napišeš v cmd in dobiš listo ipjev in macov
+
+
+in tiste k so dynamic pod 192.168.1.___ bi mogle bit robotske....
+
+
+
+JAAA FOUND SOLUTION--- v git bash pjt
+ping roka6.local -4
+AL PA V POWERSHELL - je isto
+
+
+
+
+
+
+http://localhost:8080/index.html
+
+
+
+
+
+
+http://roka2.fri1.uni-lj.si/index.html
+
+TO DELAAAAAAAAAAAAAAAAAAAAAAAAA

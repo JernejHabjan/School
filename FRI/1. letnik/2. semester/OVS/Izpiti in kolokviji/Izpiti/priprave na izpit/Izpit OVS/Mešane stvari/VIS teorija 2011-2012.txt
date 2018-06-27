@@ -1,0 +1,17 @@
+1. a)moment reda k glede na toèko a
+b)centralni, zaèetni, disperzija ali asimetrija
+c)standardizirana spremenljivka, njeno upanje in disperzija (izraèunaj!)
+d)centralni limitni izrek
+e)neenakost èebiševa
+
+2. a)permutacije, kombinacije s ponavljanjem, zveza
+b)vrednosti funkcije gama
+c)nezdružljiva dogodka, popoln sistem dogodkov, klasièna definicija verjetnosti
+d)vsota in produkt dogodkov, zveza
+e)veèrazsežna polinomska ali mediana
+
+3. a)vzorèna statistika, cenilka
+b)dosledna, nepristranska cenilka
+c)cenilka z biasom C/100, kaj moramo narediti da bo nepristranska
+d)metoda momentov, metoda najveèjega verjetja
+e)povpreèje populacijskega vzorca, upanje in disperzija povpreèja

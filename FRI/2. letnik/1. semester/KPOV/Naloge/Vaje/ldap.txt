@@ -1,0 +1,99 @@
+ldap -telefonski imenik
+
+1. rabš domene - kdo štima kere številke
+
+2. vnos zase:
+	ime: jernej
+	telefonska: +386040473717
+	--to dvoje je narobe
+	
+	gn= jernej
+	tel= ....
+	sn = Habjan, sn = Pejic ->če maš več priimkov
+	cn = BorinG
+	c = SI
+	o = FRI
+	ou = LUSY
+	dc = polz, dc=si
+	--toj prov
+	
+	GN-given name
+	sn-surname
+	cn-common name
+	c- country
+	o-organization
+	ou-organizational unit
+	dc- domain component
+	
+To shranjujemo nekje v bazi, ki ima en distinguished name
+Shemo za to ima standard
+
+Naloga:
+popravi /etc/apt/sourceslist ---- za verzije debiana stable in testing, unstable
+apt-get -t stable install smarty3 smarty-gettext
+#js sm:
+	apt-get install smarty3
+
+1. namesti strežnik ldap (slapd) -apt-get install slapd
+	dpkg-reconfigure slapd
+2. namesti pogosto uporabljane sheme (fusiondirectory-schema)
+	na mintu -> inštaliraš gosa-schema -> apt-get install gosa-schema
+3. namesti nek spletni strežnik za dodajane vnosov ( fusiondirectory)
+	na mintu -> inštaliraš gosa -> apt-get install gosa
+
+	pol pa: greš na  http://localhost/gosa/   da zveš če ti dela v browserju
+	
+	pol slediš navodilom
+		echo -n 7i1080jafd1l3rt4kq55u7cnl4 > /tmp/gosa.auth 
+
+	če teži za imap
+	apt-get install php5-imap
+	php5enmod imap
+	service apache2 restart
+
+	pri LDAP connection setup:
+		Administrator DN -> cn=admin, dc=jernej --- jernej sm nastavu kt domeno v slapd configu
+
+	če sprašuje d mankajo eni calss objecti: greš v /etc/gosa/ in skopiraš vse ldif file tko:
+	for i in *.ldif; do ldapadd -Y EXTERNAL -H ldapi:/// -f $i; done
+
+	pol zdownloadaš config file kj use zaklučen
+	mv /home/jernej/Downloads/gosa.conf /etc/gosa/
+	chown root:www-data /etc/gosa/gosa.conf
+    chmod 640 /etc/gosa/gosa.conf
+
+	No img.style for this theme found
+	cd /usr/share/gosa/ihtml/themes/default
+		touch img.styles
+	
+	-------------------------------IN TLE MI NE DELA VČ NAPREJ
+	
+4. ustvari uporabnika v ldapu in na sistemu z različnima gesloma
+
+	ustvariš dva
+	user1 - z pass user1
+	user2 - z pass user2
+
+5. poskrbi da se uporabnik lahko prijavi z geslom iz ldap(nastavi pam - pluggable authentication modules)
+						za pam konfiguracija v -> /etc/pam.d
+	v konzoli zaženeš:    pam-auth-update
+	
+	
+						
+6. ustvari uporabnika le v ldap
+7. poskrbi da se lahko prijavi (nastavi name service switch(nss))
+							name service switch - kniznica (da bere pass namest iz fila iz baze)
+							/etc/nsswitch.conf
+
+isti username različna passworda
+en linux user -- en pa na gosi -- mata različna passworda
+in pol se probam z linuxa - se logoutam pa loginam z pass k je na gosi - drug pass na bazi
+							
+
+???? ldap-auth-client
+
+
+
+
+
+

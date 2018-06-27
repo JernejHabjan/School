@@ -1,0 +1,14 @@
+Naloga
+
+Èe želimo zvok simulirati bolj realistièno, potem postavimo poslušalca in vir zvoka v prostor (ali pa 2D ravnino). Vir zvoka "oddaja" zvok, ki smo ga naložili npr. iz datoteke. Potem zvok potuje po prostoru do poslušalca in med tem naleti na razliène ovire, ki vplivajo nanj. Tako v odvisnosti od okolja in ovir zvok lahko bolj odmeva, je zadušen, njegova jakost pada z razdaljo itd. Osnovni vzok, ki ga oddaja vir, je potrebno ustrezno transformirati in ga, èe je zvok usmerjen, predvajati z ustrezno usmeritvijo (jakost na posameznem zvoèniku/slušalki).
+
+Navodilo
+
+Posnemite iPhone-simulator, kjer se med igranjem slišijo vsaj trije razlièni zvoki, ki se spreminjajo v odvisnosti od lokacije poslušalca in vira zvoka.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:
+63080000-priimek-zvok-3D_zvoki.mov

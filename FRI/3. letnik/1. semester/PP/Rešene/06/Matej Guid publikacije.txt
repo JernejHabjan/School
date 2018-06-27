@@ -1,0 +1,52 @@
+Journal papers
+	A Program for Progressive Chess.
+		to pay
+	Assessing the difficulty of chess tactical problems
+	
+	Evaluating the aesthetics of endgame studies: a computational model of human aesthetic perception
+	
+	Detecting Fortresses in Chess
+	
+	Elicitation of neurological knowledge with argument-based machine learning
+	
+	Using Heuristic-Search Based Engines for Estimating Human Skill at Chess
+	
+	How Trustworthy is Crafty's Analysis of World Chess Champions
+	
+	Factors affecting diminishing returns for searching deeper
+		eni specifični chess programi
+	
+	Computer analysis of world chess champions.
+
+Conference papers
+	A Computational Model for Estimating the Difficulty of Chess Problems. 
+		mav opiše kok je complex pa mav algoritme neki primerja
+	Development of a Program for Playing Progressive Chess
+		to pay
+	Designing an Interactive Teaching Tool with ABML Knowledge Refinement Loop
+		to pay
+	Toward modeling task difficulty: the case of chess
+		kok lah playerji presodjo pozicije
+	Building an Intelligent Tutoring System for Chess Endgames
+		tutor
+	Search-Based Estimation of Problem Difficulty for Humans
+		how hard is problem for humans
+	ABML Knowledge Refinement Loop: A Case Study
+		buy
+	Goal-Oriented Conceptualization of Procedural Knowledge
+		tutor
+	An experiment in students' acquisition of problem solving skill from goal-oriented instructions
+		student experiment
+	Conceptualizing Procedural Knowledge Targeted at Students of Different Skill Levels.
+	
+	Learning to Explain with ABML.
+	
+	Deriving Concepts and Strategies from Chess Tablebases
+	
+	Identification and Characteristic Descriptions of Procedural Chunks
+	
+	Fighting Knowledge Acquisition Bottleneck with Argument Based Machine Learning
+	
+	Learning Positional Features for Annotating Chess Games: A Case Study. 
+	
+	Automated chess tutor.

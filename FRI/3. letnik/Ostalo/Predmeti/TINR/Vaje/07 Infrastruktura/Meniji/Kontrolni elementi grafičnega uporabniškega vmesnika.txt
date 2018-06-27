@@ -1,0 +1,21 @@
+Naloga
+
+Podobno kot svet igre sestavlja scena z razliènimi objekti, tako je uporabniški vmesnik sestavljen iz razliènih kontrolnih elementov. To so dobro poznani gradniki: napis, slika, gumb, vnosno polje, izbira med veè možnostmi, preklapljanje med dvema možnostima, izbira številske vrednosti itd.
+
+Na najnižjem nivoju potrebujemo obièajno zgolj napis in sliko, ki vsebujeta vse potrebne lastnosti za izris. Ostale kontrole so nato sestavljene iz veè napisov in slik ter kontrolne logike, ki po potrebi spreminja svoje sestavne dele.
+
+Na zaèetku kontrolne elemente najlažje izdelamo za prikaz vmesnika med samim igranjem (recimo prikaz toèk, izris slik za življenja, gumb za resetiranje stopnje). V razred Gameplay dodamo sceno za vmesnik in nov GuiRenderer, ki zna izrisati kontrolne elemente. Naloga je opravljena, ko dodate vsaj eno vrsto kontrolnega elementa.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer požete delovanje kontrolnih elementov grafiènega uporabniškega vmesnika. 
+
+Pod opombe naštejte razliène tipe kontrol, ki jih oddajate. Za vsak kontrolni element razliènega tipa dobite 5 toèk, skupno najveè 15.
+
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-infrastruktura-meniji-kontrole.mov
+(primerno popravite vpisno številko in priimek)

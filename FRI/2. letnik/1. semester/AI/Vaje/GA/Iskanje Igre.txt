@@ -1,0 +1,33 @@
+	
+>>>>>NA UCILNICI OBJAVLJENI SLAJDI NOVI<<<<<
+
+PRIMER 2 -> Izpitna naloga - MIN - MAX
+	gremo v globino - ko naletimo na list vrnemo informacijo navzgor
+
+PRIMER 3 -> Izpitna naloga - MIN - MAX
+	2 igralca 6 kamnov na mizo (3 kupčke po 2 kamna)
+	igralec mora vzet vsaj 1 kamen iz 1 kupa
+	
+
+ALPHA BETA REZANJE -> izpitna naloga
+	NA SLAJDIH:
+	ko se zgodi da alpha >= beta return - to je REZANJE!!
+		pregleduješ če alpha< beta else return
+	ko min -> updataš beto
+	ko maax -> updataš alpho
+	
+	ko si v vozlišču - nardiš min z vsakmu posebi (min(sebe, kida))
+		isto je za max
+	
+	POGLEJ SI PRIMER NA SLAJDIH
+	
+	
+MONTE CARLO:
+ ni - število simuliranih tekem v vozliscu
+ wi - število zmag tekem v vozliscu
+ n - število simulacij
+ C - koliko časa smo porabili raziskovanju v temu poddrevesu
+	(večji kot je c - bolj smo nagnjeni proti raziskovanju drugih vozlisc)
+	ponavadi je c = sqrt(2)
+
+ceprav ima neko vozlisce vec zmag- gamo prednost drugmu ki recmi še nism mel tok simulacij in ma isti WL ratio

@@ -1,0 +1,58 @@
+﻿PAZI $$ SPREMENLJIVKA   ----naslov starša???
+$$ -> kdo je klicatelj in pol ko zves njegov pid ves komu nazaj vrnt signal -za dn!!!!!!
+
+
+ssh remote@212.235.182.232
+vaje123
+
+
+pidof
+ps
+top
+kill
+sleep
+nice
+bg-background
+fg
+jobs
+nohup-nohangup
+
+
+pregled ukazov:
+	nice -prioriteta ob zagonu procesa
+	renice -prioriteta ob že zalaufanem procesu
+	top -task manager
+navidezni imenik -vanj se zrcali procesna slika ->/proc/PID
+	...
+	
+V01-izpiši PID terminalov bash
+	pidof bash
+v02-izpiši pid samo svojega terminala
+	echo $$ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+v03-izpiši vse procese na sistemu
+	ps -A
+	-preštej vrstice -> ps -e | wc -l (word count lines)
+		pstree ->vidimo da je init oče vsehprocesor
+v04-izpiši proces uporabnika
+	ps -u $(whoami) | wc -l ->napiše koliko procesov ima on
+V05-dobi procese samo tega terminala
+	ps ->>samo to nardiš
+V06-otroke od roota in napiši v daljši obliki
+	ps -u root -l           (root je uporabnik,   -u pa zauserja, -l pa long)
+V07 zalaufat eyes
+	xeyes& ->dobimo še številko opravila
+V08-ubili opravilo od eyes
+	top 			-> task manager
+	pritisneš "h" ->vidiš  kaj je za kill ->k
+	pritisneš k in pol vpišeš pid od procesa "učkov"
+V09-izpisi drevo vseh procesov terminala
+	pstree $$
+V10-odprimo še en shell
+	vpišemo mkfifo testFifo
+	cat >testFifo
+	pritisnemo enter
+	gremo v drugo lupino:
+	cat <testFifo | tee c.txt d.txt ->tee da mi izpisuje še na ekrat
+	nekaj vpišeš pa se pokaže na drugi
+	odpreš še 3. lupino:
+	pidof tee ->dobimo številko

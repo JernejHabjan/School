@@ -1,0 +1,16 @@
+Naloga
+
+Za izris statiènih slik ni potrebno veliko dela. Vzamemo SpriteBatch in mu naložimo izris vseh objektov na sceni. Podatke o teksturi in delu teksture, ki prikazuje doloèen objekt, si pred tem shranimo v objekte tipa Sprite. Kam na ekran narišemo doloèen objekt doloèa vektor pozicije, lastnost Origin na Sprite-u pa doloèa, katera toèka na sliki ustreza podani poziciji.
+
+Ko je izrisanih nekaj testno postavljenih objektov je naloga opravljena.
+
+Navodilo
+
+Uporabite lahko QuickTime ali Screenium (ali pa kakšen podoben program; èe imate virtualko, lahko poskusite s programom izven virtualke) in posnemite zaslon, kako v Xcode poženete projekt. V simulatorju se mora prikazati igra v kateri je nekaj objektov prikazanih s statiènimi (neanimiranimi) slikami.
+
+Posnemite le del ekrana, v katerem je viden simulator iOS. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo!).
+
+Oddate nastalo video datoteko (.mov/.avi/.mp4).
+
+Poimenovanje: 63090000-priimek-izris-slike-staticne.mov
+(primerno popravite vpisno številko in priimek)

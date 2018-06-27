@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>dn1</title>
+
+	<script src="Vector4f.js"></script>
+	<script src="Matrix4f.js"></script>
+	<script src="PointManager.js"></script>
+	<script src="Transformation.js"></script>
+</head>
+<body>
+
+
+<h3>Point manager:</h3><br>
+
+<div id="transformTextArea" style="white-space:pre-wrap ; word-wrap:break-word;">
+translate 1.25 0 0
+rotateZ 60
+translate 0 0 4.15
+translate 0 3.14 0
+scale 1.12 1.12 1
+rotateY 112.5
+
+</div>
+<textarea rows="30" cols="100" id="myTextarea">
+v 3 4 5
+v 23 -4 7
+v 32 4 5
+</textarea>
+
+
+<br>
+<button type="button" onclick="pointManager.writeVertex()">Transformiraj</button>
+<button type="button" onclick="object.resetTransformationMatrix()">Resetiraj Matriko</button>
+
+
+<script>
+
+	var mArray=[0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0];
+	var globalMatrix = new Matrix4f(mArray1);    //used to call methods
+	var globalVector = new Vector4f(0, 0, 0, 0); //used to call methods
+
+
+	console.log("__VECTOR__");
+	var vec1 = new Vector4f(3, 5, 6, 0);
+	var vec2 = new Vector4f(-3, 2, 2, 0);
+		console.log("Negate");
+		console.log(globalVector.negateV4f(vec1));
+		console.log("Add");
+		console.log(globalVector.addV4f(vec1, vec2));
+		console.log("Scalar");
+		console.log(globalVector.scalarV4f(3, vec1));
+		console.log("Dot Product");
+		console.log(globalVector.dotProductV4f(vec1, vec2));
+		console.log("Cross Product");
+		console.log(globalVector.crossProductV4f(vec1, vec2));
+		console.log("Length");
+		console.log(globalVector.lengthV4f(vec1));
+		console.log("Normalize");
+		console.log(globalVector.normalizeV4f(vec1));
+		console.log("Project");
+		console.log(globalVector.projectV4f(vec1, vec2));
+		console.log("Cos");
+		console.log(globalVector.cosPhiV4f(vec1, vec2));
+		
+
+	console.log("__MATRIX__");
+	var mArray1=[1, 3, 5, -5,
+				 4, 5, 6,  4,
+				 1, 4, 3,  4,
+				 5, 4, 1,  8];
+	var m1 = new Matrix4f(mArray1);
+	var mArray2=[1,  2,  3,  4,
+				 5,  6,  7,  8,
+				 9,  10, 11, 12,
+				 13, 14, 15, 16];
+	var m2 = new Matrix4f(mArray2);
+		console.log("Negate");
+		console.log(globalMatrix.negateM4f(m1).matrixArray.toString());
+		console.log("Add");
+		console.log(globalMatrix.addM4f(m1,m2).matrixArray.toString());
+		console.log("Transpose");
+		console.log(globalMatrix.transposeM4f(m2).matrixArray.toString());
+		console.log("Scalar");
+		console.log(globalMatrix.multiplyScalarM4f(2, m1).matrixArray.toString());
+		console.log("Multiply");
+		console.log(globalMatrix.multiplyM4f(m1, m2).matrixArray.toString());
+
+	console.log("__TRANSFORMATION__");
+	var object = new Transformation();
+	var pointManager = new PointManager(object);
+
+</script>
+
+
+</body>
+</html>

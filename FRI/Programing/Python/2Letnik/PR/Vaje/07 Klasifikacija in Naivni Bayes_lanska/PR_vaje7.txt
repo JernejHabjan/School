@@ -1,0 +1,18 @@
+X: {short, middle, tall}
+Y: {basketball, football, gymnastics}
+//as long as number of options is small, we can compute everything we need
+if X is not one dimensional value, P(X) gets get really hard to calculate
+	naive bayes assumption
+	X1 = {x11, x12,...}
+	X2 = {...}
+	Y -target
+	
+	we want
+		max y P(Y|X1,X2..)= max y P(X1|Y)*P(X2|Y)...*P(Y) ----to rabš
+				--why weight with P(Y) 
+	
+	
+P(X,Y) = P(X|Y)*P(Y)=P(Y|X) * P(X)
+
+P(Y|X)//what is the propability of sport if i know the height
+P(Y|X) = (P(X|Y)*P(Y))/P(X)

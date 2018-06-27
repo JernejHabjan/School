@@ -1,0 +1,147 @@
+Recimo, da imamo na omrežju veliko množico racunalnikov. Radi bi nadzorovali, koliko prostora je na diskih, kakšne so temperature procesorjev in hitrosti vrtenja ventilatorjev.
+
+Prva možnost je seveda ta, da zaposlimo kurircka, ki bo tekal od racunalnika do racunalnika in prebiral podatke.
+
+Druga možnost je, da uporabimo SNMP.
+
+Vaša naloga je, da omogocite drugim racunalnikom branje podatkov o stanju svojega. Poleg tega si morate namestiti vsaj en program za graficno pregledovanje statisticnih podatkov o stanju oddaljenih racunalnikov.
+
+Ogledali si bomo, kako lahko pregledamo statistiko razlicnih performancnih metrik s pomocjo protokola SNMP.
+
+Situacijo bomo simulirali tako, da bo vsakdo v ucilnici omogocil vsem ostalim dostop do omenjene statistike na svojem racunalniku. Za nadzor bomo uporabili široko uporabljano orodje munin, ki omogoca pregledovanje razlicnih grafov s prikazom statistik preko spletnega vmesnika.
+
+Zacnimo z namestitvijo SNMP agentov in orodij za pregledovanje podatkov, dostopnih preko SNMP:
+
+sudo apt-get install snmpd snmp snmp-mibs-downloader
+Na starejših razlicicah Ubuntu snmp-mibs-downloader ne obstaja in ga ni potrebno namestiti.
+
+Nastavitve SNMP agentov lahko spremenimo v konfiguracijski datoteki:
+
+sudo gedit /etc/snmp/snmpd.conf
+Za potrebe vaj bomo popravili konfiguracijo tako, da bo racunalnik dovolil dostop vsem ostalim racunalnikom.
+
+#  Listen for connections from the local system only
+#agentAddress  udp:127.0.0.1:161
+#  Listen for connections on all interfaces (both IPv4 *and* IPv6)
+agentAddress udp:161,udp6:[::1]:161
+Dodati bo treba tudi skupino (community) racunalnikov, za katere smatramo, da lahko dostopajo do vseh podatkov. Skupino bomo poimenovali studentje:
+
+rocommunity studentje 0.0.0.0/0
+Niže v taisti datoteki lahko nastavite tudi to, kje se racunalnik nahaja ter e-mail naslov skrbnika. Dodamo lahko tudi dodatne agente - primer je podan v datoteki:
+
+extend    test1   /bin/echo  Hello, world!
+Ce primera test1 v datoteki ne vidite, ga ni potrebno prepisovati. Po vsaki spremembi konfiguracije strežnik ponovno zaženemo:
+
+sudo /etc/init.d/snmpd restart
+Na starejših razlicicah snmpd v nekaterih primerih že privzeto posluša na vseh vmesnikih. Ce ne, je potrebno agentaddress nastaviti v skladu z navodili v:
+
+man snmpd
+man snmpd.conf
+Ce vam agentaddress v /etc/snmp/snmpd.conf še vedno ne deluje, je mogoce, da je snmpd zagnan tako, da je naslov, na katerem naj posluša, naveden že kot argument programu. To lahko preverite tako, da pogledate datoteko:
+
+NEKEDITOR /etc/default/snmpd
+Ce med argumenti vidite naslov 127.0.0.1, ga pobrišite, sicer se bo snmpd pritožil, ce naleti na isti naslov v konfiguracijski datoteki snmpd.conf.
+
+Za pregled podatkov, dostopnih preko SNMP, uporabimo program snmp-walk:
+
+snmpwalk -c public -v 1 neknaslov
+Tukaj lahko preizkusite, ali vam deluje dostop do sosedovega racunalnika. Za dostop do lastnega uporabite naslov localhost.
+
+Da bi prišli do res vseh podatkov, ki jih racunalnik daje na voljo, moramo izbrati drugo skupino (community). Ce želimo izpis podatkov od nekega OID naprej, to nastavimo. Ce se skupina, ki ima dostop do vseh spremenljivk, imenuje studentje in ce bi radi imena lastnosti izpisali v bolj cloveškem formatu (-m ALL):
+
+snmpwalk -m ALL -c studentje -v 1 neknaslov nekOID
+Za dostop do podatkov o temperaturi racunalnika potrebujemo paket lm-sensors. Za nastavljanje hitrosti vrtenja ventilatorja si namestite paket fancontrol:
+
+sudo apt-get install lm-sensors fancontrol
+Da bi bili podatki, odcitani s senzorjev, dostopni preko SNMP, boste morali na internetu poiskati primeren MIB. Potem boste morali ugotoviti, kje v hierarhiji mibov se skrivajo vrednosti senzorjev. Verjetno boste iskanje zaceli pri OID 1. Pri tem si lahko pomagate z ukazom less:
+
+snmpwalk -v 1 -c studentje neknaslov 1 | less
+V less išcemo s tipko "/", za izhod uporabimo "q". Namesto less lahko besede v izpisanem tekstu išcemo tudi z grep ali na poljuben drug nacin. Da bi prišli do vrednosti za posamezen OID, namesto snmpwalk uporabimo snmpget:
+
+snmpget -v 1 -c studentje -Oqv neknaslov NEKOID 
+Za graficno pregledovanje podatkov lahko uporabimo spletno orodje Munin:
+
+sudo apt-get install munin apache2
+Munin je zgrajen okrog orodja RRDTOOL. Za pravilno ustvarjanje grafov si lahko ogledate dokumentacijo rrdtool.
+
+Da bi o sistemu lahko zbrali še vec podatkov, lahko namestimo še paket collectd:
+
+sudo apt-get install collectd
+Konfiguracija se kot obicajno nahaja v /etc:
+
+sudo gedit /etc/collectd/collectd.conf
+Collectd v povezavi z dodatnimi aplikacijami, prav tako omogoca izris grafov.
+
+Suppose we have a large number of computers on a network. We want to control the available disk space, the temperature of the CPU in each computer and the RPMs of each fan.
+
+To do that, the first option would be to employ a bell-hop who will run from one computer to the next and record the data manually.
+
+The second option would be SNMP.
+
+Your task is to enable other computers to access information regarding your own computer's state. You also have to install at least one program which allows you to monitor statistical data regarding remote computers through a graphical interface.
+
+Let's take a look at how we can monitor the statistics of various performance metrics using the SNMP (simple network management protocol).
+
+We will simulate a realistic situation by having each student in the classroom allow access to the abovementioned metrics on his or her computer. To monitor the statistics, we will use a widely used tool called munin which allows you to monitor various graphs through a web interface.
+
+Let's start by setting up the SNMP agents and tools for inspecting the data available over SNMP:
+
+sudo apt-get install snmpd snmp snmp-mibs-downloader
+On older versions of Ubuntu, snmp-mibs-downloader does not exist so you do not have to install it.
+
+The settings for SNMP agents can be changed by editing the config file:
+
+sudo gedit /etc/snmp/snmpd.conf
+For todays lecture, we will change the configuration so that the computer will allow all other computers to access it:
+
+#  Listen for connections from the local system only
+#agentAddress  udp:127.0.0.1:161
+#  Listen for connections on all interfaces (both IPv4 *and* IPv6)
+agentAddress udp:161,udp6:[::1]:161
+We also have to add a group (community) of computers we deem to be worthy of accessing all data. This group will be called studentje:
+
+rocommunity studentje 0.0.0.0/0
+Lower in the same file, one can also set the location of the computer snmpd is running on and the name of the administrator. We can also add additional agents - the example is listed lower in the file:
+
+extend    test1   /bin/echo  Hello, world!
+If you don't see the test1 example in the file, you don't have to copy it from here. After each configuration change, restart the server:
+
+sudo /etc/init.d/snmpd restart
+On older versions of debian/ubuntu, snmpd listens on all interfaces by default. If this is not the case on your computer, you have to change the agentaddress according to the instructions found in:
+
+man snmpd
+man snmpd.conf
+If the agentaddress in /etc/snmp/snmpd.conf still doesn't work for you, it is possible that snmpd is already getting the address it's supposed to be listening on as it's command-line argument. You can check this by looking at a file:
+
+SOMEEDITOR /etc/default/snmpd
+If you see the address 127.0.0.1, remove it. Otherwise, snmpd will complain if it sees the same address in snmpd.conf.
+
+To inspect the data available over SNMP, one can use snmp-walk:
+
+snmpwalk -c public -v 1 someaddress
+At this point you can check whether you can access your computer's address. To access your own, you can use the address localhost.
+
+If you want to access all the data that is being made available by the computer, you have to change a communiti which is some other than the default one. To access the data from some OID onwards, we can set it by specifying the OID. If the community which has access to all the available data is called studentje and if you want to display the data in a more human-friendly format (-m ALL), run:
+
+snmpwalk -m ALL -c studentje -v 1 neknaslov nekOID
+To access the data regarding CPU temperature, we need to install the package lm-sensors. To set the speed of the CPU fan, you need to install the package fancontrol:
+
+sudo apt-get install lm-sensors fancontrol
+To make the data from the sensors available over SNMP, you have to find the right MIB on the Internet. Then, you have to find out where in the MIB hierarchy the sensor values ale hidden. You will probably start your search at OID 1. You can use the less command to make your life easier:
+
+snmpwalk -v 1 -c studentje neknaslov 1 | less
+Use the "/" key for searching, "q" to quit in less. Instead of using less, you can also use the grep command or some other way to search for the relevant words. To access the value for an individual OID, one can use snmpget instead of snmpwalk:
+
+snmpget -v 1 -c studentje -Oqv neknaslov NEKOID 
+For graphical monitoring of data, we can use Munin:
+
+sudo apt-get install munin apache2
+Munin is build around a tool called RRDTOOL. To learn more about how to properly create graphs, read the rrdtool documentation.
+
+To collect even more data regarding the system, we can install the collectd package:
+
+sudo apt-get install collectd
+As usual, the configuration files are located in /etc:
+
+sudo gedit /etc/collectd/collectd.conf
+Collectd together with other applications also allows you to create graphs.

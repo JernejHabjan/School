@@ -1,0 +1,21 @@
+foo=string
+for (( i=0; i<${#foo}; i++ )); do
+  echo "${foo:$i:1}"
+done
+${#foo} expands to the length of foo.
+ ${foo:$i:1} expands to the substring starting at position $i of length 1.
+
+
+
+______
+index normally:
+echo ${stringZ:0}                            # abcABC123ABCabc
+echo ${stringZ:1}                            # bcABC123ABCabc
+echo ${stringZ:7}                            # 23ABCabc
+echo ${stringZ:7:3}                          # 23A
+                                             # Three characters of substring.
+
+index through right end of string:
+echo ${stringZ:(-4)}                         # Cabc 
+echo ${stringZ: -4}                          # Cabc
+____

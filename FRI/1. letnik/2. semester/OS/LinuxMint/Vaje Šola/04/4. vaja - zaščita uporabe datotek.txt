@@ -1,0 +1,111 @@
+Ukazi, ki jih bomo uporabljali:
+
+chown, chgrp, chmod
+Pred vajami si s pomocjo pomoci v ukazni lupini poglejte kaj je glavna naloga posameznih ukazov (stikala posameznih ukazov ni potrebno podrobneje poznati, saj jih bomo bolj podrobno proucili, ce jih bomo potrebovali).
+
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavje 4.3 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+Zašcita uporabe datotek
+
+Dovoljenja in sklopi uporabnikov
+
+Vsak spodoben datotecni sistem omogoca uporabnikom – lastnikom datotek – njihove datoteke zašcititi pred nezaželjenim dostopom oz. uporabo s strani drugih uporabnikov. Datoteke navadno šcitimo pred osnovnimi operacijami, ki jih je nad njimi možno izvesti. Osnove operacije nad neko datoteko so:
+
+branje (read)
+pisanje (write)
+izvajanje (execute)
+Dovoljenja so vedno predstavljena s tremi zaporednimi znaki: prvo mesto za branje, drugo za pisanje in tretje za izvajanje. Pri tem operacije zaporedoma oznacimo z oznakami r, w in x. Prisotnost oznake na dolocenem mestu predstavlja prisotnost ustreznega dovoljenja, odsotnost dovoljenja pa predstavlja oznaka -. Tako npr. rwx predstavlja dovoljenja za branje, pisanje in izvajanje datoteke, r-x dovoljenji za branje in izvajanje, r-- pa le dovoljenje za branje, možne so seveda tudi ostale kombinacije dovoljenj, vendar se v praksi manj pogosteje ponavljajo.
+
+Dovoljenja so za vsako datoteko opisana v naslednjih treh uporabniških sklopih:
+
+lastnik datoteke
+uporabniki, ki pripadajo skupini datoteke
+vsi ostali uporabniki
+Pri podajanju dovoljenj (npr. ukaz chmod) sklope oznacimo zaporedoma z oznakami u, g in o. Pogosto potrebujemo tudi oznako a, ki predstavlja vse tri uporabniške sklope skupaj. Pri izpisu dovoljenj (npr. ukaz ls -l) pa so sklopi dovoljenj navadno tudi zaporedoma prikazani v zgornjem vrstnem redu.
+
+Tako npr. rwxr-x--- predstavlja naslednja dovoljenja:
+
+branje, pisanje in izvajanje za lastnika datoteke,
+branje in izvajanje za uporabnike iz iste skupine kot je datoteka in 
+brez dovoljenj za vse ostale uporabnike.
+
+Pomen posameznega dovoljenja se rahlo razlikuje glede na tip datoteke in je za navadne datoteke in imenike prikazan v spodnji tabeli
+
+Operacija
+
+Navadna datoteka
+
+Imenik
+
+Branje
+
+Branje vsebine
+
+Izpis imenika.
+
+Pisanje
+
+Pisanje v datoteko
+
+Ustvarjanje in brisanje datotek v imeniku.
+
+Izvajanje
+
+Izvajanje datoteke
+
+Dostop do datotek v imeniku.
+
+Tabela: Pomen dovoljenj
+
+Nastavitev lastnika in skupine datoteke: chown in chgrp
+
+Ob ustvarjanju datoteke njen lastnik postane uporabnik, ki je datoteko ustvaril. Kasnejše spreminjanje njenega lastništva je dovoljeno le uporabniku root. To omogoca ukaz chown (angl. change owner), s katerim lahko spremenimo lastnika (in prav tako tudi skupino) podane datoteke. Njegova uporaba je naslednja:
+
+chown [-R] [lastnik][:][skupina] datoteka
+
+ce želimo nastaviti lastnika in skupino, torej med njiju vstavimo dvopicje. S stikalom -R vklopimo rekurzivno nastavitev dovoljenj, kar pomeni, da se dovoljenja nastavijo tudi vsem datotekam v podimenikih danega imenika.
+
+Primer: v naslednjih dveh primeri nastavimo lastništvo datoteke slika.jpg na uporabnika jure, v drugem primeru pa hkrati nastavimo še skupino na uporabniki.
+
+luka@os:˜ >chown jure slika.jpg ... uporabnik 
+luka@os:˜ >chown jure:uporabniki slika.jpg ... uporabnik in skupina
+
+Vcasih želimo spremeniti le skupino neke datoteke. To lahko – poleg administratorja sistema – naredi lastnik datoteke z ukazom chgrp (angl. change group). Njegova uporaba je naslednja:
+
+chgrp [-R] skupina datoteka
+
+Stikalo -R ima enak pomen kot pri ukazu chown. Prav tako pa lahko obema ukazoma podamo vec datotek.
+
+Nastavitev dovoljenj uporabe datoteke: chmod
+
+Pri šcitenju datotek pred nezaželjeno uporabo je zelo pomemben ukaz chmod ( angl. change mode), ki omogoca nastavitev dovoljenj za izvedbo zgoraj opisanih operacij nad podano datoteko. Ukaz omogoca dva nacina podajanja dovoljenj. Prvi nacin je podajanje dovoljenj v simbolni obliki:
+
+chmod [-R] [augo][+-=][rwxs] datoteka
+
+Stikalo -R zopet pomeni rekurzivno nastavljanje dovoljenje. Izraz [augo][+-=][rwxs] predstavlja podajanje dovoljenj v simbolni obliki. Pomen posameznih oznak v izrazu je:
+
+a ... vsi uporabniki (angl. all);
+u ... lastnik datoteke (angl. user);
+g ... uporabniki, ki pripadajo isti skupini kot datoteka (angl. group);
+o ... ostali uporabniki (angl. other);
++ ... dodajanje dovoljenj;
+- ... odvzemanje dovoljenj;
+= ... nastavljanje dovoljenj;
+r ... dovoljenje za branje;
+w ... dovoljenje za pisanje;
+x ... dovoljenje za izvajanje;
+
+t ... lepljivi bit (angl. sticky bit).
+Oglejmo si še drugi nacin podajanja dovoljenj, to je podajanje dovoljenj v številcni obliki:
+
+chmod [-R] vrednost datoteka
+
+Podana vrednost, ki predstavlja dovoljenja, mora biti podana kot osmiško število s tremi števkami. Števke zaporedoma predstavljajo dovoljenja za sklope: lastnik, skupina in ostali uporabniki. Števko posameznega sklopa pa izracunamo kot vsoto naslednjih vrednost: 1 (20) za zvajanje, 2 (21) za pisanje in 4 (22) za branje. Tako npr. vrednost 6 ustreza dovoljenju za branje in pisanje. Ce želimo nastaviti še lepljivi bit, potem uporabimo štirimestno osmiško število, pri cemer prva števka števila predstavlja nastavitev lepljivega bita, ostale tri pa kot smo opisali zgoraj. Števka 4 dodeli lepljivi bit lastniku datoteke, števka 2 pa skupini, števka 0 seveda predstavlja odstranitev lepljivega bita.
+
+Oglejmo si nekaj primerov nastavljanja dovoljenj:
+
+>chmod u=rwx struca.jpg ... dovoljenja za lastnika
+>chmod g+r kruha.jpg ... dodajanje branja za skupino
+>chmod 755 igra.sh ... številcna oblika dovoljenj 
+>chmod -R o+r naloge ... ostali uporabniki, rekurzija
+>chmod 1777 imenik/ ... dovoljena za imenik, lepljivi bit

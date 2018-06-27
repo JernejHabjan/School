@@ -1,0 +1,97 @@
+ping -n 10 google.com ---> 10x pinga
+
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavje 2.2 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+Sklaplanje ukazov
+
+Zaporedno izvajanje
+
+Vec ukazov med seboj lahko na razlicne nacine združimo v sklop ukazov.
+
+Prvi nacin podajanja seznama ukazov je, da naštejemo ukaze drugega za drugim, v vsaki vrstici svoj ukaz. Pravzaprav so ukazi na ta nacin med seboj loceni z znakom EOL (angl. end of line).
+
+Drugi, popolnoma enakovredni, nacin je, da ukaze naštejemo v eni vrstici in med seboj locimo s podpicjem. Seveda pa lahko oba nacina med seboj poljubno mešamo.
+
+Pomembno je, da v obeh primerih lupina naštete ukaze izvaja v strogem zaporedju kot si sledijo v spisku, torej šele ko konca z izvajanjem nekega ukaza, nadaljuje z izvajanjem naslednjega.
+
+Primera zaporedja ukazov:
+
+pushd .; cd ~; ls; popd ... skok v domaci imenik, izpis njegove vsebine in vrnitev v prvotni imenik
+
+touch test.txt; ls –l test.txt; rm test.txt; ls –l test.txt 
+
+ 
+
+Pogojno izvajanje
+
+Ukazi iz seznama se lahko tudi pogojno izvajajo. To pomeni, da se nekateri ukazi izvedejo drugi ne. V osnovi locimo dva nacina pogojnega izvajanja. Prvi nacin, imenovan “in”-nacin, uporabljamo s pomocjo operatorja &&:
+
+ukaz1 && ukaz2
+
+To pomeni, da se izvede ukaz1 , in ce je njegov izhodni status resnicno, potem izvedi še ukaz2
+
+Naloga (a): V terminalu napišite ukaz, ki bo preveril ce obstaja kakšna datoteka s koncnico txt in v primeru, da obstaja, izpiše "V trenutni mapi je vsaj ena datoteka s koncnico txt"
+Rešitev: ls *.txt && echo "V trenutni mapi je vsaj ena datoteka s koncnico txt"
+
+Drugi nacin, imenovan “ali”-nacin, dobimo z operatorjem ||
+
+ukaz1 || ukaz2
+
+To pomeni, da se izvede ukaz1, ce je njegov izhodni status neresnicno, potem izvedi še ukaz2
+
+Naloga (b): V terminalu napišite ukaz, ki preveri ce obstaja kakšna datoteka s koncnico txt in v primeru, da ne obstaja, izpiše »V trenutni mapi ni datoteke s koncnico txt«.
+Rešitev:
+
+ls *.txt || echo »V trenutni mapi ni datoteke s koncnico txt«
+
+V obeh primerih gre za zaporedno izvajanje ukazov, zato (pozor!) operator && nima prednosti pred ||. Nekaj primerov:
+
+echo 1 || echo 2 || echo 3 ... izvede se le prvi ukaz echo
+
+echo 1 && echo 2 && echo 3 ... ukaz echo se izvede 3x
+
+echo 1 || echo 2 && echo 3 ... izvede se prvi in zadnji echo
+
+ 
+
+Združevanje ukazov
+
+Vcasih se pojavi potreba, da neko skupino ukazov združimo, da navzven deluje kot samostojna celota. To storimo z uporabo zavitih oklepajev.
+
+{ ukazi ; }
+
+Npr. echo 1 || { echo 2 && echo 3; } ... izvede se le prvi echo. Pri tem bodimo pozorni na to, da mora za zadnjim ukazom, ki stoji znotraj zavitih oklepajev, obvezno biti podpicje. Poleg tega mora biti med vsemi operatorji in oklepaji vsaj en presledek.
+
+Naloga: Združite nalogi (a) in (b) tako, da bo združeni ukaz napisal ali datoteke *.txt obstajajo ali ne.
+
+{ ls *.txt && echo "V trenutni mapi je vsaj ena datoteka s koncnico txt" ; } ; { ls *.txt || echo "V trenutni mapi ni datoteke s koncnico txt" ; }
+
+ls *.txt && echo "V trenutni mapi je vsaj ena datoteka s koncnico txt" || echo "V trenutni mapi ni datoteke s koncnico txt"
+
+ 
+
+Izvajanje v podlupini
+
+Neko skupino ukazov lahko izvedemo tudi kot samostojen proces. V trenutni lupini lahko ustvarimo podlupino z uporabo navadnih oklepajev. Proces podlupine je potomec procesa lupine. Ukazi navedeni znotraj oklepajev se izvedejo, izhodni status podlupine, pa je enak statusu zadnjega izvedenega ukaza.
+
+Sintaksa uporabe: ( ukazi )
+
+Primer uporabe:
+
+( echo Ta niz je izpisan v podlupini. ) ; ( pwd ; exit 42 ; echo "Jaz se ne izvedem" ) ; echo $?
+
+posebna spremenljivka $? oznacuje izhodni status zadnjega ukaza (0 ... vse v redu, $?>0 ... napaka)
+
+Pogostejša uporaba podlupine je tako imenovana zamenjava (substitucija) ukaza. Vcasih želimo vsebino, ki jo ukazi v podlupini izpišejo na standardni izhod nadalje uporabiti v skripti. V tem primeru uporabimo
+
+$(ukazi)
+
+Ukazi se izvedejo, namesto $(ukazi) pa se pojavi izhod izvedenih ukazov. Enakovredno lahko dosežemo rezultat tudi z uporabo enojnih poševnih narekovajev ( ` ).
+
+Primeri:
+
+echo $(pwd) 
+echo $(ls) 
+ls $(pwd)/bin 
+echo `pwd`
+

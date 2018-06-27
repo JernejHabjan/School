@@ -1,0 +1,62 @@
+				VAJE VPN
+				
+Navidezna zasebna omrežja (Virtual Private Network, VPN) uporabljamo takrat, kadar hočemo uporabnikom, ki jim zaupamo, omogočiti dostop do storitev na nekem zaprtem omrežju, čeprav se omenjeni uporabniki nahajajo nekje na Internetu v omrežju, nad katerim nimamo nadzora.
+
+Primer take storitve je samba (windows file sharing). Podjetje naprimer hoče omogočiti delavcem dostop do datotečnih strežnikov, čeprav je delavec doma.
+
+Z uporabo VPN lahko zagotovimo nek osnoven nivo varnosti. Vseeno je pri vsakem omrežju pametno smatrati, da je nanj nekdo že vdrl. Tako se ameriška služba NSA že sedaj obnaša, kot da so v omrežje in računalniške sisteme vdrli službe že vdrli nepridipravi.
+
+Za začetek predlagam, da postavite VPN do svojega soseda.
+
+Da bi VPN lahko preizkusili, boste najprej postavili navidezno mrežo, ki bo obstajala samo znotraj vašega računalnika in ne bo povezana z nobenim fizičnim omrežnim vmesnikom. Takemu omrežnemu vmesniku pod linuxom rečemo TAP (network tap), če gre za emulacijo ethernet vmesnika, ali pa TUN (virtual tunnel). Če boste iskali dokumentacijo, torej poiščite TUN/TAP.
+
+Najprej namestimo paket, ki vsebuje tunctl, program za nadzor nad virtualnimi napravami:
+
+	sudo apt-get install uml-utilities
+Nato ustvarimo napravo:
+
+	sudo tunctl
+Tako ustvarjena naprava se imenuje tun0. Lahko jo tudi pobrišemo:
+
+	sudo tunctl -d tap0
+Lahko ustvarimo tudi več navideznih omrežnih naprav:
+
+	sudo tunctl
+	sudo tunctl
+	sudo ifconfig -a
+Tako ste ustvarili napravi tap0 in tap1. Druge ne boste potrebovali, prvi lahko nastavite IP:
+
+	sudo tunctl -d tap1
+	sudo ifconfig tap0 10.P.Q.R netmask 255.255.255.0
+Sedaj namestite openvpn:
+
+	sudo apt-get install openvpn
+Ustvariti boste morali nek skupen ključ, ki si jo bosta strežnik in klient delila:
+
+	openvpn --genkey --secret vpnkljuc.key
+Ključ potem skopirajte v nek imenik na strežniku ter kamorkoli na klienta, ki bo verjetno računalnik vašega soseda.
+
+Sledi konfiguracija VPN strežnika: sudo gedit /some_directory/somewhere/tap0.conf
+
+Kamor zapišite:
+
+	dev tap0
+	proto tcp-server # no need for this if you use UDP
+	secret vpnkjluc.key 
+Nato zaženite openvpn:
+
+	sudo openvpn --config /some_directory/somewhere/tap0.conf
+Da bi se povezali na ustvarjeno navidezno omrežje, morate skonfigurirati še klienta. Ena možnost je, da na klientu ustvarite konfiguracijsko datoteko, ki vsebuje:
+
+	remote IP_OF_YOUR_NEIGHBOR
+	dev tap0
+	proto tcp-client # you can leave this out if you use UDP
+	secret vnpkljuc.key
+Nato seveda poženete openvpn, podobno, kot ste to storili na strežniku.
+
+Pot do omrežja 10.S.T.U preko računalnika 10.V.W.Z dodate takole:
+
+	route add -net 10.S.T.U/24 gw 10.V.W.Z
+Lahko pa nastavitve odklikate, pri čemer morate prej namestiti modul za VPN za NetworkManager:
+
+	sudo apt-get install network-manager-opevpn-gnome

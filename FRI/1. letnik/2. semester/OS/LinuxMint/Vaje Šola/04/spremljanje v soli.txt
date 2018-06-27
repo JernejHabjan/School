@@ -1,0 +1,79 @@
+ssh remote@212.235.182.232
+vaje123
+
+?zascita uporabe datotek-pravice
+
+ugo a -user/group/other ->>>simbolicno naslavljanje
+t/T -> t->sticky bit- brisanje le root,lastniku datoteke ali samo nekaterim v skupini
+____________
+odvzemi rw pravice chmod o-rw test.txt (o->owner)
+_______________
+uporabnik+en drug uporabnik uporabljajo file drugi ne->
+chgrp uporabniki test.txt ->uporabniki je grupa
+sudo usermod append -a -G uporabniki student ->student je nov uporabnik
+______________
+uporabniku odvzemi vse pravice
+sudo chmod a-rwx text.txt    (all - rwx)
+___________
+kateri je nov lastnik in kateri je nova grupa
+sudo chown administrator:administrator test.txt
+__________
+pravica direktorija -> lahko briše bla bla nemore pa zalaufat file itd...
+_____
+kako bi priskrbeli da bi uporabniki brisali, delali datoteke,ostali pa ne
+sudo chown root:root vaje (vaje so direktorij)
+
+*moramo še resetirati pravice in dodati sticky bit*
+sudo chmod a=rwx+t vaje
+__________________
+VAJE RWX
+absolutno naslavljanje ->preko stevilk
+660 -> rw- rw- ---
+100 -> --x - -
+1777 -> (sedm je max) -> 1ka je sticky bit ->> t rwx rwx rwx
+
+r-r-r- -> 444
+r-xr rw--wx ->
+rw-rw-rwt -> 1667 -enka na drugi strani ker je sticky bit, rwt je pa 7
+______
+
+OSNOVE SKRIPTIRANJA
+$
+unset
+test ->lahko tudi oglate oklepaje za test
+` ` ->izpis direktno
+____
+NALOGE SKRIPTE:
+napisi skripto ta bo preverila ali smo zalaufali kot super user, ?e ne bo izpisal nimaš pravic ?e pa smo bo pa zalaufal ukaz zadnjih 5 uspešnih in 5 neuspešnih prijav (last ->uspešni, lastb ->neuspešni
+
+#!/bin/bash
+(id nam da izpis skupin uporabnikov in njihovih številk)-> vsi superuserji majo številko ni?, tako da ?e je 0 good... lahko naredimo s sklapljanjem ukazov)
+dolar nam da vrednost
+test $(id -u) -eq 0 || { echo "prijavi se kot superuser"; exit 1; }
+last -5	->izpiše zadnjih 5 uspešnih
+lastb -5 ->izpiše zadnjih 5 neuspešnih
+sudo ./skripta.sh
+_______
+naloga2:
+(spremenljivka PATH)
+v PATH dodajte kje se trenutno nahajate
+PATH="$PATH:$(pwd)" ->dolar damo spredaj ker nas zanima vrednost ->path bo toliko ?asa tako nastavljen dokler ne zapremo lupine
+____
+naloga3
+nano skripta2.sh
+#!/bin/bash
+(preveri stevilo parametrov)
+test $# -eq 1 || { echo "podajte uporabnika kot argument"; exit 1; }
+(preveri ali obstaja v sistemu ta uporabnik ki smo ga dobili kot argument)
+id $1 || "uporabnik obstaja" || { echo "uporabnik ne obstaja"; exit 2; }
+(?e user obstaja, preverite ali obstaja njegov doma?i imenik)
+domaci=$(eval echo ~$1) ->evaluate
+#echo $domaci
+test -d $domaci && echo "direktorij obstaja" || { echo "direktorij ne obstaja"; exit 3; }
+(ce domaci direktorij obstaja ali imamo dostop nad direktorijem (-x ali imamo dostop do datotek))
+test -x $domaci $$ echo "imam dostop do datotek" ||{ echo "nimam dostopa do datotek"; exit 4; }
+exit 0
+(save this shit motherfucker... zdle grem na jufko.. future me je pa hungry ane you motherfucker loloololool get rekt lolol
+./skripta2.sh Jure
+./skripta2.sh petardo
+

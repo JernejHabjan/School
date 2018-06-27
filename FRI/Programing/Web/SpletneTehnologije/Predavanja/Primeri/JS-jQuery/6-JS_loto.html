@@ -1,0 +1,53 @@
+<html> <head> 
+<title>Loto</title> 
+</head> 
+<body>
+<!--_____________________________________________
+	LOTO: nakju�na dolo�itev 7 �tevilk   
+_________________________________________________
+-->
+<script language="javascript">
+
+var stevilke = [];
+var kombinacija = [];
+var i,j,k;
+var tmp;
+
+for (i=0; i<39; i++)	
+{
+	stevilke[i]=i;
+	//stevilke[i]=i;
+}
+for (i=0; i<1000; i++)
+{
+    j = Math.floor(Math.random() * 38.99999);
+    k = Math.floor(Math.random() * 38.99999);
+    tmp = stevilke[j];
+    stevilke[j] = stevilke[k];
+    stevilke[k] = tmp;
+}
+for (i=0; i<7; i++)	
+{	// prvih sedem vrednosti predstavlja izbrano kombinacijo
+    kombinacija[i]=stevilke[i] + 10;
+}
+kombinacija.sort();		// ureditev po velikosti
+document.write("<br />Zmagovalna kombinacija: ");
+
+for (i=0; i<kombinacija.length; i++)
+{
+	//document.write(kombinacija[i] + " ");  
+	document.write(kombinacija[i]-9 + " ");  // �tevilke = �tevilke - 9
+}
+
+//	____ . reverse
+/*kombinacija.reverse();
+document.write("<br />Zmagovalna kombinacija: ");
+for (i=0; i<kombinacija.length; i++)
+{
+    document.write(kombinacija[i] -9  + "  ");
+}
+*/
+</script>
+
+</body>
+</html>

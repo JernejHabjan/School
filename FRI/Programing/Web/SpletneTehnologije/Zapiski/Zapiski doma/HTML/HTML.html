@@ -1,0 +1,137 @@
+FILE UPLOAD:
+	MAIN FILE MORE BIT POIMENOVAN:
+		index.html
+
+	http://www.1apps.com/cp/fileManager.aspx -tukej maš darkneess10 profil pa uploadaš site
+
+
+valid doctype:
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+headerji od 1-6
+
+LINKS:
+	LINK: <a href="URL">My Favorite Site!</a>
+	LINK MY SECOND PAGE: <a href="page.html">My second page!</a>
+	Navigation to text:
+		example1:
+			<a href="#lol"> farm section</a>
+			<h3 id ="lol"> farmeeeee </h3>
+		example2:
+			<a href="#tips">Visit the Useful Tips Section</a>
+			<h2 id="tips">Useful Tips Section</h2>
+	Email links:
+		<a href "mailto:jernej.habjan96@gmail.com">Email me</a> (odpre default mail na kompu)
+	Link upgrade:
+		<a href="google.com" title="says something else when hovered over">google</a>
+IMAGES:
+	IMG: <img src="url" /> - self closing
+	Resize picture:
+		<img src="URL" height="150"/> (naloada se šekr tavelka slika in se potem shrinka)
+		
+IMG with LINK: 	<a href="URL"> <img src="URL"> </a>
+
+naštevanje št:
+<ol>
+ <li> </li>
+</ol>
+
+dot points:
+<ul>
+ <li> </li>
+</ul>
+
+<!-- This is an example of a comment! -->
+
+style: <p style="font-size: 20px"> Some text for you to make normal size!</p>
+       <h2 style="color: green; font-size:12px">
+       <h1 style="font-family: Arial">Title</h1>
+       <p style="font-size:20px; color: blue; font-family: Arial">A truly spectacular paragraph!</p>
+
+color: 	   <body style="background-color: red;">
+alignment: <h1 style="text-align:center"> or left or right
+bold: 	   <p>Do you hear the people <strong>sing</strong>?</p>
+italic:    <p>Hey, don't say  <em>that</em>!</p>
+
+<p style="font-size: 0.5em">Half an em!</p> - relative measure for all screens. not pixels
+
+TABLE:
+	table: <table>
+	table row: <tr>
+	table data: <td> (posamezna celica)
+	table header <th>
+
+	Table attributes:
+		<th colspan="2"/> (raztegne column cez 2)
+		<table width="100%"/> (da zavzame 100% sirine ce razteguješ)
+		<table cellpadding="20"/> (space between text)
+		<table cellspacing="20"/> (space between cells)
+
+
+
+	table primer: 
+		  <table style="border-collapse:collapse;">
+				<thead>
+					<tr>
+						<th colspan="2" style="color:red">Famous Monsters by Birth Year</th>
+					</tr>
+					<tr style="border-bottom:1px solid black;">
+						<th style="padding:5px;"><em>Famous Monster</em></th>
+						<th style="padding:5px;border-left:1px solid black;">
+						<em>Birth Year</em></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="padding:5px;">King Kong</td>
+						<td style="padding:5px;border-left:1px solid black;">1933</td>     
+					</tr>
+					
+					<tr>
+						<td style="padding:5px;">Dracula</td>
+						<td style="padding:5px;border-left:1px solid black;">1897</td>
+					</tr>
+					
+					<tr>
+						<td style="padding:5px;">Bride of Frankenstein</td>
+						<td style="padding:5px;border-left:1px solid black;">1944</td>
+					</tr>
+				</tbody>
+			</table>
+
+division: <div></div> - divides in smaller pieces
+FORMS:
+	ATTRIBUTES:
+		Username: <input type="text" name="username" size="4 maxlength="5" value="Enter name here"> //size changes view, ne amount of char
+			//maxlength pa max št charov
+			//value pa da že nekej piše not
+	RADIO BUTTON:
+		male: <input type="radio" name="sex" value="female" />
+		male: <input type="radio" name="sex" value="male" /> 
+		//ce sta 2 radio  buttna pod istmu imenom pol jih switcha ce klikneš enga al druzga
+	CHECKBOX:
+		Bacon <input type="checkbox" name="food" value="bacon"/>
+		Tuna <input type="checkbox" name="food" value="tuna"/>
+	DROPDOWN:
+		<select name="activities">
+			<option value="play">play the guitar</option>
+			<option value="shave">Shave beard</option>
+			//po defaultu je prva in dolžina najdalše
+		</select>
+	TEXTAREA:
+		Tell me about yourself <br/>
+		<textarea name="bio" rows="8" cols="40">
+		</textarea>
+	INPUT:
+		Password: <input type="password" name="pword"/>
+	FILE:
+		<input type="file" name="myFile"/>
+	SUBMIT:
+		<form action="dosomething" method="post"> //pazi to more bit notr
+			Username: <input type="text" name="username" />
+			<input type="submit" value="Submit!" />
+		</form>
+<span> oblikuješ manjše kose example: <p>This text is black, except for the word <span style="color:red">red</span>!</p>
+<fieldset> --da dodamo napis pa vmes znaèko
+	<legend>

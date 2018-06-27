@@ -1,0 +1,21 @@
+<html>
+<head>
+<script language="JavaScript">
+  function pprint(){
+   var tf = document.getElementById('tf');
+   var a = tf.value;
+
+   document.getElementById("demo").innerHTML=a;
+
+
+
+   alert(a);
+  }
+ </script>
+</head>
+<body>
+<p id="demo">watch it change</p>
+<input type="text" id="tf"  value="Test">
+<input type="button" onClick="pprint()" value="print" >
+</body>
+</html>

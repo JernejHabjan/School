@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Simple JavaScript App</title>
+
+<header>
+	<span id="center">Web technologies</span>
+</header>
+
+<section id="content1">
+	<table id="participant-table">
+		<caption>The list of class participants.</caption>
+		<tr>
+			<th>First name</th>
+			<th>Last name</th>
+			<th>Role</th>
+		</tr>
+	</table>
+</section>
+
+<section id="content2">
+	<fieldset>
+		<legend>Add a new participant</legend>
+		<label for="first">First name: </label>
+		<input id="first" type="text" name="first" autofocus />
+
+		<label for="last">Last name: </label>
+		<input id="last" type="text" name="last" />
+
+		<label for="role">Role: </label>
+		<select id="role" name="role">
+			<option>Lecturer</option>
+			<option>Teaching assistant</option>
+			<option selected="selected">Student</option>
+		</select>
+
+		<button onclick="addParticipant()">Add participant</button>
+	</fieldset>
+</section>
+
+<footer>
+	An example footer text. Web technologies @ UL-FRI
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="script.js"></script>

@@ -1,0 +1,67 @@
+Najpreprostejši protokol za sinhronizacijo ure prek interneta je rdate. Pri tem protokolu klient preprosto vpraša strežnik po casu, strežnik pa mu cas vrne. Za uporabo rdate potrebujemo poseben program, imenovan rdate:
+
+apt-get install rdate
+Uro potem lahko nastavimo povsem preprosto:
+
+rdate NEKSTREZNIK
+kjer je NEKSTREZNIK lahko naprimer ntp1.arnes.si.
+
+Nato se lahko zacnemo igrati s casom. Za nastavljanje in gledanje casa v konzoli uporabite ukaz date:
+
+date
+Cas lahko nastavite z ukazom date -s.
+
+Prva naloga: na poljuben nacin nastavite uro na vceraj ob polnoci.
+
+Druga naloga: z rdate nastavite uro na pravi cas, pri cemer promet med strežnikom in vašim racunalnikom zajemite z wiresharkom. Iz prometa odcitajte cas.
+
+Tretja naloga: napišite program v poljubnem programskem jeziku, ki bo s pomocjo rdate dobil tocen cas in ga izpisal na zaslon. To, na katera vrata se morate povezati, lahko odcitate v datoteki /etc/services. Kot strežnik spet lahko uporabite ntp1.arnes.si.
+
+Primer odpiranja omrežne povezave v Pythonu:
+
+#create an INET, STREAMing socket
+s = socket.socket(
+    socket.AF_INET, socket.SOCK_STREAM)
+#now connect to the web server on port 80
+# - the normal http port
+s.connect(("www.mcmillan-inc.com", 80))
+Primer odpiranja omrežne povezave v Javi:
+
+Socket s = new Socket("nekstreznik.com", 666/* nekavrata */);
+izhod = new OutputStreamWriter(s.getOutputStream());
+vhod = s.getInputStream();
+Primer, kako pošljemo neko sporocilo v pythonu:
+
+s.send("sporocilo")
+Pošiljanje v Javi:
+
+izhod.write("sporocilo", 0, "sporocilo".length());
+Primer, kako preberemo podatek dolžine 13 byte-ov s socketa. 13 byte-ov zato, da ni podobno nicemur drugemu. Številka, v kateri se po time protokolu sporoci cas, ima dolžino 4 byte:
+
+podatek = s.recv(13)
+V Javi:
+
+byte podatek[] = new byte[13];
+int dejanskoPrebranih = vhod.read(podatek);
+Ali (malce bolj pravilno):
+
+DataInputStream podatkovniVhod = new DataInputStream(vhod);
+podatkovniVhod.readFully(podatek);
+Kako v Javi preberemo 4 byte pretvorimo v številko:
+
+byte podatek[] = new byte[4];
+ByteBuffer buf = ByteBuffer.wrap(podatek);
+int stevilka = buf.getInt();
+Kako 4 byte v Javi preberemo in interpretiramo kot številko:
+
+int stevilka = podatkovniVhod.readInt();
+Kako pythonovski niz, ki vsebuje binarni zapis navadnega celega števila, pretvorimo v celo število, z uporabo paketa struct:
+
+stevilka = struct.unpack("i", podatek)
+Kako cas v sekundah od 1. 1. 1970 pretvorimo v datum v Pythonu:
+
+time.localtime(stevilka)
+Kako cas v milisekundah od 1. 1. 1970 pretvorimo v datum v Javi:
+
+Date d = new Date(milisekunde);
+Cetrta naloga: namestite NTP strežnik. Preberite si, približno kako se NTP strežniki usklajujejo med sabo. Preberite si, kakšna je zgodovina NTP strežnikov pri nas in kakšni so problemi pri nastavljanju ure. Nastavite svoj NTP strežnik tako, da bo za višjenivojski strežnik uporabljal ntp1.arnes.si.

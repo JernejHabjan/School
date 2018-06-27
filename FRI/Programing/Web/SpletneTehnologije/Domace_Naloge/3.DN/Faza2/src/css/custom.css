@@ -1,0 +1,39 @@
+/*-----------------------------------
+	General Styles
+-----------------------------------*/
+
+body {
+    font-size: 14px;
+    background-color: #f2f6f9;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/*-----------------------------------
+	Navbar
+-----------------------------------*/
+
+
+.navbar {
+    background-color: #4ea6bc;
+    padding: 15px;
+    border-radius: 0;
+    margin: 0;
+}
+
+.navbar-brand {
+    color: #fff;
+    font-family: Open Sans, sans-serif;
+    padding-left: 32px;
+}
+
+.navbar-brand:hover {
+    color: #fff;
+}
+

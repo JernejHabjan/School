@@ -1,0 +1,11 @@
+# vsebina za primer zahtevka HTTP z uporabo programa telnet
+# ukaz: telnet localhost 80
+
+# poizvedba brez piškotka
+GET /ex7/session/index.php HTTP/1.1
+Host: localhost
+
+# poizvedba s piškotkom
+GET /ex7/session/index.php HTTP/1.1
+Host: localhost
+Cookie: PHPSESSID=

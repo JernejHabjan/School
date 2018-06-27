@@ -1,0 +1,106 @@
+Poročilo Albums SQL
+
+Prvo, ko sem začel delati seminarsko nalogo, sem z interneta povlekel XAMPP, kjer sem potem tudi zagnal SQL server, na katerem je potem tekla moja baza.
+Bazo Albums.sql sem importal v HeidiSQL, kjer sem tudi delal poizvedbe.
+
+1. Naloga:
+a)
+SELECT AlbumID, Price
+FROM Album JOIN Price USING(AlbumID);
+-Klasični join in izpis dveh atributov
+b)
+SELECT AlbumID, Price
+FROM Album JOIN Price USING(AlbumID)
+WHERE Price IS NOT NULL;
+-Ta naloga je podobna nalogi a, ampak samo dodan pogoj WHERE.
+c)
+DROP VIEW IF EXISTS price_medij;
+CREATE VIEW price_medij AS
+	SELECT AlbumID, COUNT(MediumID) AS st_medijev, Medium, Price/COUNT(MediumID) AS price_count
+	FROM Price JOIN Album USING (AlbumID) JOIN Medium USING(AlbumID) JOIN MediumNames USING (MediumID)
+	GROUP BY AlbumID
+	ORDER BY 4;
+SELECT AlbumID, st_medijev, Medium FROM price_medij;
+-k vsakem kreiranju pogleda ali tabele sem spredaj dodal drop ___ if exists, da sem lahko to zmeraj znova zagnal
+ Pri tej nalogi sem se mučil, kako bi uredil po Price/COUNT(MediumID), tako da sem kar naredil pogled in potem izpisal iz njega potrebne atribute
+d)
+SELECT MIN(Year), MAX(Year)
+FROM Album JOIN Year USING(AlbumID);
+-samo izpiše minimum in maksimum
+e) DELA
+SELECT AuthorID, AuthorName, COUNT(AlbumID) AS st_albumov
+FROM Album JOIN Author USING(AlbumID) JOIN AuthorNames USING (AuthorID)
+GROUP BY AuthorID
+ORDER BY st_albumov DESC;
+-tu je bilo potrebno dodati GROUP BY, tako da izpiše več vrstic.
+f)
+
+TODO
+
+g)
+SELECT COUNT(*) AS dodatna_dolocila
+FROM Album
+WHERE AlbumName LIKE '%[%]';
+-tu sem se mučil z LIKE, saj sem ga pomešal z REGEX in sem mislil, da mora biti oglati oklepaj med dvema oglatima oklepajema, da ga sprejme kot simbol (npr. "[[]%[]]")
+h)
+DROP PROCEDURE IF EXISTS Priporocam;
+DELIMITER $
+CREATE PROCEDURE Priporocam(IN isci VARCHAR(50))
+BEGIN
+	DROP TABLE IF EXISTS izbrani;    
+	CREATE TABLE izbrani AS
+		SELECT AlbumID AS AlbumIDNEW, AlbumName AS AlbumNameNEW, RecommendationID AS RecommendationIDNEW
+		FROM Album JOIN Recommendation USING(AlbumID)
+		WHERE AlbumName=isci;
+
+	SELECT AlbumIDNEW , AlbumNameNEW, AlbumName
+		FROM  izbrani, Recommendation r, Album a
+		WHERE r.RecommendationID=RecommendationIDNEW
+		AND a.AlbumID=r.AlbumID;
+	DROP TABLE IF EXISTS izbrani; 
+END $
+DELIMITER ;
+CALL Priporocam("Bert Jansch - Black Swan");
+IZPIS:
+189 | Bert Jansch - Black Swan | Johnny Rivers - L.a Reggae/Blue Suede Shoes [Import, Original recording remastered]
+189 | Bert Jansch - Black Swan | Bert Jansch - Black Swan
+189 | Bert Jansch - Black Swan | The Rolling Stones - Through The Past, Darkly (Big Hits Vol. 2) [Original recording remastered]
+- tukaj sem dal, da lahko iščemo po točno določenem naslovu, kot piše v navodilih, bilo bi pa bolj smiselno da bi iskali le po delu naslova
+- imel sem tudi probleme z izpisom imena albuma, ki ga je pokazal Recommendation, zato sem naredil kar novo tabelo in si z njo spomagal pri izpisu
+i)
+
+TODO
+
+j)
+
+TODO
+
+#______
+
+2. naloga
+a)
+DROP TABLE IF EXISTS razsirjeni_izvajalci;
+DROP VIEW IF EXISTS razsirjeni_izvajalci;
+CREATE VIEW razsirjeni_izvajalci AS
+	SELECT AuthorID, AuthorName, COUNT(AlbumID) AS st_njegovih_albumov
+	FROM Author JOIN AuthorNames USING(AuthorID)
+	GROUP BY AuthorID;
+SELECT * FROM razsirjeni_izvajalci;
+-tukaj sem dodal drop view in drop table, saj bi v teoriji lahko zagnali enega pred drugem in sem napako na tak način preprečil
+b)
+DROP TABLE IF EXISTS razsirjeni_izvajalci;
+DROP VIEW IF EXISTS razsirjeni_izvajalci;
+CREATE TABLE razsirjeni_izvajalci AS
+	SELECT AuthorID, AuthorName, COUNT(AlbumID) AS st_njegovih_albumov
+	FROM Author JOIN AuthorNames USING(AuthorID)
+	GROUP BY AuthorID;
+SELECT * FROM razsirjeni_izvajalci;
+-isto kot naloga a
+c)
+
+TODO
+
+3.
+
+TODO part 2
+

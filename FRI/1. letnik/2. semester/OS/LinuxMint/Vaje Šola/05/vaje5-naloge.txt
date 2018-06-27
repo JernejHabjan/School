@@ -1,0 +1,13 @@
+﻿1. Napišite skripto v Bashu, ki naredi trdo povezavo na datoteko, ki jo podamo kot prvi argument ob klicu. Povezavo naredi v trenutnem imeniku in naj se imenuje enako kot izvorna datoteka, če pa izvorna datoteka ne obstaja, pa naj se ustvari prazna datoteka z istim imenom v trenutnem imeniku.
+
+
+2. S pomočjo (a) zanke for in (b) zanke while napišite skriptni program, ki bo štel od 1 do 500 v enosekundnih intervalih. 
+
+
+3. Napišite skripto, ki bo združila vse navadne datoteke iz trenutnega imenika v pakete tar. V posameznem paketu naj bodo vse datoteke, ki imajo prvih n črk imena istih. Ime paketa naj bo sestavljeno iz prvih skupnih n črk in končnice tar. Število črk n podamo kot argument skripte. 
+
+
+4. Napišite skripto, ki bo združila vse navadne datoteke iz trenutnega imenika v pakete tar. V posameznem paketu naj bodo vse datoteke, ki imajo isto končnico (torej imajo isti niz za zadnjo piko). Ime paketa naj bo ime končnice. Če končnice ni, napišite null.
+
+
+5.  Napišite skripto, ki bo v podanem imeniku izpisala vse mehke povezave, ki ne kažejo na neko končno datoteko ali imenik (v verigi povezav manjka kakšen člen ali pa ciljna datoteka ne obstaja). Za vsako takšno povezavo naj skripta izpiše verigo povezav do člena, ki manjka. Imenik skripta prejme tako, da uporabniku izpiše poziv in čaka, da uporabnik vpiše imenik. Ko skripta obdela podani imenik in izpiše problematične mehke povezave, ponovno izpiše uporabniku poziv za vpis novega imenika itd. Če uporabnik ne vpiše imenika v petih sekundah, se skripta ustavi.

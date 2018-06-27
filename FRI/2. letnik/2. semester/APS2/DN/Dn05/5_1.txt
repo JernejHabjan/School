@@ -1,0 +1,76 @@
+a)
+	1)
+		x1  x2
+		1	1
+	2)
+		x1  x2  x3
+		0	0	0
+		0	1	0
+	3)
+		x1  x2  x3  x4
+		0	0	0	0
+		1	1	1	1
+	4)
+		x1  x2  x3  x4  x5  x6  x7
+		0	0	0	0	0	0	0
+		0	0	0	0	0	0	1
+		0	0	0	0	0	1	1
+		0	0	0	0	1	1	1
+		0	0	0	1	1	1	1
+		0	0	1	1	1	1	1
+		0	1	1	1	1	1	1
+		1	1	1	1	1	1	1
+b)
+
+	v prilogi
+c)
+	i)
+	Algoritem: Tarjanov algoritem:
+	Pravilnost izraza lahko najdemo z pomočjo Tarjanovega algoritma z močno povezanimi
+	komponentami, saj ta dela za vse implikacijske grafem ne samo za 2-SAT.
+	Algoritem je linearen.
+	
+	Algoritem:
+	1. Zgradimo implikacijski graf in poiščemo močno povezane komponente
+	2. Pogledamo za vsako močno povezano komponento, če katera vsebuje 
+		spremenjivko in njeno negacijo. če jo. ustavi izvajanje in vrni False
+	3. Sestavi skrčen graf, kjer je po eno oglišče za vsako močno povezano komponento
+		in pot od komponente i do j, ko graf implikacij vsebuje povezavo uv,
+		tako da u pripada komponenti i in v pripada komponenti j.
+		Dobimo usmerjen aciklični graf
+	4. Topološko uredi vozlišča
+	5. Za vsako komponento v obratnem topološkem redu, ki nimajo pravilnih nastavitev,
+		nastavi komponente na True.
+		
+		
+	ii) condensation graphs:
+		v prilogi
+		
+	iii)
+		Reševanje 2-SAT z implikacijami:
+			Če imamo sestavljen graf implikacij, lahko z krepko povezanimi komponentami
+			(Tarjanov algoritem) v linearnem času poiščemo rešitev.
+			Rešitev se da najti v O(n) času, saj moramo pogledati, da vozljišče in 
+			njegova negacija, oba NE pripadata isti povezani komponenti, ker drugače 
+			bi morala biti oba pogoja pravilna, in to ni možno.
+			To naredimo za vsa vozlišča.
+			
+		 
+		 
+		 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

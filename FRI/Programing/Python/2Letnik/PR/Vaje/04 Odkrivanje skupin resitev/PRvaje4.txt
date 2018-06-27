@@ -1,0 +1,19 @@
+theory: k-means algorithm
+practice: implement kmeans in python
+
+nenadzorovano učenje - nimamo končnih skupin
+
+uporabimo matriko (numpyev array)
+	vsaka vrstica je vektor z m featursi
+	
+task is to fing groups  in this data
+	-points are closer to each other than they are to other groups
+	uporabimo evklidsko razdaljo med tema točkama
+
+kako izračunamo nove centre -> dobimo average točk
+
+	X[labels == 1]
+	to lah nardimo pr primerih k sta X in labels istih dimenzij
+	
+kmeans dela dobr pr primerih kjer lah narišeš ravno črto med clusterjema
+	pr doughnutu tega nmorš

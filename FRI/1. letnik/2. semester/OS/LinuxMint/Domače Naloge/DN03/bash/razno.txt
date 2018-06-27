@@ -1,0 +1,45 @@
+echo $! -TKO DOBIŠ TAZADN ZALAUFAN PROCES
+
+v04-izpiši proces uporabnika
+	ps -u $(whoami) | wc -l ->napiše koliko procesov ima on
+	
+V07 zalaufat eyes
+	xeyes& ->dobimo še številko opravila
+	
+	
+	
+ŠTEVILKA KOK JIH LAUFA
+	pgrep -c PIDPROCESA
+	
+	---ce ne dela pgrep:
+		ps -C PIDPROCESA --no-headers | wc -l
+
+	
+	
+za zvedt kok jih že laufa:
+	pgrep procname && echo Running 
+	pgrep procname || echo Not running 
+	killall -q -0 procname && echo Running 
+	pidof procname && echo Running
+	
+	
+
+	
+da zalaufaš proces če ne laufa:
+	#!/bin/sh
+
+	PROCESS="$1"
+	PROCANDARGS=$*
+
+	while :
+	do
+		RESULT=`pgrep ${PROCESS}`
+
+		if [ "${RESULT:-null}" = null ]; then
+				echo "${PROCESS} not running, starting "$PROCANDARGS
+				$PROCANDARGS &
+		else
+				echo "running"
+		fi
+		sleep 10
+	done    

@@ -1,0 +1,24 @@
+4.2)
+a)Ip in masko bom uporabil kot bitno pot v drevesu, za list bo pa Ip naslendnjega hop routerja.
+	Route add pa razcepi vejo na določenem mestu in doda vozlišče, oziroma naredi novo vejo, če 
+	sta ip in maska čisto drugačna od že vnešenih
+b) Slika v prilogi
+c)Vsa vozlišča so potrebna, saj vozlišča predstavljajo neka podomrežja. Če teh vozlišč ne bi bilo,
+	bi vse preusmerjali na isti next hop router.
+d)Next Hop vrača ip naslednjega usmerjevalnika tako da mu podami ip, ta pa se sprehodi bit po bit po drevesu
+	in gleda najdaljšo ujemajočo predpono s temu novim podanim Ipjem. Potem v listu prebere Ip naslednjega
+	hop usmerjevalnika.
+e)
+	nexthop 2.5.5.5 ->129.0.2.1
+	nexthop 192.249.124.2 ->172.16.16.15
+	nexthop 192.249.125.1 ->172.16.16.15
+	nexthop 192.249.20.48 ->172.168.16.193
+f) Slika v prilogi
+g) Sprememb ni, saj drevo že deli vozlišča po bitih z masko
+h)
+	nexthop 5.5.5.5 ->192.0.2.2
+	nexthop 192.249.20.14 ->172.168.16.193
+	nexthop 192.249.20.39 ->172.168.16.193
+	nexthop 192.249.20.41 ->172.168.16.193
+	nexthop 192.249.21.14 ->172.16.17.15
+	

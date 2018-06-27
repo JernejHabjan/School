@@ -1,0 +1,18 @@
+Naloga
+
+Izris predmetov z rotacijo je s SpriteBatchom zelo enostaven. Naprednejši klici draw namreè sprejmejo parameter, za koliko radianov naj bo izrisana slika zarotirana. Tako lahko najpreprostejše vrtenje naredimo že, èe namesto nièle v parameter rotation pošljemo gameTime.totalGameTime.
+
+Èe po drugi strani želimo pripraviti podlago za fizikalno pravilne rotacije, potrebujemo podobne spremenljivke kot pri premikanju (le da je rotacija v 2D enodimenzionalna lastnost). Pot postane kót in namesto hitrosti imamo kotno hitrost. Tako izdelamo protokole za Rotation, AngularVelocity in Rotatable, ki združuje oboje.
+
+V fizikalni pogon tako dodamo izraèun, ki vsem objektom, ki implementirajo Rotatable, spremeni kót rotacije glede na kotno hitrost.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer se nekateri predmeti vrtijo.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-fizika-premikanje-rotacija.mov 
+(primerno popravite vpisno številko in priimek)

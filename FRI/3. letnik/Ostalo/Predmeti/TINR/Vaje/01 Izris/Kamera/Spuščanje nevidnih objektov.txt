@@ -1,0 +1,17 @@
+Naloga
+
+V igrah, kjer ne vidimo celotnega sveta naenkrat, lahko pospešimo izris, èe za objekte, ki se nahajajo izven vidnega polja, sploh ne poklièemo kode za izris. GPU šele po transformaciji oglišè ugotovi, da posamezen trikotnik ne bo viden. Zato lahko prihranimo delo, èe matematiko prenesemo na CPU in za celoten objekt naenkrat izraèunamo, ali je v vidnem polju. To je veliko hitreje, saj objekt pred tem poenostavimo z orisanjem krogle ali kvadra, oziroma kroga ali pravokotnika v dveh dimenzijah. Èe ta geometrièni primitiv primerjamo z vidnim poljem (vidni stožec – frustum v 3D, pravokotnik v 2D), bomo z izraèunom geometriènega preseka ugotovili, ali je objekt potencialno viden.
+
+Pri ugotavljanju toèk sveta, ki ustrezajo oglišèem ekrana, si pomagamo s klicem [graphicsDevice.viewport unproject: projection: view: world:], da iz koordinat zaslona pridemo v koordinatni sistem sveta.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer se na ekranu izpisuje, koliko objektov je na sceni v celoti in, koliko jih trenutno izrisujete (recimo 5/86). S sprehajanjem po sceni prikažite, da pravilno izrisujete samo vidne objekte na sceni. Po potrebi lahko izpis števila objektov izpisujete v konzolo.
+
+
+Posnemite le del ekrana, v katerem je viden simulator (in konzola). Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-izris-kamera-spuscanje_nevidnih_objektov.mov
+(primerno popravite vpisno številko in priimek)

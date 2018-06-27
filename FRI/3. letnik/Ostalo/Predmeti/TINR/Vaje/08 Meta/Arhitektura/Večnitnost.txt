@@ -1,0 +1,10 @@
+
+Posnemite video, kjer pokažete, kje v kodi se kreirajo niti. Med izvajanje veè niti hkrati prekinite izvajanje programa s pomoèjo prekinitvenih toèk (angl. breakpoint) in pokažite, da je aktivnih veè niti. Tempirajte in primerjajte èas izvajanja z veè nitmi in eno samo nitjo.
+
+Posnemite le del ekrana, ki je pomemben za video. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+
+Poimenovanje:
+63080000-priimek-meta-arhitektura-vecnitnost.mov
+
+(primerno popravite vpisno številko in priimek)

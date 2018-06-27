@@ -1,0 +1,169 @@
+Connection name: poljubno
+Hostname: pb.vaje.uni-lj.si
+Username: pb
+Pass: pbvaje
+Default schema: vaje
+
+
+/*1 SELECT DISTINCT ime FROM jadralec WHERE jid%2--0;
+*/
+/*2 unfinished SELECT DISTINCT ime FROM coln WHERE 
+*/
+/*3
+SELECT DISTINCT coln.ime
+FROM jadralec, rezervacija, coln
+WHERE jadralec.jid=rezervacija.jid
+	AND rezervacija.cid=coln.cid
+    AND starost<=35
+    AND dolzina>35;  */
+/*4 no idea
+*/
+/*5 SELECT DISTINCT jadralec.ime
+FROM jadralec, rezervacija, coln
+WHERE jadralec.jid=rezervacija.jid
+	AND rezervacija.cid=coln.cid
+    AND coln.ime LIKE'%sun%'
+	AND rezervacija.dan BETWEEN date('2006-06-23') AND date('2006-09-21'); */
+/*6
+SELECT DISTINCT jadralec.jid,ime,dan
+FROM jadralec
+LEFT JOIN rezervacija ON jadralec.jid=rezervacija.jid;
+*/
+/*7 unfinished
+SELECT DISTINCT naselje.id, naselje.vid, naselje.village, 
+naselje.x, naselje.y, naselje.population, naselje.pid
+FROM aliansa, naselje, igralec
+WHERE igralec.pid=naselje.pid
+	AND igralec.aid=aliansa.aid
+	AND alliance="Nwm";
+*/
+/*8*/
+SELECT DISTINCT aliansa.ime
+FROM aliansa, naselje, igralec
+WHERE igralec.pid=naselje.pid
+	AND igralec.aid=aliansa.aid
+	AND naselje.x>0
+    AND naselje.y>0
+#______________________________________________________
+#REŠITVE:
+
+#1.1
+SELECT ime
+FROM jadralec
+WHERE rating IN (0,2,4,6,8,10);
+#ali
+SELECT ime
+FROM jadralec 
+WHERE rating % 2 = 0;
+
+#1.2 
+#če rezultat poizvedbe ni prazen imajo nekateri čolni enako ime
+SELECT c1.ime
+FROM coln c1, coln c2
+WHERE c1.cid != c2.cid AND c1.ime = c2.ime;
+#dopolnjena rešitev z uporabo funkcije IF(pogoj, trueVrednost, falseVrednost)
+SELECT IF( EXISTS (SELECT c1.ime
+			FROM coln c1, coln c2
+			WHERE c1.cid != c2.cid AND c1.ime = c2.ime),
+			'Obstajajo čolni z enakim imenom.', 
+			'Čolni z enakimi imeni ne obstajajo.') AS 'Odgovor';
+
+#1.3
+SELECT c.ime
+FROM jadralec j JOIN rezervacija r USING(jid) JOIN coln c USING(cid)
+WHERE dolzina > 35 and starost < 35;
+
+#1.4
+#naloga je enaka 1.2
+#če rezultat poizvedbe ni prazen imajo nekateri jadralci enako ime
+SELECT j1.ime
+FROM jadralec j1, jadralec j2
+WHERE j1.jid != j2.jid AND j1.ime = j2.ime;
+#polepšana rešitev
+SELECT IF( NOT EXISTS (SELECT j1.ime
+			FROM jadralec j1, jadralec j2
+			WHERE j1.jid != j2.jid AND j1.ime = j2.ime),
+			'Da.', 
+			'Ne.') AS 'Ali imajo vse jadralci različna imena?';
+
+#1.5
+SELECT j.ime
+FROM jadralec j JOIN rezervacija r USING(jid) JOIN coln c USING(cid)
+WHERE r.dan BETWEEN DATE('2006-06-21') AND DATE('2006-09-23')
+		AND c.ime LIKE '%sun%';
+
+#1.6
+#stik s čolnom ni potreben
+SELECT *
+FROM jadralec LEFT JOIN rezervacija USING(jid) LEFT JOIN coln USING(cid);
+
+#2.1
+SELECT n.*
+FROM aliansa a, igralec i, naselje n
+WHERE a.aid = i.aid AND i.pid = n.pid
+	AND alliance = 'Nwm';
+
+#2.2 SAMO V SV
+#To so tisti z naseljem v SV kvadrantu in hkrati ne obstaja naselje v drugih kvadrantih (MINUS)
+SELECT DISTINCT aid, alliance
+FROM aliansa a JOIN igralec i USING(aid) JOIN naselje n USING(pid)
+WHERE x > 0 AND y > 0
+	AND aid NOT IN(
+				SELECT aid
+				FROM aliansa a JOIN igralec i USING(aid) JOIN naselje n USING(pid)
+				WHERE x <= 0 OR y <= 0);
+
+#2.3 !!!!!!!!!!!!!!!!!!
+#REGEXP in RLIKE lahko poljubno menjamo
+#POZOR ker so znaki "[", "]" in "." rezervirani za regularne izraze jih iščemo z "[[]", "[]]" in "[.]"
+SELECT n.village
+FROM naselje n
+WHERE village REGEXP '[[][0-9]{2}[]]'
+	 OR village RLIKE '[[][0-9][.][0-9][]]';
+
+#2.4
+#Izpisanih je še nekaj atributov za lajžje preverjanje pravilnosti in razumevanje naloge
+SELECT id, village, x, y, SQRT((x-30)*(x-30)+(y-20)*(y-20)) as Oddaljenost
+FROM naselje n
+WHERE (x-30)*(x-30)+(y-20)*(y-20) < 100*100 #računamo po evklidski razdalji
+ORDER BY Oddaljenost ASC;
+
+#2.5
+SELECT DISTINCT i.pid, player
+FROM naselje n JOIN igralec i USING(pid) JOIN pleme p USING(tid)
+WHERE p.tribe = "Galci" AND n.population > 1000;
+
+#3.1
+#Naloga ima veliko rešitev. Tukaj je rešena z dvojnim gnezdenjem.
+SELECT c.cid 
+FROM coln c
+WHERE c.dolzina > 35 AND c.cid IN
+		(SELECT r.cid
+		FROM rezervacija r
+		WHERE r.jid IN
+			(SELECT j.jid
+			FROM jadralec j
+			WHERE j.starost < 40));
+
+#3.2
+SELECT *
+FROM jadralec LEFT JOIN rezervacija USING(jid)
+ORDER BY jid;
+
+#3.3
+SELECT * 
+FROM
+	(SELECT * 									#jadralci, ki imajo rezervacije
+	FROM jadralec JOIN rezervacija USING(jid) 
+	UNION
+	SELECT j.*, NULL, NULL						#plus tisti, ki nimajo rezervacije
+	FROM jadralec j	
+	WHERE j.jid NOT IN 	(
+						SELECT jid 
+						FROM jadralec JOIN rezervacija USING(jid) 
+						)
+	) AS unija 
+ORDER BY unija.jid;								#zunanje gnezdenje je samo zato, da lahko izpis sortiramo po jid
+
+#3.4
+#krneki

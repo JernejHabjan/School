@@ -1,0 +1,11 @@
+﻿1. poenostavmo enačbo kokr se da... krajšamo obe strani enačbe z istmu koeficientom
+2. če enačba ni cela... da jo ne sestavljajo celi deli jo moramo tako preoblikovati da pač jo
+
+3. napišemo prvo vrstico, kjer je večji člen pomnozen z *1 vmes je vedno plus, manjsi clen pa pomnozen z 0... na desni strani pa napišemo rezultat te naše nove enačbe
+4. v drugi vrstici naredimo ravno obratno, vmes je še vedno plus
+5. izračunamo ostanek (napisan na desni strani) tako da vzamemo rezultat prve vrstice in izrazimo z drugo vrstico... ki je pa 5= 3*1+2... 1 je tukaj količnik s katerim bomo množili pozneje.. 2 je pa ostanek, ki ga prepišemo kot rezultat v 3. vrstici
+6. ko imamo v 3. vrstici rezultat... prepišemo št 5 in 3 na to vrstico... prav tako plus.. koeficiente... ki sta tukaj 1 in -1 pa moramo izračunati... koeficient zraven 5 smo izračunali tako, da smo prvi koeficient (-1) odšteli z večkratnikom (1) (ki smo dobili pri izražanju 5ke s trojko) drugega koeficienta (0)... tu se gleda koeficiente samo pri 5, to se pravi 1-(1*0). Za koef pri 3ki je isto... 0-(1*1)
+7. ko maš izračunano vrstico isto nardiš s to vrstico... izraziš eno prejšno z večkratnikom in ostankom te... vse dokler ne prideš do 0
+8. ko je zadnji rezultat ==0...potem pogledaš rezultat pri predzadnji vrstici... in če je ta deljiv z rezultatom osnovne enačbe... tuki sm napisu če 2|52.. pol je rešitev možna... drugače rešitev ne obstaja...
+9. količnike v tej vrstici pomnožiš z istmu količnikom kot pomnožiš rezultat v tej vrstici da pride org rezultat, prepišeš kot x in y... pazi- če je v org formuli pred x ali y minus... moraš to tukaj upoštevati
+10. zapišeš še x0 in y0 tako da prepišeš rezultat pri x in y in prišteješ večkratnik k in z njem pomnožen koeficient ki je zraven x in y v zadnji vrstici razširjenega evlkidovega algoritma, kjer rabiš spet upoštevati ali imata x in y v osnovni formuli poz ali neg predznak

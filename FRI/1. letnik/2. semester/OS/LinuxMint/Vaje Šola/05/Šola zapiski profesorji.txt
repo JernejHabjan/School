@@ -1,0 +1,568 @@
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavje 2 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+PROGRAMIRANJE v BASH-u
+
+BASH - Bourne Again Shell
+lupina za ukaze
+skriptni jezik
+Omogoca v celoti uporabiti zmožnosti lupine
+Avtomatizacija opravil (veliko programov v Linuxu je skriptnih programov)
+Razlika med skriptnimi in neskriptnimi programskimi jeziki
+
+neskriptni (C, C++, Java)
+
+hitrejši
+izvorna koda se prevede v izvršno datoteko
+preveden program se obicajno prevede za dolocen OS
+Rešitev: Java, .NET
+skriptni
+
+izvorna koda se tolmaci (prevaja sproti) ? pocasnejši
+lažja prenosljivost med razlicnimi OS
+Pisanje skript
+
+Ko zaženemo lupino bash in se pojavi pozivnik (angl. prompt), se lupina nahaja v interaktivnem nacinu. V tem nacinu v ukazno vrstico vtipkamo ukaz, lupina ga nato poskuša izvesti. V primeru težav z izvajanjem lupina izpiše sporocilo o napaki, sicer lupina ne izpiše nic. Med dejanskim izvajanjem ukaza pa lahko sam ukaz izpiše morebitna sporocila.
+
+Pri prakticni uporabi ukazne lupine so nekatera opravila pogosto sestavljena iz (daljšega) zaporedja vecih ukazov. Poleg tega lahko takšna opravila tudi pogosteje ponavljamo. Ponavljajoce tipkanje istega zaporedja ukazov lahko postane za uporabnika zelo utrujajoce. Zato takšno zaporedje ukazov navadno zapišemo v datoteko, lupini pa, ob vsaki potrebi po izvajanju opravila, preprosto narocimo naj izvede ukaze zapisane v datoteki. Takšno datoteko imenujemo skripta (angl. script), takšen nacin uporabe lupine pa neinteraktivni nacin.
+
+Program v BASH-u
+
+V izbranem urejevalniku besedil (npr. vi, nano, gedit) napišemo:
+
+#!/bin/bash
+echo "testni izpis"
+exit
+
+Skriptni program shranimo kot npr. testni.sh
+
+Koncnica datoteke, ki vsebuje bash-skripto, naj bi (po dogovoru) bila .sh, ni pa nujno. Ce želimo skripto pognati, moramo imeti pravico za njeno izvajanje. Skripta ni zapisana v izvajalnem formatu, ampak vsebuje le navadno besedilo oz. zaporedje ukazov. Ce pa je prva vrstica skripte naslednje oblike:
+
+#!/bin/bash
+
+potem lupina ve, da gre za skripto in jo temu ustrezno tudi izvede. V tem primeru je /bin/bash pravzaprav pot do programa.
+
+Namesto tolmaca (angl. interpreter) /bin/bash lahko uporabimo tudi katerega drugega, npr. /bin/sh, /usr/bin/perl, /usr/bin/python, /usr/bin/ruby. Pravzaprav lahko uporabimo poljuben sistemski ukazi, kot npr. /bin/cat ali celo /bin/rm. 
+
+Skripto potem poženemo tako, da v konzolo vpišemo njeno ime (in pot, ce skripta ni locirana v enem od imenikov v okoljski spremenljivki $PATH). Ce se nahajamo v istem imeniku, kjer je skripta (in imenik ni v $PATH), potem je najhitreje da podamo relativno pot do skripte (imeti moramo seveda pravice za izvajanje):
+
+./testni.sh
+
+Zakljucek skripte
+
+Vsak ukaz, prav tako tudi vsaka skripta, po koncanem izvajanju vrne nek izhodni status izvajanja. Izhodni status je število med 0 in 127, oz. 128+n, ce se je ukaz koncal s signalom številka n. Pri tem 0 pomeni uspešno in vse ostalo neuspešno.
+
+Status zadnjega v ospredju (angl. foreground) izvedenega ukaza se nahaja v vgrajeni spremenljivki $?. Primer: ls; echo $?
+
+Ce želimo izvajanje skripte eksplicitno koncati, to lahko naredimo z ukazom exit
+
+exit [status]
+
+pri cemer je status izhodni status skripte. Ce tega ukaza ni, se skripta konca, ko tolmac naleti na konec datoteke. V tem primeru je izhodni status enak statusu zadnjega izvedenega ukaza. Pravila lepega programiranja vseeno narekujejo, da se skripta konca z ukazom exit. Primer uporabe:
+
+exit ... izhodni status skripte bo status zadnjega izvedenega ukaza
+exit 0 ... izhodni status skripte bo 0
+exit 42 ... izhodni status skripte bo 42
+
+Še en primer malo bolj uporabne skripte: program za avtomatizacijo opravil – hocemo pobrisati vse datoteke.
+
+izvesti moramo sledece ukaze:
+
+mkdir kos
+mv * kos
+rm -rf kos
+mkdir kos
+
+namesto tega napišemo skripto: pobrisi.sh
+
+#!/bin/bash
+mkdir trash
+mv * trash
+rm -rf trash
+mkdir trash
+echo "Vse datoteke so zbrisane!"
+
+Komentarji
+
+Zacnejo se z znakom #
+
+Izjema je samo prva vrstica (ki ni le komentar).
+Prva dva znaka skupaj #! – kot 16-bitno število – pravzaprav predstavljata carobno število (angl. magic number). Glej tudi man magic.
+
+#!/bin/bash
+# program šteje od 1 do 10:
+for i in 1 2 3 4 5 6 7 8 9 10; do
+  echo $i
+done
+
+Ceprav se še nismo naucili uporabe zanke for, lahko s pomocjo komentarja sklepamo, kaj naredi zgornji program.
+
+Spremenljivke
+
+Spremenljivke v bashu ni potrebno posebej deklarirati, definiramo pa jo enostavo tako, da ji priredimo neko vrednost. Tip vseh spremenljivk je niz znakov, ce ne zahtevamo drugace. Spremenljivko definiramo in/ali ji priredimo vrednost s prireditvenim stavkom:
+
+ime_spremenljivke=vrednost
+
+Spremenljivke v programu uporabljamo na naslednja dva nacina:
+
+${var}
+$var
+
+Poleg zgoraj opisane enostavne zamenjave jih poznamo še nekaj. Naštejmo zanimivejše:
+
+echo ${ime:-veronika}: ce ime ni definirano, potem izpiše veronika (spremenljivka ime se ne nastavi)
+echo ${ime:=veronika}: ce spremnljivka ime ni definirana, potem jo nastavi in izpiše
+
+stringZ=abcABC123ABCabc
+
+${#stringZ} # dolžina niza: 15
+${stringZ:position} ali ${stringZ:position:length} # kopiranje podniza
+echo ${stringZ:0} # izpiše abcABC123ABCabc
+echo ${stringZ:1} # izpiše bcABC123ABCabc
+echo ${stringZ:7} # izpiše 23ABCabc
+echo ${stringZ:7:3} # izpiše 23A
+
+Opomba: spremenljivka $* doloca seznam vseh vhodnih argumentov ukaza
+echo ${*:2} # izpiše vse vhodne argumente ukaza od 2. naprej
+echo ${*:2:2} # izpiše 2 argumenta od 2. Naprej
+
+# kopiranje podniza od desne
+${stringZ: -position} ali ${stringZ: -position:length} ali
+${stringZ: (-position)} ali ${stringZ: (-position):length}
+
+echo ${stringZ:&nbsp(-4)} # Cabc
+echo ${stringZ: -4} # Cabc
+
+odstranitev podniza
+
+# Odstrani najkrajše ujemanje podniza $substring s sprednje strani iz niza $string. 
+${string#substring}
+
+# Odstrani najdaljše ujemanje podniza $substring s sprednje strani iz niza $string. 
+${string##substring}
+
+# Odstrani najkrajše ujemanje podniza $substring z zadnje strani iz niza $string. 
+${string%substring}
+
+# Odstrani najdaljše ujemanje podniza $substring z zadnje strani iz niza $string.
+${string%%substring}
+
+echo ${stringZ#a*C} # 123ABCabc
+echo ${stringZ##a*C} # abc
+echo ${stringZ%b*c} # abcABC123ABCa
+echo ${stringZ%%b*c} # a
+
+zamenjava podniza
+
+${string/substring/replacement} # zamenja prvo ujemanje
+${string//substring/replacement} # zamenja vsa ujemanja
+
+stringZ=abcABC123ABCabc
+echo ${stringZ/abc/xyz} # xyzABC123ABCabc
+
+# Zamenja prvo ujemanje 'abc' z 'xyz'.
+
+echo ${stringZ//abc/xyz} # xyzABC123ABCxyz
+
+
+${string/#substring/replacement} # zamenja zacetek niza string
+${string/%substring/replacement} # zamenja konec niza string
+
+stringZ=abcABC123ABCabc
+echo ${stringZ/#abc/XYZ} # XYZABC123ABCabc
+
+# Ce 'abc' ustreza zacetku niza, ga zamenjaj z 'XYZ'.
+
+echo ${stringZ/%abc/XYZ} # abcABC123ABCXYZ
+
+# Ce 'abc' ustreza koncu niza, ga zamenjaj z 'XYZ'.
+
+Kontrolne strukture: if, case, while, for
+
+primer programa: bar.sh
+
+#!/bin/bash
+cp /etc/foo .
+echo "Done."
+
+ce datoteka foo ne obstaja, nam program vrne:
+
+borutb@borutb-desktop:~$ ./bar.sh
+cp: /etc/foo: No such file or directory
+Done.
+
+Struktura: if … then … else … elif … fi
+
+omogoca, da delamo odlocitve
+naredi to, ce je izpolnjen ta pogoj, drugace naredi nekaj drugega
+popravljen primer programa: kopiraj.sh:
+
+#!/bin/bash
+
+if test -f /etc/blabla
+then         # datoteka obstaja, kopiraj, izpiši, da je uspešno
+  cp /etc/blabla .
+  echo "Koncano."
+else         # datoteka ne obstaja, izpiši
+  echo "Datoteka ne obstaja"
+  exit
+fi
+
+Zamik vrstic v desno omogoca vecjo berljivost kode.
+
+Namesto ukaza test lahko uporabljamo [  ].
+
+Npr.: namesto test -f /etc/foo then lahko napišemo:
+
+if [ -f /etc/foo ]; then
+
+pazimo na prazne presledke v oklepajih!
+sintaksa je mogoce bližje tisti v drugih programskih jezikih
+podpicje oznacuje konec ukaza
+vse od tu naprej se bo izvedlo kot da imamo novo vrstico
+ko uporabljamo spremenljivke, je dobro da jih damo v narekovaje: if [ "$ime" -eq 5 ]; then
+V novejših inacicah BASH-a lahko pogoje evalviramo z [[ ]].
+
+V tem primeru gre za sintakticno strukturo in ne ukaz. Sintaksa preverjanja je podobna [], vendar pa lahko v en izraz zapišemo vec testnih pogojev. Pozor: v izrazih tukaj velja prednost && pred ||.
+
+namesto if [ "$spr1" -eq 5 ] && [ "$spr2" -gt 10 ]; then
+
+lahko uporabimo 
+
+if [[ $spr1 -eq 5 && $spr2 -gt 10 ]]; then
+
+Poleg obicajnih primerjav, ki jih omogocata test oz. [ ], omogoca [[ ]] s pomocjo operatorja =~ tudi preverjanje ujemanja z regularnimi izrazi. Vendar je potrebno paziti na sintakso (glej dokumentacijo).
+
+Logicni "in" in "ali"
+
+logicni operator "in": &&
+
+pogoj1 && pogoj2
+
+Najprej preverimo 1 pogoj, ce je resnicen, preverimo 2 pogoj, ce je tudi ta resnicen, se izvrši preostanek kode.
+
+logicni operator "ali": ||
+
+pogoj1 || pogoj2
+
+Ce 1 pogoj ni resnicen, potem preverimo 2 pogoj. Koda se izvrši, ce je vsaj en pogoj resnicen.
+
+primer za operator "in":
+
+#!/bin/bash
+x=5
+y=10
+if [ "$x" -eq 5 ] && [ "$y" -eq 10 ]; then
+
+echo "Oba pogoja sta resnicna."
+else
+
+echo "Pogoja nista resnicna."
+fi
+
+primer za operator "ali": 
+
+#!/bin/bash
+x=3
+y=2
+if [ "$x" -eq 5 ] || [ "$y" -eq 2 ]; then
+   echo "En od pogojev je resnicen."
+else
+   echo "Noben pogoj ni resnicen."
+fi
+
+
+Negacija
+
+Znak ! s presledkom pred ukazom (ali skupino ukazov) negira izhodni status ukaza (ali skupine): ce je bil izhodni status 0, potem postane 1; ce je bil status > 0, potem postane 0.
+
+Primer:
+
+! test a = b; echo $?             # status bo 0
+! [[ a = a && b = b ]]; echo $?   # status bo 1
+! ls ~ ; echo $?                  # status bo 1
+
+
+
+Struktura case … in … esac
+
+Bolj pregledno, ko je potrebno preveriti veliko pogojev.
+
+Isto lahko naredimo s strukturo if.
+
+#!/bin/bash
+x=5 # prenastavimo x na 5
+# preveri vrednost x:
+case $x in
+0) echo "Vrednost x je 0."
+;;
+5) echo "Vrednost x je 5."
+;;
+9) echo "Vrednost x je 9."
+;;
+*) echo "Nepoznana vrednost."
+esac
+
+#!/bin/bash
+x=5 # prenstavimo x na 5
+if [ "$x" -eq 0 ]; then
+echo "Vrednost x je 0."
+elif [ "$x" -eq 5 ]; then
+echo "Vrednost x je 5."
+elif [ "$x" -eq 9 ]; then
+echo "Vrednost x je 9."
+else
+echo "Nepoznana vrednost."
+fi
+
+spremenljivko x preverimo 3x
+prvic, ali je vrednost 0
+drugic, ali je vrednost 5
+tretjic, ali je vrednost 9
+v primeru, ce ni izpolnjen noben pogoj, se izpiše "Nepoznana vrednost"
+zank * pomeni vse drugo
+vsak pogoj se mora koncati z dvojnim podpicjem ;;
+
+Zanke
+
+Struktura while … do … done
+
+Omogoca ponavljanje: ponavljaj dokler je pogoj resnicen.
+
+1. primer z ukazom true ? pocasnost izvajanja, ker ni vgrajen
+
+#!/bin/bash
+while true; do
+   echo "Za izhod pritisni CTRL-C."
+done
+
+1. primer z v lupino vgrajenim ukazom : (ukaz null, ne naredi nic, se vedno zakljuci uspešno) ? hitreje
+
+#!/bin/bash
+while :; do
+   echo "Za izhod pritisni CTRL-C."
+done
+
+Odlociti se moramo med hitrostjo in berljivostjo kode.
+
+2. primer
+
+#!/bin/bash
+x=0; # prenastavimo x na 0
+while [ "$x" -le 10 ]; do
+
+echo "Trenutna vrednost spremenljivke x: $x"
+x=$(expr $x + 1)
+sleep 1
+done
+
+Uporabili smo test (v obliki oglatih oklepajev).
+-le: preverimo, ce je spremenljivka x manjša ali enaka vrednosti 10.
+
+Dokler je x manjši ali enak 10, izpiši trenutno vrednost in nato prištej 1. Ukaz sleep 1 program zaustavi za 1 sekundo.
+
+x=$(expr $x + 1)
+
+x poveca za 1
+
+$() : izvrši ukaz v oklepajih (v našem primeru: expr $x + 1)
+
+jaz=$(whoami); echo "jaz sem $jaz."
+
+Podobno lahko lahko namesto $( ) uporabimo enojne narekovaje nazaj ` `.
+
+Struktura until … do … done
+
+omogoca ponavljanje (enako kot while), samo pogoj je ravno obrnjen
+
+while: ponavljaj, dokler je pogoj resnicen
+until: ponavljaj, dokler ni pogoj izpolnjen
+
+#!/bin/bash
+x=0
+until [ "$x" -ge 10 ]; do
+
+echo "trenutna vrednost x: $x"
+x=$(expr $x + 1)
+sleep 1
+done
+
+ponavljaj, dokler ni x enak ali vecji od 10
+
+Struktura for … in … do … done
+
+Struktura for omogoca ponavljamo po seznamu vrednosti.
+
+for var in spisek ; do ukazi ; done
+
+Pomen zanke je, da spremenljivka var zaporedno dobi vse vrednosti iz spisek . Za vsako vrednost se izvedejo ukazi.
+
+1. primer: vsako sekundo izpiši piko
+
+#!/bin/bash
+echo -n "Kontrola sistema za napake"
+for dots in 1 2 3 4 5 6 7 8 9 10; do
+
+echo -n "."
+sleep 1
+done
+echo "Sistem je pregledan."
+
+Spremenljivka dots zavzame vrednosti iz zaporedja števil od 1 do 10 in izpiše piko za vsako vrednost
+
+2. primer: vrednosti v zaporedju so lahko tudi nizi:
+
+#!/bin/bash
+for x in papir svincnik pero; do
+
+echo "The value of variable x is: $x"
+sleep 1
+done
+
+Najprej zavzame spremenljivka x vrednost papir, nato svincnik in na koncu pero. Ko ni v zaporedju vec vrednosti se zanka konca.
+
+3. (bolj uporaben) primer: doda koncnico .html vem datotekam v trenutni mapi
+
+#!/bin/bash
+for file in *; do
+
+echo "Dodaj koncnico .html datoteki $file..."
+mv $file $file.html
+sleep 1
+done
+
+znak * pomeni vse v trenutnem imeniku (v našem primeru vse datoteke)
+spremenljivka file zavzame vrednosti posamezne datoteke v zaporedju vseh datotek
+nato s pomocjo ukaza mv preimenuje posamezno datoteko v datoteko z novim zakljuckom .html
+
+ 
+
+Drugi nacin uporabe zanke for je bolj podoben klasicnim programskim jezikom:
+
+for (( inicializacija ; pogoj ; inkrementacija )); do ukazi ; done
+
+Znotraj slednje lahko uporabljamo sintakso, ki je skoraj enaka programskemu jeziku C.
+
+Primera:
+
+for i in `seq 24 42`; do echo -n "$i "; done
+
+for ((i=24; i<=42; i++)); do echo -n "$i "; done
+
+
+Aritmetika
+
+Za izvajanje uporabimo ukaz expr.
+
+Podobno kot uporaba ukaza true je tudi uporaba ukaza expr za racunanje pocasno.
+
+Namesto true lahko uporabimo ukaz : (null)
+
+Namesto expr pa racunski izraz vpišemo med dvojne oklepaje: $((  )).
+
+primer:
+
+#!/bin/bash
+x=8 # prenastavimo x na 8
+y=4 # prenastavimo y na 4
+# priredimo vsoto x in y spremenljivki z:
+z=$(($x + $y))
+echo "Vsota števil $x + $y je $z"
+
+operatorji
+
+akcija
+
+operator
+
+seštevanje
+
++
+
+odštevanje
+
+-
+
+množenje
+
+*
+
+deljenje
+
+/
+
+modulu (ostanek pri deljenju)
+
+%
+
+Primer: aritmeticne operacije
+
+#!/bin/bash
+x=5 # prenastavimo x na 5
+y=3 # prenastavimo y na 3
+add=$(($x + $y)) # seštejemo vrednosti x in y in rezultat priredimo sprem. add
+sub=$(($x - $y)) # odštejemo vrednosti x in y in rezultat priredimo sprem. sub
+mul=$(($x * $y)) # množimo vrednosti x in y in rezultat priredimo sprem. mul
+div=$(($x / $y)) # delimo vrednosti x in y in rezultat priredimo sprem. div
+mod=$(($x % $y)) # ostanek pri deljenju x in y priredimo sprem. mod
+
+# izpišemo rezultate:
+echo "vsota: $add"
+echo "razlika: $sub"
+echo "produkt: $mul"
+echo "kolicnik: $div"
+echo "ostanek: $mod"
+
+Testiranje in razhrošcevanje
+
+Kadar skripta ne deluje pravilno, si lahko pomagamo z dodatnimi izpisi posameznih spremenljivk med izvajanjem. Izpise npr. z echo lahko vstavimo v kodo rocno. Lahko pa skripo poženemo v nacinu s slednjem izvajanja ukazov: bash -x. V tem nacinu se bo vsaka vrstica (z že zakljuceno substitucijo spremenljivk) izpisala v konzolo.
+bash -x skripta.sh
+ali pa v prvi vrstici skripte #!/bin/bash -x
+
+Ce ne želimo izpisovati celotne skripte, lahko izpis vklapljamo in izklapljamo v kodi s set -x oz. set +x:
+
+set -x            # aktiviramo izpis
+echo $PATH
+set +x            # deaktiviramo izpis
+
+
+Ce želimo samo preveriti sintakso skripte, ne da bi jo pognali, lahko uporabimo bash -n (ce je naša skripta kompatibilna z lupino sh, lahko tudi sh -n).
+
+Branje vhoda: ukaz read
+
+Omogoca interakcijo z uporabnikom, tako da bere iz standardnega vhoda.
+
+#!/bin/bash
+# prebere ime uporabnika in izpiše dobrodošlico
+echo -n "Vpisi svoje ime: "
+read user_name
+echo "Pozdravljen $user_name!"
+
+popravljen primer:
+
+#!/bin/bash
+# prebere ime uporabnika in izpiše dobrodošlico
+echo -n "Vpisi svoje ime: "
+read user_name
+
+# ce uporabnik nic ne vnese:
+if [ -z "$user_name" ]; then
+   echo "Nisi mi povedal svojega imena!"
+   exit 10
+fi
+echo "Pozdravljen $user_name"
+
+exit 0
+
+Ce na standardni vhod preusmerimo datoteko, bo read bral datoteko vrstico za vrstico.
+
+datoteka=$1
+while read vrstica; do 
+    echo $vrstica
+done < $datoteka
+
+ali pa
+
+datoteka=$1
+cat $datoteka | while read vrstica; do 
+    echo $vrstica
+done

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SlivkoConnectionString-Web.config Connection String" description="SlivkoConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=serverjernejtest.database.windows.net;Initial Catalog=Slivko;User ID=darkneess10;Password=YrnY.Hab96991" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\jerne\\Google\ Drive\\School\\FRI\\3\.\ letnik\\1\.\ semester\\Informacijski\ Sistemi\\Vaje\\5\.\ Objava\ spletnih\ aplikacij,\ storitev\ v\ oblak\ MS\ Azure\\REST\\RESTService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SlivkoConnectionString']/@connectionString" />
+  </parameter>
+</parameters>

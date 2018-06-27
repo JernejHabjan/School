@@ -1,0 +1,185 @@
+REGRESIJA: (zvezna)
+napovedat toèno številko... ciljna spremenljivka je zvezna
+
+
+ucna <- read.table("AlgaeLearn.txt", header = T)
+testna <- read.table("AlgaeTest.txt", header = T)
+
+
+LINEARNA REGRESIJA: -atributi ki so "normalno porazdeljeni" so primerni za linearno regresijo
+-modeli ki so ekxponentno so slabi: zato to logaritmiramo vrednosti spremenljivke
+hist(log(ucna$c1))
+	logaritmiramo atribute v testni množici in v uèni!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	ÈE SE NAREDI LOG(0)->-neskonèno.. daš log(0.0000001) -> kar ti vrne -23.02...
+
+
+
+
+	lm.model <- lm(a1 ~ ., data = ucna) --a1 je atribut
+	dobimo koeficiente
+	-diskretni atribut razbijemo na veè binarnih!!-to linearna regresija naredi sama
+
+
+	observed <- testna$a1
+	predicted <- predict(lm.model, testna)
+	
+	merimo razliko od prave vrednosti:
+	ocene:(HOÈEMO DA SO VREDNOSTI ÈIM MANJŠE)
+		srednja abs napaka:
+			rmae <- function(observed, predicted, mean.val) 
+			{  
+				sum(abs(observed - predicted)) / sum(abs(observed - mean.val))
+			}
+			rmae(observed, predicted, mean(ucna$a1))
+		relativna srednja absolutna napaka:
+			rmae <- function(observed, predicted, mean.val) 
+			{  
+				sum(abs(observed - predicted)) / sum(abs(observed - mean.val))
+			}
+			
+		
+		srednja kvadratna napaka
+			mse <- function(observed, predicted)
+			{
+				mean((observed - predicted)^2)
+			}
+			//pove za kok ponavad zgreši rezultate(koliko košev...)
+		relativna srednja kvadratna napaka
+		rmse <- function(observed, predicted, mean.val) 
+			{  
+				sum((observed - predicted)^2)/sum((observed - mean.val)^2)
+			}
+			rmae(observed, predicted, mean(ucna$a1))
+				//NE GLEDE NA ATRIBUTE REÈE POVPREÈNO VREDOST
+				hoèemo da je napaka èim manjša, èe veè kot 1, je slabši kot najbolj butast
+				//pove koliko smo boljši kod model ki vedno pove isto
+				
+				
+
+
+GRADNJA DREVES:
+	library(rpart)
+	TIP CILJNE SPREMENLJIVKE MORMO DOLOÈT -ALI REGRESIJA ALI KLASIFIKACIJA
+	spremenimo ciljno spremenlivko v pravo obliko
+	BASIC DREVO:
+		rt.model <- rpart(a1 ~ ., ucna)
+		predicted <- predict(rt.model, testna)
+		rmae(observed, predicted, mean(ucna$a1))
+
+
+		plot(rt.model);text(rt.model, pretty = 0)
+		
+	# nastavitve za gradnjo drevesa
+		rpart.control() -vrne list spremenljivk ki jih on uporablja
+		minsplit->ko vè kt "20" se splita
+		maxdeph
+		...
+	# zgradimo drevo z drugimi parametri
+		rt <- rpart(a1 ~ ., ucna, minsplit = 100)--prej ustavimo gradnjo drevesa
+		plot(rt);text(rt, pretty = 0)
+		
+		
+	# parameter cp kontrolira rezanje drevesa
+		rt.model <- rpart(a1 ~ ., ucna, cp = 0) ->cp -razmerje med velikostjo in kompleksnostjo
+			cp =0 -> sklopimo to.. in je šel do konca... overfitan na podatke- pol ga POREŽEMO
+		plot(rt.model);text(rt.model, pretty = 0)
+		
+	printcp(rt.model) -> pogledamo xerror in poišèemo min vrednost- -- gremo v tej vrstici do CP in vidmo...
+		tm je 0.01992... in pol nastavmo za PRUNE mav vè kt to... aka 0.02:
+		rt.model2 <- prune(rt.model, cp = 0.02) ->GA POREŽEMO  S TEM
+		
+		predicted <- predict(rt.model2, testna)
+		rmae(observed, predicted, mean(ucna$a1))
+
+
+	----cp=0, pol tabela in not poišèemo cp... pa prunamo ->TAKO ZA KLASIFIKACIJO KOT ZA REGRESIJO
+
+
+	
+	CORELEARN:
+		rt.core <- CoreModel(a1 ~ ., data=ucna, model="regTree", modelTypeReg = 1)
+		
+		# drevo z linearnim modelom v listih se lahko prevec prilagodi ucnim primerom
+		rt.core3 <- CoreModel(a1 ~ ., data=ucna, model="regTree",  modelTypeReg = 3, selectedPrunerReg = 2)
+			-DOBILI SMO PREVELIKO PARAMETROV IN PREMALO UÈNIH MODELOV:
+			ZATO: DEFINIRAMO MANJŠO MNOŽICO ATRIBUTOV DA SO FORMULE V LISTIH BOLJ ENOSTAVNE KER JE MALO UÈNIH PRIMEROV
+				ZATO UPORABIMO WRAPPER FUNKCIJO
+					source("wrapperReg.R")
+					wrapperReg(ucna, "a1") //VEÈKRAT JIH PROBAMO KER SO LAHKO RAZLIÈNI REZULTATI
+					attrEval-TUDI TO LAHKO UPORABLJAMO V REGRESIJI
+				rt.core <- CoreModel(a1 ~ PO4 + size + mxPH, data=ucna, model="regTree", modelTypeReg = 3)
+				IN ZBILDAMO DREVO SAMO IZ TEH
+				
+				
+NE MEŠAJ OCEN ZA REGRESIJO IN ZA KLASIFIKACIJO!!!
+
+
+
+
+_____________________________________________________
+Naloge:
+- najprej nalozimo podatke iz datoteke "auto-mpg.txt"
+#
+#	cars <- read.table("auto-mpg.txt", na.strings = c("?"))
+#	colnames(cars) <- c("mpg","cylinders","displacement","horsepower","weight","acceleration","year","origin","name")
+#	summary(cars)
+#	plot(cars$horsepower ~ cars$displacement)
+#
+# - dolocimo ucne primere, v katerih manjka vrednost atributa "horsepower"
+#
+#	sel <- is.na(cars$horsepower)
+#
+# - zgradite model za predikcijo vrednosti atributa "horsepower" s pomocjo vrednosti atributa "displacement" 
+#   (npr. z linearno regresijo ali utezeno linearno regresijo). Pri ucenju uporabite samo tiste ucne primere, 
+#   ki vsebujejo vrednost atributa "horsepower" 	
+#
+# - s pomocjo zgrajenega modela vstavite manjkajoce vrednosti v vektor cars$horsepower[sel] tako, da uporabite 
+#   funkcijo predict na "testni" mnozici cars[sel,]
+#
+1. odstraniš nepotrebne atribute- >name (znamka avta)- tako kot takrat id
+	cars$name <- NULL
+2. najprej obdelaš manjkajoèe vrednosti:
+	cars <- read.table("auto-mpg.txt", na.strings = c("?")) ->vprašaj za manjkajoèo vrednost
+	zanima nas NA-not avaliable
+	
+	plot(cars$horsepower ~ cars$displacement)
+	napovedal bomo linearni model, ki napove horse power
+	tistih 6 missing damo kot testno množico
+	######	
+	sel <- is.na(cars$horsepower) //pove ali je na-not avaliable kot true/false
+	
+	model <-lm(horseppower ~ displacement, cars[!sel,]) -vzamemo vse tiste ki so false
+	abline(model) --vidimo kakšna je premica
+	-za tistih 6:
+		predict(model, cars[sel,])
+		cars$horsepower[sel] <-predict(mode, cars[sel,])
+		
+	######	
+	lahko na ne celo premico ampak naredimo premice skoz "LOKALNO UTEŽENA REGRESIJA" nekaj okoliških toèk
+	model2<-loess(horseppower ~ displacement, cars[!sel,], span=0.3, degree = 1)
+	
+	points(cars$displacement[!sel], model2$fit, col="blue")
+	ord<-oder(cars#displacement[!sel])
+	lines(cars$displacement[!sel][ord], model2$fit[ord], col="red")
+	predict(model2, cars[sel,])
+	
+	
+pravilno izraèunane atrib ki so iz samo iz preteklosti
+neodvisna uèna in testna množica
+koliko rzliènih atrib dodali
+koliko razliènih modelov
+kaj narediti da izboljšamo (rezanje, log, kombiniranje, izbira podmnožice atributov)
+
+
+
+
+konèni izdelek: poroèilo(izmerili to pa to... te pa te atribute... 3 strani, pol pa tabele z rezultati in grafi.... vse kar poskusiš napiši zravn.... tud èe je slabo)
+
+
+seminarska: znebiš se imen ampak jih opišeš z množico atrib...
+namesto AL-ATL
+0.5,49,99,86,3, 0.5... 1,H ->v uèni množici vemo kdo je zmagal
+v testni ne vemo kdo je zmagal in ima isto obliko... 
+NA ISTO OBLIKO PRIPRAVIMO TESNO KOT UÈNO
+	
+					

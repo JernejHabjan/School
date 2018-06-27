@@ -1,0 +1,41 @@
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\csc.exe
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\System.Collections.Immutable.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\vbc.exe
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\VBCSCompiler.exe
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\roslyn\VBCSCompiler.exe.config
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\Vaja7.dll.config
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\Vaja7.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\Vaja7.pdb
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\obj\Debug\Vaja7.csprojResolveAssemblyReference.cache
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\obj\Debug\Vaja7.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\Vaja7\Vaja7\obj\Debug\Vaja7.pdb
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\csc.exe
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\vbc.exe
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\VBCSCompiler.exe
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\Vaja7.dll.config
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\Vaja7.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\Vaja7.pdb
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\obj\Debug\Vaja7.csprojResolveAssemblyReference.cache
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\obj\Debug\Vaja7.csproj.CoreCompileInputs.cache
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\obj\Debug\Vaja7.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\2. Podatkovna polja\Vaja7\Vaja7\obj\Debug\Vaja7.pdb

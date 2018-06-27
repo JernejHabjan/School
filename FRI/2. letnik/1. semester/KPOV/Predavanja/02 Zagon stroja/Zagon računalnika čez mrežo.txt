@@ -1,0 +1,95 @@
+Za zagon racunalnika cez mrežo potrebujemo:
+
+strežnik, ki bo ob zagonu poserviral zagonsko datoteko. Ta datoteka je obicajno bootloader, ki potem naprej preko mreže naloži jedro "pravega" operacijskega sistema.
+strežnik za poljuben omrežni datotecni sistem
+zagonski nalagalnik
+operacijski sistem
+Kot omrežni datotecni sistem lahko uporabimo NFS, za serviranje zagonske datoteke pa TFTP. Poleg strežnika TFTP, ki klientu pošlje zagonsko datoteko, potrebujemo še strežnik DHCP oziroma BOOTP, ki klientu pove, kje se zagonska datoteka nahaja.
+
+Today's tasks:
+
+Install a DHCP server
+Install a TFTP server
+Have the DHCP server supply the clients with the filename to boot from
+Boot a computer using PXELINUX
+Set up PXELINUX so that your name is written in the boot menu
+Boot an arbitrary OS over the network using PXELINUX
+Set up a NFS server
+Mount one of your neighbor's directories on your computer
+Install a DNS server
+Make sure that the DHCP server updates the DNS entry for each of it's clients
+Solve the problem of hunger in Somalia
+Maniacal laughter.
+Naloge za tokratno vajo:
+
+Namesti nek dhcp strežnik
+Namesti nek TFTP strežnik
+Prek TFTP si s sosedom izmenjaj poljubno datoteko
+Nastavi dhcp strežnik tako, da bo klientom predlagal datoteko za zagon
+Zaženi racunalnik s PXELINUX
+Nastavi PXELINUX tako, da bo v menuju ali na sliki vidno tvoje ime
+Poskrbi, da se prek mreže z uporabo PXELINUX zažene poljuben operacijski sistem
+postavi strežnik NFS
+preko mreže obesi (mount) nek imenik na disku tvojega soseda na nek imenik na svojem racunalniku
+Namesti nek dns strežnik
+Poskrbi, da klienti DHCP strežnika dobijo vnose v DNS
+Reši problem lakote v Somaliji
+manicni smeh (izvedba v poljubnem stilu)
+Ne pozabimo na nastavitve mreže. Let us not forget the network settings. /etc/network/interfaces:
+
+iface eth5 inet static
+    address 193.2.1.45
+    netmask 255.255.12.0
+Nastavitev strežnika DHCP in tftp je odvisna od tega, kateri strežnik uporabite. Naprimer (One way of setting up the DHCP server):
+
+sudo apt-get install isc-dhcp-server
+Nato v /etc/dhcp/dhcpd.conf v konfiguracijo dodati vrstico filename. Konfiguracija za DHCP strežnik, ki ima staticno nastavljen naslov na 10.0.66.2, pri cemer je privzeti prehod na 10.0.66.1, za DNS strežnik pa uporabljen Arnesov DNS, bi lahko izgledala takole:
+
+default-lease-time 600;
+max-lease-time 7200;
+subnet 10.0.66.0 netmask 255.255.255.0 {
+    range 10.0.66.16 10.0.66.254;
+    option routers 10.0.66.1;
+    option domain-name-servers 193.2.1.66;
+    filename "pxelinux.0";
+}
+Poleg tega je ob uporabi isc-dhcp-server treba namestiti še poljuben tftp strežnik. Strežnike, ki so na voljo, najdemo takole (How to find a TFTP server):
+
+sudo apt-cache search tftp server
+Recimo, da namestimo atftpd (suppose we've chosen to install ATFTPD):
+
+sudo apt-get install atftpd
+Privzeto bo atftpd stregel datoteke iz /srv/tftp . To nastavitev lahko spremenite v nastavitvah inetd strežnika, ki ga uporabljate - naprimer /etc/rlinetd.d/tftpd.conf
+
+Po namestitvi potrebnih strežnikov je treba namestiti še zagonske datoteke. Kot bootloader bomo uporabili pxelinux.
+
+Zagonsko datoteko najdete v paketu syslinux-common:
+
+sudo apt-get install sysilnux
+dpkg -L sysliunx-common | grep pxelinux
+Skopirajte jo v /srv/tftp.
+
+Namestitev strežnika in klienta NFS (Installing the NFS server):
+
+sudo apt-get update
+sudo apt-get install nfs-kernel-server 
+Nastavitev strežnika NFS (Setting up the NFS server):
+
+sudo gedit /etc/exports
+sudo /etc/init.d/nfs-kernel-server restart
+V /etc/exports morate dodati vrstico, ki bo dovoljevala oddaljenim racunalnikom dostop do nekega imenika. Naprimer za poln dostop do imenika Pictures in samo bralni dostop do imenika Videos, vsem racunalnikom:
+
+/home/ubuntu/Pictures *(rw)
+/home/ubuntu/Videos *(ro)
+Obešanje (mount) imenika, ki se nahaja na drugem racunalniku (v tem primeru imenik /home/ftp na naslovu 10.0.1.66 obesimo tako, da se bo njegova vsebina nahajala v /home/ubuntu/oddaljeni_ftp):
+
+sudo mount 10.0.1.66:/home/ftp /home/ubuntu/oddaljeni_ftp
+Operacijski sistem in nastavitve PXELINUX lahko dobite v poljubni sliki .iso. Do vsebine slike pridete z:
+
+sudo mount -o loop /home/ubuntu/my_favourite_distro.iso /home/ubuntu/some_empty_folder
+
+Prek NFS morate potem streci imenika casper ter .disk, prek TFTP pa datoteke isolinux.cfg (preimenovano v pxelinux.cfg/default), vmlinuz in initramfs.
+
+Namesto isc-dhcp-server in atftpd lahko uporabite tudi dnsmasq: sudo apt-get install dnsmasq sudo gedit /etc/dnsmasq.conf sudo /etc/init.d/dnsmasq restart
+
+Zadnja sprememba: ponedeljek, 10. november 2014, 08:51

@@ -1,0 +1,248 @@
+﻿#### FIND FILE########
+da poiščeš file na kompu
+dpkg -S imedatoteke --poiščeš file in kje je
+dpkg -L imepaketa --poiščeš kere file ima en paket
+
+
+#####VIM###########
+	Za pisat komande--- :
+	Insert: i --- pol pa začneš pisat
+	Quit: escape , :wq
+
+######Regex###########
+	%s/neki/zNečim/g ---g je za več linov … s je pa substitute
+
+
+####IFCONFIG#######
+	Ifconfig če ne dela
+		Ip addr show
+
+	/sbin/ifconfig
+
+######### /ETC/NETWORK/INTERFACES
+	primer:
+		source /etc/network/interfaces.d/*
+		auto lo
+		iface lo inet loopback
+		
+		allow-hotplug ens3
+		iface ens3 inet dhcp
+		
+		allow-hotplug enp0s3
+		auto enp0s3
+		iface enp0s3 inet dhcp
+		
+		auto enp0s8
+		iface enp0s8 inet static
+			address 172.23.254.1/26
+	
+	
+	na serverju v network interfaces nastavš static ip
+	pa gateway daš ip od tistga ki je priključen na net
+
+
+###### IFUP IFDOWN #######
+	ifdown enp0s3
+	pol ifup enp0s3
+			
+############## APT-GET INSTALL #############
+	apt-get update
+	apt-get install isc-dhcp-server tftpd pxelinux nfs-kernel-server squashfs-tools
+
+
+############ NAMESERVER #################
+	vim /etc/resolv.conf
+	in spremeniš nameserver na 193.2.1.66 ---taj z arnesa
+	
+############ INTERFACESv4 ###############
+	vim /etc/default/isc-dhcp-server in dodaš svoj interface (enp0s3 v INTERFACESv4)
+	
+	
+############ DHCP#########################
+	dhcp server da dodeljuje ipje  - na studentu
+	cd /etc/dhcp
+	vim dhcpd.conf
+	
+	nekje napišeš
+		subnet 10.64.0.0 netmask 255.192.0.0{  //netmask isti kot ip mask na arbiterju subnet pa spodna cifra med 128 in 64 k je drug razdelk pr ip
+		range 10.105.25.0 10.105.66.0;  //prva je prve 3 razdelki od ip na arbiterju, durga pa mav mjn
+		next-server 10.105.25.162; //ip of this dhcp server
+		filename "pxelinux0"; //za navadnga clienta
+		}
+		
+		host clentb{ //clientB
+			hardware ethernet 08:00:27:0B:2C:7C //toj mac od tega special kompa k mu mormo dat drugo datoteko
+			filename "9kteuia.pdf";
+		}
+		host simplearbiter{ //simplearbiter
+			hardware ethernet 08:00:27:...; //toj mac od ineta
+			fixed-address 10.105.25.234; --toj ip od enp0s8 na arbitru
+		}
+		
+		service isc-dhcp-server start
+		PREVER ČEJ ŠTARTU
+			ps xa |grep dhc
+		
+	##TEST DHCP:
+		ZA TEST DA TLE NOT DELA NAPIŠ V KONZOLO KO SI V ETC/DHCP.. napišeš dhcpd
+		
+	##LEASES ERROR:
+		ko se prtužuje za leases
+		service isc-dhcp-server stop
+		service isc-dhcp-server start
+		Ali
+		service isc-dhcp-server restart
+	in pol preverš če sej program naredu z:
+		ps xa |grep dhc
+
+############ TFTP #########################################
+	ZDJ PA ZA SHARAT FILE- pxelinux itd..
+
+
+	nardiš direktorija / -srv in znotrej njega tftp
+	znotrej pa touch pxelinux.0
+	
+	
+	use restartaš k lah...services pa ifup if down itd... 
+
+	Pol lah zaženeš bootable client a
+
+############# FIXED PXELINUX.0 ###################
+	POSTAVŠ SE V /srv/tftp
+	cp /usr/lib/PXELINUX/pxelinux.0 ./pxelinux.0 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		da lahko še drug client z istega boota
+			cp pxelinux.0 8kr4839.png
+	
+	pol probaš pa error da d nmor naloadat ldlinux.32 -to clientA
+
+
+#############BOOT V LIVE USB DRIVE ########################
+	PAZI DA SI V /srv/tftp !!!!! /////////ROOT/SRV/TFTP!!!! IN NE /ETC/SRV...
+	lets see disks: fdisk -l
+	mount /dev/sdb1 /mnt
+	ls /mnt
+	cp /mnt/* . ---copy everything to current dir
+	mkdir pxelinux.cfg
+	cp syslinux.cfg pxelinux.cfg/default
+	cp /usr/lib/syslinux/modules/bios/*.c32 . --skopiramo vse sem k so .32
+	
+
+
+
+
+############ BOOT V LIVE CD ############################
+	mount /dev/sr0 /media/cdrom0 ALI mount /dev/sr0    ---SR1 IN SR0 STA DISKA
+	ls /media/cdrom0 -vsebina cdja
+	cp /media/cdrom0/isolinux/isolinux.cfg /srv/tftp/pxelinux.cfg/default
+	-pol skopiraš vse .c32 file tko kt prej v /srv/tftp
+
+	cp /media/cdrom/isolinux/splash.png /srv/tftp
+
+	mkdir /srv/tftp/kuza
+	cp /media/cdrom/casper/vmlinuz /srv/tftp/kuza
+	cp /media/cdrom/casper/initrd.lz /srv/tftp/kuza
+
+	nano pxelinux.cfg/default
+		v prvem razdelku kjer piše label live
+			namesto: "kernel /casper/vmlinuz" -> kernel kuza/vmlinuz
+			še vedno pod live-KJER JE INITRD -> namesto initrd=/casper/initrd.lz -> initrd=kuza/initrd.lz
+			lahko še pobrišemo quiet in splash da nam vrača errorje
+
+	ls -lh /media/cdrom0/casper/filesystem.squashfs <-s tega bootat mora:
+		nano pxelinux.cfg/default
+		V VRSTI KJER JE APPEND:
+			nakoncu dodaš " netboot=nfs nfsroot=10.105.25.162:/media/cdrom"
+
+	ČE PRAVI CLIENT: permission denied: moraš skonfigurat NFS SERVER:
+		nano /etc/exports
+			nakoncu dodamo:
+			/media/cdrom *(ro)
+		service nfs-kernel-server restart
+		
+	
+##############ERRORS######################
+	ČE CRKNE PO INITRD... pjt v virtualbox pa dj pod system-processor enabli neki od intela
+
+	ČE CRKNE random-nonblocking-pool-is-initialized ->>>>>>>>>>>>>
+		ŠE ENKRAT ->MOUNTEJ
+
+
+###################NET FORWARDING#################
+	cat proc/sys/net/ipv4/ip_forward --- mora vrnt 1
+	apt-get install iptables-persistent
+	cat /etc/iptables/rules.v4
+
+	iptables -t nat -A POSTROUTING -o enpos8 -j MASQUERADE
+	iptables-save > rules.v4	
+
+	-ne dela popolno
+
+#############DEBUG##########################
+	tail -f /var/log/syslog
+	netstat -l -p !!!!!!!!!!!!!!!!!!!! za poslušat na vratih
+
+
+###########SQUASHFS###############
+	quashfs-tools --ima unsquashfs
+
+###############FLUXBOX###############
+	apt-get install xinit xterm fluxbox
+	-za zagon:
+		startx
+
+	apt-get install thunar iceweasel
+	THUNAR JE FILEEXPLORER
+	
+	pol pa
+	thunar &
+	iceweasel &
+		
+#############BOOT PREKO OMREŽJA -SPECIAL MAC############
+	na virtualki daš bootablu ->daš inet mu daš ta special mac k ga maš na učilnc
+	
+	na serverju pa greš v /srv/tftp/pxelinux.cfg
+		cp default 01-06-a9-18-8a-f2-31
+		nano 01-06-a9-18-8a-f2-31
+			in pol notr:
+				od začetka dol:
+				prve dve vrstice cool
+				
+				menu background window.png
+				menu title WELCOME JENEJ_HABJAN_63150106
+
+				
+
+###### ARBITER ########	
+
+	Na arbiterju error: root
+	vim /etc/sudoers.d
+	dodaš še
+	tester ALL = NOPASSWD: /usr/sbin/dhcdump
+
+	kill dhcp na studentu -- pač process
+
+#####OSTALI NAPOTKI#############
+	//MAKE SURE D MAŠ CLIENTA 64 BIT!!
+
+	
+	
+	
+
+######CHANGE BOOT ANIMATION ##########
+	Zamenjal sem sliko pri bootu. Ta boot sem izvedel na virtualki, ker imam linuxe naložene samo na virtualki. Šel sem na naslednji spletni naslov in povlekel zip datoteko
+	https://www.gnome-look.org/p/1009072/
+	To zip datoteko sem ekstrahiral v /lib/plymouth/themes/colors
+
+	Potem sem uporabil naslednje komande v terminalu za nastavitev te slike kot temo v plymouthu.
+
+	-sudo update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/colors/colors.plymouth 500
+	To je linkalo to temo v plymouth s prioriteto 500.
+
+	-sudo update-alternatives --config default.plymouth
+	 in tu sem nastavil temo ki sem jo ravnokar linkal.
+
+	Poženem še komando da mi posodobi initial ram file sistem: 
+	-sudo update-initramfs -u
+
+	in animacija se prikaže ob bootu:
+	https://goo.gl/photos/919kaHjcfuFzgyaH7

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script id="vShader"  type="vertex-shader">
+	attribute vec3 vertex;
+	void main(){
+		gl_Position=vec4(vertex, 0.6);
+	}
+	</script>
+
+	<script id="fShader"  type="fragment-shader">
+	void main(){
+		gl_FragColor= vec4(0.0, 1.0, 1.0, 1.0);
+	}
+	</script>
+
+	<script>
+	var gl=null;
+
+	var VBO;
+	function initBuffers(){
+		var vertices=[
+		-0.5, -0.5, 0.0,
+		 0.0,  0.5, 0.0,
+		 0.5, -0.5, 0.0
+		];
+		VBO= gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, VBO);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+	}
+
+	var program;
+	function loadShader(s){
+		var sString=document.getElementById(s);
+
+		if(!sString){
+			alert("shader source string not found");
+			return;
+		}
+		var sourceString="";
+		var child=sString.firstChild;
+		while(child){
+			if(child.nodeType==3){
+				sourceString+=child.textContent;
+			}child=child.nextSibling;
+		}
+
+		var sh;
+		switch(sString.type){
+			case "fragment-shader": sh=gl.createShader(gl.FRAGMENT_SHADER); break;
+			case "vertex-shader": sh=gl.createShader(gl.VERTEX_SHADER); break;
+			default: alert("shader not recognized"); break;
+		}
+		gl.shaderSource(sh,sourceString);
+		gl.compileShader(sh);
+		if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)){
+			alert(s+": "+gl.getShaderInfoLog(sh));
+		}
+
+		return sh;
+	}
+
+	function loadProgram(){
+		var fShader=loadShader("fShader");
+		var vShader=loadShader("vShader");
+
+		program = gl.createProgram();
+		gl.attachShader(program, vShader);
+		gl.attachShader(program, fShader);
+
+		gl.linkProgram(program);
+		if(!gl.getProgramParameter(program,gl.LINK_STATUS)){
+			alert("error creating program");
+		}
+	}
+	function initContext(context){
+		try{
+			gl=context.getContext("webgl") || context.getContext("experimental-webgl");
+		}catch(e){}
+		if(!gl){
+			gl=null;
+			alert("webgl unsupported");
+		}
+	}
+	function initWebGL(){
+		c=document.getElementById("context");
+		initContext(c);
+		loadProgram();
+		initBuffers();
+		if(gl){
+			gl.viewport(0,0,c.width,c.height);
+			gl.clearColor(1.0,0.0,0.0,1.0);
+			draw();
+		}
+	}
+	function draw() {
+		gl.clear(gl.COLOR_BUFFER_BIT);
+		gl.useProgram(program);
+		var vertex=gl.getAttribLocation(program,"vertex");
+		gl.enableVertexAttribArray(vertex);
+		gl.bindBuffer(gl.ARRAY_BUFFER,VBO);
+		gl.vertexAttribPointer(vertex, 3,gl.FLOAT,false,0,0);
+		gl.drawArrays(gl.TRIANGLES, 0, 3);
+		setTimeout(function(){requestAnimationFrame(draw);},1000 / 30);
+	}
+	</script>
+
+</head>
+<body onload="initWebGL()" style="background-color: #00ff00">
+<canvas id="context" width="500" height="500"></canvas>
+</body>
+</html>

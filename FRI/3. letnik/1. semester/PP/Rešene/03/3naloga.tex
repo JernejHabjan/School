@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}   % omogoča uporabo slovenskih črk kodiranih v formatu UTF-8
+\usepackage[slovene]{babel}    % naloži, med drugim, slovenske delilne vzorce
+
+
+
+\title{Uporaba in analiza Monte-Carlo drevesnega preiskovanja na strateški igri}
+\author{Jernej Habjan\\
+jh0228@student.uni-lj.si\\
+\ \\
+MENTOR: doc. dr. Matej Guid \\
+Fakulteta za računalništvo in informatiko Univerze v Ljubljani
+\date{\today}         
+}
+
+
+\begin{document}
+\maketitle
+
+\section{Motiv za diplomsko nalogo}
+
+Razvoj umetne inteligence v realno-časovnih strateških igrah je velik problem, saj je prisotnih veliko možnih kombinacij v vsakem trenutku. Prav tako je problem razviti dobrega nasprotnika v igri, ki izbira akcije na podlagi svojega znanja in nasprotnikovih akcij.
+
+\section{Kako so se s to temo dosedaj ukvarjali učitelji na FRI?}
+Nekaj učiteljev na FRI se ukvarja z razvijanjem algoritmov za igranje šaha in razvijanjem umetne inteligence, razumljive ljudem~\cite{mozina2008fighting}.
+Uporabljajo algoritme kot je Monte-Carlo drevesno preiskovanje, genetske algoritme in algoritme spodbujevalnega učenja. Primerjavo algoritmov strojnega učenja je dobro opisal Miroslav Kubat z Ivanom Bratkom in Ryszardom Michalskem~\cite{kubat1998review}.\\
+Te algoritme se da preslikati na druge strateške igre z dodatnimi modifikacijami, saj je preiskovalni prostor še večji.
+
+\section{Kaj je konkretni cilj diplomske naloge in kateri so glavni koraki do tega cilja?}
+
+Cilj diplomske naloge je razviti umetno inteligenco v naši realno-časovni strateški igri Trump Defense 2020 na nivo, primerljivo s človeškim igranjem.
+
+Koraki do cilja so naslednji:
+\begin{itemize}
+	\item izdelava realno-časovne strateške igre v pogonu Unreal Engine 4,
+	\item implementacija algoritma Monte-Carlo drevesno preiskovanje,
+	\item vrednotenja algoritma in prikaz rezultatov.
+\end{itemize}
+
+\section{Orodja za doseg cilja}
+Uporabili bomo različice algoritma Monte-Carlo drevesnega preiskovanja. 
+Pri realno-strateških računalniških igrah je prostor raziskovanja velik, zato so so nekateri algoritmi bolj primerni od drugih, kot naprimer CMAB (Combinatorial Multi-Armed Bandit Problem) je problem, kjer imamo za vsak osebek tudi posebne vrednosti. 
+Nekaj algoritmov je opisanih tudi v članku Bandit based monte-carlo planning~\cite{kocsis2006bandit}.
+
+Pri igri Go, ki jo je leta 2016 premagal program AlphaGo, so uporabili nevronske mreže s hevrističnimi algoritmi. 
+Prav tako bomo mi pridružili nevronske mreže k Monte-Carlo drevesnemu preiskovanju, da se lahko algoritem nauči iz svojih iger~\cite{chaslot2006monte}.
+
+Za prikaz igre bom uporabil celostni pogon Unreal Engine 4, ki omogoča poenostavljeno razvijanje računalniške igre, tako da se osredotočamo samo na razvijanje algoritma
+
+\section{Kako bomo preizkusili rešitev ali ustreza zadanim ciljem?}
+Pri rešitvi primerjamo Monte-Carlo algoritme in jih preiskušamo proti človeškim igralcem in tako vidimo njihovo moč igranja.
+Ker je cilj implementacija algoritma v igri, bomo dali poseben poudarek na igranju nasprotnika proti človeškem igralcu.
+
+
+\section{Zaključek: zakaj je izbrani mentor primeren za predlagano temo?}
+Docent Matej Guid je član laboratorija za umetno inteligenco in je aktiven pri razvoju umetne inteligence pri igranju igre šah. 
+S predstojnikom laboratorija prof. Ivanom Bratkom je napisal članek o hevrističnem iskanju na področju šaha~\cite{guid2011using}.
+Pri šahu se docent Guid ukvarja predvsem z velikim kombinatoričnim prostorom, ki je posledica veliko možnih premikov figur v vsaki potezi, in ima veliko izkušen na tem področju.\\
+V laboratoriju za umetno inteligenco se ukvarjajo s temi algoritmi in velikimi raziskovalnimi prostori, kako te prostore zmanjšati in katere hevristike uporabiti.
+Prav tako se ukvarjajo z vizualizacijo, vendar ne posebej s pogonom Unreal Engine.
+
+
+\bibliographystyle{plain}
+\bibliography{literatura}
+
+\end{document}  
+
+
+
+

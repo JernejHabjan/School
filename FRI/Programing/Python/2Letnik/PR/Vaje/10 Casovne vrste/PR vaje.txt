@@ -1,0 +1,79 @@
+koda:
+
+
+
+
+import random
+random.seed(42)
+
+def weighted_choice(weighted_items):
+    rnd = random.random() * sum(weighted_items.values())
+    for i,v  in weighted_items.items():
+        rnd-=v
+        if(rnd <0):
+            return i
+
+    """Random choice given the list of elements and their weights"""
+    
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	def generate_hmm_sequence(h, T, E, n):
+    
+    s = weighted_choice(E[h])#vzami verjetnosti vidnih simbolov ko si v stanju h
+    yield h,s
+    for _ in range(n-1): #preostanek
+        h = weighted_choice(T[h])#premakni se v naslednje skrito stanje
+        yield h, weighted_choice(E[h])
+    
+    
+    """
+    HMM sequence given start state,
+    transition, emission matrix and sequence length
+    
+    return zip(hidden_path, visible_sequence)
+    """
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	from collections import Counter, defaultdict
+
+def normalize(dic):
+    
+    s = sum(dic.values())
+    return (k, dic[k]/s for k in dic)
+def build_hmm(h, x):
+    
+    
+    t = {}
+    
+    for (i,j), cn in Counter(zip(h, h[1:])).items():
+        t.setdefault(i,{}).setdefault(j,cn)
+    t = {}
+    for i,d in t.items():
+        T[i] = normalize(d)
+    
+    c = Counter(zip(h,x))
+    E = {}
+    for h in T.keys():
+        E[h]= normalize({xi:c((pi,xi)) for pi, xi in c if pi==h})
+    
+    
+    return T, E

@@ -1,0 +1,132 @@
+after malloc:
+    preveri če je alociran:
+        If primes == NULL
+
+nakoncu malloca:
+    free(void *ptr);
+
+resize malloc:
+    realloc(void *ptr, size_t size)
+
+branje dolker ne dobiš 0:
+    while (scanf("%s", beseda) == 1){}
+
+za scanf string
+    char string[256];
+    scanf( "%s" , string);
+    printf("%d", (int) strlen(string));
+
+strlen dela tud na malloc
+
+
+////// KOLOKVIJ 2:
+
+    INCLUDES
+        #include <stdio.h>
+        #include <string.h>
+        #include <stdlib.h>
+        #include <stdbool.h>
+        #include <ctype.h>
+        #include <memory.h>
+        #include <math.h>
+
+        ctype:
+            isalpha(znak) //vse kar ne \n, presledke, punct
+            tolower(znak)
+        memory:
+            strcmp(str_arr[i], beseda) //returns -1 če je prba beseda po abecedi prej, 0 če enaki else 1
+        stdbool:
+            true, false konstanti
+
+
+    GETTING ARGUMENTS:
+        int main(int argc, char *argv[]){} //argv je tabela kazalcev na stringe--argv je tabela nizov- vsak niz je 1 argument v ukazni vrstici
+        -- prvi argument je filename C programa
+
+
+
+    DEALING WITH FILES
+
+        FILE *f;
+        f = fopen("filename.txt", "w");
+        if(f == NULL) exit(1);
+        fprintf(f, "lol");
+
+        while(! feof(f)){
+            fscanf(f, "%d" ,&bla);
+        }
+
+        //FILE TYPES
+            stderr
+            stdout
+
+    STRUCTS
+
+        typedef struct _bla{
+            struct _bla *next; ///PAZI DA TU DAŠ PTR
+            int value;
+        }bla, *blaptr;
+
+        init:
+        blaptr neki = (blaptr) malloc(sizeof(bla));
+        bla neki1; /// PAZI BREZ MALLOC!!!!
+
+        neki->value =5;
+        neki1.value = 5;
+
+        int isNULL = neki == NULL;
+        int isNULL1 = neki1.value == NULL;
+
+        free(neki);!!!!!!
+
+
+        //struct ki vsebuje tabelo kazalcev na samega nase
+            typedef struct _node{
+                int stevilo;
+                struct _node (*tabela[5]);
+            }node, *nodePtr;
+
+
+            nodePtr c;
+            node a;
+            a.tabela[4] = c;
+
+
+
+
+    ARRAYI
+        int a[100][100]; //array s 100 x 100 inti
+        int (*a)[100][100]; //kazalec na tabelo s 100 x 100 inti
+        int (*a[100][100]); //100 x 100 kazalcev na int
+
+        ///PRIMER PODAJANJA NASLOVA
+        void permN(int *A, int N) { ... }
+        permN(&A[i], 2);
+
+
+    MALLOC
+
+        int *ax;
+        ax = (int*) malloc(N*sizeof(int));
+        ax = (int *) realloc(ax, 2*N* sizeof(int)); /// REALLOC
+
+        //calloc -- vse postavi na 0
+        polni = (int *) calloc((size_t) n, sizeof(int));
+
+    DEFINE
+        pazi define se piše s HASH
+        #define N 100
+
+
+    LINKED LISTS:
+        če rabiš spremeniti PRVEGA--- nared to na koncu... pa return first->next
+            if(list->value > max){
+                return list->next;
+            }
+        če nimaš sentinela:
+        while(tmp->next != NULL){} !!!!!!!
+        ...
+        if(first != NULL)
+
+
+

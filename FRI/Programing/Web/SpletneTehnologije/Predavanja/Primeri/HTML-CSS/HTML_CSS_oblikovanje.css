@@ -1,0 +1,110 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+
+#seznam{
+	width: 800px;
+	margin: auto;
+	border:5px dashed black;
+	background-color: #2B4F89;
+	height: 35px;
+	font-family: Georgia;
+}
+
+#seznam span{
+	display: block;
+	float: left;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	width: 350px;
+	text-align: center;
+	padding-top: 8px;
+	height: 27px;
+}
+
+#naslov{
+	width: 800px;
+	height: 112px;
+	color: #2B4F89;
+	font-size: 40px;
+	font-weight: bold;
+	text-align: center;
+	margin: auto;
+	font-family: Georgia;
+	margin-bottom: 4px;
+}
+
+#sredina{
+	margin: auto;
+	width: 800px;
+}
+
+#levi{
+	float: left;
+	width: 150px;
+}
+
+#levo{
+	border-bottom: 1px solid #2B4F89;
+    border-left: 1px solid #2B4F89;
+	border-top: 1px solid #2B4F89;
+    padding-left: 10px;
+    padding-top: 10px;
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+	background-color: #f0f0f0;
+	color: #4D4D4D;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	margin-bottom: 5px;
+}
+
+#vsebina{
+	float: left;
+    text-align: center;
+    width: 478px;
+	border: 1px solid #2B4F89;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	padding: 10px;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 13px;
+}
+
+h1 {
+    color: #2B4F89;
+    font-family: Georgia;
+    font-size: 2.8em;
+    font-weight: normal;
+    margin-top: 5px;
+}
+
+#desni{
+	float: left;
+	width: 139px;
+	border-top: 1px solid #2B4F89;
+	border-bottom: 1px solid #2B4F89;
+    border-right: 1px solid #2B4F89;
+    padding-top: 10px;
+	padding-left: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+	background-color: #f0f0f0;
+	color: #4D4D4D;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	margin-bottom: 5px;
+}
+
+
+
+#noga{
+	width: 800px;
+	margin: auto;
+	text-align: center;
+	float: left;
+	padding: 10px;
+	color: #C8C8C8;
+}

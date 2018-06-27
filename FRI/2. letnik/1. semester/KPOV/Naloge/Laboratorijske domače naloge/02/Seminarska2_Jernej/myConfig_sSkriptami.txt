@@ -1,0 +1,30 @@
+client.conf
+certs/cert.crt
+private/privkey.key
+root.crt
+
+skopiramo v /etc/openvpn
+
+skopiraš 
+client.conf v root.conf
+popravš root.conf -> spremeniš remote ipRootServerja
+popravš client.conf -> spremeniš remote ipSvojgaServerja
+
+skopiraš 
+client.conf v root.conf
+
+service openvpn@root start ??????
+
+openvpn --config root.conf   #TO JE ROOT SERVER --- ma not domeno
+openvpn --config client.conf   #TO JE MOJ SERVER
+
+
+
+
+
+install nginx
+cd /usr/share/nginx/...
+	in upimpaš index.html
+	
+	
+	

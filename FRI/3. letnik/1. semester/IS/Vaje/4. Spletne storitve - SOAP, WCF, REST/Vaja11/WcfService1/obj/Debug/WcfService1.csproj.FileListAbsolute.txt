@@ -1,0 +1,13 @@
+C:\Users\jerne\source\repos\WcfService1\WcfService1\bin\WcfService1.dll.config
+C:\Users\jerne\source\repos\WcfService1\WcfService1\bin\WcfService1.dll
+C:\Users\jerne\source\repos\WcfService1\WcfService1\bin\WcfService1.pdb
+C:\Users\jerne\source\repos\WcfService1\WcfService1\obj\Debug\WcfService1.csprojResolveAssemblyReference.cache
+C:\Users\jerne\source\repos\WcfService1\WcfService1\obj\Debug\WcfService1.csproj.CoreCompileInputs.cache
+C:\Users\jerne\source\repos\WcfService1\WcfService1\obj\Debug\WcfService1.dll
+C:\Users\jerne\source\repos\WcfService1\WcfService1\obj\Debug\WcfService1.pdb
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\4. Spletne storitve - SOAP, WCF, REST\Vaja11\WcfService1\bin\WcfService1.dll.config
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\4. Spletne storitve - SOAP, WCF, REST\Vaja11\WcfService1\bin\WcfService1.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\4. Spletne storitve - SOAP, WCF, REST\Vaja11\WcfService1\bin\WcfService1.pdb
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\4. Spletne storitve - SOAP, WCF, REST\Vaja11\WcfService1\obj\Debug\WcfService1.csproj.CoreCompileInputs.cache
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\4. Spletne storitve - SOAP, WCF, REST\Vaja11\WcfService1\obj\Debug\WcfService1.dll
+C:\Users\jerne\Google Drive\School\FRI\3. letnik\1. semester\Informacijski Sistemi\Vaje\4. Spletne storitve - SOAP, WCF, REST\Vaja11\WcfService1\obj\Debug\WcfService1.pdb

@@ -1,0 +1,149 @@
+##########NAVODILA################
+A: CA
+B: SERVER
+C: CLIENT
+A, B, C: namesti openvp, easy-rsa
+A, B, C: skopiraj easy-rsa v nek svež imenik
+A, B, C: popravi vars
+A, B, C: source vars
+A: build-ca
+B: build-req --server W#$#RW
+A: build-key %$3%Wt#
+C: build-req RewT$#
+B,C: spravi svoj .csr do A
+A: sign-req RewT$# (taj od C)
+A: sign-req --server W#$#RW (taj od B)
+A: spravi W#$#RW.crt, ca.crt do B
+A: spravi RewT$.crt, ca.crt do C
+A, C: cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf ./
+A, C: popravi client.conf - key, cert, ca, remote, proto
+B: cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz ./
+B: gunzip server.conf.gz
+B: popravi server.conf -key, cert, ca, proto
+A, C(kot root): openvpn --config client.conf
+B(kot root): openvpn --config server.conf
+###################################
+
+
+
+*VIRTUALKE NASTAVIŠ NA BRIDGED NETWORK INTERFACE -> da dobijo ip? prek kompa?????
+na vseh treh: apt-get update; apt-get install easy-rsa openvpn
+
+C: mkddir /openvpn-CLIENT
+	cd /openvpn-CLIENT
+A: mkdir /openvpn-CA
+	cd /openvpn-CA
+B: mkdir /openvpn-SERVER
+	cd /openvpn-SERVER
+	
+A: cp /usr/share/easy-rsa/* /openvpn-CA
+C: cp /usr/share/easy-rsa/* /openvpn-CLIENT
+B: cp /usr/share/easy-rsa/* /openvpn-SERVER
+B: vim vars
+	export KEY_COUTRY="SI"
+	export KEY_PROVINCE="nekji"
+	export KEY_CITY="eeeerew"
+	..
+	
+	#x509 subject field
+	export KEY_NAME="servercek"
+	
+B: source vars
+	./clean-all
+	./build-req --server servercek
+
+A: vim vars
+	export KEY_COUTRY="SI"
+	export KEY_PROVINCE="nekji"
+	export KEY_CITY="eeeerew"
+	..
+	
+	#x509 subject field
+	export KEY_NAME="agencija"
+A: source vars
+	./clean-all
+	./build-ca
+	./build-key agentklient
+
+C: vim vars
+	export KEY_COUTRY="SI"
+	export KEY_PROVINCE="nekji"
+	export KEY_CITY="eeeerew"
+	..
+	
+	#x509 subject field
+	export KEY_NAME="clientFile"
+C: source vars
+	./clean-all
+	ln -s openssl-1.0.0.cnf openssl.cnf
+	./build-req clientFile
+	
+	ls keys/
+	 **notr ma clientFile.csr**
+	
+PRI VSEH ->
+	as user -> sudo chmod -R 777 keys/
+	
+B: skopiraš keys/servercek.csr do A v keys mapo
+C: skopiraj keys/clientFile.csr do A v keys mapo
+A:	(ko si v mapi openvpn-CA)
+
+	./sign-req clientFile   ----IN NE clientFile.csr   --ko se pri temu tud prtužuje d nima clientFile.key je navadn -s'all goood'man
+	./sign-req --server servercek   ----če javi da ni servercek.key --- je good
+	*SPRAVŠ DO UPORABNIKOV TE CRT*
+	skopiraš keys/servercek.crt, keys/ca.crt, keys/clientFile.crt
+C: sprejme clientFile.crt, ca.crt v ./keys
+B: sprejme servercek.crt, ca.crt v ./keys
+----- preveri če majo vsi vse ključe -----
+
+A: cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /openvpn-CA
+	vim client.conf
+		proto spremenimo na tcp
+		remote spremenimo na -> remote *JAVEN_IP_C* 193.2.176.216 1194  **PAZI 1194**
+		
+		ca keys/ca.crt
+		cert keys/agentklient.crt
+		key keys/agentklient.key
+		*odkomentiraš* comp-lzo
+	shraniš
+	
+	(kot root) openvpn --config client.conf
+	
+C: 	cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /openvpn-CLIENT
+	vim client.conf
+		proto na tcp
+		remote *JAVEN_IP_OD_CLIENTA* 193.2.176.216 1194
+		*ZAKOMENTIRAŠ remote-cert-tls server*
+		*ZAKONETIRAŠ cipher AES-256-CBC*
+		*odkomentiraš* comp-lzo
+		ca keys/ca.crt
+		cert keys/clientFile.crt
+		key keys/clientFile.key
+	shraniš
+	(kot root) openvpn --config client.conf
+B: cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz /openvpn-SERVER
+	gunzip server.conf.gz 
+	
+	vim server.conf
+		proto na tcp
+		ca keys/ca.crt
+		cert keys/servercek.crt
+		key keys/servercek.key
+		dh dh1024.pem ---- spremenimo na-> dh dh2048.pem
+		*odkomentiraš* client-to-client   ---da lah clienta pingata med sabo
+		*odkomentiraš* comp-lzo
+	shranš
+	source vars
+	./build-dh
+	cp keys/dh2048.pem /openvpn-SERVER/dh2048.pem
+
+
+	(kot root) openvpn --config server.conf
+	---tukaj server naj bi laufal---
+	
+B: virtualka -> network -> nat -> advanced -> vklopiš port forwarding
+		 hostport 1194 gre na guest port 1194
+
+#clienta naj bi se lahko pingala med sabo#
+
+

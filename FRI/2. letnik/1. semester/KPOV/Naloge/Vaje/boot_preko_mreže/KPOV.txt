@@ -1,0 +1,23 @@
+kpov.fri.uni-lj.si
+virtual box
+
+
+username na studentu:
+	U:root
+	P:kaboom
+	
+username na arbiterju
+	U:tester
+	P:tester
+	
+u:markos97
+p:123456
+ip:192.168.0.13
+
+
+
+
+sudo poweroff
+povežem oba preko ineta:
+	ifdown enp0s3
+	ifup enp0s3

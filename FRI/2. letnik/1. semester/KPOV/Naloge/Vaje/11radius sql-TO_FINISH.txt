@@ -1,0 +1,104 @@
+arbiter - nat intnet
+student - intnet
+
+STUDENT:
+	apt-get update
+	apt-get install freeradius freeradius-utils mariadb-server libpam-radius-auth
+	 
+	 
+	msyql
+	create database *IMETVOJEBAZE*(T8TB);
+	create user *TVOJUSER*('PzETqG') identified by *YOURPASS*('GboGsk');
+	grant all privileges on *TVOJABAZA*(T8TB.*) to *TVOJUSER* PzETqG;
+	--- za to komando naprej dol morš delat kt root in ne kt mariadb
+	msysql -u PzETqG -p T8TB
+		vpišeš *SVOJE GESLO*(GboGsk)
+	__
+	cd /etc/freeradius/3.0
+	vim clients.conf
+	
+		client localhost:
+			greš do secret = __
+				napises secret = *YOURSECRET*(NN48k0HR)
+		greš nekam dol pa napišeš
+			client lokalni_intnet {
+				ipaddr = 10.94.94.0/24
+				secret = *YOURSECRET*(NN48k0HR)
+			}
+	shranš
+	
+	service freeradius restart
+	radtest tralal wtf 127.0.0.1 1 *YOURSECRET*(NN48k0HR)
+	_________________________
+	apt-cache search freeradius mysql
+	apt-get install freeradius-mysql
+	
+	cd /etc/freeradius/3.0/mods-config/sql/main/mysql/
+		msysql -u PzETqG -p T8TB < schema.sql
+		vneseš pas...*SVOJE GESLO*(GboGsk)
+	cd /etc/freeradius/3.0/
+	cd mods-enabled/
+		ln -s ../mods-avaliable/sql .
+		cd ../mods-avaliable
+		vim sql
+			driver = rlm_sql_mysql 
+			**POD SERVER = "LOCALHOST"  PORT = 3306 LOGIN = "RADIUS"
+			NAPIŠEŠ
+				server = "localhost"
+				login =  *TVOJUSER*("PzETqG")
+				password = *SVOJE GESLO*("GboGsk")
+				radius_db = *IMETVOJEBAZE*("T8TB")
+			**MAV NAD TEM POPRAVIŠ DIALECT
+			dialect = "mysql"
+			
+			
+	service freeradius restart
+	tail /var/log/syslog
+	msysql -u PzETqG -p T8TB
+		vpises  *SVOJE GESLO*("GboGsk")
+		select * from radcheck;
+		
+ARBITER: POŽENEŠ TEST
+
+STUDENT:
+	cd /etc/mysql/mariadb.conf.d/
+		vim 50-server.cnf	
+		gremo do bind-adress in to spremenimo na 0.0.0.0 
+	service mysql restart
+ARBITER - spet poženeš
+
+STUDENT:
+	msysql -u PzETqG -p T8TB
+	select * from radcheck;
+	MOJ USER IN PASS V BAZI: antonnovak9 z geslom 9oIGjR7e
+	insert into radcheck(username, attribute, op, vaue) values('antonnovak9', 'Cleartext-Password', ':=', '9oIGjR7e');
+		_________________________ 36. min
+	root nazaj:
+	radtest antonnovak9 9oIGjR7e 127.0.0.1 1 NN48k0HR ---NE DELA _________________________	_________________________	_________________________
+	
+	-------35 min
+
+	____________________
+	
+	
+	cd /etc/pam.d/
+		pam-auth-update
+		apt-get install libpam-radius-auth
+		vim commmon-auth
+			auth sufficient pam_radius_auth.so
+			
+		shranš
+		cd /etc
+		vim pam_radius_auth.conf
+			VSE ZAKOMENTIRAŠ PO PAS
+			127.0.0.1   *SHARED SECRET*(NN48k0HR)
+		save
+		
+		
+		vim /etc/passwd
+		adduser antonnovak9 
+			geslo
+			
+	
+	
+	

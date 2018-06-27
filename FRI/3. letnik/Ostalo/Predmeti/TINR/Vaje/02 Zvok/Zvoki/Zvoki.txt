@@ -1,0 +1,28 @@
+Naloga
+
+Poleg grafike ne smemo pozabiti na drugi del predstavitve sveta, zvok.
+
+V najosnovnejši razlièici ob doloèenih dogodkih med procesiranjem pravil igre enostavno sprožimo predvajanje želenega zvoka. Le-te si pred tem pripravimo, najlažje v komponento singleton, ki zvoke naloži  ob inicializaciji ter jih ob naših zahtevah predvaja.
+
+Tudi pri zvoku tako kot pri slikah moramo paziti na avtorske pravice, tako lahko zvok:
+
+posnamemo sami
+ustvarimo (modeliramo), lahko uporabimo orodja kot npr. cfxr (http://thirdcog.eu/apps/cfxr)
+poišèemo na medmrežju (in pazimo na licenco, ki mora dovoljevati integracijo v druge projekte), npr. zbirka zvokov soundlab (http://xbox.create.msdn.com/en-US/education/catalog/utility/soundlab)
+Navodilo
+
+Posnemite iPhone-simulator, kjer se med igranjem ustrezno slišijo zvoki (vsaj trije).
+
+Pred snemanjem s Quicktimom ali Screeniumom si namestite Soundflower. Nato pojdite v System Preferences - Sound in pod input tudi izberite Soundflower. Resetirajte simulator in ko boste dali record boste slišali zvoke iz simulatorja, Screenium pa jih bo tudi ustrezno posnel.
+
+Èe imate probleme s snemanjem iz virtualke/hackintosha poskrbite, da boste posneli video na macu na vajah ali v labu.
+
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-zvok-zvoki.mov 
+(primerno popravite vpisno številko in priimek)
+
+Èe imate probleme s snemanjem zvoka in, èe ne gre drugaèe, lahko posnamete zaslon s kamero ali mobitelom.

@@ -1,0 +1,48 @@
+package predavanje10;
+
+import java.util.Random;
+
+/**
+ * Demonstracija uporabe abstraktnega razreda: v metodi poisciNiclo() 
+ * uporabljamo abstraktni razred Funkcija, saj nam v tej fazi ni pomembno,
+ * kaksne so dejanske vrednosti in odvod funkcije, pomembno je le, da
+ * imamo na razpolago objekt z definiranima metodama vrednost() in odvod().
+ * 
+ */
+public class Newton {
+  
+  /**
+   * Racunanje nicle funkcije po Newtnovi metodi. 
+   */
+  static double poisciNiclo(int n, double x0, Funkcija f) {
+    for (int i = 0; i < n; i++) { 
+      x0 = x0 - f.vrednost(x0) / f.odvod(x0);
+    }
+    return x0;
+  }
+  
+  /** 
+   * Racunanje nicle funkcije sin(x) okoli tocke 3.
+   */
+  public static void main(String[] args) {
+    
+    double nicla = poisciNiclo(10, 3, new Sinus());
+    System.out.println("Nicla sinusa blizu 3 je " + nicla);
+    
+    nicla = poisciNiclo(10, 1.5,  new Funkcija() {
+
+      @Override
+      double vrednost(double x) {
+        return Math.cos(x);
+      }
+
+      @Override
+      double odvod(double x) {
+        return -Math.sin(x);
+      }
+      
+    });
+    System.out.println("Nicla cosinusa blizu 1.5 je " + nicla);
+  }
+
+}

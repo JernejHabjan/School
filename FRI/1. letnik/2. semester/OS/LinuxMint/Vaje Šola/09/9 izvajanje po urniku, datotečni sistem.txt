@@ -1,0 +1,115 @@
+Ukazi, ki jih bomo uporabljali:
+
+at, atq, atrm
+cron, crontab
+mount, umount
+df, du
+Pred vajami si s pomocjo pomoci v ukazni lupini poglejte, kaj je glavna naloga posameznih ukazov.
+
+ 
+
+ZAKASNJENO IZVAJANJE UKAZOV
+
+Izvajanje ukazov z zamikom: at
+
+Ukaz prebere ukaze, ki naj jih izvede iz standardnega vhoda. Kot parameter mu moramo podati, kdaj naj te ukaze izvede. Ukazi se bodo izvedli v lupini /bin/sh
+
+Možni zapisi casa:
+
+at 23:45 - podamo uro, kdaj naj se izvede
+at Jul 2 - podamo datum 
+at 02.07.12 - druga možnost za datum
+at 10am Jul 2 - podamo datum in uro
+at now + 5 hours - izvedemo cez 5 ur
+at 10am + 3 days - izvedemo cez 3 dni ob 10h zjutraj
+Stikalo:
+ 
+-f datoteka ... podamo datoteko, v kateri so zapisani ukazi, ki naj jih izvede
+ 
+ 
+Pregled vrste za izvajanje: atq
+ 
+Izpiše seznam nalog, ki cakajo v vrsti. Vsaka vrstica vsebuje zaporedno številko, kdaj se bodo ukazi izvršili, oznako vrste in ime uporabnika.
+ 
+Brisanje naloge iz vrste: atrm
+ 
+Iz vrste zbriše nalogo s podano zaporedno številko.
+
+atrm 6 - zbriše nalogo s številko 6
+
+ 
+Periodicno izvajanje ukazov: cron, crontab 
+ 
+Z ukazom crontab lahko popravljamo datoteko, kamor lahko zapišemo ukaze, ki bi jih radi izvajali periodicno npr. enkrat na dan. Proces cron vsako minuto preveri vse datoteke crontab in izvede ukaze, ki so na vrsti za izvajanje.
+stikala ukaza crontab :
+-l ... izpiše trenutno nastavitev crontaba - kateri ukazi se izvršujejo in kdaj 
+-r ... zbriše trenutno nastavitev
+-e ... odpre urejevalnik, kjer lahko dodamo/popravimo nastavitve
+Vrstica v nastavitvah crontaba je sestavljena iz šestih stolpcev:
+minuta(0-59),  ura(0-23),  dan(1-31),  mesec(1-12),  dan_v_tednu(0-6, 0=nedelja),  ukaz
+ 
+Primeri vrstic:
+ 
+10  11  5  4  1  /usr/bin/program
+Datoteka /usr/bin/program se bo zagnala ob 11:10 dne 5. aprila in poleg tega tudi vsak ponedeljek v aprilu.
+ 
+10  11  *  *  *  /usr/bin/program
+Datoteka /usr/bin/program se bo zagnala ob 11:10 vsak dan v vsakem mesecu.
+ 
+10,20  11,12  5-10  4,6  * /usr/bin/program
+Datoteka /usr/bin/program se bo zagnala ob 10 in 20 minut cez 11 in 12 na dneve od 5. do 10. aprila in junija.
+ 
+*/10  *  *  *  *  /usr/bin/program
+Datoteka /usr/bin/program se bo zagnala vsak dan, vsakih 10 minut (ko bodo minute deljive z 10 - minute bodo enake 0,10,20,30,40 ali 50)
+ 
+Opomba: 
+Za zadnjo vnešeno vrstico v datoteki mora biti obvezno vsaj še ena (lahko prazna) vrstica. V nasprotnem primeru se ta vrstica ne bo izvajala.
+ 
+PRIKLAPLJANJE DATOTECNIH SISTEMOV
+ 
+Priklop datotecnega sistema v dolocen imenik: mount
+Odklop datotecnega sistema: umount
+ 
+V Linuxu lahko dostopamo do datotek na npr. CD-ROMu tako, da datotecni sistem CD-ROMa priklopimo na dolocen imenik na našem datotecnem sistemu. Datoteke, ki so na CD-ROMu bodo potem vidne znotraj tega imenika. Po zakljucenem delu moramo pred odklopom naprave uporabiti ukaz umount, saj se sicer pri zunanjih diskih ali usb kljucih lahko zgodi, da vsebina na njih še ne bo pravilna, ce smo jo kaj popravljali. Z ukazom umount sistemu povemo, da naj takoj zapiše vse manjkajoce podatke na napravo, saj bi jo radi odklopili.
+
+Uporaba:
+
+mount naprava imenik
+
+Kot napravo navedemo datoteko iz imenika /dev/, ki predstavlja želeno napravo, kot imenik pa lokacijo, kamor bi radi priklopili datotecni sistem naprave.
+
+Primer:
+
+mount /dev/cdrom /cdrom
+
+Stikala:
+
+-t tip ... tukaj podamo tip datotecnega sistema naprave. Ce tega stikala ne podamo, ga poskusi ugotoviti samodejno.
+
+V datoteki /etc/fstab so lahko shranjeni podatki o tem, katere naprave se priklopijo na kateri imenik vkljucno z vsemi parametri. 
+
+Tako lahko, recimo, ce v tej datoteki obstaja vrstica za cdrom:
+
+/dev/cdrom  /cdrom  iso9660  ro,user,noauto,unhide
+
+priklopimo cdrom kar z ukazom:
+
+mount /cdrom ali mount /dev/cdrom
+
+ 
+
+Izpis zasedenosti (oziroma nezasedenosti) datotecnih sistemov in lokacije v datotecnem sistemu, kamor so priklopljeni: df
+
+Izpis koliko prostora porabijo podane datoteke/imeniki: du 
+
+Stikalo:
+
+-h ... izpis z merskimi enotami KB, MB,...
+
+Primer:
+
+du -h . - izpiše koliko prostora zasede na disku trenutni imenik z vsemi podimeniki
+
+ 
+
+Zadnja sprememba: sreda, 13. maj 2015, 09:46

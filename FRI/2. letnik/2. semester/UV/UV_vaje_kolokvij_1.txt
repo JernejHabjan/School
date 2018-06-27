@@ -1,0 +1,81 @@
+#KOLOKVIJ NAVODIL
+	10 nielsenovih princopov
+	1 praktièna naloga pomikanje in vodenje (implementacija fitovega zakona)
+		
+		log -- to so vse dvojiški log
+		
+		a)
+			na zaslonu imamo 4 tarèe
+			
+			m      ---A--      ---B---    ---C----    ----D----
+			0______2_____4_____5______7___9______15___16______24
+
+			fitov zanke je funkcija velikosti in razdalje -> D je najveèja ampak je najbolj oddaljen
+			T = a+b*log(D/S +1) --pomik
+				d je razdalja od trenutne pozicije miške do CENTRA tarèe
+				s je širina tarèe
+				a in b sta velikosti ki sta za danega uporabnika in interakcijo konstantni
+					//v naših primerih ju lahko zanemarimo, saj se bojo povsod pojavlale in bi jih pokrajšal
+					a- dpi?
+					b- odvisno od uporabnika
+					
+				Ta = a+b * log(D/S+1) = log(D/S+1) = log(3/2 +1) = log(2.5)
+				Tb = log(D/S+1) = log(6/2 +1) = log(4)
+				Tc = log(D/S+1) = log(12/6 +1) = log(3)
+				Td = log(D/S+1) = log(20/8 +1) = log(3.5)
+
+			odgovor: najhitreje dosežemo tarèo A, najpoèasneje pa tarèo D 
+			
+			èe a polovico velikosti
+				m      -A- 
+				0______3_4
+			T'a = log(D/S+1) = log(3.5/1+1) = log(4.5)
+			
+			èe je tarèa na robu -> gre velikost tarèe proti neskonèno, gre cel izraz proti konstanti a
+			
+		b)
+			m      ---A--      ---B---    ---C----    ----D----
+			0______2_____4_____5______7___9______15___16______24
+
+			koloiko mora biti velika tarèa D da tarèo najhitreje obrnemo
+			
+			Td = log(D/S + 1) < log(2.5) //mora biti manjša od A
+				S = ?
+				D = 16(start_tarèe) + S/2
+			
+			Td = log((16+S/2)/S + 1) <log(2.5) .. antilogaritmiramo /log^-1
+				(16'S/2)/S +1 <2.5     mnozimo *-1/*S
+				16+S/2 <1.5S
+				16<S 
+				S >16
+			zato -> start(16) + 16 = 32(konec tarèe)
+			
+		c) tunel
+			sprehod miške po meniju (dropdown) - ne smeš z miško dol in se zapre meni
+			T = a+b * (D/S) --vodenje
+			
+			težje zlog
+			2 tarèi
+			pot do tarèe a je prosta
+			tarèa a se nahaja na:
+			A: D = 15cm
+			   S = 5cm
+			   
+			   
+			tarca B se nahaja v tunelu:
+			B: D=12cm
+			-koliko mora biti širina tunela da tarèi dosežemo enako hitro ---v menijih je širina tarèe širina menija
+			
+			
+			za prvo tarco:
+			Ta = log(D/S +1) = log (15/5 +1) = log(4) = 2
+			Tb = D/S = 12cm/S -> rezultat mora biti 2 ker Ta = Tb
+				12/S = 2 -> S = 6
+
+	3 teoretiène  (kakšen je spiralni model(uporablja poceni prototipe v zaèetnih iteracija, v èem se razlikuje )
+		èlovekove sposobnosti -procesor  zaz zanavanje - za zanavanje èrk, fonemov.... primerja s kosi dolgotrajnega spomina
+		s katerim sodeluje procesor -> z dolgotrajnim, senzornim in __
+		ukazna vrstica, meniji, forme, direktna manipulacija, antropomofni vmesniki...
+		
+	pišemo DO (ne vkljuèno) navodil naèrtovanja
+

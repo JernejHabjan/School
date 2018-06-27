@@ -1,0 +1,71 @@
+﻿krogec pa - -> lahko ima ali nima (0,1)
+-|- -> (1,1)
+krogec pa vranja noga (0,n)
+| pa vranja noga ->(1,n)
+
+
+dedovanje (prevozno sredstvo ->avto,tovornjak (nemorata meti skupnih)... )
+
+šibek ključ -ima trikotnik na slikci... je sestavljen iz svojih ključev in enega tujega
+
+lahko imamo... oddelek in pododelke... v kerem je vsebovan tudi v tabeli... lahko naerdimo rekurzivno
+
+naloga1:
+	avto (serijska znamka, id)
+	cenik (id, začetek, konec)
+	postavka (cena, popust)
+	akcija(id, ime)
+
+	povezave: avtomobil 1, postavka 1 ali mnogo
+			cenik 1, postavka 1 alin
+			akcija 1, cenik 0 ali več
+	cena z ddv nebomo dali notri ker se potem izračuna
+naloga2: tekmovanje
+
+	tekmovanje(datum, čas, ime tekmovanja, čas trajanja)
+	skalaknica (id, ime, dolzina)
+	tekmovalec(id, ime ,priimek)
+	država(id, ime)
+	skok(dolžina, številka skoka, ocena)
+	status_skoka(stanje)
+	
+	
+	
+	povezave: tekmovanje 0 ali več, skakalnica 1 ()
+		skok 1, status 0 ali mnogo
+		tekmovalec 1, skok 0 ali mnogo (2 skoka)
+		tekmovanje 1, skok 1 ali več (skoka brez tekmovanja ni)
+		država 1, tekmovalec 0 ali mnogo
+	
+	skok je šibki entitetni tip -> št. skokov in id tekmovanja in id tekmovalca!!!
+	
+kluči... če samo 1 potem ima ključ
+če same mnoge, potem je sestavljen oz šibek ker je neka vmesna tabela
+	
+	
+	
+vse ki je varchar - kar se lahko ponavlja... damo na novo entiteto
+podčrtaj ključe
+
+
+________
+logično načrtovanje:
+že vse določeno (primarni, tuji ključi...)
+
+preslikave 1:1 ->bz ker so odvisne
+			0:1 ->že treba
+			mnogo:1 ->pri mnogo bo tuji ključ... to lahko označimo s trikotnikom
+			
+relacijska shema:
+	oseba((pk)emšo: number(13),ime:varchar(20))
+	posel((fk)emšo,šifra artikla,šifra prodajalca,datum,cena) (vse je primarni ključ)
+	
+	če ven iz tabele mnogo -> pol bo to tuji ključ
+	če je izven tabele trikotnik, po bo to del primarnega ključa
+	
+NE GLEJ SAMO ATRIBUTE AMPAK TUDI POVEZAVE!!!!!!!!!!!!! ČE VEN IZ TABELE MNOGO---IMA NOTR TUJI KLJUČ!
+
+PAZI 7 naloga:
+	VMESNA TABELA sodeluje(#emšo, #id_org) (oba primarni ključ)
+	
+	LAHKO STA 2 POVEZAVI --- podružnica ->več osebja,    1 oseba upravlja 1 ali 0 podružnic

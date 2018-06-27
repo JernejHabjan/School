@@ -1,0 +1,137 @@
+Vsebina: 1. vprašanja iz kviza (done)
+		2. Teoretična
+		
+	KVIZ:
+	________________________________________________________________________________________
+		najti točko presečišča:
+			111n+5 = 2n^2 + 5n +5n
+			111 = 2n +5n
+			n=53
+			
+		kolikokrat moramo prepogniti list papirja da do sonca
+			(moč eksponentne funkcije)
+			1,2,4,8,16,32.... ko 20x=milijon
+			razdalja med zemljo in soncem: 150mio km-> 1.5*10^8 km -> 1.5*10^11m ->1.5*10^14mm->1.5*10^15 desetink mm
+			2^n
+			11.5*10^15 desetink mm < 2n ... koliko je N
+			2^10 -> 1024 ~ 1000 = 10^3 -- 2^10 ~ 10^3
+			1.5*2^50desetink mm < 2^n ---> n = 51-- prepognemo 51x in smo dlje
+			
+		kolikokrat se izvede zanka
+			i: 100 -200
+			j: i i- 300
+			
+			1. i=100   j: 100-300 (j se ponovi 201x)
+				101   j: 101-300 (j 200x)
+				...
+				i= 200  j: 200-300: (j:101)...   vsota kolikokrat se j ponovi je 50*302 + 151 (po pare vzamemo zadnjega in prvega in je 50 parov) =15251
+				
+		najslabši primer: 5n^2
+			ali lahko rečemo da algoritem porabi toliko korakov - ne drži ????
+		
+		časovna zahtevnost n*logn T(n) = c*n*lg(n)+d*n ->dvojiški logaritem ... porabi A sekund
+			koliko sekund porabi za 2x nalogo
+			T(2n) = c*(2n)*lg(2n)+d*(2n)
+				2*c*n*lg(2n) +2dn
+				2*c*n*(lg(2)+lg(n))+2dn
+				2cn *(1+lg(n))+2dn
+				2cn + 2cn*ln +2dn (vstavimo c*n*lg(n)+d*n)
+				2cn + 2A
+				2(A+cn)
+		
+		izračunaj za n = 512
+		T(n)= 5n^2 +5/2*n *ln(n)     512 = 2^9
+		T(512) = 5*(2^9)^2 +3/2 *(2^9) *lg2^9
+			2^8 (5*2^10 +3*9) ----lg2**9 == 2
+			256*(5120+27)
+			= 13117632
+			
+		kako veliko nalogo lahko rešimo v 10h
+			8/3*n^2 +3/2*n +9 <= 10*3600
+			8/3*n^2 +3/2*n -35991 <= 0
+			
+			D= b^2-4ac
+			x1 = -b +sqrt(D)/2a
+			x2 = -b -sqrt(D)/2a
+			
+			pravilna rešitev je 115
+	________________________________________________________________________________________
+	
+	AVDITORNE VAJE:
+	________________________________________________________________________________________
+	
+	
+	Jernej Habjan 63150106
+	n   		  log(2)n   	n 		nlog2n  	 n^2		n^3			2^n			n!  		n^n
+	______________________________________________________________________________________________________________
+	1			  0				1		0			1			1			2			1			1
+	2			  1				2		2			4			8			4			2			2
+	3			  1,585			3		4,7			9			27			8			6			6
+	5			  2,3		 	5		11.6		25			125			32			120			3125
+	10			  3,3			10		~33 		100			1000		1024		~3.6 mil	10^10
+	100			  6,64			100		~664		10^4		10^6		1.2*10^30	9*10^157	10^200
+	1000 		  ~10			1000	~10k		10^6		10^9		10^301					10^(3*10^3)
+	10 000		  ~13			10^4	~132k		10^8		10^12								10^(4*10^4)
+	100 000		  ~17			10^5	~1.6 mil	10^10		10^15								10^(5*10^5)
+	1000 000 	  ~20			10^6	~20 mil		10^12		10^18								10^(6*10^6)
+	1000 000 000  ~30			10^9	~30 M		10^18		10^27								10^(9*10^9)
+	
+	n! vs 2^n
+	n! -1*2*3*4...*n (n členov)
+	2*n 2*2*2*2...*2 (n členov)
+	
+	n* logn je večja kot n... je oblika kot eksponentna
+	
+	2. 
+		naloga = 1000
+		koliko sekund rabimo za izračun rešitve
+		podan je za 1 mikrosec
+		
+		n	lg(n)   				sqrt(n)   		n   	 n*lgn    		n^2      			n^3     			2^n      		 n!
+		1    1      				1         		1       0    			1          			 1      			 2       		1
+		1000 10mikrosec				32micsec		1000	10 000 mis		1000 000 = 1sec		10*9=1000sec		10^21 let		...
+	--- kaj pa za v 1 sec: (koliko velika naloga za 1 sec)
+			lg(n) = 1000 000 mikrosec --10^333333
+			sqrt(n) = 1000000 -  10^12
+			n -> 10^6
+			n*log(n) = 1000 000  -- 10^5
+			n^2 =1000000 -> n = 1000 (korenili smo oba konca)
+			n^3 = 1000000 -> n = 100
+			2^n -> ~20
+			n! -> ~10
+	________________________________________________________________________________________
+	4.
+		zakna od 1-n, kaj je rezultat
+		 1+1+1+1+1+1 (ponovi se nkrat) .. rezultat je n
+		 kolikokrat se izvede operacija seštevanja- tolikokrat kolikokrat se izvede prištevanje -nkrat
+		 kolikokrat preverjanje pogoja -> n+1x
+	5. zanka v kateri vsoti prištevamo iterator
+		1+2+3+4+5+6...+n-1+n  ((prvi + zadnji) + (drugi+ predzadnji)+...) -- če n sod .. pol zdelimo z 2    ((n+1)*n)/2
+																		-če n lih - ((n+1)*n)/2 --- ista formula kot za sodega
+																		
+	6. Dvojna zanka:
+		znotrej se prišteva +1
+		notranja zanka da rezultat n
+		zunanja zanka to izvede nkrat -> zato n*n = n^2 ---- notranje prištevanje se izvede n^2krat
+	7 notranja zanka samo do i
+		notranja zanka se ponovi 1+2+3+4...+n --> = ((n+1)*n)/2
+		
+	8 	vsota+=i !!!!!!!
+		1+2+2+3+3+3+4+4+4+4--- 1*1 + 2*2 + 3*3 +.... 1+ 2^2 + 3^2 + 4^2--
+		vsota n^2
+		TAKA VSOTA JE = (n(n+1)*(2n+1))/6 !!!!!!!!!!!!!!!!!
+		trajanje: ((n+1)*n)/2
+		
+		
+	9 	trojna zanka
+		
+		rezultat = (n*(n+1)(2n+1))/6
+		ponovitev je  (n*(n+1)(2n+1))/6
+	10	štirojna  zanka
+		
+		rezultat = 1/4*n^4  +1/2*n^3  + 1/4 *n^2
+		
+		ponovitev je. (n*(n-1)(2n+1))/6
+	
+			
+	če 5 gnezdenih zank - n^5

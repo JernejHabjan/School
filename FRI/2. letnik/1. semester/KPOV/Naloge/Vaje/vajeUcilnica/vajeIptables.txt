@@ -1,0 +1,56 @@
+			VAJE IPTABLES
+
+Pod Linuxom za požarni zid skrbi nadvse fleksibilen sistem, poimenovan iptables. Gre za več tabel, pri čemer vsaka tabela vsebuje več verig, prek katerih se "sprehodi" algoritem za razvrščanje paketov, ki potujejo prek omrežnih vmesnikov.
+
+Uradna, precej dobra dokumentacija, je dostopna z:
+
+	man iptables
+Precej dober je tudi Iptables Tutorial
+
+Ukaz za prikaz in spreminjanje tabel se imenuje iptables. Poizkusite:
+
+	iptables -t filter -L
+	iptables -t nat -L
+	iptables -t mangle -L
+	iptables -t raw -L
+	iptables -L
+Kot ste verjetno uganili, trenutno veljavna pravila za razvrščanje oz. filtriranje paketov dobite z ukazom iptables -L. V tem primeru je -L (--list) ukaz, ki izpiše vsebino tabel. To, za katero tabelo gre, lahko spremenite z možnostjo -t IMETABELE.
+
+Ukaz iptables pozna celo vrsto možnosti. Prva morebiti zanimiva je -v (verbose):
+
+	iptables -L -v
+Tako lahko pogledamo, koliko paketov oz. byte-ov prometa je bilo prenešenega po neki verigi. Za vsako od verig namreč obstaja števec prenešenega prometa, ki ga lahko uporabimo za različne statistike.
+
+Pri uporabi iptables vam bodo gotovo prišli prav še ukazi:
+
+	-S (--list-rules) - izpiši vsa pravila v verigi oz. v vseh verigah, uporabno za shranjevanje nastavitev
+	-A (--append), -I (--insert) - dodaj pravilo na konec verige, na začetek verige ali na poljubno mesto v verigi.
+	-R (--replace) - zamenjaj pravilo
+	-D (--delete) - odstrani pravilo
+	-F (--flush) - odstrani vsa pravila v verigi
+	-N (--new-chain) - ustvari novo verigo
+	-X (--delete-chain) - pobriši verigo
+	-E (--rename-chain) - preimenuj verigo
+	-P (--policy) - nastavi, kaj naj se zgodi s paketi, ki jih ne ujame nobeno od pravil v verigi
+	-Z (--zero) - nastavi števce v verigi na 0
+Najpogosteje boste uporabljali ukaza:
+
+	iptables -A VERIGA PRAVILO # doda PRAVILO na konec VERIGA
+	iptables -D VERIGA ST_PRAVILA # odstrani PRAVILO s konca verige
+Poglejmo si primer - zavrnimo ves promet, ki pride do našega računalnika in izvira s HTTP strežnikov (se pravi po protokolu tcp z vrat 80):
+
+	iptables -A INPUT -p tcp --sport 80 -jDROP
+In potem to neumno pravilo izbrišemo:
+
+	iptables -D INPUT 1
+Lep pregled vseh treh običajnih tabel in njihovih verig lahko preberete v temle lepem HOWTO-ju
+
+Zadnjih nekaj let se iptables počasi umikajo - njihova zamenjava so nftables. Spodnje naloge lahko rešujete tudi z njihovo pomočjo.
+
+Naloge:
+	nastavite pravilo, ki bo ves promet, ki pride na vaš računalnik prek TCP na vrata 8080, preusmerilo na vrata 80.
+	nastavite pravilo, ki bo omogočilo vsem računalnikom z omrežja 192.168.1.0/24, da prek vašega računalnika dostopajo do interneta (se pravi da zanje vaš računalnik izvaja NAT)
+	nastavite pravilo, ki bo čez dve minuti zaprlo ves promet prek spleta za eno minuto
+	nastavite pravila, ki bodo zavrgla ves promet, ki vsebuje besede:"alah" ali "bomba" ali "marmelada".
+	nastavite pravilo, ki bo vsako vzpostavljeno povezavo prekinil po prenešenih 666 byte-ih.
+	nastavite pravilo, ki bo ves promet, ki pride na vaš računalnik na vrata 80, preusmerilo na strežnik www.google.com

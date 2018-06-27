@@ -1,0 +1,18 @@
+Naloga
+
+Fiziko lahko v projekt dodamo na veè naèinov. Izvajamo jo lahko v sami metodi igre updateWithGameTime oziroma ene od komponent (Gameplay, Level). Takoj, ko gre za kompleksnejše obravnavanje, je smiselno ustvariti novo komponento PhysicsEngine, ki deluje nad sceno ali stopnjo ter poklièe vse ustrezne izraèune glede na zvrst igre.
+
+Možno je spisati tudi povsem splošen fizikalni pogon, ki na podlagi prisotnosti protokolov na objektih scene raèuna vse potrebno (recimo premika IMovable objekte, vrti IRotatable, dela trke nad IParticleCollider itd.), še boljše pa je, èe fizikalni pogon optimiziramo za zvrst igre. V splošnem delu pogona si samo pripravimo posamezne izraèune (premikanje, rotacija, raèunanje sil, trkov), ki jih v fizikalnem pogonu za konkretno igro po potrebi uporabljamo. Tako je v igri podiranja zidu na sceni naenkrat žoga in veè deset opek, a nam ni potrebno delati detekcije trkov med vsemi pari opek, temveè le med žogo in opekami. Povsem splošen pogon, pri katerem samo poklièemo simulacijo nad celotno sceno, se brez naprednih tehnik (recimo loèevanje predmetov v razliène skupine za trke) temu ne bi znal izogniti.
+
+Ko se odloèimo na katerem mestu in, kako splošno bomo spisali fizikalni pogon, izdelamo najbolj osnovni del, to je raèunanje enaèbe za premikanje. Da preverimo delovanje enemu od objektov, nastavimo zaèetno hitrost in, èe je vse pravilno povezano, ga bo fizikalni pogon zaèel premikati po sceni.
+
+Navodilo
+
+Posnemite simulator, kjer se kakšen predmet sam (zaradi nastavljene hitrosti) premika po sceni.
+
+Posnemite le del ekrana, v katerem je viden iPhone simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko in NE zip/rar z video datoteko.
+
+Poimenovanje: 63080000-priimek-fizika-premikanje.mov
+(primerno popravite vpisno številko in priimek)

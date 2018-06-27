@@ -1,0 +1,12 @@
+Jernej Habjan 63150106
+
+Risanje krivulje:
+	Naklikate na canvas 4 toèke, za tem pa se bo izrisala krivulja. To lahko ponovite za n krivulj.
+Kombiniranje krivulj:
+	Oznaèite 2 rdeèa krogca in pritisnete "zdruzi krivulji"
+		-ps. èe neboste mogli doloèiti dveh krogcev, ker bo doloèen moder kvadrat, prvo odklikajte tega.	
+	krivuljo lahko združite tudi z drugo "nepopolno" krivuljo (objekta ki nima še vseh 4 toèk)
+Spreminjanje barve krivulje
+	z gumbom "barva krivulje" se spremeni barva vseh krivulj
+Natanènost krivulje
+	v textarea vnesete število, kako natanèno naj se izrisuje krivulja in pritisnete potrdi.

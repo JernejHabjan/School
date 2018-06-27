@@ -1,0 +1,173 @@
+a)
+
+1. Priority lists for men and women:
+	V:L,A,T
+	P:A,L
+	B:T,J
+	K:T,A
+	
+	L:V,P,B,K
+	A:P,V
+	T:B
+	J:V,B,K
+	
+	Day01:
+	Proposals Engagements Refusals
+	L:V       L-V		  J
+	A:P		  A-P
+	T:B		  T-B
+	J:V
+	
+	Day02:
+	Proposals Engagements Refusals
+	J:V		  null		  J
+	
+	
+	Day03:
+	Proposals Engagements Refusals
+	J:K	  	  J-K		  null
+	
+	Engagements:
+	L-V
+	A-P
+	T-B
+	J-K
+	
+1. Priority lists for men and women:
+	V:A,L,T
+	P:L,A
+	B:J,K
+	K:T,A
+	
+	L:K,V,P,B
+	A:V,P
+	T:B
+	J:B,V,K
+	
+	
+	Day01:
+	Proposals Engagements Refusals
+	L:K       L-K		  J
+	A:V		  A-V
+	T:B		  T-B
+	J:B
+	
+	Day02:
+	Proposals Engagements Refusals
+	J:V		  null		  J
+	
+	
+	Day03:
+	Proposals Engagements Refusals
+	J:K	  	  J-K		  null
+	
+		
+	Engagements:
+	L-K
+	A-V
+	T-B
+	J-K
+Za prvo toèko sem vzel kar listo ki je bila podana kot prioritetno listo, kjer je prva napisana oseba bolj privlaèna
+za to osebo kot zadnja napisana.
+
+Za drugo toèko sem pa premešal to listo, saj  navodilih ni pisalo, da naj to obravnavamo kot prioritetno listo.
+
+b)
+i)
+	Graf v prilogi
+
+ii)
+# Algoritem sestavljen po: Stable Marriage Problem - Numberphile - Gale–Shapley algorithm
+from collections import defaultdict
+import numpy as np
+import math
+
+def propose(woman, proposed, preference_zenske,rejected, engaged ):
+	womans_preferences = preference_zenske[woman]
+	next_propose = womans_preferences[0]
+
+	#prvo pogleda zenska kateri po listi jo je že zavrnil
+	if woman in rejected.keys():
+		for i in range(len(womans_preferences)):
+			if womans_preferences[i] == rejected[woman]:
+				if(i < len(womans_preferences)-1):
+					next_propose = womans_preferences[i+1] #izbere naslednjega
+	#ce se ni zarocena ga prosi za roko
+	#if(next_propose not in engaged):
+	proposed[next_propose].append(woman)
+
+def reject(man, preference_moski, proposed, engaged, rejected):
+	mans_preferences = preference_moski[man]
+	mens_proposals = proposed[man]
+
+	for preference in mans_preferences:
+		#izbere najboljso njemu
+		for propose in mens_proposals:# ce ni forever -alone guy aka ce ga je zaprosila ksna
+			if preference == propose:
+				proposed[man] = [preference] #samo njo izbere, ostale zavrne
+				engaged[man] = preference # se zarocita zacasno
+
+				#reject women:
+				mens_proposals.remove(preference)
+
+	#zavrnemo
+	for failed_proposal in mens_proposals:
+		rejected[failed_proposal] = man #pove kdo jo je rejectov
+
+def main():
+	ST_PAROV = 4
+	engaged = {}
+
+	proposed = defaultdict(list)
+	rejected = {}
+
+	preference_moski = {
+		"Luka": ["Veronika", "Petra", "Barbara", "Katarina"],
+		"Anže": ["Petra", "Veronika"],
+		"Tomaž": ["Barbara"],
+		"Jan": ["Veronika", "Barbara", "Katarina"]
+	}
+	preference_zenske = {
+		"Veronika": ["Luka", "Anže", "Tomaž"],
+		"Petra": ["Anže", "Luka"],
+		"Barbara": ["Tomaž", "Jan"],
+		"Katarina": ["Tomaž", "Anže"]
+	}
+	for i in range(math.factorial(ST_PAROV)): ### da ponovimo veèkrat - za vse možne pare...
+
+		while(len(engaged) < ST_PAROV): # ko so vsi engaged ke konec
+			for woman in preference_zenske.keys():
+				propose(woman, proposed, preference_zenske,rejected, engaged)
+			for man in preference_moski.keys():
+				reject(man, preference_moski, proposed, engaged, rejected)
+
+		for man, woman in engaged.items():
+			print(man, "<3", woman)
+		print()
+
+		##permute --- tako poišèemo veè razliènih zaroèiè
+		for preferences in preference_zenske.values():
+			np.random.permutation(preferences)
+		for preferences in preference_moski.values():
+			np.random.permutation(preferences)
+main()
+
+	
+iii)
+	Smiselne so samo dvosmerne povezave, saj se samo tako oba hoèeta poroèiti en z drugim
+	Trdni zakon je tisti, kjer nekatera oseba nima veè dvosmernih povezav.
+
+c)
+Problem se imenuje stable marriage problem
+Da je problem sigurno rešljiv, morajo biti polja preferenc napolnjena, saj se lahko zgodi, da
+ko fant zaprosi dekleta, so vsa ta dekleta že z drugim fantom, potem pa fantu zmanka preferenc
+in ostane sam, prav tako pa ostane samo eno dekle.
+
+Isti problem ima lahko samo eno rešitev, èe je podana samo ena preferenca.
+Èe pa se preference ljudi spremenijo, pa algoritem privede do druge rešitve.
+
+Èe so polja preferenc napolnjena, so na koncu iteracij vsi poroèeni/zaroèeni, ker vsak moški zaprosi neko
+žensko ob enem trenutku.
+
+Prav tako so stabilne poroke/zaroke, ker èe katera poroka ni stabilna, to pomeni da ženska fanta ni
+zavrnila za njej boljšo ponudbo.

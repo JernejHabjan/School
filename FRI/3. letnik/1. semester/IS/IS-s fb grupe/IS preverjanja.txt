@@ -1,0 +1,42 @@
+1. PREVERJANJE:
+
+Kaj je podatek? (abc)
+	- Podatek je predstavitev informacije na formaliziran naèin, ki je primeren za komunikacijo, interpretacijo ali obdelavo (s strani èloveka ali stroja)
+Kaj je informacija? (abc)
+	- Informacija je novo spoznanje, ki ga èlovek doda svojemu poznavanju sveta. Odnos med informacijo, podatki, èasom in interpretatorjevim znanjem predstavlja informacijska enaèba
+Zapišite informacijsko enaèbo. (odprto)
+	- I = i(D, S, t)
+Kakšna je razlika med enostavnim in zapletenim sistemom? (abc)
+	- Enostaven sistem ima samo vhod in izhod .. Zapleten pa ima še krmilna navodila, krmilni podsistem, informacije o delovanju
+Med naštetimi IS obkrožite tiste, ki se tipièno uporabljajo le za podporo operativnim nalogam, ne pa tudi za podporo vodenju. (obkroži)
+Med naštetimi IS obkrožite tiste, ki se tipièno uporabljajo le za podporo vodenju nalogam, ne pa tudi za podporo operativnim nalogam. (obkroži)
+Med naštetimi nalogami obkrožite tiste, ki so tipièno v domeni raèunovodskega funkcionalnega podsistema. (obkroži)
+Med naštetimi nalogami obkrožite tiste, ki so tipièno v domeni finanènega funkcionalnega podsistema. (obkroži)
+Katera od alinej predstavlja najveèji strošek pri vpeljavi sistema ERP? (abc)
+Kaj pomeni kratica CIM, ki smo jo sreèali v sklopu proizvodnih informacijskih podsistemov? (abc)
+
+2. PREVERJANJE:
+
+Katere vrste CRM smo obravnavali v okviru predavanj? (abc - veè pravilnih)
+Kateri od spodaj naštetih stroškov vpeljave ERP so tipièno najveèji? (abc - veè pravilnih)
+Katera od spodnjih razvrstitev je pravilna za tradicionalni informacijski in poslovni sistem? (abc)
+Kateri od naštetih gradnikov ni del sheme WCA? (abc - veè pravilnih)
+Kateri so trije osnovni procesi, ki se odvijajo v vsakem poslovnem sistemu in tvorijo odprto sinergijsko celoto? (odprto – tri vnosna polja za tri besede)
+Kaj je eEPC? (abc)
+Obkrožite odgovor v katerem so razliène stopnje integracije poslovnih procesov pravilno razvršèene od najmanjše do najveèje! (abc)
+Uporaba doloèene informacije je smiselna le èe velja: (abc)
+Katere od spodaj naštetih lastnosti veljajo za podatkovna skladišèa? (abc - veè pravilnih)
+Obkrožite vse pravilne trditve v zvezi s samodejnim merjenjem uèinkovitosti na podlagi analize trenda: (abc - veè pravilnih)
+
+3. PREVERJANJE:
+
+Izberite funkcije, ki spadajo pod elektronski arhiv in tipièno niso del obièajnega dokumentacijskega sistema! (abc - veè pravilnih)
+Izberite trditve, ki veljajo za simetrièno kriptografijo! (abc - veè pravilnih)
+Slabosti simetriène in asimetriène kriptografije rešujemo s kombinacijo obeh. Spodaj so našteti koraki po katerih poteka kriptiranje s kombinacijo obeh pristopov. Pravilno jih razvrstite!
+Izberite dva kljuèna elementa, ki ju vsebuje digitalno potrdilo (brez njiju potrdilo ni smiselno)! (abc - veè pravilnih)
+Poimensko naštejte nivoje tri-nivojske arhitekture! (odprto – tri vnosna polja za tri besede)
+Izberite napaène trditve v povezavi s SOA! (abc - veè pravilnih)
+Zapišite kaj pomeni kratica UDDI!
+Izberite faze življenjskega cikla SOA kot ste jih spoznali na predavanjih! (abc - veè pravilnih)
+Izberite kljuèni razlog, da uporaba SOA v stabilnem okolju tipièno ni primerna? (abc)
+Izberite pravilne trditve v zvezi s SOAP! (abc - veè pravilnih)

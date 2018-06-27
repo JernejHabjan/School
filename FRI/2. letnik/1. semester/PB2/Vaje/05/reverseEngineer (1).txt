@@ -1,0 +1,82 @@
+REVERSE ENGINEERING-preslikava logičnega v konceptualnega
+
+file-reverseEngineer-database-keraBazaScrypt-ok
+
+dokumentacija:
+	reportwizard!!!!!!!! v menu vrstici
+	
+	reverse engineer za izpit -> iz logicnega v konceptualnega !!!!!!!!
+	
+##########
+Logicno nacrtovanje
+	omejitev entitet in povezav -> DIFFERENCIALNA INTEGRITETA
+		-ko zbrišemo 1000 Ljubljana ->
+			-CASCADE on delete ->brišeš še vse ki živijo v lj
+			-RESTRICT ->nemoreš brisat če maš kšn tuj ključ
+			-NO ACTION
+			-Nadomestimo z NULL ali z predifinirano
+		
+	
+-kako se DIFFERENCIALNA INTEGRITETA določi na FIZIČNEM NIVOJU
+	-CONSTRAINT->kjer je tuji ključ
+		-vrednosti tujega ključa so lahko samo tiste ki so v drugi tabeli primarni
+		
+		POWER DESIGNER
+			-povezava-integrity -> določiš cascade.....
+			
+	-TRIGGER
+	
+############
+FIZIČNI NOVO
+	ORACLE 
+		user: PBMOJASIFRA
+		pass: pb
+		
+		SQLWorkbench
+			-ZIP NA UCILNICI -pod fizicnim nacrtovanjem
+
+			server:
+			todo.fri.uni-lj.si
+			port:1521
+			instanca: vaje
+			shema: PBMOJASIFRA
+			
+	KORAKI
+		-preslikovanje
+		-izračunani atributi
+		-dat.organizacija
+		-indeksi
+		-oceni velikost databasa
+		-view
+		-varnostni mech
+		
+da nimajo po geneartu atrib dvojne narokeovaje-> database-edit -scrypt-sql->format->druga->no!!		
+generate scrypt->database->database-generation ->filename...
+
+poženemo scrypt:
+	v workbenchu
+		manage drivers->oracle->določš jdbc driver
+		driver: oracle:jdbc
+		url = naslov, port=, service
+		username 
+		password
+		obklukaj autocommit
+		
+#Ipeljani atribut:
+	ko ga narediš morš še njegove value ohranjat- trigger
+	primer:
+		cena_SKUPAJ = CENA_NA_ENOTO*KOLICINA*(1-POPUST)
+		
+		kopija tabele:
+			create table neki as select ....
+			
+			
+#ANALIZA TRANSAKCIJ:
+	pravilo 80/20 -analiziraj tistih 20% transakcij ki se 80% dostopajo do diska
+	matrika "transakcija-relacija"
+			T1		t2		t3		t4
+		r1	x[freq]
+		r2
+		r3			x[freq]
+		SUM
+			

@@ -1,0 +1,7 @@
+http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/CIADCDHH.html
+
+
+
+INTERPRETACIJA CARRYJA … èe odštejemo 2 neg števili npr -127 in -64… prišlo bi do “carryja” ker bi šli biti èez.. ampak to arm obravnava kot (-127- (-64) ) in ne pride do overflowa
+
+For a subtraction, including the comparison instruction CMP, C is set to 0 if the subtraction produced a borrow (that is, an unsigned underflow), and to 1 otherwise.

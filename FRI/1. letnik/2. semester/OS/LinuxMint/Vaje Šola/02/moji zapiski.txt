@@ -1,0 +1,39 @@
+mkdir
+	mkdir [-p] ->nardi folderje še do tega patha
+rmdir    ->remove directory
+cp
+mv
+rm	  ->remove
+touch	  ->nastavitev datuma
+	-a ... nastavitev datuma in casa dostopa; 
+	-m ... nastavitev datuma in casa zadnje spremembe; in 
+	-d datum ... nastavitev na podani datum.
+file	  -> determine file type	
+stat	  ->izpis inf o podani datoteki
+	-L ... sledenje povezavam; 
+	-c format ... nastavitev formata izpisa; in 
+	-t ... izpis v zgošceni obliki.
+ln	  ->ustvarjanje simbolicnih in trdih povezav primer: ln [-s] cilj povezava
+readlink  ->ugotavljanje kam kaže simbolicna povezava
+basename  ->strip directory and suffix(pripona ker tega neveš faking tard) from filenames
+dirname   ->strip non-directory suffix from file name
+
+ls        ->stikalo: 
+	ls -l	->daljši izpis z vec info
+	ls -h  ->lepši izpis datotek
+	-I Odstranimo dolocen vzorec datotek iz izpisa, npr. –I*.txt ne bo izpisal datotek s koncnico txt
+	-p Ime imenika se zakljuci z znakom / , da hitreje locimo datoteke od imenikov
+	-R Rekurziven izpis. Izpišejo se tudi vsebine imenikov.
+	-S Uredi po velikosti datotek
+	-t Uredi po casu spremembe datoteke
+	-1 Izpis vsake datoteke v svoji vrstici
+	-g Izpis brez lastnika pri uporabi stikala -l
+	-G Izpis brez skupine pri uporabi stikala -l
+
+Absolutna in relativna pot:
+Absolutna pot se pricne s poševnico, prvi imenik, ki ga je potrebno obiskati, pa je korenski imenik datotecnega sistema ‘/’ (ang. root ).
+V nasprotnem primeru, t.j. ko se pot ne pricne s poševnico, gre za relativno pot, z zacetkom obiskovanja v trenutnem delovnem imeniku.
+
+trde in simbolicne povezave:
+Symbolic: points to another file by name. -file doesnt have to exist. if pointer deleted -file doesnt get deleted
+Hard: points to the file by inode number. -file must exist

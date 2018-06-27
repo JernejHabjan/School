@@ -1,0 +1,100 @@
+Status zadnjega v ospredju (angl. foreground) izvedenega ukaza se nahaja v vgrajeni spremenljivki $?. Primer: ls; echo $?
+Ce želimo izvajanje skripte eksplicitno koncati, to lahko naredimo z ukazom exit->exit [status]
+____
+for i in 1 2 3 4 5 6 7 8 9 10; do
+  echo $i
+done
+___
+echo ${ime:-veronika}: ce ime ni definirano, potem izpiše veronika (spremenljivka ime se ne nastavi)
+echo ${ime:=veronika}: ce spremnljivka ime ni definirana, potem jo nastavi in izpiše
+___
+${#stringZ} # dolžina niza: 15
+____
+echo ${stringZ:7:3} # izpiše od 7 crke naprej pa 3 crke... to se pravi 23A
+__
+Opomba: spremenljivka $* doloca seznam vseh vhodnih argumentov ukaza
+echo ${*:2} # izpiše vse vhodne argumente ukaza od 2. naprej
+echo ${*:2:2} # izpiše 2 argumenta od 2. Naprej
+___
+stringZ=abcABC123ABCabc
+echo ${stringZ: -4} # Cabc
+
+__________________
+PREBER SI NAPREJ DOL V SKRIPTI
+odstranitev podniza
+
+# Odstrani najkrajše ujemanje podniza $substring s sprednje strani iz niza $string. 
+${string#substring}
+
+# Odstrani najdaljše ujemanje podniza $substring s sprednje strani iz niza $string. 
+${string##substring}
+
+# Odstrani najkrajše ujemanje podniza $substring z zadnje strani iz niza $string. 
+${string%substring}
+
+# Odstrani najdaljše ujemanje podniza $substring z zadnje strani iz niza $string.
+${string%%substring}
+
+echo ${stringZ#a*C} # 123ABCabc
+echo ${stringZ##a*C} # abc
+echo ${stringZ%b*c} # abcABC123ABCa
+echo ${stringZ%%b*c} # a
+__
+zamenjava podniza
+
+${string/substring/replacement} # zamenja prvo ujemanje
+${string//substring/replacement} # zamenja vsa ujemanja
+
+stringZ=abcABC123ABCabc
+echo ${stringZ/abc/xyz} # xyzABC123ABCabc
+
+# Zamenja prvo ujemanje 'abc' z 'xyz'.
+
+echo ${stringZ//abc/xyz} # xyzABC123ABCxyz
+
+
+${string/#substring/replacement} # zamenja zacetek niza string
+${string/%substring/replacement} # zamenja konec niza string
+
+stringZ=abcABC123ABCabc
+echo ${stringZ/#abc/XYZ} # XYZABC123ABCabc
+
+# Ce 'abc' ustreza zacetku niza, ga zamenjaj z 'XYZ'.
+
+echo ${stringZ/%abc/XYZ} # abcABC123ABCXYZ
+
+# Ce 'abc' ustreza koncu niza, ga zamenjaj z 'XYZ'.
+
+__________________
+V novejših inacicah BASH-a lahko pogoje evalviramo z [[ ]].
+________
+negacija:
+! test a = b; echo $?             # status bo 0
+_________
+case:
+
+#!/bin/bash
+x=5 # prenastavimo x na 5
+# preveri vrednost x:
+case $x in
+0) echo "Vrednost x je 0."
+;;
+5) echo "Vrednost x je 5."
+;;
+9) echo "Vrednost x je 9."
+;;
+*) echo "Nepoznana vrednost."
+esac
+
+SE PREVEDE V:
+#!/bin/bash
+x=5 # prenstavimo x na 5
+if [ "$x" -eq 0 ]; then
+echo "Vrednost x je 0."
+elif [ "$x" -eq 5 ]; then
+echo "Vrednost x je 5."
+elif [ "$x" -eq 9 ]; then
+echo "Vrednost x je 9."
+else
+echo "Nepoznana vrednost."
+fi

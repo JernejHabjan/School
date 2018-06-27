@@ -1,0 +1,195 @@
+Ukazi, ki jih bomo uporabljali:
+
+whoami, users, who, w, last, lastb
+finger, groups,id
+sg, su, sudo
+useradd, userdel, usermod, adduser
+groupadd , groupdel, groupmod, addgroup
+mkpasswd, passwd, gpasswd
+grep, cut
+Pred vajami si s pomocjo pomoci v ukazni lupini poglejte kaj je glavna naloga posameznih ukazov (stikala posameznih ukazov ni potrebno podrobneje poznati, saj jih bomo bolj podrobno proucili, ce jih bomo potrebovali).
+
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavje 3 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+
+Prijave in uporabniki
+
+Pri izvajanju spodnjih ukazov se veckrat prijavite v sistem (v virtualnih konzolah in v psevdo konzolah).
+
+Kako preverimo kateri uporabniki so trenutno prijavljeni v sistem?
+
+whoami ... izpiše uporabniško ime s katerim smo trenutno prijavljeni
+users ... seznam vseh uporabnikov, ki so trenutno prijavljeni v sistem
+who [-Hlmru] ... informacije o trenutno prijavljenih uporabnikih
+who am i
+w ... informacije o trenutno prijavljenih uporabnikih + kateri proces poganjajo v ospredju
+
+Kako si pogledamo zgodovino prijav v sistem! Katere podatke lahko vidimo?
+prijave se beležijo v datoteki: /var/log/wtmp in /var/log/btmp
+
+Njuno vsebino lahko lepše pregledujemo s pomocjo ukazov:
+last [-n num] [-F] ... izpis uspešnih prijav 
+lastb [-n num] [-F] ... izpis neuspešnih prijav
+
+Ugotovimo lahko uporabniško ime, terminal, casovno od kdaj do kdaj oziroma koliko casa je bil uporabnik prijavljen.
+
+Katere podatke lahko pridobimo o nekem uporabniku? Katero prijavno lupino uporablja dani uporabnik? Katerim skupinam pripada dani uporabnik?
+
+finger ... poizvedba po uporabniku lokalnega ali oddaljenega sistema
+
+Izvemo prijavno lupino, ki je navedena v razdelku Shell, izvemo domaco mapo uporabnika, uporabniško ime, polno ime ter koliko casa je prijavljen na dolocenem terminalu; ce ima kaj novih sporocil ter kakšen plan ima (.plan).
+
+groups [uporabnik] ... katerim skupinam pripada dani uporabnik
+id [uporabnik] ... izpiše identifikacijske številke skupin in uporabnika
+
+sg [-l] skupina [-c ukaz] ... zagon pod drugo skupino
+primer uporabe: 
+poženemo ukaz id in pogledamo pod gid=, 
+poženemo sg adm -c id in pogledamo pod gid=
+
+ 
+
+ukaza su in sudo
+
+su [-c ukaz] [-l] [uporabnik] ... zamenja uporabnika s katerim smo trenutno prijavljeni z novim uporabnikom.
+sudo [-u uporabnik] ukaz ... izvrševanje ukazov pod drugimi uporabniki
+
+Ukaz sudo je zelo pogosto uporabljen ukaz v distribuciji Ubunt-u, ker je geslo uporabnika root, iz varnostnih razlogov, zaklenjeno (/). Ce hocemo izvršiti ukaz, katerega pravico izvrševanja ima samo root potem moramo pred ukazom klicati ukaz sudo (gksudo za graficne programe ) . Za geslo pa vnesemo svoje geslo, ki ga sistem hrani za 15 minut.
+
+Administracija
+
+V kateri datoteki so shranjeni uporabniški racuni? Kako je z njihovimi gesli? Kje so shranjene uporabniške skupine? Izpišite vsebino ustreznih datotek? Kakšen format imajo?
+
+Uporabniški racuni so shranjeni v datoteki: /etc/passwd
+
+uporabniško ime : Uporablja se za dostop v sistem. Velikost je od 1 do 32 znakov.
+geslo : x oznacuje, da se kriptirano geslo nahaja v datoteki /etc/shadow
+ID uporabika (UID) : Vsak uporabnik ima svojo ID številko (UID). UID 0 (nic) je rezervirano za uporabnika root in števila UID 1-99 so rezervirana za druga predefinirane uporabnike. Nadaljna števila UID 100-999 so rezervirana za sistemske uporabnike in skupine.
+ID skupine(GID) : ID primarne skupine (shranjene v datoteki /etc/group)
+informacije ID uporabnika : Polje za komentarje. Namenjeno je dodatnim informacijam uporabnika: uporabnikovo ime, telefon, itd. Uporablja se pri ukazu finger.
+domaci imenik : Absolutna pot do domacega imenika uporabnika, ki je tudi prevzeti ko se uporabnik prijavi v sistem. Ce ni definiran se doloci imenik /.
+ukazna lupina : Absolutna pot ukaza ali lupine. Obicajno je to pot do lupine (/bin/bash), ampak ni obvezno, da je to lupina.
+gesla so shranjena v /etc/shadow
+skupine pa so shranjene v /etc/group
+
+Posamezne datoteke izpišemo z ukazom cat. Samo doloceno vrstico iz datoteke /etc/passwd pa s pomocjo ukaza grep: 
+grep borutb /etc/passwd ali posamezno polje z ukazom cut: cut –d: -f1 /etc/passwd
+
+Dodajanje, brisanje spreminjanje uporabnika, skupine
+
+Dodajanje novega uporabnika
+
+useradd [stikala] uporabnik
+
+Na primer sudo useradd janezn
+
+Ukazu useradd moramo kot argument podati uporabniško ime. Brez dodatnih argumentov ne ustvari nicesar vec kot uporabnika - to se pravi, ne ustvari domacega imenika v /home in gesla.
+
+Primer ukaza useradd z dodatnimi argumenti:
+
+sudo useradd -c "Janez Novak" –b /home1 –d /home1/novak –m –s /bin/bash –G admin –u 2000 janezn
+
+-m ustvari domaci imenik /home/janezn
+-c komentar ... dodamo informacije, ki jih lahko izpišemo z ukazom finger
+-d domdir ... nastavimo domaci imenik (privzeto: /home/janezn)
+-g gid ... nastavitev osnovne uporabnikove skupine
+-G skupine ... nastavitev dodatnih uporabnikovih skupin
+-p kriptiranogeslo ... nastavitev uporabnikovega gesla
+-s ... nastavitev uporabnikove prijavne lupine
+-u ... nastavitev uporabnikove identifikacijske številke
+
+Še vedno pa uporabnik nima definiranega gesla. To lahko vidimo v datoteki: /etc/shadow
+
+:!: pomeni, da uporabnik nima gesla in posledicno se ne moremo se prijaviti v sistem
+
+:*: pomeni, da je uporabniški racun zaklenjen
+
+:!!: geslo je poteklo
+
+Geslo lahko definiramo že pri samem ustvarjanju uporabnika s pomocjo stikala –p kriptiranogeslo. Kriptirano geslo lahko dobimo s pomocjo ukaza mkpasswd:
+
+mkpasswd geslo
+kx.hxDSkEJLl2
+
+kar dobimo na izhodu vpišemo k stikalu –p:
+
+sudo useradd –p kx.hxDSkEJLl2 metkan
+
+ali vse skupaj izvršimo v eni vrstici:
+
+sudo useradd –p $(mkpasswd geslo) metkan
+
+Ker lahko kdorkoli prisluškuje procesom in s tem vidi geslo je bolje, da geslo definiramo kasneje z ukazom passwd:
+
+sudo passwd janezn
+
+ 
+
+Izpis ali shramba privzetih vrednosti
+
+Izpis privzetih vrednosti za ustvarjanje uporabnika dobimo z:
+
+useradd --defaults ali -D
+
+Privzete vrednosti so shranjene v datoteki /etc/default/useradd. Spremenimo pa jih lahko tako da poleg stikala –D navedemo še dodatna stikala, ki smo jih spoznali že pri samem ukazu useradd.
+
+Odstranjevanje uporabnika
+
+userdel [-r] uporabnik
+
+-r ... odstrani tudi domaci imenik uporabnika
+
+Spreminjanje uporabnika
+
+usermod stikala uporabnik
+
+usermod –c "Metka Novak" –d /home1/metkan –m metkan
+
+-m: premakne vsebino v nov imenik definiran s stikalom -d
+
+Ubuntu - Dodajanje novega uporabnika
+
+Ukaz useradd je nizkonivojski ukaz zato se v distribuciji Debian in posledicno tudi Ubuntu priporoca raje uporaba ukaza adduser, ki je uporabniku prijaznejši.
+
+sudo adduser
+
+Ukaz nas interaktivno sprašuje po dodatnih informacijah in geslu. Privzete nastavitve so shranjene v datoteki: /etc/adduser.conf
+
+ 
+
+Ustvarjanje skupine
+
+groupadd stikala skupina
+
+sudo groupadd predmet_OS
+
+
+Odstranitev skupine
+
+groupdel skupina
+
+sudo groupdel predmet_OS
+
+
+Spreminjanje skupine
+
+groupmod stikala skupina
+
+primer: ustvarimo novo skupino in vanjo dodamo novega uporabnika.
+
+sudo groupadd osvaje
+sudo usermod –a -G osvaje student
+
+ali za novega uporabnika:
+
+sudo useradd -G osvaje student
+
+
+Ubuntu - Ustvarjanje skupine
+
+Enako kot za ukaz useradd se tudi pri skupinah priporoca raje uporabo ukaza addgroup:
+
+sudo addgroup osvaje
+sudo adduser student osvaje
+
+Zadnja sprememba: ponedeljek, 9. marec 2015, 22:46

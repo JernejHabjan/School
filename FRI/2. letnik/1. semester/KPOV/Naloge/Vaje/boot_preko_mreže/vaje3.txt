@@ -1,0 +1,45 @@
+172.16.0.0/12
+192.168.0.0/16
+10.0.0.0/8
+
+169.254.0.0/16 -LINK LOCAL naslovi -èe dhcp server pade, ga izžreba en ip - nardi arp poizvedbo in èe že ma kšn - izžreba novga
+
+
+1. vzpostavi omrežje s sosedom na podroèju 172.16.0.0/12
+2. na googlovem dns preveri ip lurkmore.to in bwin.com
+3. ugotovi ali sta naslova ista èe uporabljaš dns pri nas in v rusiji
+
+
+
+/etc/interfaces -tle not ne pisat ker jih network manager povoz
+	tle not daš vpisat kko mreža dela
+	
+nardiš ifdown ifup in dela
+
+prek vmesnika dodajanje konfiguracij za mreže:
+	network-manager -nastavla omrežne vmesnike
+	
+	instaliraj network-manager
+	istaliraj network-manager-gnome
+	
+	pogovarjamo se z nmapplet - grafièni program
+	poženeš nmapplet in skunfigurirat mrežo
+	
+	port forward
+	
+	
+	èe 2 raè
+		usak na nat in usak na intnet
+		
+Greš na network manager - na gui…
+	SPREMEN IP NA INTERNAL NETWORKU
+Pol pogledaš pr ifconfig ker mac adress ma ker utiènik (primerjaš z vbox daj taprav)
+na intnetu spremeniš ip (daš na fiksnega) pr tapravmu vtièniku
+			
+			
+za 2. Nalogo:
+	Greš v:
+	sudo nano etc/resolv.conf
+	spremeniš na googlov server… ki je ponavadi 8.8.8.8 ali 8.8.4.4
+	pol pa nslookup www.example.com
+

@@ -1,0 +1,17 @@
+1. Kot uporabnik miha ustvarite datoteko ~/vaje/test.txt. Kakšne pravice nad to datoteko imajo posamezni uporabniki? Preizkusite spreminjati vsebino datoteke kot drug uporabnik.
+
+2. Vsem uporabnikom omogočite pisanje v datoteko test.txt.
+
+3. Ostalim uporabnikom (razen sebi in skupini) vzemite bralne in pisalne pravice nad datoteko test.txt.
+
+4. Omogočite, da bo uporabnik student (brez administratorskih pravic) poleg vas (uporabnik miha) lahko pisal in bral vašo datoteko, ostali uporabniki v splošnem pa ne.
+
+5. Vsem uporabnikom odvzemite vse pravice nad datoteko ter prenesite lastništvo in skupino datoteke na uporabnika administrator. Ali lahko kot uporabnik miha pogledate in spreminjate vsebino datoteke? Ali jo lahko zbrišete? Zakaj?
+
+6. Kako bi poskrbeli, da lahko v imenik vaje vsi uporabniki shranjujejo in brišejo svoje datoteke, ne morejo pa brisati datotek ostalih uporabnikov?
+
+7.	Napišite skripto, ki preveri, ali smo skripto pognali kot skrbnik sistema "super uporabnik" (angl. superuser)! Če nismo, izpiše opozorilo in se zaključi. Če smo, požene ukaz, ki izpiše zadnjih 5 uspešnih in 5 neuspešnih prijav v sistem.
+
+8.	V spremenljivko okolijsko spremenljivko PATH dodajte imenik, kjer se trenutno nahajate (ne trenutni imenik v splošnem) in podimenik vaje v vašem domačem imeniku!
+
+9.	Napišite skripto, ki preveri, ali uporabnik, ki ga podamo kot argument skripti, obstaja (na našem sistemu)? Če uporabnik obstaja, preverite, ali obstaja njegov domači imenik! Če domači imenik obstaja, izpišite, če imate pravico za dostop do posameznih datotek v tem imeniku! Če uporabnik ne poda argumenta, ga opozorimo, da mora kot prvi argument podati podati uporabniško ime.

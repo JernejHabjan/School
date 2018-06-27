@@ -1,0 +1,32 @@
+10.0.0.0/24
+10.0.1.0/24
+192.168.0.0/24 
+172.16.6.0/24 
+
+
+2001:db8:e:0::/64
+2001:db8:ef:0::/64
+2001:db8:1:f::/64 -pc1
+2001:db8:6:ef::/64 -pc2
+
+
+
+sudo route add default gw (ip)
+
+sudo ip route add 0/0 via 192.168.1.1
+
+ZA PC
+sudo ifconfig eth(številka) _ip_
+sudo ifconfig netmask 255.255.255.0
+
+za router pa brez sudo
+ip route add 192.168.0.1 via 
+
+ip -6 addr add
+
+ip -6 addr add 2001:db8:e:0::1/64 dev eth1
+
+
+sudo ip -6 route add ::/0 via fe80::1 dev eth0
+
+ping6

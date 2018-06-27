@@ -1,0 +1,6 @@
+img {z-index:-1} //POSTAVITEV SLIKE ZA TEKST
+
+senčenje
+h1{text-shadow:4px 4px 4px #FF0000;}
+zaokrožen border:
+div{border-radius:25px;}

@@ -1,0 +1,3 @@
+﻿Spoznavanje power designerja:
+NE ZAHTEVANJE UNIKATNIH IMEN: tools, model options - data item -odklukaš obe
+DEPENDENT-šibek entitetni tip

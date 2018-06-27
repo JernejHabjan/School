@@ -1,0 +1,161 @@
+#!/bin/bash
+
+readFile(){
+	#LANG=sl_SI.UTF-8 ->uncomment da upošteva S Š namesto Š S
+	stBesed=0
+	datoteka=$1
+	while read line; do
+		for word in $line; do
+			temp=""
+			for((j=0; j< ${#word}; j++)); do #crko za crko
+				substr=${word:j:1}
+				substr="${substr,,}" #v lowercase  -pogledu na netu... change na tr optional 
+				if [[ $substr != "." && $substr != "," && $substr != ":" && $substr != ";" && 					      $substr != "«" && $substr != "»" && $substr != "!" && $substr != "?" && 				              $substr != "…" ]]; then #sfiltrira slabe znake 
+					temp+=$substr
+				fi
+			  done
+			seznam[stBesed]=$temp
+			(( stBesed++ ))
+		done
+	done < "$datoteka"
+	#DO TU je narjen array_______________________
+
+	#preštejemo št ponovitev s pomočjo sorted__________________________"9 je"
+	sorted=($(printf '%s\n' "${seznam[@]}"|sort|uniq)) #dunno but works
+	k=0
+	for word in ${sorted[*]}; do 
+		count=0
+		for word1 in ${seznam[*]}; do
+		    if [[ $word == $word1 ]]; then
+			(( count++ ))
+		    fi
+		done 
+		sezPonovitev[k]="$count ${#word} $word" # v sez ponovitev da št ponovitev in besedo
+		(( k++ ))
+	done
+	#DO TU preštete ponovitve______________________
+	
+
+	# IZPIS PROCENTA PONOVITVE________________________ "9 je 7.89%"
+	LC_NUMERIC=C #da mi dela s piko, ker drugače je 2,343
+	for((i=0; i<${#sezPonovitev[@]}; i++)); do
+		Ponovitev=$(echo "${sezPonovitev[i]%% *}")
+		ponovitevProcent=$(echo "$Ponovitev * 100/$stBesed" | bc -l)
+		ponovitevProcent=${ponovitevProcent::-18}  #odstrani zadnjih 18 ker printf %.2f ni delal -.-
+		#do tu prešteje št ponovitev_____
+		array2[i]="${sezPonovitev[i]} $ponovitevProcent%" #nafukaš izpis v nov seznam 	
+		
+	 done
+	#_______________________________________________
+
+	#sort po vsem_________
+	IFS=$'\n'
+	sortedarray2=($(sort -k1,1nr -k2,2nr -k3,3<<<"${array2[*]}")) #DELAAAAAAAA !!! ;DDDDDDDDD
+	unset IFS
+	#_____________________		
+	
+	
+}
+
+noFlagsRead(){
+  for((i=0; i<${#seznam[@]}; i++)); do
+	echo ${seznam[i]}
+  done
+
+}
+
+
+flag(){
+  case "$1" in 
+	-l)
+		
+		#prekopiraš v nov array	______	
+		for((i=0; i<${#sortedarray2[@]}; i++)); do
+			arrayL[i]=${sortedarray2[i]}
+
+		  done
+		#_____________________________
+		sortedarray2=() #unset array
+		novistavki=0 # da daš v sortedarray2
+		for((i=0; i<${#arrayL[@]}; i++)); do
+			#echo $(echo ${arrayL[i]} | cut -d " " -f2) #ENCAPSULATE ECHO!!!!!!!!!
+			if [[ $(echo ${arrayL[i]} | cut -d " " -f2) -eq $2 ]]; then #$2 je dolzina
+				sortedarray2[novistavki]+=${arrayL[i]}
+				(( novistavki++ ))
+			fi
+		done
+		
+
+		
+		
+		#prvo skopiraš use v začasn array pa unga unsetaš
+		#unset $array
+		#pol pa deklariraš array Z ISTMU IMENAM KT SI GA DUBU ->sortedarray2
+
+        ;;
+        -n) 
+		
+	
+
+		for((i=0; i<${#sortedarray2[@]}; i++)); do
+			
+			arrayN[i]=${sortedarray2[i]}
+		done
+		sortedarray2=()
+		novistavki2=0
+		for((i=0; i<${#arrayN[@]}; i++)); do
+
+			
+			if [[ $(echo ${arrayN[i]} | cut -d " " -f1) -ge $2 ]]; then
+				sortedarray2[novistavki2]+=${arrayN[i]}
+				(( novistavki2++ ))
+			fi
+		done
+        ;;
+        *)
+	    echo "Napaka: neznano stikalo $1.">&2; exit 1
+
+        ;;
+  esac 
+}
+
+checkRead(){
+	for((i=0; i<${#1}; i++)); do	 #retarded- zka bi dav namest datoteke switch
+	   if [[ ${1:j:1} == "-" ]]; then
+		echo "Napaka: neznano stikalo $1.">&2; exit 1
+	   fi
+	done
+
+
+
+        if ! [ -r "$1" ]; then
+		echo "Napaka: datoteka $1 ne obstaja.">&2; exit 1
+        fi
+}
+
+
+finalIzpis(){
+	finalString=""
+	for((i=0; i<${#sortedarray2[@]}; i++)); do
+		neki=$(echo ${sortedarray2[i]} | cut -d " " -f-1,3-) # izpise brez dolzine besed
+		if [[ $i -gt $((${#sortedarray2[@]} - 2)) ]]; then
+		   finalString+="$neki"
+		else
+		   finalString+="$neki\n"
+		fi 
+	done
+	echo -e "$finalString"
+	exit 0
+
+
+}
+
+
+stArg=$#
+case "$stArg" in
+	0) echo "Kot argument skripti $(basename $0) morate podati ime vaše skripte."; exit 1;;
+	1)checkRead $1; readFile $1; finalIzpis;;
+	3)checkRead $3; readFile $3; flag $1 $2 $3; finalIzpis;;
+	5)checkRead $5; readFile $5; flag $1 $2 $5; flag $3 $4 $5; finalIzpis;;
+	*)echo "Too many args.";;
+esac

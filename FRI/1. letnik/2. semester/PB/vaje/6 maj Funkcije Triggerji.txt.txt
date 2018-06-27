@@ -1,0 +1,130 @@
+#Rešitve DDL SQL 2.teden
+#Avtor: Matej Piculin
+
+#Napišite funkcijo Prebivalstvo(imeAlianse), ki vam vrne število 
+#prebivalcev v aliansi.
+
+	DELIMITER $$
+	DROP FUNCTION IF EXISTS Prebivalstvo $$
+	CREATE FUNCTION Prebivalstvo(imeAlianse VARCHAR(100)) RETURNS INTEGER
+	BEGIN
+	RETURN (SELECT SUM(population)
+	FROM aliansa a JOIN igralec i USING(aid) JOIN naselje n USING(pid)
+	WHERE a.alliance = imeAlianse);
+	END $$
+	DELIMITER ;
+
+	SELECT Prebivalstvo("TG_TS");
+
+#Napišite proceduro Brisi(pop), ki bo izbrisala vse igralce s 
+#popupacjo pop ali manj, ter nato še vse alianse, 
+#ce le ta nima vec igralcev.
+
+	DELIMITER //
+	DROP PROCEDURE IF EXISTS Brisi //
+	CREATE PROCEDURE Brisi(IN pop INTEGER)
+	BEGIN
+	DROP TABLE IF EXISTS izbrani;     #pazi drop table if exists
+	CREATE TABLE izbrani AS    #mormo kreirat tabelo da jo pol lah 
+						#zbrišemo ker nmormo direkt v delete stavek pisat
+		SELECT i.pid
+		FROM igralec i JOIN naselje n USING(pid)
+		GROUP BY i.pid
+		HAVING SUM(population) <= pop;
+		#prvo mormo zbrisat iz naselij ker naselje ne mora obstajati brez igralca
+	DELETE FROM naselje WHERE pid IN (SELECT pid FROM izbrani) AND id > 0;
+	DELETE FROM igralec WHERE pid IN (SELECT pid FROM izbrani) AND pid > 0;
+	DELETE FROM aliansa WHERE aid NOT IN(SELECT aid FROM igralec) AND aid > 0;
+	DROP TABLE IF EXISTS izbrani;
+	END //
+	DELIMITER ;
+
+CALL Brisi(20);
+
+#Tabeli MladoletniJadralci dodajte še bazne prožilce 
+#za brisanje in spreminjanje vrstic iz tabele 
+#jadralci.
+
+	DELIMITER $
+	CREATE TRIGGER MladoletniJadralci_Delete
+	AFTER DELETE ON Jadralec
+	FOR EACH ROW
+	BEGIN
+	#IF OLD.starost < 18 THEN
+	DELETE FROM MladoletniJadralci WHERE OLD.jid = jid;
+	#NEW in OLD vrstica
+	#END IF;
+	END $
+	DELIMITER ;
+
+
+#Tabeli MladoletniJadralci dodajte še bazne prožilce 
+#za brisanje in spreminjanje vrstic iz tabele 
+#jadralci.
+
+	DELIMITER $
+	CREATE TRIGGER MladoletniJadralci_Update
+	AFTER UPDATE ON Jadralec
+	FOR EACH ROW
+	BEGIN
+	UPDATE MladoletniJadralec SET 
+							jid = NEW.jid AND
+							starost = NEW.starost AND
+							ime = NEW.ime AND
+							rating = NEW.rating
+	WHERE jid = OLD.jid; #pazi to vrstico
+	IF NEW.starost >= 18 THEN #BRIŠEMO PO UPDATU
+		DELETE FROM MladoletniJadralci WHERE jid = NEW.jid;
+	END IF;
+	IF NEW.starost < 18 AND OLD.starost >= 18 THEN #ce se pomladi -> napacen vnost
+		INSERT INTO MladoletniJadralci VALUES(NEW.jid, 
+						NEW.ime, NEW.rating, NEW.starost); #pazi new! pa pazi vrstni red
+	END IF;
+	END $
+DELIMITER ;
+
+#Napišite proceduro Zdruzi(aliansa1, aliansa2, novaAliansa), 
+#ki združi igralce iz alians aliansa1 in aliansa2 in 
+#ustvari novo alianso novaAliansa. Originalni aliansi je 
+#potrebno odstraniti.
+
+	DELIMITER $
+	DROP PROCEDURE IF EXISTS Zdruzi $
+	CREATE PROCEDURE Zdruzi(IN aliansa1 VARCHAR(100),
+							IN aliansa2 VARCHAR(100),
+							IN novaAliansa VARCHAR(100))
+	BEGIN #PREMAKNEMO IZ ENE ALIANSE V DRUGO PA PREIMENUJEMO(z update)
+	DECLARE aid1 INTEGER; 
+	DECLARE aid2 INTEGER;
+
+	SELECT aid INTO aid1			#iskanje sifer alians
+	FROM aliansa
+	WHERE alliance = aliansa1;
+
+	SELECT aid INTO aid2  #shranili sifre alians v aid1 in aid2
+	FROM aliansa
+	WHERE alliance = aliansa2;
+
+	UPDATE aliansa SET alliance = novaAliansa    #preimenovanje ene alianse
+					WHERE alliance = aliansa1 AND aid > 0;
+
+	UPDATE igralec SET aid = aid1 WHERE aid = aid2 AND pid > 0;  #premikanje igralcev
+	DELETE FROM aliansa WHERE aid = aid2; #brisanje alianse
+	END $
+	DELIMITER ;
+
+#Napišite funkcijo povStarost(cid), ki vrne 
+#povprecno starost jadralcev, ki so rezervirali coln s šifro cid.
+
+	DELIMITER $
+	CREATE FUNCTION povStarost(cid INTEGER) RETURNS FLOAT
+	BEGIN
+		DECLARE X FLOAT;
+		SELECT AVG(j.starost) INTO X
+		FROM jadralec j WHERE j.jid IN (SELECT r.jid
+										FROM rezervacija r
+										WHERE r.cid = cid);
+		RETURN X;
+	END $
+	DELIMITER ;
+

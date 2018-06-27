@@ -1,0 +1,6 @@
+
+Današnje predavanje je bilo sestavljeno iz dveh delov:
+
+Obdelali smo še agenta z modelom ter ciljno usmerjenega agenta ter vse premerjali v dveh scanarijih. Nato smo izpostavili preiskovalne algoritme. Seveda smo za namen debate o preiskovalnih algoritmih morali najprej predstaviti svet igre v ustreznih podatkovnih strukturah: mreže, grafi smernih toèk in navigacijska omrežja. Da smo prišli do ocenjevalne funkcije A* algoritma smo naredili hibrid iz algoritma najprej najboljši in Dijkstrinega algoritma. Izpostavili smo tudi potrebne spremembe v kodi našega projekta.
+
+V drugem delu smo imeli odprto predavanje iz industrije: VR industrija 2.0 v praksi, Gostili smo Nejca Lešeka, ki je CTO podjetja Frontseat Studio ter avtor igre ShowdownVR in knjige Showdown: Virtual reality carnage in direktno sodeluje s podjetji NVIDIA, OculusVR, Valve in Epic Games pri razvoju VR/AR tehnologij in vsebin. Po predavanju smo se poigrali z Oculus Rift + Touch, Gear VR, HTC Vive in Hololens. ...:prosojnice (pptx, z videom in referencami - vkljuèno s povezavo do knjige Showdown: Virtual reality carnage):...

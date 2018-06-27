@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="starostVoznikaGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="osnovnoZavarovanjeGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="kaskoGroup">
+    </Component>
+    <Menu class="javax.swing.JMenuBar" name="menuBar">
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="menu_datoteka">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Datoteka"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="datoteka_odpri">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+O"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="79"/>
+                <Property name="text" type="java.lang.String" value="Odpri"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="datoteka_odpriActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="datoteka_shrani">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+S"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="83"/>
+                <Property name="text" type="java.lang.String" value="Shrani"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="datoteka_shraniActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="datoteka_izhod">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Q"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="73"/>
+                <Property name="text" type="java.lang.String" value="Izhod"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="datoteka_izhodActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menu_popravi">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Orodja"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="popravi_item1">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+W"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="80"/>
+                <Property name="text" type="java.lang.String" value="Po&#x10d;isti polja"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popravi_item1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menu_pomoc">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pomo&#x10d;"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="pomoc_Avtor">
+              <Properties>
+                <Property name="mnemonic" type="int" value="65"/>
+                <Property name="text" type="java.lang.String" value="Avtor"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pomoc_AvtorActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Menu>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="toolBar" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="panel_main" max="32767" attributes="0"/>
+                  <Component id="scrollPane_StatusnaVrstica" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="toolBar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="panel_main" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="scrollPane_StatusnaVrstica" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="panel_main">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="tabbedPane" alignment="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="tabbedPane" alignment="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JTabbedPane" name="tabbedPane">
+          <Properties>
+            <Property name="tabPlacement" type="int" value="2"/>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="panel_zavarovanec">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Zavarovanec">
+                    <Property name="tabTitle" type="java.lang.String" value="Zavarovanec"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="zavarovanjec_label_title" min="-2" pref="192" max="-2" attributes="0"/>
+                                  <EmptySpace pref="463" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="zavarovanjec_label_ime" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="zavarovanjec_label_priimek" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="zavarovanjec_label_kraj" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="zavarovanjec_label_posSt" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="zavarovanjec_field_priimek" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="zavarovanjec_field_ime" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="zavarovanjec_field_kraj" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="zavarovanjec_field_posSt" alignment="1" min="-2" pref="185" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace pref="190" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="zavarovanjec_label_hSt" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="zavarovanjec_label_ulica" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="zavarovanjec_field_ulica" min="-2" pref="185" max="-2" attributes="0"/>
+                                              <Component id="zavarovanjec_field_hst" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="zavarovanjec_label_datRoj" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="zavarovanjec_label_izkusnje" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="zavarovanjec_rad_mlad" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="zavarovanjec_rad_izkusen" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="dat_rojstva_picker" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="286" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="zavarovanjec_label_title" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="zavarovanjec_label_priimek" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="zavarovanjec_field_priimek" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="zavarovanjec_label_ime" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="zavarovanjec_field_ime" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="zavarovanjec_label_posSt" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="zavarovanjec_label_kraj" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="zavarovanjec_label_ulica" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="zavarovanjec_field_ulica" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="zavarovanjec_label_hSt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="zavarovanjec_field_hst" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="zavarovanjec_field_posSt" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="zavarovanjec_label_datRoj" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="dat_rojstva_picker" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                          <Component id="zavarovanjec_field_kraj" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="zavarovanjec_label_izkusnje" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="zavarovanjec_rad_mlad" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="zavarovanjec_rad_izkusen" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="116" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_title">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="18" style="2"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Podatki o zavezancu"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_priimek">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Priimek"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_ime">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ime"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_hSt">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Hi&#x161;na &#x161;tevilka"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_ulica">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ulica"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_datRoj">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Datum rojstva"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_kraj">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kraj"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_posSt">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Po&#x161;tna &#x161;tevilka"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="zavarovanjec_field_priimek">
+                </Component>
+                <Component class="javax.swing.JTextField" name="zavarovanjec_field_ime">
+                </Component>
+                <Component class="javax.swing.JTextField" name="zavarovanjec_field_kraj">
+                </Component>
+                <Component class="javax.swing.JTextField" name="zavarovanjec_field_posSt">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zavarovanjec_field_posStActionPerformed"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="zavarovanjec_field_posStKeyTyped"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="zavarovanjec_field_ulica">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zavarovanjec_field_ulicaActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanjec_label_izkusnje">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Izku&#x161;nje"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="zavarovanjec_rad_mlad">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="starostVoznikaGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Mlad voznik"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="zavarovanjec_rad_izkusen">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="starostVoznikaGroup"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Izku&#x161;en voznik"/>
+                  </Properties>
+                </Component>
+                <Component class="org.jdesktop.swingx.JXDatePicker" name="dat_rojstva_picker">
+                </Component>
+                <Component class="javax.swing.JTextField" name="zavarovanjec_field_hst">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zavarovanjec_field_hstActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="panel_zavarovanje">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Zavarovanje">
+                    <Property name="tabTitle" type="java.lang.String" value="Zavarovanje"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="zavarovanje_label_title" min="-2" pref="207" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="580" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="zavarovanje_label_dodatno" min="-2" max="-2" attributes="0"/>
+                                      <Component id="zavarovanje_label__osnovno" min="-2" max="-2" attributes="0"/>
+                                      <Component id="zavarovanje_label_kasko" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="zavarovanje_check_stekla" min="-2" max="-2" attributes="0"/>
+                                              <Component id="zavarovanje_check_parkirisce" min="-2" max="-2" attributes="0"/>
+                                              <Component id="zavarovanje_check_potniki" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="zavarovanje_rad_AO" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="zavarovanje_rad_AOPLUS" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="zavarovanje_rad_polno" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="zavarovanje_rad_odbFran" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="zavarovanje_rad_brez" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="zavarovanje_check_kraja" min="-2" max="-2" attributes="0"/>
+                                      <Component id="zavarovanje_check_gume" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="zavarovanje_check_tretjaOs" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="zavarovanje_check_toca" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="265" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="zavarovanje_label_title" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="zavarovanje_label__osnovno" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="zavarovanje_rad_AO" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="zavarovanje_rad_AOPLUS" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="zavarovanje_label_kasko" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="zavarovanje_rad_polno" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="zavarovanje_rad_odbFran" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="zavarovanje_rad_brez" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="zavarovanje_label_dodatno" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="zavarovanje_check_stekla" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="zavarovanje_check_tretjaOs" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="zavarovanje_check_toca" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="zavarovanje_check_parkirisce" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="zavarovanje_check_gume" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="zavarovanje_check_kraja" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="zavarovanje_check_potniki" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="zavarovanje_label_title">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="18" style="2"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Podatki o zavarovanju"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanje_label__osnovno">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Osnovno zavarovanje"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="zavarovanje_rad_AO">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="osnovnoZavarovanjeGroup"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="AO"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zavarovanje_rad_AOActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="zavarovanje_rad_AOPLUS">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="osnovnoZavarovanjeGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="AO+"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanje_label_kasko">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kasko"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="zavarovanje_rad_polno">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="kaskoGroup"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Polno"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="zavarovanje_rad_odbFran">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="kaskoGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Odbitna fran&#x161;iza"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="zavarovanje_rad_brez">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="kaskoGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Brez"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="zavarovanje_label_dodatno">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Dodatno zavarovanje"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="zavarovanje_check_stekla">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="zavarovanje stekel"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="zavarovanje_check_parkirisce">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="zavarovanje na parkiri&#x161;&#x10d;u"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="zavarovanje_check_potniki">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="zavarovanje potnikov"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="zavarovanje_check_tretjaOs">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="zavarovanje tretje osebe"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="zavarovanje_check_gume">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="zavarovanje gum"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="zavarovanje_check_kraja">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="zavarovanje proti kraji"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="zavarovanje_check_toca">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="zavarovanje proti to&#x10d;i"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="panel_registracija">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Registracija">
+                    <Property name="tabTitle" type="java.lang.String" value="Registracija"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="registracija_label_title" min="-2" pref="192" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
+                                  <Component id="registracija_field_regOznacba" min="-2" pref="252" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="registracija_label_datPrveReg" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="278" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="registracija_label_krajPrveReg" min="-2" max="-2" attributes="0"/>
+                                      <Component id="registracija_label_regOzn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="registracija_field_kfajPrveReg" alignment="1" min="-2" pref="254" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="574" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="registracija_label_title" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="registracija_label_regOzn" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="registracija_label_datPrveReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="registracija_field_regOznacba" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="registracija_label_krajPrveReg" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="registracija_field_kfajPrveReg" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="134" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="registracija_label_title">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="18" style="2"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Podatki o registraciji"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="registracija_label_regOzn">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Registrska ozna&#x10d;ba"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="registracija_label_krajPrveReg">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kraj prve registracije"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="registracija_field_regOznacba">
+                </Component>
+                <Component class="javax.swing.JTextField" name="registracija_field_kfajPrveReg">
+                </Component>
+                <Component class="javax.swing.JLabel" name="registracija_label_datPrveReg">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Datum prve registracije"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="panel_vozilo">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Vozilo">
+                    <Property name="tabTitle" type="java.lang.String" value="Vozilo"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="vozilo_label_title" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="vozilo_label_znamka" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                                  <Component id="vozilo_combo_znamka" min="-2" pref="204" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="vozilo_label_moc" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="vozilo_spinner_moc" min="-2" pref="142" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="vozilo_label_oznaka" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="vozilo_label_barva" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                                  <Component id="vozilo_field_oznaka" min="-2" pref="203" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="vozilo_label_gorivo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="vozilo_combo_gorivo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="vozilo_colorDisplay" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="vozilo_button_izberiBarvo" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="vozilo_label_prostornina" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="vozilo_label_sifra" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="vozilo_field_Sifra" alignment="0" max="32767" attributes="0"/>
+                              <Component id="vozilo_field_prostornina" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="237" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="vozilo_label_title" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="vozilo_label_oznaka" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="vozilo_label_sifra" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="vozilo_field_Sifra" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="vozilo_field_oznaka" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="vozilo_label_barva" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="vozilo_label_prostornina" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="vozilo_colorDisplay" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="vozilo_field_prostornina" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="vozilo_button_izberiBarvo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="vozilo_label_znamka" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="vozilo_combo_znamka" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="vozilo_label_gorivo" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="vozilo_combo_gorivo" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="vozilo_label_moc" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="vozilo_spinner_moc" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="57" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="vozilo_label_title">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="18" style="2"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Podatki o vozilu"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="vozilo_label_moc">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Mo&#x10d; (kW)"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSpinner" name="vozilo_spinner_moc">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="vozilo_label_oznaka">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Oznaka"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="vozilo_label_sifra">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x160;ifra"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="vozilo_field_oznaka">
+                </Component>
+                <Component class="javax.swing.JTextField" name="vozilo_field_Sifra">
+                </Component>
+                <Component class="javax.swing.JLabel" name="vozilo_label_barva">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Barva"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="vozilo_label_prostornina">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Prostornina"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="vozilo_field_prostornina">
+                </Component>
+                <Component class="javax.swing.JLabel" name="vozilo_label_znamka">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Znamka"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="vozilo_label_gorivo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Gorivo"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="vozilo_combo_znamka">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="4">
+                        <StringItem index="0" value="Item 1"/>
+                        <StringItem index="1" value="Item 2"/>
+                        <StringItem index="2" value="Item 3"/>
+                        <StringItem index="3" value="Item 4"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="vozilo_combo_gorivo">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="5">
+                        <StringItem index="0" value="bencin"/>
+                        <StringItem index="1" value="diesel"/>
+                        <StringItem index="2" value="hibridni pogon"/>
+                        <StringItem index="3" value="bencin + plin"/>
+                        <StringItem index="4" value="e-pogon"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="vozilo_button_izberiBarvo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Izberi barvo"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vozilo_button_izberiBarvoActionPerformed"/>
+                  </Events>
+                </Component>
+                <Container class="javax.swing.JPanel" name="vozilo_colorDisplay">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="29" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                </Container>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="scrollPane_StatusnaVrstica">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="statusnaVrstica">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=" "/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JToolBar" name="toolBar">
+      <Properties>
+        <Property name="rollover" type="boolean" value="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="tool_Odpri">
+          <Properties>
+            <Property name="mnemonic" type="int" value="79"/>
+            <Property name="text" type="java.lang.String" value="Odpri"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tool_OdpriActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator1">
+        </Component>
+        <Component class="javax.swing.JButton" name="tool_Shrani">
+          <Properties>
+            <Property name="mnemonic" type="int" value="83"/>
+            <Property name="text" type="java.lang.String" value="Shrani"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tool_ShraniActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator2">
+        </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator6">
+        </Component>
+        <Component class="javax.swing.JButton" name="button_clear">
+          <Properties>
+            <Property name="mnemonic" type="int" value="80"/>
+            <Property name="text" type="java.lang.String" value="Po&#x10d;isti polja"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_clearActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

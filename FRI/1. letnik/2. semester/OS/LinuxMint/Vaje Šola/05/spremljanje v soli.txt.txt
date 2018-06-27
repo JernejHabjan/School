@@ -1,0 +1,94 @@
+#1/bin/bash -x ->debug mode
+pes=3
+${pes}a ->sprinta 3a
+${#pes} ->dolzino
+
+pes="briket"
+echo ${pes:1} ->riket
+echo ${pes:4:3} ->dolzine 3 od 4 znaka naprej zacne z 1
+echo ${pes:(-2):2} ->et
+
+najdalse ujemanje:
+x="To je test, 123, 123."
+echo ${#x}
+echo ${x#* } ->najdalše ujemanje z leve karkoli 
+	echo ${x#* } -> je test, 123, 123.
+echo ${x%% *}->To
+echo ${x/123/56} To je test, 56, 123. (zamenjava)
+echo ${x//123/56} -> To je test, 56, 56.
+______________
+naloga:
+trde povezave ->ln
+$0 je skripta
+$1 je prvi argument
+basename ->vrne notranji file !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+dirname ->vrne direktorij !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+naredili file...
+preveri ali obstaja datoteka -> 
+if test -f "$1"; then
+	ln "$1" $(basename "$1")
+	echo "povezava narejena"
+else
+	touch $(basename "$1")    //DOMA DAJ $1 V NAREKOVAJE
+fi
+
+ko zalaufamo skripto
+./vaja.sh /etc/passwd
+_______________________
+[[]] -> znotraj tega se uporablja kot logicni && in ||
+[$1 -eq "lol"] ??????
+______________
+casi
+;; break
+* default -da se sprehodimo po tem direktoriju
+______________
+expr 1 + 2 ->3 !!!pazi space ,lahko prejme samo 3 argumente(operand, operator, operand)
+expr 1+2 -> 1+2
+
+echo $((1 + 2)) ->3
+echo $((1+2))	->3
+echo $((1+2*3)) ->lahko prejme vec argumentov
+
+__debug mode bash -x vaja.sh
+x=$(($x+1))
+______________
+
+vaja 2 skripta
+#!/bin/bash
+x=0
+while [ "$x" -le 500 ]; do
+	echo -n "$x " #echo ima zastavco -n da daje vse v novo vrstico
+	x=$(($x+1))
+done
+
+še for:
+#!/bin/bash
+for((x=1; x<=500; x++)); do
+	echo -n "$x "
+done
+
+ali for(1.. 500)
+______________
+vaja3
+vse datoteke trenutnega direktorija združimo v pakete tar
+tar uf ->uf je zastavca, nima minusa
+
+nano vaja3.sh ->to je lahko novo
+#!/bin/bash
+for datoteka in *; do
+    x=${datoteka:0:$1}
+    if [ $datoteka != ${x}.tar ]; then
+        tar uf ${x}.tar $datoteka
+        echo "trenutno pakiram $datoteka v $x"
+    fi
+done
+exit 0
+zalaufat:
+./vaja3.sh 2
+______________
+poglej si tabele
+
+let i++ ->namesto ((x++))
+printf"% 4d"....
+

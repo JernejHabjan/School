@@ -1,0 +1,29 @@
+arbiter -nat intnet
+student -intnet
+
+#NALOGA - read an integer from standard input
+
+ARBITER
+/sbin/ifconfig -- vrne 10.0.2.15
+
+STUDENT
+	apt-get update
+	apt-get install rdate
+
+	
+	adduser test ----z geslom test
+	login as test
+	vim NN48k0HR
+		#!/usr/bin/python
+		import sys
+		data = sys.stdin.read(4)
+		import struct
+		i = struct.unpack(">i", data) ///ker je big endian
+		print(i[0])
+	shran
+	chmod +x NN48k0HR
+	
+	./NN48k0HR -prtisneš entr po pa neki napišeš pa spet enter
+	
+	while sleep 1; do rdate 10.0.2.15; done
+ARBITER -> poženeš

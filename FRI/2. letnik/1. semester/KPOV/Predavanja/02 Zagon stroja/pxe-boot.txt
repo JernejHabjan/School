@@ -1,0 +1,23 @@
+# add directives for network booting
+enable-tftp
+# tftp-root=/var/lib/tftproot
+tftp-root=/home/nfs/tftpboot
+#dhcp-boot=gpxe-1.0.1-undionly.kpxe
+dhcp-boot=pxelinux.0
+#dhcp-userclass=gPXE-booted,"gPXE"
+#dhcp-boot=net:gPXE-booted,http://10.0.0.1/tftpboot/pxelinux.0
+
+# Send options to PXELinux. Note that we need to send the options even
+# though they don't appear in the parameter request list, so we need
+# to use dhcp-option-force here. 
+# See http://syslinux.zytor.com/pxe.php#special for details.
+# Magic number - needed before anything else is recognised
+dhcp-option-force=208,f1:00:74:7e
+# Configuration file name
+dhcp-option-force=209,default
+# Path prefix
+#dhcp-option-force=210,http://10.0.0.1/tftpboot/
+dhcp-option-force=210,/
+# Reboot time. (Note 'i' to send 32-bit value)
+#dhcp-option-force=211,30i
+

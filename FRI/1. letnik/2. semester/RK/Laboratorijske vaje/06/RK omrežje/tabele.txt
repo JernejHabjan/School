@@ -1,0 +1,88 @@
+Ravno ko sem zakljuceval s pingi in tracerouti, mi je server nehal delati, so pa tu vse tabele:
+
+PC1
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         192.168.0.2     0.0.0.0         UG    0      0        0 eth0
+127.0.0.1       *               255.255.255.255 UH    0      0        0 lo
+192.168.0.0     *               255.255.255.0   U     0      0        0 eth0
+R1
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        *               255.255.255.0   U     0      0        0 eth1
+172.16.6.1      10.0.0.2        255.255.255.255 UGH   0      0        0 eth1
+192.168.0.0     *               255.255.255.0   U     0      0        0 eth0
+192.168.0.1     192.168.0.1     255.255.255.255 UGH   0      0        0 eth0
+R2
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        *               255.255.255.0   U     0      0        0 eth0
+10.0.1.0        *               255.255.255.0   U     0      0        0 eth1
+172.16.6.1      10.0.1.2        255.255.255.255 UGH   0      0        0 eth1
+192.168.0.1     10.0.0.1        255.255.255.255 UGH   0      0        0 eth0
+R3
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.1.0        *               255.255.255.0   U     0      0        0 eth0
+172.16.6.0      *               255.255.255.0   U     0      0        0 eth1
+172.16.6.1      172.16.6.1      255.255.255.255 UGH   0      0        0 eth1
+192.168.0.1     10.0.1.1        255.255.255.255 UGH   0      0        0 eth0
+PC2
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         172.16.6.2      0.0.0.0         UG    0      0        0 eth0
+127.0.0.1       *               255.255.255.255 UH    0      0        0 lo
+172.16.6.0      *               255.255.255.0   U     0      0        0 eth0
+______
+PC1
+
+default via 2001:db8:1:f::2 dev eth0  metric 1024
+R1
+2001:db8:1:f::1 via 2001:db8:1:f::1 dev eth0  metric 1024
+2001:db8:6::1 via 2001:db8:e::2 dev eth1  metric 1024
+R2
+2001:db8:1:f::1 via 2001:db8:e::1
+2001:db8:6::1 via 2001:db8:ef::2
+R3
+2001:db8:1:f::1 via 2001:db8:ef::1 dev eth0  metric 1024
+2001:db8:6::1 via 2001:db8:6::1 dev eth1  metric 1024
+PC2
+default via 2001:db8:6::2 dev eth0  metric 1024
+
+IP:
+PC1
+eth0      Link encap:Ethernet  HWaddr 00:00:AB:34:F1:00
+          inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: 2001:db8:1:f::1/64 Scope:Global
+          inet6 addr: 2001:db8:1:f::/128 Scope:Global
+          inet6 addr: fe80::200:abff:fe34:f100/64 Scope:Link
+R1
+eth0      Link encap:Ethernet  HWaddr 00:00:AB:4B:9C:00
+          inet addr:192.168.0.2  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: 2001:db8:1:f::2/64 Scope:Global
+          inet6 addr: 2001:db8:1:f::1/64 Scope:Global  !!!!!!!!!!!!!!!!!!!!! ZBRISAL IN DELA!! :D
+          inet6 addr: fe80::200:abff:fe4b:9c00/64 Scope:Link
+eth1      Link encap:Ethernet  HWaddr 00:00:AB:4B:9C:01
+          inet addr:10.0.0.1  Bcast:10.0.0.255  Mask:255.255.255.0
+          inet6 addr: 2001:db8:e::1/64 Scope:Global
+          inet6 addr: fe80::200:abff:fe4b:9c01/64 Scope:Link
+R2
+eth0      Link encap:Ethernet  HWaddr 00:00:AB:73:01:00
+          inet addr:10.0.0.2  Bcast:10.0.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::200:abff:fe73:100/64 Scope:Link
+          inet6 addr: 2001:db8:e::2/64 Scope:Global
+eth1      Link encap:Ethernet  HWaddr 00:00:AB:73:01:01
+          inet addr:10.0.1.1  Bcast:10.0.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::200:abff:fe73:101/64 Scope:Link
+          inet6 addr: 2001:db8:ef::1/64 Scope:Global
+          inet6 addr: 2001:db8:e::1/64 Scope:Global
+R3
+eth0      Link encap:Ethernet  HWaddr 00:00:AB:7C:62:00
+          inet addr:10.0.1.2  Bcast:10.0.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::200:abff:fe7c:6200/64 Scope:Link
+          inet6 addr: 2001:db8:ef::2/64 Scope:Global
+eth1      Link encap:Ethernet  HWaddr 00:00:AB:7C:62:01
+          inet addr:172.16.6.2  Bcast:172.16.6.255  Mask:255.255.255.0
+          inet6 addr: 2001:db8:6::2/64 Scope:Global
+          inet6 addr: fe80::200:abff:fe7c:6201/64 Scope:Link
+
+PC2
+eth0      Link encap:Ethernet  HWaddr 00:00:AB:4D:C4:00
+          inet addr:172.16.6.1  Bcast:172.16.6.255  Mask:255.255.255.0
+          inet6 addr: 2001:db8:6::1/64 Scope:Global
+          inet6 addr: fe80::200:abff:fe4d:c400/64 Scope:Link

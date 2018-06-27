@@ -1,0 +1,11 @@
+Jernej Habjan 63150106
+
+Postavljanje krogcev:
+	Na platno lahko z miško kliknete in kolikor èasa boste držali, veè krogcev vam bo izrisalo.
+	Prav tako lahko postavite krogce s pomoèjo text-boxa "dodaj ali zbriši na:", ki vam bo naenkrat izrisalo doloèeno
+	število krogcev. To je primerno za primerjanje brute force proti quadtree.
+Brisanje krogcev:
+	To lahko naredite z gumbom "zbriši posamezen krogec" ali pa vpišete v text-area manjše število krogcev kot jih je na
+	platnu.
+Brute force:
+	Privzeto je brute force izkljuèen, vkljuèite ga lahko z checkboxom "Bruteforce"

@@ -1,0 +1,25 @@
+Naloga
+
+Pri umetni inteligenci v igrah si redko želimo, da se nasprotnik obnaša preveè "pametno" in natanèno. Pogosto se ukvarjamo z ravno obratnim ciljem, kako narediti iz kirurško natanènega robota, ki ga je nemogoèe premagati, èimbolj èloveškega sogiralca. Èloveško obnašanje je prav tako pogosto zaželeno pri neigralnih likih, ki velikokrat predstavljajo ravno ljudi.
+
+Ena od zahtev, ki sledijo temu cilju, je, da agent, tako kot ponavadi igralec, ni vsevedoè. Agentu torej omejimo, da se ne zaveda celotnega sveta naenkrat, temveè lahko reagira le na stvari v svoji okolici.
+
+Agentu z modelom sveta ne podamo kar scene stopnje, iz katere bi lahko ugotovil lokacije vseh nasprotnikov in objektov v stopnji, temveè ima agent svojo sceno, ki je na zaèetku prazna ter jo skozi branje vhodov postopno gradi. Zato reèemo, da agent gradi model sveta (posnetek dejanskega stanja scene).
+
+Agentu z modelom sveta v vsakem ciklu zanke scena poda samo predmete, ki jih vidi s trenutne pozicije. Lokacije novih predmetov shrani v svojo lastno sceno in se glede na tako posodobljeno stanje odloèi, kakšno akcijo bo izbral. Hkrati se s èasom uèi v kakšnem svetu se nahaja in lahko vedno pametneje izbira odloèitve.
+
+Pristop še zdaleè ni omejen na like, ki na ta naèin s premikanjem raziskujejo svet. Agent z modelom sveta je tudi vsak pametnejši algoritem za igranje iger s kartami, saj si mora v ozadju graditi svoj model, torej da predvideva, kakšne skrite karte imajo igralci v rokah.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer pokažete, da agent skozi spoznavanje sveta spreminja notranji model sveta in glede na to s èasom spreminja svoje obnašanje.
+Pod opombe v nekaj stavkih opišite delovanje vašega agent.
+Za nalogo je dovolj, da predstavite enega agenta, ki gradi model sveta.
+
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje: 
+63080000-priimek-ui-odzivni_agenti_z_modelom_sveta.mov
+(primerno popravite vpisno številko in priimek)

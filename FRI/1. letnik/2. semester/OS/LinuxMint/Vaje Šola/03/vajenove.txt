@@ -1,0 +1,95 @@
+creating script
+1. #!/bin/bash
+2. chmod +x
+3. ./ "ime skripte"
+--- glej vaje2 v šoli
+
+nano text---neki not napišeš
+
+cat ->prebereš vse k piše v filu
+cat text
+cut
+ln ->link naredi povezavo
+ln -s ->naredi mehko povezavo
+
+gedit ->text editor
+ls text mojnovfile  -> create link... toj hard link
+
+touch naredi file pa spremeni datum
+
+stat mojnovfile ---ti vse piše povezava
+	v stat je inode povezave in datoteke isti
+
+ln -s /etc novapov ->link na direktorij namesto na file
+-> velikost jedra 6MB
+ls -lh ->human format
+
+_________
+
+ukaz1; ukaz2
+
+ce se uspešno izvede (0) good
+u1 || u2 -> ce je prvi succesful se bo samo prvi, drugace se bo mejbi drug
+u1 && u2 -> ce se prvi uspešno se bo tudi drug
+u1 || { u2 && u3; }
+
+echo $? ->izpis statusa
+echo 1 || lolo && eteeze ->vrne error status >0 ->kar je error...  PAZI NA || &&....
+
+podlupina:
+(echo 1; echo lolo; exit 42)
+
+user:
+whoami,users,who,w(w pove kdo je logiran)
+last,lastb,id,groups,finger(
+
+sudo -izvajaj s superuser pravicami
+su ->switchuser--- po defaultu je superuser
+apt-get install finger
+
+useradd
+adduser
+
+
+cat /etc/passwd ->tu so vsi userji
+
+last -5 ->kdo je bil zadnje prijavljen
+lastb 
+sudo lastb
+
+cut -d ->cut delimiter
+cut -d: -f 1,6 /etc/passwd ->izpis od 1 do 6 vrstice
+
+etc/shadow ->passwordi
+sudo cat /etc/shadow
+
+zgenerirajmo userja
+gremo v "su" ->superuser
+useradd -c "Petardo Mauritti" -d /home/petardo -m -p $(mkpasswd -m sha-512) petardo
+-password doma je petardo
+->potem šele settaš pass ko poženeš
+apt-get install whois -> tako moramo še installati
+exit ???
+
+sudo grep petardo /etc/passwd ----z grepom ga najdeš v filu
+
+v friju-> su (pass ->fri)
+
+groups petardo -dobili smo seznam
+groups
+
+su petardo ->prijaviti se kot petardo
+
+id ->dobili id skupin
+
+sudo groupadd uporabniki -> ce smo prijavljeni kot petardo napiše error ker ni med sudo uporabnik
+-> zato sudo--- potem groupadd uporabniki
+usermod -a -G uporabniki,student petardo
+groups petardo ->napiše v katerih groupah je on
+
+DISABLE USER:
+-- lock:
+passwd -l petardo
+-> ce smo v superuserju se lahko prijavimo...drugace ne
+
+

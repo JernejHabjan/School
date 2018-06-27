@@ -1,0 +1,3 @@
+Danes smo nadaljevali s snovanjem arhitekture, kjer smo uporabili nove razrede, imenski prostor in kompozicijo (GameComponent, DrawableGameComponent), nato pa smo orisali še loèitev pogonov (recimo tistega dela igre, ki je neodvisen od vsebine igre (game non-specific code), fizikalnega pogona ipd.). 
+
+Implementacija je obsegala dva razlièna projekta za demonstracijo omenjenih arhitekturnih prijemov.

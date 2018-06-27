@@ -1,0 +1,19 @@
+\BOOKMARK [0][-]{chapter*.2}{Povzetek}{}% 1
+\BOOKMARK [0][-]{chapter*.3}{Abstract}{}% 2
+\BOOKMARK [0][-]{chapter.1}{Uvod}{}% 3
+\BOOKMARK [0][-]{chapter.2}{Realno-casovne strate\235ke igre}{}% 4
+\BOOKMARK [1][-]{section.2.1}{Izdelava strate\235ke igre}{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.2}{Trump Defense 2020}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.3}{Obstojeca dela na podrocju umetne inteligence v realno-casovnih igrah}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.4}{Odprta vpra\235anja o umetni inteligenci v realno-casovnih igrah}{chapter.2}% 8
+\BOOKMARK [0][-]{chapter.3}{Algoritmi}{}% 9
+\BOOKMARK [1][-]{section.3.1}{Monte-Carlo drevesno preiskovanje}{chapter.3}% 10
+\BOOKMARK [0][-]{chapter.4}{Implementacija algoritmov}{}% 11
+\BOOKMARK [1][-]{section.4.1}{implementacija nakljucnosten algoritma}{chapter.4}% 12
+\BOOKMARK [1][-]{section.4.2}{implementacija MCTS}{chapter.4}% 13
+\BOOKMARK [1][-]{section.4.3}{sprememba preiskovalnega parametra pri ocenjevanju}{chapter.4}% 14
+\BOOKMARK [0][-]{chapter.5}{Ovrednotenje rezultatov}{}% 15
+\BOOKMARK [1][-]{section.5.1}{Simulacija igre racunalnika proti racunalniku}{chapter.5}% 16
+\BOOKMARK [1][-]{section.5.2}{Igranje racunalnika proti cloveku}{chapter.5}% 17
+\BOOKMARK [0][-]{chapter.6}{Zakljucek}{}% 18
+\BOOKMARK [0][-]{chapter.6}{Literatura}{}% 19

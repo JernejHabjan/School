@@ -1,0 +1,55 @@
+﻿Naloge (1)
+
+1.	Kakšen izhodni status vrne ukaz ls ~
+
+2.	Kakšen izhodni status vrne ukaz ls /os
+
+3.	Kakšen izhodni status vrne ukaz ls –R /, če ga prekinemo s ctrl+c
+
+4.	V man ls poglejte, kaj pomeni posamezni izhodni status.
+
+5.	Kakšen izhodni status vrne echo "OS"
+
+6.	Kakšen izhodni status vrne ( ls; exit 0 ) 
+
+7.	Kakšen izhodni status vrne ( ls; exit 10 )
+
+8.	Kaj se zgodi, če poženemo { ls; exit 0; }
+
+9. Napišite skripto vsebina.sh, ki sprejme kot prvi argument imenik. Skripta naj izpiše kananoično pot do imenika (s pomočjo ukazov readlink ali realpath) in podrobnosti njegove vsebine (s pomočjo ukaza ls). Če se skripta zaključi uspešno, naj vrne status 0, če se zaključi neuspešno, naj vrne status 10.
+
+10.	V imeniku ~/vaje3 ustvarite datoteko vaje3.txt in jo premaknite v imenik ~, če bo kopiranje uspešno izpišite niz "datoteka uspešno premaknjena"
+
+
+
+Naloge (2)
+
+1.	Prijavite se v vsaj tri konzole (poskusite se prijaviti tudi z napačnim geslom ali neobstoječim uporabnikom)! 
+
+2.	Izpišite, kateri uporabniki so trenutno prijavljeni!
+
+3.	Kako izpišete samo podatke o vaši prijavi na konzoli, v kateri trenutno pišete ukaze?
+
+4.	Izpišite, seznam zadnjih desetih prijav v sistem!
+
+5.	Izpišite, seznam vseh uporabnikov, ki so registrirani v sistemu!
+
+6.	Kakšna imajo gesla?
+
+7.	Izpišite seznam vseh uporabnikov, vendar izpišite samo uporabnikovo uporabniško ime in domači imenik!
+
+8.	Poiščite, kateri uporabniki so včlanjeni v skupino sudo (kot sekundarno skupino)!
+
+9.	V katere skupine je včlanjen uporabnik administrator?
+
+10.	Katera je primarna skupina uporabnika administrator?
+
+11.	S pomočjo ukaza useradd ustvarite novega uporabnika miha (polno ime Miha Krajnc) skupaj z domačim imenikom /home/miha. V ukazu podajte tudi geslo.
+
+12.	Prijavite se kot uporabnik miha in preverite, če ste prijavljeni in pojdite v domači imenik uporabnika. 
+
+13.	Ustvarite skupino uporabniki in vanjo včlanite uporabnika miha (uporabniki naj bo njegova sekundarna skupina). Prav tako uporabnika miha včlanite v skupino student.
+
+14.	Uporabniku miha dodajte pravice za izvajanje ukazov kot root (naj postane t.i. sudoer).
+
+15.	Uporabniku miha onemogočite možnost prijave v sistem.

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Programiranje2"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Programiranje2">
+				<Option output="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Programiranje2.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/x86_64-pc-cygwin"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/../include/w32api"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 Programiranje2"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Programiranje2/fast">
+				<Option output="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Programiranje2.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/x86_64-pc-cygwin"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/../include/w32api"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 Programiranje2/fast"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/jerne/Google\ Drive/Programing/Cpp/Programiranje2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Header Files/Programiranje2/Pred.h">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Header Files/Programiranje2/Vaje.h">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Header Files/Programiranje2/domaca01.h">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Header Files/Programiranje2/kolokvij.h">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Header Files/Programiranje2/other_zapiski.h">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Header Files/UporabniskiVmesniki/Naloga06.h">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Pisni izpiti/Kolokviji/kolokvij.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Pisni izpiti/Kolokviji/kolokvij_0.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Pisni izpiti/Kolokviji/kolokvij_0_1.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Pisni izpiti/Kolokviji/kolokvij_1.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Pisni izpiti/Kolokviji/kolokvij_2.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Pisni izpiti/Kolokviji/playground_1.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/01 Uvod/Pred.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/01 Uvod/Vaje.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/02 Struktura programa/Pred02.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/02 Struktura programa/Vaje02.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/02 Struktura programa/domaca01.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/03 Struktura programa/Pred03.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/03 Struktura programa/Vaje03.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/03 Struktura programa/domaca02.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/04 Kazalci in tabele (1. del)/Pred04.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/04 Kazalci in tabele (1. del)/Vaje04.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/04 Kazalci in tabele (1. del)/domaca03.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/05 Preprosto urejanje/Pred05.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/05 Preprosto urejanje/Vaje05.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/05 Preprosto urejanje/domaca04.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/06 Rekurzija (1. del)/Pred06.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/06 Rekurzija (1. del)/Vaje06.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/06 Rekurzija (1. del)/domaca05.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/07 Kazalci in tabele (2. del)/Pred07.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/07 Kazalci in tabele (2. del)/Vaje07.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/07 Kazalci in tabele (2. del)/domaca06.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/08 Strukture/Pred08.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/08 Strukture/Vaje08.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/08 Strukture/domaca07.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/09 Rekurzija (2. del)/Pred09.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/09 Rekurzija (2. del)/Vaje09.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/09 Rekurzija (2. del)/domaca08_toChange_neDela.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/10 Vhodno-izhodne operacije/Pred10.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/10 Vhodno-izhodne operacije/Vaje10.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/10 Vhodno-izhodne operacije/domaca09.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/11 Predprocesor/Pred11.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/11 Predprocesor/Vaje11.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/11 Predprocesor/domaca10.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/12 Zgradba velikih programov/Pred12.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/12 Zgradba velikih programov/Vaje12.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/Predavanja_Vaje/12 Zgradba velikih programov/domaca11.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/other_zapiski/dll.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/other_zapiski/kombinacije_permutacije.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/Programiranje2/reading_books.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/Source Files/main.c">
+			<Option target="Programiranje2"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/jerne/Google Drive/Programing/Cpp/Programiranje2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

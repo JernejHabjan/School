@@ -1,0 +1,13 @@
+Jernej Habjan 63150106
+
+Vnos toèk v polje:
+	toèke vnašate v TextArea tako, da napišete "v" in za tem x y z komponente eno za drugim, loèeno s presledki
+	Za vpisovanje veè toèk jih loèite z new line
+	Nazaj v isto polje vam vrne transformirane toèke, v konzolo pa množenje matrik, potrebnih za transformacijo.
+
+Transformiranje toèk:
+	Za to pritisnite gumb "transformiraj"
+Gumb resetiraj matriko:
+	Ta gumb nastavi transformacijsko matriko nazaj na identièno matriko- èe veèkrat zaporedno transformirate
+Preverjanje matrik in vektorjev:
+	v konzolo izpisujem primere nalog, ki so bile podane za matrike in vektorje

@@ -1,0 +1,140 @@
+﻿absolutno naslavljanje- iz eno in iste začetne točke
+relativno naslavljanje- od trenutne pozicije -jih je neskončno (nazaj potem naprej itd)
+
+
+obstajajo tudi -> /bin/pwd ki zalaufa neugrajeno različico
+
+NALOGA1:
+../   -nazaj ---npr za zalaufat file -> ../../bin/ls
+cd / ->čisto nazaj
+cd .. -nazaj
+cd ~ _VRNE NAZAJ NA HOME ~ ->altgr+1(2x)
+. -> ta direktorij
+.. ->prejšni direktorij
+
+
+ABSOLUTNA POT--- VEDNO PRVO SLASH   -> cd /home/student/
+cd ../home/student/
+
+
+ls /  -> LISTA OD TISTGA K HOČŠ / je tuki root directory
+ls -R /   ->RECURSIVE --- GW
+man ls ---- notri damo / (slash) da naredimo ctrl+f
+q ->quit
+
+
+tree -L 2  --drevo globine 2
+tree -L 1 -d   -VSI PODDIREKTORIJI
+tree -L 1 -d / ->vse mape gnezdene 2 od d /
+
+
+
+
+
+
+NALOGA2:
+mkdir os OS Os ---naredi 3 folderje
+
+
+mkdir os/test
+touch vaje.txt
+cp vaje.txt OS -copyvaje
+cp Os/* os  -copy vse file iz Os v os
+
+
+"operacijski sistemi" -pazi v dveh ker to nista 2 različna folderja
+oper+/ pa napiše sam operacijski sistemi
+
+
+rekurzivno prekopiraj -> cp -r OS/* Operacijski\ sistemi/
+
+
+rm *3* ---izbriše vse ki ima trojko
+rm -i *3*  --praša te če hočeš izbrisat
+
+
+
+
+VAJE3: SKRIPTA
+nano ustvari.sh
+#!   --> da poveš kkje je to
+
+
+#!/bin/bash
+touch test1.txt test2.txt test3.txt
+$ -->dostop do argumentov ob klicu skripte
+popravimo vrstico na
+touch $1/test1.txt $1/test2.txt $1/test3.txt
+
+
+exit 0
+pol exitaš pa shranš
+
+
+
+
+chmod u+x ustvari.sh
+preveriš ali je z ls -l  --->piše read write pravice itd
+./ustvari.sh Os    -Os je directory kamor smo extractal
+
+
+___________
+vsebine imenikov:
+bin
+dev -devices
+etc -notri ena "passwrd" ki nima gesel... je pa "shadow" ki so kriptirana gesla
+proc -procesi 
+var -je event log
+___________
+
+
+ukazi:
+ls
+tree
+pwd
+
+
+cd           -change directory
+mkdir
+rmdir
+cp
+mv    -RENAME AND MOVE!!
+rm     -izbriše vse
+  rm -r -- rekurzivno zbriši podimenike
+
+
+basename   -ime datoteke
+dirname                -pot do datoteke/fila
+
+
+touch                -tudi ustvari datoteko--- primarno spreminja
+
+
+file                
+ln                -ustvarjanje linkov
+readlink        -branje linkov
+stat        
+        
+gedit                -editor - gui
+vi                -dela na vseh kompih
+
+
+
+
+d -directory
+- ---- navadna datoteka
+b ---bločno orientirana naprava trdi dick
+c ---char oriented devices
+t  ---simbolična povezava
+p --pipeline
+s ---socket --ustvarja mrežno povezavo
+
+
+
+
+mehka/trda povezava:
+file allocation table -nek indeks ki poveže datoteke v podatke
+mehka povezava : POVEZAVA->ORIGINAL->PODATKI
+povezava se ne zbriše.. se samo zbreaka
+trda povezava: ->original IN povezava ->podatki (če hočemo podatke zbrisat moramo obe zbrisat)
+links ->število trdih povezav

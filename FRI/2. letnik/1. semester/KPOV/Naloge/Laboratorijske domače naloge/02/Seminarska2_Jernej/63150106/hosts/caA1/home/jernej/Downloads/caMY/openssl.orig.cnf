@@ -1,0 +1,138 @@
+[ ca ]
+# Privzete nastavitve certifikatne agencije
+default_ca			= intermediate_ca
+
+[ root_ca ]
+# Nastavi pot do certifikatne agencije
+dir				= /home/moje-ime/ca
+
+# Poti do certifikata in kljuca agencije
+certificate			= $dir/certs/cert.crt
+private_key			= $dir/private/privkey.key
+
+# Pot do ostalih certifikatov (root, veriga, ...)
+certs				= $dir/certs
+new_certs_dir			= $dir/client-certs
+database			= $dir/internal/database.txt
+serial				= $dir/internal/serial
+RANDFILE			= $dir/private/.rand
+unique_subject			= no
+
+# Nastavitve za certifikate
+default_md			= sha256
+default_days			= 375
+preserve			= no
+policy				= policy_loose
+
+# Nastavitve preklicne liste
+crl_dir				= $dir/internal/crl
+crlnumber			= $dir/internal/crl-number
+crl_extensions 			= crl_ext
+default_crl_days		= 30
+
+[ intermediate_ca ]
+# Nastavi pot do certifikatne agencije
+dir				= /home/moje-ime/ca
+
+# Poti do certifikata in kljuca agencije
+certificate			= $dir/certs/cert.crt
+private_key			= $dir/private/privkey.key
+
+# Pot do ostalih certifikatov (root, veriga, ...)
+certs				= $dir/certs
+new_certs_dir			= $dir/client-certs
+database			= $dir/internal/database.txt
+serial				= $dir/internal/serial
+RANDFILE			= $dir/private/.rand
+
+# Nastavitve za certifikate
+default_md			= sha256
+default_days			= 375
+preserve			= no
+policy				= policy_strict
+
+# Nastavitve preklicne liste
+crl_dir				= $dir/internal/crl
+crlnumber			= $dir/internal/crl-number
+crl_extensions 			= crl_ext
+default_crl_days		= 30
+
+[ req ]
+# Nastavitve za certifikatne zahteve
+default_bits			= 4096
+distinguished_name		= req_distinguished_name
+string_mask			= utf8only
+default_md			= sha256
+x509_extensions			= v3_ca
+
+[ intermediate_cert ]
+# Nastavitve certifikatov vmesnih agencij
+subjectKeyIdentifier 		= hash
+authorityKeyIdentifier		= keyid:always,issuer
+basicConstraints 		= critical, CA:true, pathlen:0
+keyUsage			= critical, digitalSignature, cRLSign, keyCertSign
+
+[ client_cert ]
+# Nastavitve certifikatov koncnih uporabnikov
+basicConstraints		= CA:FALSE
+nsCertType			= client, email
+nsComment			= "FRI NET client"
+subjectKeyIdentifier		= hash
+authorityKeyIdentifier		= keyid,issuer
+keyUsage			= critical, nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage		= clientAuth, emailProtection
+
+[ server_cert ]
+# Nastavitve certifikatov storitev
+basicConstraints		= CA:FALSE
+nsCertType			= server
+nsComment			= "FRI NET server"
+subjectKeyIdentifier		= hash
+authorityKeyIdentifier		= keyid,issuer:always
+keyUsage			= critical, digitalSignature, keyEncipherment
+extendedKeyUsage		= serverAuth
+
+[ policy_loose ]
+# Nastavitve za svobodno preverjanje
+countryName			= supplied
+stateOrProvinceName		= supplied
+localityName			= optional
+organizationName		= supplied
+organizationalUnitName		= supplied
+commonName			= supplied
+emailAddress			= supplied
+
+[ policy_strict ]
+# Nastavitve za strogo preverjanje
+countryName			= supplied
+stateOrProvinceName		= supplied
+localityName			= optional
+organizationName		= match
+organizationalUnitName		= match
+commonName			= supplied
+emailAddress			= supplied
+
+[ req_distinguished_name ]
+# Nastavitve predstavitvenih podatkov
+countryName			= Country Name (2 letter code)
+stateOrProvinceName		= Region Name
+0.organizationName		= Project Name
+organizationalUnitName		= Group Name
+commonName			= Student Id
+emailAddress			= Email Address
+
+# Privzeti predstavitveni podatki
+countryName_default		= SI
+stateOrProvinceName_default	= Ljubljana
+0.organizationName_default	= FRI NET
+
+[ v3_ca ]
+# Dodatne nastavitve certifikatne agencije
+subjectKeyIdentifier		= hash
+authorityKeyIdentifier		= keyid:always,issuer
+basicConstraints		= critical, CA:true
+keyUsage			= critical, digitalSignature, cRLSign, keyCertSign
+
+[ crl_ext ]
+# Dodatne nastavitve preklicne liste
+authorityKeyIdentifier		= keyid:always

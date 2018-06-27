@@ -1,0 +1,20 @@
+Glavne toèke:
+analiza trga iger,
+analiza orodij, 
+analiza kompleksnosti, 
+analiza zahtev, 
+naèrt rešitve,
+vodenje projekta,
+agilnost,
+Extreme Programming,
+Scrum.
+
+V praksi smo pokazali:
+osnove sintakse Objective C,
+uporabo višjenivojskega pogona igre (od XNI),
+potrebne spremembe v kodi za pripravo projekta na osnovi XNI,
+osnovne arhitekturne prijeme v projektu,
+nastavek za loèitev pogona igre od igre same,
+uporabniške zgodbe,
+sprinte.
+

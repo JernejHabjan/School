@@ -1,0 +1,19 @@
+načrtovanje mobilnih applikacij:
+	ne tle ne bomo neki zelo velik dal povdarka ker bo zaenkrat še zmerej precej tko nedorečeno področje
+	mogoče vprašanje o mobilnih spletnih applikacijah - responsive design in kaj to je
+GTK+
+	ne bo
+Vrednotenje, testiranje uporabnikov zna biti
+Prototipi, kaj se lahko naučimo iz papirnatih prototipov,
+kaj iz računalniških prototipov
+
+Navodila načrtovanja --tega še nismo
+
+Dialogi - vrste dialogov s stališča mogoče modalnosti
+	npr dialogi za obvestila, ampak za modalnosti
+	kakšni načini modalnosti dialogov
+	
+	npr modalni dialog je dialog ko nemoreš še kj druzga delat z app
+	in so lahko različne vrste modalnosti
+	
+1 naloga bo praktična

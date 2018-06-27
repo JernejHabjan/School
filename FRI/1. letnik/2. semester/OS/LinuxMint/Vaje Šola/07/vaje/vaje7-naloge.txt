@@ -1,0 +1,47 @@
+﻿1.	Ali je uporabnik administrator prijavljen v sistem ali ne?
+
+2.	Izpišite število trenutno prijavljenih uporabnikov! 
+
+3.	Za vsakega uporabnika izpišite, kolikokrat je trenutno prijavljen (v kolikih konzolah).
+
+4.	Preštejte število datotek v trenutnem imeniku.
+
+5.	Permutirajte zaporedje števil od 100-999 in izpišite prvih 5 števil permutiranega zaporedja.
+
+6.	Vse male črke niza "Operacijski sistemi" pretvorite v velike.
+
+7.	Izpis ukaza tree, ki izpiše celotno datotečno strukturo sistema, preusmerite v datoteke po 1000 vrstic.  Imena datotek naj bodo oblike drevo_#, kjer je # tromestna številka.
+
+8.	V pomoči ukaza find poiščite omembe besede inode. Izpišite dve vrstici pred in po vrstici, kjer se nahaja beseda. Vrstice naj bodo oštevilčene.
+
+9.	Za vsako datoteko v imeniku izpišite število vrstic, besed in znakov, ki jih vsebuje.
+
+10.	Prepišite ukaz naslednji ukaz tako, da bo uporabljal xargs. find / -inum $(stat test.txt -c "%i") -exec rm -i {} \; 
+
+11.	Primerjajte datoteki a.txt in b.txt. Če sta njuni vsebini, enaki izbrišite eno od njiju. Če je brisanje uspešno, izpišite ustrezno sporočilo.
+
+12.	Izpišite vsebino datoteke /etc/passwd tako, da bodo stolpci poravnani. 
+
+13.	Izpis prejšnjega ukaza izpišite na zaslon, shranite v datoteko uporabniki.txt, poleg tega pa tudi v datoteko uporabniki_arhiv.txt.
+
+14.	Ustvarite naključno geslo s pomočjo generatorja psevdonaključnih števil. Geslo naj bo sestavljeno iz sedmih alfanumeričnih znakov.
+
+
+
+15. Napišite skripto, ki izračuna največji skupni delitelj treh naravnih števil, ki jih podamo kot argumente skripti.
+Primer klica: ./najvecjiDelitelj.sh 27 15 45 
+
+Največji skupni delitelj dveh naravnih števil lahko izračunamo rekurzivno:
+int gcd(a, b){
+    if (b == 0){
+       return a;
+    }
+    else {
+	    return gcd(b, a%b);
+    }
+}
+
+Velja:
+gcd(a, b, c) = gcd(a, gcd(b, c)) = gcd(gcd(a, b), c) = gcd(gcd(a, c), b)
+
+

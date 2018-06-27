@@ -1,0 +1,21 @@
+4.3)
+a) Slika v prilogi
+b) p="AN"
+	Algoritem mora vrniti začetne indekse, kje se začne podniz. To pa naredi tako, da gre v drevo.
+	V drevesu pogleda prvo črko niza "p" in gre v pravilno poddrevo. V tem poddrevesu bo vrnil indeks začetka
+	podniza +  vse indekse, ki so mu vrnili njegovi poddrevesi.
+	Ko najde ujemajoč niz v poddrevesu, mora iti do vseh končnih listov. Sproti šteje globino. Z globino vemo, koliko
+	je dolg string. To pomeni da je začeten indeks podniza = len(string)- globina (od kjer se je razcepil). 
+
+	Postopek iskanja označen na sliki.
+c) Najdaljši podniz je "ANA". 
+	Če imamo podano besedilo dolžine m, lahko poiščemo najdaljši podniz v O(m^2) -> dve zanki. V prvi povečujemo štart, drugi pa konec.
+	Lahko naredimo tudi v O(n) -> primer v C med prilogami
+d)
+	Prav tako tudi tukaj štejemo globino. Štejemo globino, kje nazadnje se je veja razvejala.
+	Moramo v vsako poddrevo in sproti štejemo globino. Ko se razveja, si globino zapomnimo in gremo v tisto poddrevo. 
+	Ko se vračamo, vračamo max globino.
+e) Poddrevasa v ST2 so lahko globje, kot v ST1, če je c sorodna črka v poddrevesu ST1 (če se pojavlja v ST1)
+
+f) Vsa poddrevesa v ST2 ki so tuja črki c(imajo isto začetno črko) ostanejo na istih mestih, medtem ko vsa ostala poddrevesa 
+spadajo pod črko c in so za 1 krajša

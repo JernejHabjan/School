@@ -1,0 +1,29 @@
+# Default boot option to use
+DEFAULT menu.c32
+# Prompt user for selection
+PROMPT 0
+# Menu Configuration
+MENU TITLE Main Menu
+timeout 10
+# Menus
+# x86
+LABEL UBUNTU-10.04.1-amd64-live
+  menu label UPM
+  kernel kernels/UPM/vmlinuz
+  append initrd=kernels/UPM/initrd-client.lz netboot=nfs ro nfsroot=10.0.0.1:/cdrom file=/cdrom/pressed/ubuntu.seed boot=casper
+
+LABEL UBUNTU-10.04.1-i386
+  menu label Run - UBUNTU 10.04 i386
+  kernel kernels/ubuntu-10.04.1-i386/vmlinuz-2.6.32-21-generic
+  APPEND initrd=kernels/ubuntu-10.04.1-i386/initrd.img-2.6.32-21-generic root=/dev/nfs rw nfsroot=10.0.0.1:/home/nfs/ubuntu-10.04.1-i386 ip=dhcp
+
+LABEL UBUNTU-amd64-10.04
+  menu label Run - UBUNTU 10.04 amd64 - from debootstrap
+  kernel kernels/ubuntu-10.04-amd64/vmlinuz-2.6.32-21-generic
+  APPEND initrd=kernels/ubuntu-10.04-amd64/initrd.img-2.6.32-21-generic root=/dev/nfs rw nfsroot=192.168.1.4:/home/nfs/ubuntu-10.04-amd64 ip=dhcp
+
+LABEL UBUNTU-amd64-10.04-inst
+  menu label Run - UBUNTU 10.04 amd64 - from CD
+  kernel kernels/ubuntu-10.04-amd64-inst/vmlinuz-2.6.32-24-generic
+  APPEND initrd=kernels/ubuntu-10.04-amd64-inst/initrd.img-2.6.32-24-generic root=/dev/nfs rw nfsroot=192.168.1.4:/home/nfs/ubuntu-10.04-amd64-inst ip=dhcp
+

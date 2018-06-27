@@ -1,0 +1,163 @@
+UKAZ select
+
+Z ukazom select lahko ustvarimo tudi preprost meni . Uporaba
+
+select var in spisek ; do ukazi ; done
+
+Takšen meni pravzaprav tece v neskoncni zanki, iz njega pa skocimo z ukazom break . Izbire menija navedemo v spisek.
+
+Primer:
+
+select izbor in banana jagoda sliva; do echo "Pojedel sem \$izbor."; done
+
+ 
+
+DATOTECNI SEMAFOR: lockfile (del paketa procmail: sudo apt-get install procmail)
+
+V lupini bash ni nekega neposrednega mehanizma za uporabo semaforjev. Obstaja mehanizem zaklepanja datotek, ki ga lahko izkoristimo na zanimiv nacin. Neko datoteko lahko zaklenemo le, ce ta ni že predhodno zaklenjena. Podobno je s semaforjem, v katerega lahko vstopimo, ce je semafor prost. Zato mehanizem zaklepanja datoteke lahko uporabimo za implementacijo semaforja.
+
+Zaklepanje datoteke torej predstavlja vstop v semafor. Ce je datoteka že zaklenjena, potem je potrebno na vstop v semafor pocakati. Izstop iz semaforja je predstavljen z brisanjem datoteke. Ime same datoteke predstavlja tudi ime semaforja.
+
+Opisano delovanje nam nudi ukaz:
+
+lockfile datoteka
+
+Ukaz torej izvede operacijo vstopa v semafor. Ce vstop ni mogoc, potem pocaka nekaj casa in ponovno poskuša (privzeto 8 sekund).
+
+Izstop iz semaforja pa izvedemo z ukazom:
+
+rm -f datoteka
+
+Stikalo -f je potrebno uporabiti, ker imajo datoteke, ki jih ustvari lockfile, dovoljenje le za branje.
+
+Oba ukaza skupaj uporabimo na naslednji nacin:
+
+lockfile myscript.lock
+
+# zacetek kriticnega odseka
+
+. . .
+
+# konec kriticnega odseka
+
+rm -f myscript.lock
+
+Primer:
+
+Zagotoviti hocemo, da socasno dostopa do dolocenega vira samo 1 proces. Ukaz lockfile ustvari datotecni semafor, ki ga na koncu kriticne koda odstranimo. Lockfile pocaka 8 sekund in nato ponovno preveri, ce datoteka še vedno obstaja.
+
+Rešitev brez lockfile:
+
+#!/bin/bash
+if [ -e number.txt ]; then
+echo "Datoteka obstaja"
+else
+echo "Datoteke ni, zato ustvarimo novo"
+echo 1 > number.txt
+fi
+a=$(/usr/bin/tail -n 1 number.txt)
+if [ $a -gt 1 ]; then
+a=$(/usr/bin/tail -n 1 number.txt)
+/usr/bin/expr $a - 1 >> number.txt
+fi
+if [ $a -lt 2 ]; then
+a=$(/usr/bin/tail -n 1 number.txt)
+/usr/bin/expr $a + 1 >> number.txt 
+fi
+
+Datoteka: numbers.txt bi morala vsebovati samo števila 1 in 2, ampak ce izvedemo vec procesov vzporedno:
+
+# for a in {1..1000}; do ./script.sh & done
+
+Lahko vidimo, da temu ni tako:
+
+cat number.txt | sort -n | uniq
+
+Tudi, ce sami simuliramo datoteko, ki služi kot semafor, se lahko še vedno zgodi, da pride do prekinitve med preverjanjem pogoja: [ -e script.lock ] in dejanskim "zaklepanjem": touch script.lock:
+
+#!/bin/bash
+if [ -e number.txt ]; then
+echo "Datoteka obstaja"
+else
+echo "Datoteke ni, zato ustvarimo novo"
+echo 1 > number.txt
+fi
+
+while [ -e script.lock ]; do
+echo –n "."
+done
+
+#tukaj lahko pride do prekinitve drugega procesa
+
+
+touch script.lock
+
+a=$(/usr/bin/tail -n 1 number.txt)
+if [ $a -gt 1 ]; then
+a=$(/usr/bin/tail -n 1 number.txt)
+/usr/bin/expr $a - 1 >> number.txt
+fi
+if [ $a -lt 2 ]; then
+a=$(/usr/bin/tail -n 1 number.txt)
+/usr/bin/expr $a + 1 >> number.txt
+fi
+rm -f script.lock
+
+prava rešitev z ukazom lockfile:
+
+#!/bin/bash
+if [ -e number.txt ]; then
+echo "Datoteka obstaja"
+else
+echo "Datoteke ni, zato ustvarimo novo"
+echo 1 > number.txt
+fi 
+
+lockfile script.lock
+a=$(/usr/bin/tail -n 1 number.txt)
+if [ $a -gt 1 ]; then
+a=$(/usr/bin/tail -n 1 number.txt)
+/usr/bin/expr $a - 1 >> number.txt
+fi
+if [ $a -lt 2 ]; then
+a=$(/usr/bin/tail -n 1 number.txt)
+/usr/bin/expr $a + 1 >> number.txt
+fi
+rm -f script.lock
+
+ukaz flock
+
+V nadaljevanju si bomo ogledali dva razlicna nacina uporabe ukaza flock. Prvi nacin uporabe ukaza je naslednji:
+
+flock datoteka -c ukaz
+
+Ta nacin bomo uporabili, kadar bomo kriticni odsek implementirali s funkcijo. Naj se ta funkcija imenuje kriticniodsek. Funkcijo je potrebno še izvoziti in nato lahko uporabimo flock na naslednji nacin:
+
+function kriticniodsek {
+# tukaj implementiramo kriticni odsek
+}
+
+# izvozimo funkcijo
+export -f kriticniodsek
+
+# uporabimo datoteko semafor.lock za zaklepanje
+
+flock semafor.lock -c kriticniodsek
+
+Drugi nacin je morda bolj preprost za uporabo, vendar je potrebno poznavanje datotecnih deskriptorjev.
+
+Uporaba ukaza je sledeca:
+
+flock deskriptor
+
+Kriticni odsek implementiramo in izvedemo v podlupini, v kateri tudi takoj izvedemo zaklepanje datoteke preko datotecnega deskriptorja. Še pred tem pa je potrebno datotecni deskriptor pripraviti.
+
+Celotna shema uporabe je sledeca:
+
+(
+flock 200
+# tukaj implementiramo kriticni odsek
+
+) 200>semafor.lock
+
+Zadnja sprememba: torek, 19. maj 2015, 09:19

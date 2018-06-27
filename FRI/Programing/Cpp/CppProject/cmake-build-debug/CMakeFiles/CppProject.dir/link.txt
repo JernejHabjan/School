@@ -1,0 +1,1 @@
+/usr/bin/c++.exe  -g  -Wl,--enable-auto-import CMakeFiles/CppProject.dir/main.cpp.o  -o CppProject.exe -Wl,--out-implib,libCppProject.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

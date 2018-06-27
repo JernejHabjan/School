@@ -1,0 +1,20 @@
+Naloga
+
+Ko dobimo obèutek, kateri razredi v projektu so spisani splošno in bi jih lahko uporabili še v kakšnem drugi igri, jih lahko loèimo v svoj projekt tipa Static Library. Še lažje je, èe imamo statièno knjižnico že od samega zaèetka in ob samem ustvarjanju nov razred umestimo v primeren projekt (v konkretno igro ali v pogon/knjižnico pod njo).
+
+Splaèa se zopet vzpostaviti svoj imenski prostor (ali veè le-teh), s katerim na enostaven naèin uvozimo vse (ali smiselno poskupinjene) razrede pogona.
+
+Ustvarjen Xcode projekt zdaj preprosto povežemo v našo igro po istih navodilih, kot so opisana pri delu z XNI v obliki izvorne kode. XNI je namreè prav tako statièna knjižnica, kot bo vaš pogon, torej vsa navodila za povezovanje z XNI v obliki Xcode projekta veljajo za povezavo vaše igre z loèenim pogonom v svojem Xcode-projektu.
+
+Pri uporabi razredov iz knjižnice, ki je v celoti en nivo nižje pod našo igro (razredi igre se sklicujejo na razrede pogona, obratno pa nikoli – pogon se ne zaveda igre nad njim), nam zato ni veè potrebno loèevati med vkljuèevanjem deklaracij @class in @protocol v zaglavnih datotekah in #importi v implementacijskih datotekah. Ker ni možno, da bi prišlo do navzkrižnega povezovanja, razrede iz pogona preprosto poklièemo samo z uvozom glavne datoteke imenskega prostora (tiste s stavki #import) v sami zaglavni datoteki. Èe pogledamo nazaj, vidimo, da smo na tak naèin delali že z XNIjem.
+
+Za navodila glede povezovanja projektov poglejte v skripto pod Priprava za delo, Ogrodje XNI, Uporaba izvorne kode. Primer loèitve pogona pa vidite v na vajah pokazanem projektu Mad Driver v1. Tu sta loèitvi celo dve, saj imamo igro (MadDriver), ki uporablja pogon (Express), le-ta pa še splošno knjižnjico (Artificial).
+
+Navodilo
+
+Posnemite celotno namizje, kjer imejte odprta oba projekta, vaš loèeni pogon in igro (vaš pogon mora vsebovati vsaj en razred, ki ste ga spisali vi in je primeren za vkljuèitev pogon). Pokažite strukturo pogona (v hierarhiji projekta) in potem še strukturo igre, kjer naj bo vidno, da se povezujete direktno z Xcode projektom pogona. Odprite Target Dependencies, v katerem mora biti viden pogon in za konec še Build Settings v katerem pokažete, kako ste nastavili poti do zaglavnih datotek. Za konec poženite projekt, da pokažete, da je igra v delujoèem stanju.
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje: 63090000-priimek-meta-arhitektura-locitev_pogona.mov
+(primerno popravite vpisno številko, priimek, konènico)

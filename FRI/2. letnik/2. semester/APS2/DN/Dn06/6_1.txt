@@ -1,0 +1,28 @@
+a)
+V prilogi je zapisana matrika
+
+b) 
+i) Ali bi lahko uporabili Dijkstrov algoritem:
+	Ford-Belmanov algoritem je vrnil, da se nahaja negativen cikel. Zato Dijkstrinega algoritma ne smemo uporabljati,
+	saj lahko pride do napaènih rezultatov. Dijkstra je nevarno uporabljati na negativnih povezavah.
+	Lahko vrne pravilen rezultat, vendar to ni zagotovljeno
+ii) izvedba algoritma v prilogi
+	DeleteMin operacije so krepko obkrožena vozlišèa v matriki		
+
+iii) Ali je izraèunl najcenejšo?
+	Ne, ker ni upošteval negativnega cikla, ki ga je zaznal ford-belmanov algoritem.
+	Zaradi negativnih povezav se spremenijo vozlišèa (L), vendar ta potem ne vplivajo nazaj
+	na ostale, kakor delajo pri ford-belmanov alg.
+
+
+c) 
+èe 1 pomeni 100% zagotovilo, 0 pa 100% sesutje, bi lahko vse verjetnosti obrnil z 1 - p(u,v) ker hoèemo minimalno številko
+Bellman-Ford in Dijkstra delujeta na celih številih, zato bi pomnožil verjetnost s takim veèkratnikom števila 10, da 
+uteži ne vsebujejo veè decimalk (naprimer èe je verjetnot zapisana s float bi v javi pomnožili z Math.pow(10,9))
+Nad novimi vrednostmi bi pognal Dijkstra algoritem, ker nima negativnih povezav, ker verjetnost ne more biti negativna.
+
+for povezava e med U, V:
+	e =  (1 - e.utež) * Math.pow(10, stevilo_decimalk)
+	//manjši kot je sedaj e, bolj je zanesljiv, ter ne vsebuje decimalnih števil - je unsigned int oz unsigned long
+	
+rezultat = Dijkstra(start)

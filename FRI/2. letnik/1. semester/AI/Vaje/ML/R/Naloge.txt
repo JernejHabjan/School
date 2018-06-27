@@ -1,0 +1,25 @@
+Naloge:
+LAUFANJE SKRIPTE:
+	source("imeDat.r")
+
+
+
+
+Student:
+	student <- read.table("student.txt", sep=",", header=T)
+	
+	
+	for(i in 30:32)
+	student[,i] <-cut(student[,i],c(-Inf, 0,11,13,15,20),labels=c("fail", "sufficient","satisfactory", "good", "excellent"))
+	
+	ZDAJ LAHKO GRADIMO MODELE ÈE SO RAZDELJENI
+	
+	razdeliš na uèno in testno:
+		bin.learn <- bin.players[1:1500,] //kar številka - do 1500
+		bin.test <- bin.players[-(1:1500),]
+		NPR TKO
+		bin.learn <- student[1:200,]
+		bin.test <- student[-(1:200),]
+		
+UÈNO 80%
+TESTNO 20%

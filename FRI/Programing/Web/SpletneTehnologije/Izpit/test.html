@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<style>
+    .spodnjiRazred{
+        color:red;
+
+
+    }
+
+    #povezavaSpodaj:hover{
+
+        border:1px solid blue;
+        border-radius: 10px;
+    }
+
+
+
+    #povezavaSpodaj{
+        font-weight: bold;
+    }
+    a:nth-child(2){
+
+        border:2px solid red;
+    }
+    a[href="www.google.com"]{
+
+        background-color:orange;
+
+
+    }
+
+
+</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="color:yellow">
+<div>bla</div>
+<a>bla</a>
+
+
+<table border="1">
+    <tbody>
+
+        <tr>
+            <th>bla</th>
+            <th>bla1</th>
+        </tr>
+        <tr>
+            <td>bla2</td>
+            <td>bla3</td>
+        </tr>
+        <tr>
+            <td>bla2</td>
+            <td>bla3</td>
+        </tr>
+        <tr>
+            <td>bla2</td>
+            <td>bla3</td>
+        </tr>
+    </tbody>
+
+
+</table>
+
+
+
+
+<a id="povezavaSpodaj" class="spodnjiRazred" href="www.google.com">google</a>
+<script>
+
+    $(document).ready(function () {
+        $("td, th").click(function () {
+          $(event.target.parent).css({"background-color":"red"});
+          const bla = event.target.parent;
+          $(document.body).append("<span style='font-weight:bold; text-align:center'> "+bla+"</span>");
+        });
+
+
+    });
+
+
+
+</script>
+
+
+</body>
+</html>

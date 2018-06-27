@@ -1,0 +1,27 @@
+student ma nat pa intnet
+arbiter pa intnet
+
+apt-get update
+apt-get install dnsmasq
+
+vim /etc/network/interfaces
+dodaš
+	auto enp0s8
+	iface enp0s8 inet static
+		address 10.162.148.234/26
+	srahnš
+ifup enp0s8
+vim /etc/dnsmasqs.conf
+		syn on
+		dhcp-range = 10.162.148.200, 10.162.148.255, 12h
+		dhcp-host=MAC_OD_ARBITRA,10.162.148.247
+			like 08:00:27...
+			
+service dnsmasq restart
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -I POSTROUTING -o enp0s3 -j MASQUERADE
+
+adduser anavidmar53
+	123
+	
+----zažen

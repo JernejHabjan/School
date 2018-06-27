@@ -1,0 +1,857 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://linuxconfig.org/linux-dns-server-bind-configuration -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" dir="ltr" slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <!--<base href="https://linuxconfig.org/linux-dns-server-bind-configuration">--><base href=".">
+  
+  <meta name="keywords" content="linux, config, how to, administration, settings">
+  <meta name="author" content="Renata Rendek">
+  <meta name="description" content="Linux configuration articles.">
+  <meta name="generator" content="Joomla! - Open Source Content Management">
+  <title>Linux DNS server BIND configuration</title>
+  <link href="https://linuxconfig.org/templates/jsn_teki_pro/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/modal.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/autotoc.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/style.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/bootstrap-responsive.min.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/bootstrap-extended.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/system.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/general.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/template.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/blue.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/business.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/jsn_mobile.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/jsn_css3.css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/style(1).css" type="text/css">
+  <link rel="stylesheet" href="./Linux DNS server BIND configuration_files/skitter.styles.css" type="text/css">
+  <style type="text/css">
+
+	#jsn-page {
+		min-width: 1150px;
+	}
+	#jsn-header_inner,
+	#jsn-body,
+	#jsn-footer_inner {
+		width: 1150px;
+		margin: 0 auto;
+	}
+	#jsn-pos-promo-left {
+		float: left;
+		width: 35%;
+		left: -100%;
+	}
+	#jsn-pos-promo {
+		width: 100%;
+		left: 0;
+	}
+	#jsn-pos-promo-right {
+		float: right;
+		width: 23%;
+	}
+
+	#jsn-leftsidecontent {
+		float: left;
+		width: 23%;
+		left: -100%;
+	}
+	#jsn-maincontent {
+		float: left;
+		width: 100%;
+		left: 0;
+	}
+	#jsn-rightsidecontent {
+		float: right;
+		width: 23%;
+	}
+
+		#jsn-maincontent_inner4 { left: 72%; }
+		#jsn-maincontent_inner5 { right: 72%; }
+	
+	#jsn-pos-innerleft {
+		float: left;
+		width: 28%;
+		left: -72%;
+	}
+	#jsn-centercol {
+		float: left;
+		width: 72%;
+		left: 0;
+	}
+	#jsn-pos-innerright {
+		float: right;
+		width: 28%;
+	}
+
+		div.jsn-modulecontainer ul.menu-mainmenu ul,
+		div.jsn-modulecontainer ul.menu-mainmenu ul li {
+			width: 200px;
+		}
+		div.jsn-modulecontainer ul.menu-mainmenu ul ul {
+		margin-left: 199px;
+		}
+		#jsn-pos-toolbar div.jsn-modulecontainer ul.menu-mainmenu ul ul {
+			
+				margin-right: 199px;
+				margin-left : auto
+		}
+	
+		div.jsn-modulecontainer ul.menu-sidemenu ul,
+		div.jsn-modulecontainer ul.menu-sidemenu ul li {
+			width: 200px;
+		}
+		div.jsn-modulecontainer ul.menu-sidemenu li ul {
+			right: -200px;
+		}
+		body.jsn-direction-rtl div.jsn-modulecontainer ul.menu-sidemenu li ul {
+			left: -200px;
+			right: auto;
+		}
+		div.jsn-modulecontainer ul.menu-sidemenu ul ul {
+		margin-left: 199px;
+		}
+	
+.jsn-themeslider-skitter-jBFJb .label_skitter {filter:alpha(opacity=75);opacity: 0.75;}.jsn-themeslider-skitter-jBFJb .label_skitter p.jsn-themeslider-caption-title {font-family: Verdana;
+font-size: 10px;
+font-weight: bold;
+text-align: left;
+color: #E9E9E9;}.jsn-themeslider-skitter-jBFJb .label_skitter p.jsn-themeslider-caption-description {font-family: Arial;
+font-size: 11px;
+font-weight: normal;
+text-align: left;
+color: #AFAFAF;}.jsn-themeslider-skitter-jBFJb .label_skitter a.jsn-themeslider-caption-link {font-family: Verdana;
+font-size: 11px;
+font-weight: bold;
+text-align: right;
+color: #E06614;}.jsn-themeslider-skitter-jBFJb .info_slide {top: 15px;}.jsn-themeslider-skitter-jBFJb .info_slide_dots {top: 15px;}
+  </style>
+  <script async="" src="./Linux DNS server BIND configuration_files/analytics.js"></script><script src="./Linux DNS server BIND configuration_files/mootools-core.js" type="text/javascript" style="color: rgb(0, 0, 0);"></script><style type="text/css"></style>
+  <script src="./Linux DNS server BIND configuration_files/core.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/mootools-more.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/modal.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jquery.min.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jquery-noconflict.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jquery-migrate.min.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/caption.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/bootstrap.min.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/noconflict.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/utils.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jsn_template.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jquery.min(1).js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jsn_is_conflict.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jquery.easing.1.3.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jquery.animate-colors-min.js" type="text/javascript"></script>
+  <script src="./Linux DNS server BIND configuration_files/jquery.skitter.js" type="text/javascript"></script>
+  <script type="text/javascript">
+
+		jQuery(function($) {
+			SqueezeBox.initialize({});
+			SqueezeBox.assign($('a.modal').get(), {
+				parse: 'rel'
+			});
+		});
+		function jModalClose() {
+			SqueezeBox.close();
+		}
+jQuery(window).on('load',  function() {
+				new JCaption('img.caption');
+			});
+				JSNTemplate.initTemplate({
+					templatePrefix			: "jsn_teki_pro_",
+					templatePath			: "/templates/jsn_teki_pro",
+					enableRTL				: false,
+					enableGotopLink			: true,
+					enableMobile			: true,
+					enableMobileMenuSticky	: true
+				});
+			
+
+		jQuery(function($) {
+			SqueezeBox.initialize({});
+			SqueezeBox.assign($('a.modal').get(), {
+				parse: 'rel'
+			});
+		});
+		function jModalClose() {
+			SqueezeBox.close();
+		}
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<!-- html5.js and respond.min.js for IE less than 9 -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="/plugins/system/jsntplframework/assets/3rd-party/respond/respond.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" async="" src="https://s3.buysellads.com/ac/bsa.js"></script><script src="./Linux DNS server BIND configuration_files/embed.js" data-timestamp="1463253207694"></script><script src="./Linux DNS server BIND configuration_files/alfie.f51946af45e0b561c60f768335c9eb79.js" async="" charset="UTF-8"></script></head>
+<body id="jsn-master" class="jsn-textstyle-business jsn-textsize-medium jsn-color-blue jsn-direction-ltr jsn-specialfont jsn-css3 jsn-mobile  jsn-joomla-30 jsn-com-content jsn-view-article jsn-itemid-907">
+<!-- BuySellAds Ad Code -->
+<script type="text/javascript">
+(function(){
+  var bsa = document.createElement('script');
+     bsa.type = 'text/javascript';
+     bsa.async = true;
+     bsa.src = '//s3.buysellads.com/ac/bsa.js';
+  (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
+})();
+</script>
+<!-- End BuySellAds Ad Code -->
+	<a name="top" id="top"></a>
+	<div id="jsn-page">
+			<div id="jsn-pos-stick-rightbottom">
+			<div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">
+<div>
+	<p><a href="https://linuxconfig.org/floss-technical-writer-linuxconfig-org" title="Write for us"><img src="./Linux DNS server BIND configuration_files/write-for-us.png"></a></p></div><div class="clearbreak"></div></div></div></div>
+		</div>
+			<div id="jsn-header"><div id="jsn-header_inner">
+			<div id="jsn-logo">
+			<h1 class="jsn-topheading">LinuxConfig - </h1><a href="https://linuxconfig.org/index.php" title=""><img src="./Linux DNS server BIND configuration_files/logo.png" alt="" id="jsn-logo-desktop"></a>			</div>
+			<div id="jsn-headerright">
+							<div id="jsn-pos-top">
+					<div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent"><span class="jsn-menu-toggle">Menu</span>
+<ul class="menu-topmenu menu-iconmenu">
+<li class="first last jsn-icon-contact">	<a href="http://www.linuxcareer.com/contact-us">
+		<span>
+		Contact us		</span>
+	</a>
+	</li></ul><div class="clearbreak"></div></div></div></div>
+					<div class="clearbreak"></div>
+				</div>
+						</div>
+			<div class="clearbreak"></div>
+					<div id="jsn-menu">
+							<div id="jsn-pos-mainmenu">
+					<div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent"><span class="jsn-menu-toggle">Menu</span>
+<ul class="menu-mainmenu">
+<li class="first jsn-icon-home"><a href="https://linuxconfig.org/" title="Start here">
+	<span>
+		<span class="jsn-menutitle">Home</span><span class="jsn-menudescription">Start here</span>	</span>
+</a></li><li class="parent"><a href="https://linuxconfig.org/linux-tutorials">
+	<span>
+		Linux Tutorials	</span>
+</a><span class="jsn-menu-toggle"></span><ul><li class="first">	<a href="http://www.linuxis.org/">
+		<span>
+		What is Linux?		</span>
+	</a>
+	</li><li>	<a href="http://linuxconfig.org/linux-command-line-tutorial">
+		<span>
+		Linux command line tutorial		</span>
+	</a>
+	</li><li>	<a href="http://linuxconfig.org/bash-scripting-tutorial">
+		<span>
+		Bash scripting tutorial		</span>
+	</a>
+	</li><li>	<a href="http://linuxconfig.org/vim-tutorial">
+		<span>
+		Vim tutorial		</span>
+	</a>
+	</li><li>	<a href="http://linuxconfig.org/perl-programming-tutorial">
+		<span>
+		Perl programming tutorial		</span>
+	</a>
+	</li><li>	<a href="http://linuxconfig.org/c-programming-tutorial">
+		<span>
+		C programming tutorial		</span>
+	</a>
+	</li><li class="last">	<a href="http://linuxconfig.org/linux-tutorials">
+		<span>
+		All Linux tutorials		</span>
+	</a>
+	</li></ul></li><li class="parent"><a href="https://linuxconfig.org/linux-commands">
+	<span>
+		Linux Commands	</span>
+</a><span class="jsn-menu-toggle"></span><ul><li class="first">	<a href="http://www.linuxcareer.com/linux-lpi-101-practice-quiz">
+		<span>
+		LPI 101 training		</span>
+	</a>
+	</li><li class="last">	<a href="http://www.linuxcareer.com/linux-lpi-102-practice-quiz">
+		<span>
+		LPI 102 training		</span>
+	</a>
+	</li></ul></li><li class="last"><a href="https://linuxconfig.org/write-for-us">
+	<span>
+		Write For Us	</span>
+</a></li></ul><div class="clearbreak"></div></div></div></div>
+				</div>
+										<span id="jsn-desktopswitch">
+					<a href="https://linuxconfig.org/linux-dns-server-bind-configuration#" onclick="javascript: JSNUtils.setTemplateAttribute(&#39;jsn_teki_pro_&#39;,&#39;mobile&#39;,&#39;no&#39;); return false;"></a>
+				</span>
+				<span id="jsn-mobileswitch">
+					<a href="https://linuxconfig.org/linux-dns-server-bind-configuration#" onclick="javascript: JSNUtils.setTemplateAttribute(&#39;jsn_teki_pro_&#39;,&#39;mobile&#39;,&#39;yes&#39;); return false;"></a>
+				</span>
+			            <div class="clearbreak"></div>
+			</div>
+				</div></div>
+		<div id="jsn-body">
+					<div id="jsn-content-top" class="">
+				<div id="jsn-promo">
+			                    <div id="jsn-pos-promo"><div id="jsn-pos-promo_inner">
+                        <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">
+<div>
+	<div class="adtag" style="width:728px;margin:8px;"> 
+<div id="bsap_1305178" class="bsarocks bsap_0301574ad05d08ff34fb92f3369791d6"></div>
+</div></div><div class="clearbreak"></div></div></div></div>
+                    </div></div>
+							<div class="clearbreak"></div>
+				</div>
+						</div>
+					<div id="jsn-content" class="jsn-hasinnerright ">
+				<div id="jsn-maincontent"><div id="jsn-maincontent_inner">
+						<div id="jsn-maincontent_inner1"><div id="jsn-maincontent_inner2"><div id="jsn-maincontent_inner3"><div id="jsn-maincontent_inner4"><div id="jsn-maincontent_inner5">
+					<div id="jsn-centercol">
+                        <div id="jsn-centercol_inner">
+										<div id="jsn-mainbody-content" class=" jsn-hasmainbody">
+											<div id="jsn-mainbody">
+										<div id="system-message-container">
+	</div>
+
+										<div class="item-page">
+	
+		<div class="page-header">
+		<h2>
+										Linux DNS server BIND configuration					</h2>
+				</div>
+		<div class="jsn-article-toolbar">
+							<div class="clearfix"></div>
+	</div>
+		
+							<div class="autotoc" style="float:right;"><script type="text/javascript">
+            // <![CDATA[
+            function toc_toggle_visible(ob)
+            {
+              var ul = ob.parentNode.parentNode.getElementsByTagName("ul")[0];
+              var d = ul.style.display == "none";
+              ul.style.display = d ? "" : "none";
+              ob.innerHTML = d ? "Hide"
+                               : "Show";
+              return false;
+            }
+            // ]]>
+            </script><span>Contents</span><span>[<a href="https://linuxconfig.org/linux-dns-server-bind-configuration#" onclick="return toc_toggle_visible(this);">Hide</a>]</span><ul><li><ul><li><a href="https://linuxconfig.org/linux-dns-server-bind-configuration#h1-bind9-nameserver-installation" class="toclink toclink-h1">bind9 nameserver installation</a></li><li><a href="https://linuxconfig.org/linux-dns-server-bind-configuration#h2-creating-a-dns-zone-file" class="toclink toclink-h1">Creating a DNS zone file</a></li><li><a href="https://linuxconfig.org/linux-dns-server-bind-configuration#h3-address-to-name-mappings" class="toclink toclink-h1">address-to-name mappings</a></li><li><a href="https://linuxconfig.org/linux-dns-server-bind-configuration#h4-updating-a-bind-configuration-file" class="toclink toclink-h1">Updating a BIND Configuration File</a></li><li><a href="https://linuxconfig.org/linux-dns-server-bind-configuration#h5-checking-bind-s-zone-files-and-configuration" class="toclink toclink-h1">Checking bind's zone files and configuration</a></li><li><a href="https://linuxconfig.org/linux-dns-server-bind-configuration#h6-start-restart-bind-nameserver" class="toclink toclink-h1">Start / restart bind nameserver</a></li><li><a href="https://linuxconfig.org/linux-dns-server-bind-configuration#h7-testing-a-bind-server-configuration" class="toclink toclink-h1">Testing a bind server configuration</a></li></ul></li></ul></div>	<p>This article is a quick configuration manual of a Linux DNS server using bind. <span style="font-family: Helvetica, Arial, sans-serif;"><span style="-webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">I believe that </span></span><span style="font-family: Helvetica, Arial, sans-serif; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">bind do not need much introduction, but </span>before you proceed with the installation and configuration of bind nameserver make sure that bind DNS server is exactly what you want. Default setup and execution of bind on Debian or Ubuntu may take around 200MB of RAM with no zones added to the config file. Unless you reduce the memory usage of a bind via various bind "options" config settings, be prepared to have some spare RAM available just for this service. This fact is even more important if you pay for your own VPS server.</p>
+<p><br> Another DNS nameservers available on a Linux systems are NSD ( Name Server Daemon) or djbdns ( tinydns ). Both are lightweight alternatives to bind9 DNS server and have less RAM requirements. Apparently are even faster.  <br>In this article we will not go into details of what Domain Name Service ( DNS ) is nor how DNS works. Rather we simply concentrate in a simple configuration of a custom zone and config file for a given domain / host  supporting www, mail services.</p>
+<p>Sample scenario notes to help you ready this DNS bind howto:</p>
+<ul>
+<li>nameserver IP address 192.168.135.130</li>
+<li>sample domain / host: linuxconfig.org</li>
+<li>authoritative nameservers for a linuxconfig.org zone: ns1.linuxconfig.org ( 192.168.0.10 ) and ns2.linuxconfig.org ( 192.168.0.11 )</li>
+<li>www and mail services for linuxconfig.org will point to: 192.168.0.10 </li>
+</ul>
+<h1 id="h1-bind9-nameserver-installation">1.&nbsp;bind9 nameserver installation</h1>
+<p>Unless you prefer to install bind from a source code the installation is rather simple. On a Debian or Ubuntu Linux server you can install a bind nameserver with a following command:</p>
+ 
+<p> </p>
+<pre>apt-get install bind9 dnsutils
+</pre>
+<p>CentOS or Fedora alternative:</p>
+<pre>yum install bind dnsutils
+</pre>
+<p>dnsutils is not compulsory package to run bind webserver, but we will use a dig command which is part of this package as a testing tool of your bind configuration.</p>
+<h1 id="h2-creating-a-dns-zone-file">2.&nbsp;Creating a DNS zone file</h1>
+<p>At this stage we will need to create a new zone file for a domain linuxconfig.org. Navigate to /etc/bind/ directory execute following sequence of commands to navigate to zones/master/</p>
+<pre>cd /etc/bind
+mkdir -p zones/master
+cd zones/master/
+</pre>
+<p>/etc/bind/zones/master directory will contain a zone file for a linuxconfig.org domain. If you prefer to use another directory to hold this file you are free to do so. The following zone file db.linuxconfig.org will hold a DNS record to assist a nameserver resolve a fully qualified domain name to an IP address. Create and save <strong>db.linuxconfig.org</strong> with a following content:</p>
+<pre>;
+; BIND data file for linuxconfig.org
+;
+$TTL    3h
+@       IN      SOA     ns1.linuxconfig.org. admin.linuxconfig.org. (
+                          1        ; Serial
+                          3h       ; Refresh after 3 hours
+                          1h       ; Retry after 1 hour
+                          1w       ; Expire after 1 week
+                          1h )     ; Negative caching TTL of 1 day
+;
+@       IN      NS      ns1.linuxconfig.org.
+@       IN      NS      ns2.linuxconfig.org.
+
+
+linuxconfig.org.    IN      MX      10      mail.linuxconfig.org.
+linuxconfig.org.    IN      A       192.168.0.10
+ns1                     IN      A       192.168.0.10
+ns2                     IN      A       192.168.0.11
+www                     IN      CNAME   linuxconfig.org.
+mail                    IN      A       192.168.0.10
+ftp                     IN      CNAME   linuxconfig.org.
+</pre>
+<p>Here is just a quick review of some lines from the above bind DNS zone file:</p>
+<ul>
+<li>SOA  Record: nameserver authoritative for a zone linuxconfig.org is  ns1.linuxconfig.org and admin.linuxconfig.org is an email address of a person responsible for this DNS zone. </li>
+<li>NS Records: two nameservers for a linuxconfig.org zone are ns[1,2].linuxconfig.org </li>
+<li>MX ( Mail Exchange): linuxconfig.org mail exachange record. Number 10 means a preference for discarting a records  A : A simply means address inanother words in linuxconfig.org's zone a ns1 would ahve a A ( address )  192.168.0.10. </li>
+<li>CNAME Record ( Canonical Name record ): restart the query using the canonical name instead of the original name</li>
+</ul>
+<h1 id="h3-address-to-name-mappings">3.&nbsp;address-to-name mappings</h1>
+<div>At this stage the bind DNS server can resolve an IP address mapped to a linuxconfig.org host. What we should do now is the teach our nameserver the other way around, which is, to resolve a host  from an IP address. For this we are going to need yet another file and that is <strong>db.192.168.0</strong> with a following content:</div>
+<p>PTR</p>
+<pre>;
+; BIND reverse data file for 0.168.192.in-addr.arpa
+;
+$TTL    604800
+0.168.192.in-addr.arpa.      IN      SOA     ns1.linuxconfig.org. admin.linuxconfig.org. (
+                          1         ; Serial
+                          3h       ; Refresh after 3 hours
+                          1h       ; Retry after 1 hour
+                          1w       ; Expire after 1 week
+                          1h )     ; Negative caching TTL of 1 day
+;
+0.168.192.in-addr.arpa.       IN      NS      ns1.linuxconfig.org.
+0.168.192.in-addr.arpa.       IN      NS      ns2.linuxconfig.org.
+
+10.0.168.192.in-addr.arpa.   IN      PTR     linuxconfig.org.</pre>
+<ul>
+<li>PTR: a NDS record used for a mapping of an IP address to a host name.</li>
+</ul>
+<h1 id="h4-updating-a-bind-configuration-file">4.&nbsp;Updating a BIND Configuration File</h1>
+<div>At this point we should have two files ready:</div>
+<div>
+<ul>
+<li>/etc/bind/zones/master/db.linuxconfig.org</li>
+<li>/etc/bind/zones/master/db.192.168.0</li>
+</ul>
+<div>All we need to do now is to insert both zone file names into a bind's configuration file <strong>named.conf.local. <span style="font-weight: normal;">To do that </span></strong>add following lines into this file:</div>
+<pre>zone "linuxconfig.org" {
+       type master;
+       file "/etc/bind/zones/master/db.linuxconfig.org";
+};
+
+zone "0.168.192.in-addr.arpa" {
+       type master;
+       file "/etc/bind/zones/master/db.192.168.0";
+};</pre>
+</div>
+<p>Last thing before we go ahead to check a configuration is to add and IP address af a stable DNS server to a named.conf.options file. This IP address is used in case that a local DNS server do not know the answer the a name resolution query. In IP address of a DNS server in many cases is provided by your Internet provider. Alternatively if you are google fan use 8.8.8.8 or 8.8.4.4.</p>
+<p>Replace a following blog of text withing a named.conf.options file:</p>
+<pre>       // forwarders {
+       //      0.0.0.0;
+       // };
+</pre>
+<p>with new stable DNS server IP  address</p>
+<pre>        forwarders {
+              8.8.4.4;
+         };</pre>
+<h1 id="h5-checking-bind-s-zone-files-and-configuration">5.&nbsp;Checking bind's zone files and configuration</h1>
+<div>Before we attempt to start a bind nameserver with a new zone and configuration here are some tools to check if we have not done some typo or misconfiguration.</div>
+<div>To check a configuration files run a following command:</div>
+<pre>named-checkconf</pre>
+<p>With this named-checkconf command the rule is: no news are good news. If no output had been produced your config files looks OK.</p>
+<p>To check a DNS zone files we can use named-checkzone command:</p>
+<pre>named-checkzone linuxconfig.org /etc/bind/zones/master/db.linuxconfig.org
+zone linuxconfig.org/IN: loaded serial 1
+OK
+</pre>
+<p>reverse zone file check:</p>
+<pre>named-checkzone 0.168.192.in-addr.arpa /etc/bind/zones/master/db.192.168.0
+zone 0.168.192.in-addr.arpa/IN: loaded serial 2
+OK
+</pre>
+<h1 id="h6-start-restart-bind-nameserver">6.&nbsp;Start / restart bind nameserver</h1>
+<p>At this point nothing can stop us to run bind9 dns server:</p>
+<pre> /etc/init.d/bind9 start
+Starting domain name service...: bind9.
+</pre>
+<p>Alternatively, if your bind server is already running use a following command to to assist you with its restart:</p>
+<pre>/etc/init.d/bind9 restart
+Stopping domain name service...: bind9.
+Starting domain name service...: bind9.<span style="font-family: Helvetica, Arial, sans-serif; color: #666666; font-size: medium;"><span style="font-size: 16px; white-space: normal;"><strong>
+</strong></span></span></pre>
+<h1 id="h7-testing-a-bind-server-configuration">7.&nbsp;Testing a bind server configuration</h1>
+<p>A dig command from dnsutils package will become handy to help us to test a new configuration of  bind nameserver.</p>
+<p>dig command can be used from any PC which has a network access the your DNS server but preferably your should start your testing from a localhost. In our this case the IP address of our name server is 192.168.135.130. First we will test host-to-IP resolution:</p>
+<pre>dig @192.168.135.130 www.linuxconfig.org
+
+; &lt;&lt;&gt;&gt; DiG 9.6-ESV-R1 &lt;&lt;&gt;&gt; @192.168.135.130 www.linuxconfig.org
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 60863
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 2
+
+;; QUESTION SECTION:
+;www.linuxconfig.org.           IN      A
+
+;; ANSWER SECTION:
+www.linuxconfig.org.    10800   IN      CNAME   linuxconfig.org.
+linuxconfig.org.        10800   IN      A       192.168.0.10
+
+;; AUTHORITY SECTION:
+linuxconfig.org.        10800   IN      NS      ns2.linuxconfig.org.
+linuxconfig.org.        10800   IN      NS      ns1.linuxconfig.org.
+
+;; ADDITIONAL SECTION:
+ns1.linuxconfig.org.    10800   IN      A       192.168.0.10
+ns2.linuxconfig.org.    10800   IN      A       192.168.0.11
+
+;; Query time: 0 msec
+;; SERVER: 192.168.135.130#53(192.168.135.130)
+;; WHEN: Thu Aug  5 18:50:48 2010
+;; MSG SIZE  rcvd: 135</pre>
+<p>Next we test IP-to-host resolution:</p>
+<pre>dig @192.168.135.130 -x 192.168.0.10
+
+; &lt;&lt;&gt;&gt; DiG 9.6-ESV-R1 &lt;&lt;&gt;&gt; @192.168.135.130 -x 192.168.0.10
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 10810
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 2
+
+;; QUESTION SECTION:
+;10.0.168.192.in-addr.arpa.     IN      PTR
+
+;; ANSWER SECTION:
+10.0.168.192.in-addr.arpa. 604800 IN    PTR     linuxconfig.org.
+
+;; AUTHORITY SECTION:
+0.168.192.in-addr.arpa. 604800  IN      NS      ns2.linuxconfig.org.
+0.168.192.in-addr.arpa. 604800  IN      NS      ns1.linuxconfig.org.
+
+;; ADDITIONAL SECTION:
+ns1.linuxconfig.org.    10800   IN      A       192.168.0.10
+ns2.linuxconfig.org.    10800   IN      A       192.168.0.11
+
+;; Query time: 0 msec
+;; SERVER: 192.168.135.130#53(192.168.135.130)
+;; WHEN: Thu Aug  5 18:52:06 2010
+;; MSG SIZE  rcvd: 140
+</pre>
+<p>Congratulation. You have just created and configured your own DNS zone using bind nameserver.</p>
+	
+						 </div>
+
+									</div>
+										</div>
+										<div id="jsn-pos-user-bottom" class="jsn-modulescontainer jsn-horizontallayout jsn-modulescontainer1">
+									<div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">
+<div>
+	<center>
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- LINUXCONFIG-REPONSIVE-BOTTOM-LINKS -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4906753266448300" data-ad-slot="3873304447" data-ad-format="link"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><br><br>
+<!-- BuySellAds Zone Code -->
+<div id="bsap_1305347" class="bsarocks bsap_0301574ad05d08ff34fb92f3369791d6"></div>
+<!-- End BuySellAds Zone Code -->
+</center>
+<div id="disqus_thread"><iframe id="dsq-app2" name="dsq-app2" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Linux DNS server BIND configuration_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 631px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//linuxconfig.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript" rel="nofollow"&gt;comments powered by Disqus.&lt;/a&gt;</noscript></div><div class="clearbreak"></div></div></div></div>
+                                    <div class="clearbreak"></div>
+								</div>
+									</div>
+						</div>
+								<div id="jsn-pos-innerright">
+							<div id="jsn-pos-innerright_inner">
+								<div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">
+<div>
+	<p>
+<!-- BuySellAds Zone Code -->
+</p><div id="bsap_1305179" class="bsarocks bsap_0301574ad05d08ff34fb92f3369791d6"></div>
+<!-- End BuySellAds Zone Code -->
+<p></p></div><div class="clearbreak"></div></div></div></div><div class="richbox-2 jsn-icon-star jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><h3 class="jsn-moduletitle"><span class="jsn-moduletitle_inner1"><span class="jsn-moduletitle_inner2"><span class="jsn-moduleicon">Free Linux eBooks</span></span></span></h3><div class="jsn-modulecontent"><!-- JSN IMAGESHOW PRO UNLIMITED 4.7.0 - Theme Slider 1.1.4 --><div class="jsn-container"><div class="jsn-gallery"><div id="jsn-themeslider-skitter-jBFJb"><div style="width: 200px; height: 259px;" class="box_skitter jsn-themeslider-gallery jsn-themeslider-skitter-jBFJb">
+<ul style="display: none;"><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk10/?p=w_infk10">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk10c4.gif" alt="Understanding the Linux® Virtual Memory Manager" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Understanding the Linux® Virtual Memory Manager</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk03/?p=w_infk03">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk03c4.gif" alt="Self-Service Linux®: Mastering the Art of Problem Determination" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Self-Service Linux®: Mastering the Art of Problem Determination</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk05/?p=w_infk05">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk05c4.gif" alt="Managing Linux® Systems with Webmin™" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Managing Linux® Systems with Webmin™</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_wile11/?p=w_wile11">
+			   				<img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" alt="Ubuntu Linux Toolbox: 1000+ Commands" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Ubuntu Linux Toolbox: 1000+ Commands</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01">
+			   				<img src="./Linux DNS server BIND configuration_files/w_mach01c4.gif" alt="Introduction to Linux - A Hands on Guide" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Introduction to Linux - A Hands on Guide</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk02/?p=w_infk02">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk02c4.gif" alt="Linux® Quick Fix Notebook" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Linux® Quick Fix Notebook</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk01/?p=w_infk01">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk01c4.gif" alt="Open Source Security Tools" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Open Source Security Tools</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk07/?p=w_infk07">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk07c4.gif" alt="An Introduction to Design Patterns in C++ with Qt 4" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">An Introduction to Design Patterns in C++ with Qt 4</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk14/?p=w_infk14">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk14c4.gif" alt="The Official Samba-3 HOWTO and Reference Guide" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">The Official Samba-3 HOWTO and Reference Guide</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk09/?p=w_infk09">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk09c4.gif" alt="User Mode Linux" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">User Mode Linux</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk12/?p=w_infk12">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk12c4.gif" alt="Linux® Patch Management" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Linux® Patch Management</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_infk04/?p=w_infk04">
+			   				<img src="./Linux DNS server BIND configuration_files/w_infk04c4.gif" alt="Java™ Application Development on Linux" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Java™ Application Development on Linux</p></div>
+					 </li><li>
+			   			<a href="http://linuxconfig-org.tradepub.com/free/w_orei01/?p=w_orei01">
+			   				<img src="./Linux DNS server BIND configuration_files/w_orei01c4.gif" alt="Linux Device Drivers, 2nd Edition" style="height: 259px;">
+			   			</a>
+			   			<div class="label_text"><p class="jsn-themeslider-caption-title">Linux Device Drivers, 2nd Edition</p></div>
+					 </li></ul><input type="hidden" class="cache_skitter_index" value=""><span class="prev_button" style="display: none;">prev</span><span class="next_button" style="display: none;">next</span><span class="info_slide" style="display: none; left: 15px;"><span class="image_number" rel="0" id="image_n_1_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">1</span> <span class="image_number" rel="1" id="image_n_2_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">2</span> <span class="image_number" rel="2" id="image_n_3_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">3</span> <span class="image_number" rel="3" id="image_n_4_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">4</span> <span class="image_number image_number_select" rel="4" id="image_n_5_0" style="color: rgb(255, 255, 255); background-color: rgb(204, 51, 51);">5</span> <span class="image_number" rel="5" id="image_n_6_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">6</span> <span class="image_number" rel="6" id="image_n_7_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">7</span> <span class="image_number" rel="7" id="image_n_8_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">8</span> <span class="image_number" rel="8" id="image_n_9_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">9</span> <span class="image_number" rel="9" id="image_n_10_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">10</span> <span class="image_number" rel="10" id="image_n_11_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">11</span> <span class="image_number" rel="11" id="image_n_12_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">12</span> <span class="image_number" rel="12" id="image_n_13_0" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">13</span> </span><div class="container_skitter" style="width: 200px; height: 259px;"><div class="image"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01" target="_self"><img class="image_main" src="./Linux DNS server BIND configuration_files/w_mach01c4.gif" style="width: 200px; display: inline; height: 259px;"></a><div class="label_skitter" style="display: none; width: 200px;"><p class="jsn-themeslider-caption-title">Introduction to Linux - A Hands on Guide</p></div></div><div class="box_clone" style="left: -64px; top: -34.5px; width: 328px; height: 328px; border-radius: 328px; display: none; transform: matrix(-0.937856, 0.34702, -0.34702, -0.937856, 0, 0) rotate(20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: 64px; top: 34.5px; height: 259px;"></a></div><div class="box_clone" style="left: -14px; top: 15.5px; width: 228px; height: 228px; border-radius: 328px; display: none; transform: matrix(-0.715573, -0.698541, 0.698541, -0.715573, 0, 0) rotate(-20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: 14px; top: -15.5px; height: 259px;"></a></div><div class="box_clone" style="left: 36px; top: 65.5px; width: 128px; height: 128px; border-radius: 328px; display: none; transform: matrix(-0.92071, 0.390246, -0.390246, -0.92071, 0, 0) rotate(20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -36px; top: -65.5px; height: 259px;"></a></div><div class="box_clone" style="left: 86px; top: 115.5px; width: 28px; height: 28px; border-radius: 328px; display: none; transform: matrix(-0.954578, -0.297966, 0.297966, -0.954578, 0, 0) rotate(-20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -86px; top: -115.5px; height: 259px;"></a></div><div class="box_clone" style="left: 136px; top: 165.5px; width: 0px; height: 0px; border-radius: 328px; display: none; transform: matrix(-0.896268, 0.443508, -0.443508, -0.896268, 0, 0) rotate(20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -136px; top: -165.5px; height: 259px;"></a></div><div class="box_clone" style="left: 186px; top: 215.5px; width: 0px; height: 0px; border-radius: 328px; display: none; transform: matrix(-0.907043, -0.421034, 0.421034, -0.907043, 0, 0) rotate(-20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -186px; top: -215.5px; height: 259px;"></a></div><div class="box_clone" style="left: 236px; top: 265.5px; width: 0px; height: 0px; border-radius: 328px; display: none; transform: matrix(-0.821169, 0.570687, -0.570687, -0.821169, 0, 0) rotate(20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -236px; top: -265.5px; height: 259px;"></a></div><div class="box_clone" style="left: 286px; top: 315.5px; width: 0px; height: 0px; border-radius: 328px; display: none; transform: matrix(-0.835398, -0.549647, 0.549647, -0.835398, 0, 0) rotate(-20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -286px; top: -315.5px; height: 259px;"></a></div><div class="box_clone" style="left: 336px; top: 365.5px; width: 0px; height: 0px; border-radius: 328px; display: none; transform: matrix(-0.89765, 0.440714, -0.440714, -0.89765, 0, 0) rotate(20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -336px; top: -365.5px; height: 259px;"></a></div><div class="box_clone" style="left: 386px; top: 415.5px; width: 0px; height: 0px; border-radius: 328px; display: none; transform: matrix(-0.909582, -0.415524, 0.415524, -0.909582, 0, 0) rotate(-20deg);"><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01"><img src="./Linux DNS server BIND configuration_files/w_wile11c4.gif" style="width: 200px; left: -386px; top: -415.5px; height: 259px;"></a></div></div><span class="play_pause_button" style="left: 79px; opacity: 0;">pause</span></div>
+</div><script type="text/javascript">
+						jsnThemeSliderjQuery(function() {
+						jsnThemeSliderjQuery(document).ready(function(){
+							var wrap_width = parseInt(200);
+							var window_width = parseInt(jsnThemeSliderjQuery(window).width());
+							if (wrap_width > window_width) {
+								jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb').css("width", "100%");
+							} else {
+								jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb').css("width", "200px");
+							}
+							var oldHTML = jsnThemeSliderjQuery('#jsn-themeslider-skitter-jBFJb').html();
+							var options = {"animation":"circlesRotate","navigation":true,"navShowOnMouseOver":true,"dots":false,"numbers":false,"caption_title_css":"font-family: Verdana;\r\nfont-size: 10px;\r\nfont-weight: bold;\r\ntext-align: left;\r\ncolor: #E9E9E9;","caption_description_css":"font-family: Arial;\r\nfont-size: 11px;\r\nfont-weight: normal;\r\ntext-align: left;\r\ncolor: #AFAFAF;","caption_link_css":"font-family: Verdana;\r\nfont-size: 11px;\r\nfont-weight: bold;\r\ntext-align: right;\r\ncolor: #E06614;","caption_position":"top","caption_caption_opacity":"filter:alpha(opacity=75);opacity: 0.75;","interval":7000,"controls":true,"controlShowOnMouseOver":true,"stop_over":true,"auto_play":true,"caption_title_show":true,"caption_description_show":false,"caption_link_show":false,"label":false,"animateNumberActive":{"backgroundColor":"#CC3333","color":"#fff"},"click_action":"open_image_link","open_link_in":"current_browser","skitter_class_id":"jsn-themeslider-skitter-jBFJb"};
+							options.base_height = 259;
+							jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb').skitter(options);
+							jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb .image_main').css("max-width", "");
+							var jsn_jBFJb = jsnThemeSliderjQuery(window).width();
+							var cacheResize;
+							jsnThemeSliderjQuery(window).resize(function (e) {
+								if (jsn_jBFJb != jsnThemeSliderjQuery(window).width())
+								{
+									clearTimeout(cacheResize);
+									cacheResize = "";
+									var oldCacheIndex = jsnThemeSliderjQuery('#jsn-themeslider-skitter-jBFJb .cache_skitter_index').attr('value');
+									jsnThemeSliderjQuery('#jsn-themeslider-skitter-jBFJb').html(oldHTML);
+									var wrap_width = parseInt(200);
+							var window_width = parseInt(jsnThemeSliderjQuery(window).width());
+							if (wrap_width > window_width) {
+								jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb').css("width", "100%");
+							} else {
+								jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb').css("width", "200px");
+							}
+									jsnThemeSliderjQuery('#jsn-themeslider-skitter-jBFJb .cache_skitter_index').attr('value', oldCacheIndex);
+									var options = {"animation":"circlesRotate","navigation":true,"navShowOnMouseOver":true,"dots":false,"numbers":false,"caption_title_css":"font-family: Verdana;\r\nfont-size: 10px;\r\nfont-weight: bold;\r\ntext-align: left;\r\ncolor: #E9E9E9;","caption_description_css":"font-family: Arial;\r\nfont-size: 11px;\r\nfont-weight: normal;\r\ntext-align: left;\r\ncolor: #AFAFAF;","caption_link_css":"font-family: Verdana;\r\nfont-size: 11px;\r\nfont-weight: bold;\r\ntext-align: right;\r\ncolor: #E06614;","caption_position":"top","caption_caption_opacity":"filter:alpha(opacity=75);opacity: 0.75;","interval":7000,"controls":true,"controlShowOnMouseOver":true,"stop_over":true,"auto_play":true,"caption_title_show":true,"caption_description_show":false,"caption_link_show":false,"label":false,"animateNumberActive":{"backgroundColor":"#CC3333","color":"#fff"},"click_action":"open_image_link","open_link_in":"current_browser","skitter_class_id":"jsn-themeslider-skitter-jBFJb"};
+									options.base_height = 259;
+									cacheResize = setTimeout(function () {
+										jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb').skitter(options);
+										jsnThemeSliderjQuery('.jsn-themeslider-skitter-jBFJb .image_main').css("max-width", "");
+									}, 500);
+									jsn_jBFJb = jsnThemeSliderjQuery(window).width();
+								}
+							});
+						})});
+				</script><div class="jsn-themeslider-seocontent">
+<div><p>Tradepub Ebooks</p><p></p><ul><li><p>Introduction to Linux - A Hands on Guide</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01">http://linuxconfig-org.tradepub.com/free/w_mach01/?p=w_mach01</a></p></li><li><p>Understanding the Linux® Virtual Memory Manager</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk10/?p=w_infk10">http://linuxconfig-org.tradepub.com/free/w_infk10/?p=w_infk10</a></p></li><li><p>User Mode Linux</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk09/?p=w_infk09">http://linuxconfig-org.tradepub.com/free/w_infk09/?p=w_infk09</a></p></li><li><p>Self-Service Linux®: Mastering the Art of Problem Determination</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk03/?p=w_infk03">http://linuxconfig-org.tradepub.com/free/w_infk03/?p=w_infk03</a></p></li><li><p>Linux® Quick Fix Notebook</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk02/?p=w_infk02">http://linuxconfig-org.tradepub.com/free/w_infk02/?p=w_infk02</a></p></li><li><p>Managing Linux® Systems with Webmin™</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk05/?p=w_infk05">http://linuxconfig-org.tradepub.com/free/w_infk05/?p=w_infk05</a></p></li><li><p>Linux® Patch Management</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk12/?p=w_infk12">http://linuxconfig-org.tradepub.com/free/w_infk12/?p=w_infk12</a></p></li><li><p>The Official Samba-3 HOWTO and Reference Guide</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk14/?p=w_infk14">http://linuxconfig-org.tradepub.com/free/w_infk14/?p=w_infk14</a></p></li><li><p>Linux Device Drivers, 2nd Edition</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_orei01/?p=w_orei01">http://linuxconfig-org.tradepub.com/free/w_orei01/?p=w_orei01</a></p></li><li><p>Java™ Application Development on Linux</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk04/?p=w_infk04">http://linuxconfig-org.tradepub.com/free/w_infk04/?p=w_infk04</a></p></li><li><p>Open Source Security Tools</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk01/?p=w_infk01">http://linuxconfig-org.tradepub.com/free/w_infk01/?p=w_infk01</a></p></li><li><p>An Introduction to Design Patterns in C++ with Qt 4</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_infk07/?p=w_infk07">http://linuxconfig-org.tradepub.com/free/w_infk07/?p=w_infk07</a></p></li><li><p>Ubuntu Linux Toolbox: 1000+ Commands</p><p><a href="http://linuxconfig-org.tradepub.com/free/w_wile11/?p=w_wile11">http://linuxconfig-org.tradepub.com/free/w_wile11/?p=w_wile11</a></p></li></ul></div></div>
+</div></div><div class="clearbreak"></div></div></div></div><div class="lightbox-2 jsn-icon-search jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><h3 class="jsn-moduletitle"><span class="jsn-moduletitle_inner1"><span class="jsn-moduletitle_inner2"><span class="jsn-moduleicon">Search Articles</span></span></span></h3><div class="jsn-modulecontent"><form action="https://linuxconfig.org/linux-dns-server-bind-configuration" method="post">
+	<div class="search">
+		<label for="mod-search-searchword"></label><input name="searchword" id="mod-search-searchword" maxlength="200" class="inputbox" type="text" size="35" value="search ..." onblur="if (this.value==&#39;&#39;) this.value=&#39;search ...&#39;;" onfocus="if (this.value==&#39;search ...&#39;) this.value=&#39;&#39;;"><p align="center"><input type="submit" value="Search" class="button" onclick="this.form.searchword.focus();"></p>	<input type="hidden" name="task" value="search">
+	<input type="hidden" name="option" value="com_search">
+	<input type="hidden" name="Itemid" value="907">
+	</div>
+</form>
+<div class="clearbreak"></div></div></div></div><div class="lightbox-2 jsn-icon-info jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><h3 class="jsn-moduletitle"><span class="jsn-moduletitle_inner1"><span class="jsn-moduletitle_inner2"><span class="jsn-moduleicon">Friendly Sites</span></span></span></h3><div class="jsn-modulecontent">
+<div>
+	<p><a href="http://tuxmachines.org/">Tuxmachines.org</a><br></p></div><div class="clearbreak"></div></div></div></div><div class="lightbox-2 jsn-icon-info jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><h3 class="jsn-moduletitle"><span class="jsn-moduletitle_inner1"><span class="jsn-moduletitle_inner2"><span class="jsn-moduleicon">Latest Configs</span></span></span></h3><div class="jsn-modulecontent"><ul class="latestnewslightbox-2 jsn-icon-info">
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/how-to-move-docker-s-default-var-lib-docker-to-another-directory-on-ubuntu-debian-linux" itemprop="url">
+			<span itemprop="name">
+				How to move docker's default /var/lib/docker to another directory on Ubuntu/Debian Linux			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/how-to-move-var-directory-to-another-partition" itemprop="url">
+			<span itemprop="name">
+				How to move /var directory to another partition			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/getting-what-you-want-on-arch-and-slackware-aur-and-slackbuilds" itemprop="url">
+			<span itemprop="name">
+				Getting what you want on Arch and Slackware - AUR and Slackbuilds			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/intrusion-detection-systems-using-tripwire-on-linux" itemprop="url">
+			<span itemprop="name">
+				Intrusion detection systems : Using tripwire on Linux			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/custom-kernels-in-ubuntu-debian-how-when-and-why" itemprop="url">
+			<span itemprop="name">
+				Custom kernels in Ubuntu/Debian - how, when and why			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/in-depth-howto-on-linux-kernel-configuration" itemprop="url">
+			<span itemprop="name">
+				In-depth HOWTO on Linux kernel configuration			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/using-cron-scheduler-on-linux-systems" itemprop="url">
+			<span itemprop="name">
+				Using cron scheduler on Linux systems			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/linux-system-and-hardware-monitoring-made-efficient" itemprop="url">
+			<span itemprop="name">
+				Linux system and hardware monitoring made efficient			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/how-to-determine-os-of-the-remote-host" itemprop="url">
+			<span itemprop="name">
+				How to determine OS of the remote host			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/learning-linux-commands-dd" itemprop="url">
+			<span itemprop="name">
+				Learning Linux commands: dd			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/learning-linux-commands-join" itemprop="url">
+			<span itemprop="name">
+				Learning Linux Commands: join			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/deployment-of-kippo-ssh-honeypot-on-ubuntu-linux" itemprop="url">
+			<span itemprop="name">
+				Deployment of Kippo SSH Honeypot on Ubuntu Linux			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/an-overview-of-gnu-r-programming-language" itemprop="url">
+			<span itemprop="name">
+				An overview of GNU R programming language			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/building-basic-packages-in-gnu-r" itemprop="url">
+			<span itemprop="name">
+				Building basic packages in GNU R			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/how-to-install-and-use-packages-in-gnu-r" itemprop="url">
+			<span itemprop="name">
+				How to install and use packages in GNU R			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/a-quick-gnu-r-tutorial-to-statistical-models-and-graphics" itemprop="url">
+			<span itemprop="name">
+				A quick GNU R tutorial to statistical models and graphics			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/a-quick-gnu-r-tutorial-to-basic-operations-functions-and-data-structures" itemprop="url">
+			<span itemprop="name">
+				A quick GNU R tutorial to basic operations, functions and data structures			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/running-gnu-r-on-linux-operating-system" itemprop="url">
+			<span itemprop="name">
+				Running GNU R on Linux Operating System			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/introduction-to-gnu-r-on-linux-operating-system" itemprop="url">
+			<span itemprop="name">
+				Introduction to GNU R on Linux Operating System			</span>
+		</a>
+	</li>
+	<li itemscope="" itemtype="https://schema.org/Article">
+		<a href="https://linuxconfig.org/running-a-simple-http-web-server-with-one-terminal-command-and-python" itemprop="url">
+			<span itemprop="name">
+				Running a simple HTTP web server with one terminal command and python			</span>
+		</a>
+	</li>
+</ul>
+<div class="clearbreak"></div></div></div></div>
+							</div>
+						</div>
+							<div class="clearbreak"></div></div></div></div></div></div></div></div>
+						<div class="clearbreak"></div>
+			</div>
+				</div>
+					<div id="jsn-footer">
+				<div id="jsn-footer_inner">
+					<div id="jsn-footermodules" class="jsn-modulescontainer jsn-modulescontainer1">
+								<div id="jsn-pos-footer">
+						<div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent"><span class="jsn-menu-toggle">Menu</span>
+<ul class="menu-divmenu">
+<li class="first last">	<a href="http://www.linuxcareer.com/contact-us">
+		<span>
+		Contact us		</span>
+	</a>
+	</li></ul><div class="clearbreak"></div></div></div></div><div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">
+<div>
+	<br>Copyright 2007 - 2016 LinuxConfig.org. All rights reserved.<p></p></div><div class="clearbreak"></div></div></div></div>
+					</div>
+								<div class="clearbreak"></div>
+				</div>
+			</div>
+		</div>
+			</div>
+			<a id="jsn-gotoplink" href="https://linuxconfig.org/linux-dns-server-bind-configuration#top" opacity="0" style="margin-left: -43px; opacity: 1; visibility: visible;">
+			<span>Go to top</span>
+		</a>
+	
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-40602308-3', 'linuxconfig.org');
+  ga('send', 'pageview');
+
+</script><script id="dsq-count-scr" src="./Linux DNS server BIND configuration_files/count.js" async=""></script>
+
+
+<div id="sbox-overlay" aria-hidden="true" tabindex="-1" style="z-index: 65555; opacity: 0;"></div><div id="sbox-window" role="dialog" aria-hidden="true" class="shadow" style="z-index: 65557;"><div id="sbox-content" style="opacity: 0;"></div><a id="sbox-btn-close" href="https://linuxconfig.org/linux-dns-server-bind-configuration#" role="button" aria-controls="sbox-window"></a></div></body></html>

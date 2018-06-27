@@ -1,0 +1,43 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[slovene]{babel}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+
+\title{Primer uporabe \textsc{Bib}\TeX}
+\author{Franc Solina}
+
+\date{\today}
+
+
+\begin{document}
+\newcommand{\sn}[1]{"`#1"'}
+
+\maketitle
+
+
+Z umetni\v skimi projekti se v Laboratoriju za ra\v cunalni\v ski vid ukvarjamo \v ze vrsto let \cite{leonardo,IS2001}, saj so tak\v sni projekti primerno testno okolje za metode ra\v cunalni\v skega vida \cite{poglavje_springer}.
+Kot za vsako programsko opremo, ki se uporablja vrsto let, pa je potrebno take projekte tudi vzdr\v zevati \cite{ZKM}.
+
+Na\v s zadnji projekt \sn{Svetlobni vodnjak} \cite{video} uporablja senzor Kinect za zajem globinske slike \cite{andersen2012kinect}.
+
+Reference v \textsc{Bib}\TeX\ formatu lahko enostavno prekopiramo iz Google u\v cenjaka, tako da v nastavitvah Google u\v cenjaka najprej pri "`Upravitelju bibliografskih podatkov"' izberemo \textsc{Bib}\TeX.
+Pri vseh zadetkih se bo potem pokazala mo\v znost \sn{Uvozi v \textsc{Bib}\TeX}.
+
+Z uporabo opcije
+\verb+\usepackage[hyphens]{url}+ v spisku literature ni te\v zav z dolgimi spletnimi naslovi~\cite{bimgrwm}!
+
+Kako se citira diploma~\cite{diploma}?
+
+\sn{Slovenski narekovaji}.
+
+Javno predavanje~\cite{src1}.
+
+Spletna stran~\cite{nscu}.
+
+\bibliographystyle{plain}
+\bibliography{reference}
+
+
+
+\end{document}  

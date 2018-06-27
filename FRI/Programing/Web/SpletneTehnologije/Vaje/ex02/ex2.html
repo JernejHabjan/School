@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @-webkit-keyframes dance {
+      0%  { transform: rotate(0deg); left: 0px; }
+      25% { transform: rotate(20deg); left: 0px; }
+      50% { transform: rotate(0deg); left: 400px; }
+      55% { transform: rotate(0deg); left: 400px; }
+      70% { transform: rotate(0deg); left: 400px; background-color: orange; }
+      100% { transform: rotate(-360deg); left: 0px; }
+    }
+
+    @-moz-keyframes dance {
+      0%  { transform: rotate(0deg); left: 0px; }
+      25% { transform: rotate(20deg); left: 0px; }
+      50% { transform: rotate(0deg); left: 400px; }
+      55% { transform: rotate(0deg); left: 400px; }
+      70% { transform: rotate(0deg); left: 400px; background-color: orange; }
+      100% { transform: rotate(-360deg); left: 0px; }
+    }
+
+    @keyframes dance {
+      0%  { transform: rotate(0deg); left: 0px; }
+      25% { transform: rotate(20deg); left: 0px; }
+      50% { transform: rotate(0deg); left: 400px; }
+      55% { transform: rotate(0deg); left: 400px; }
+      70% { transform: rotate(0deg); left: 400px; background-color: orange; }
+      100% { transform: rotate(-360deg); left: 0px; }
+    }
+
+    figure {
+        position: absolute;
+        top: 100px;
+        left: 0px;
+        width: 300px;
+        background-color: yellow;
+        border: 2px solid black;
+        border-radius: 25px;
+        -webkit-animation: dance 5s infinite;
+        -moz-animation: dance 5s infinite;
+        animation: dance 5s infinite;
+    }
+
+    figure p {
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <figure>
+    <p>
+      Hello HTML5 and CSS3 world!
+      <video width="200" height="200" autoplay loop>
+        <source src="http://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+      </video>
+    </p>
+  </figure>
+</body>
+</html>

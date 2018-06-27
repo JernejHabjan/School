@@ -1,0 +1,83 @@
+﻿Dej ti bom kr sm skopirov točn kaj vse sm si napisov na vajah, pa probi desifrirat poj:
+
+seprav dodamo unu ka je na sliki
+
+odpremo v consolah vse
+
+bind1 im default naslov
+
+bind2 spremenimo ip naslov 192.168.1.2
+ifconfig eth0 192.168.1.2 netmask 255.255.255.0
+
+za microcore spremenimo IP naslov
+sudo ifconfig eth0 192.168.1.100 netmask 255.255.255.0
+
+bind1 je master
+bind2 je slave
+
+za bind1
+cd /etc/bind
+nano named.conf
+eno cono kopiramo in jo spremenimo
+"mirnik.rk"
+file /etc/bind/db.mirnik.rk
+
+cp db.local db.mirnik.rk
+nano db.mirnik.rk
+propravimo
+
+tm zgori @ sam gleda kr ime datoteke pod TTL
+popravimo mirnik.rk.
+isto za SOA mirnik.rk. hostmaster.mirnik.rk.
+
+nameserver bo ns1.mirnik.rk.
+
+mirnik.rk. IN NS ns1.mirnik.rk.
+mirnik.rk. IN NS ns2.mirnik.rk.
+ns1 IN A 192.168.1.1
+ns2 IN A 192.168.1.2
+www IN CNAME ns1
+
+ps pogledamo stevilo procesa named.conf
+kill -HUP 1131 (restartamo proces)
+
+nslookup ns1.mirnik.rk. localhost
+more delat
+
+nslookup www.mirnik.rk localhost
+more delat
+
+sedaj pa v Microcore spremenimo da uporablja naš DNS server
+nslookup ns1.mirnik.rk 192.168.1.1
+to dela
+nano(mi uporabljamo vi)
+
+sudo echo nameserver 192.168.1.1 > /etc/resolv.conf
+cat /etc/resolv.conf
+
+v VI daš i da vnasaš , ESC za vn
+WQ zapisi pa quit
+Q! quit
+
+
+
+
+PA ŠE MOJE:
+Naloga L8.4: Vzpostavitev DNS sistema v GNS3
+
+
+
+
+microcore ->ima zapisa
+openwrt-bind1 -nima nič
+openwrt-bind2 -ma 2 zapisa
+
+ #maybe
+zone "habjan.rk" {
+        type master;
+        file "/etc/bind/db.255";
+};
+
+
+#255 je localhost?
+cp /etc/bind/db.255 /etc/bind/db.priimek   

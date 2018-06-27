@@ -1,0 +1,21 @@
+1.
+a) definiraj verjetnost vsote A + B in produkta A * B in pogojno verjetnost
+b) kako izraèunamo pogojno verjetnost odvisnih in neodvisnih spremenljivk
+c) opiši popolno verjetnostin zapiši formulo
+d) Kako lahko izraèunamo verjetnost, da je dogodek A nastopil z doloèenim dogodkom H_k iz prve faze
+e) za bonus izpelji Bayesovo formulo
+
+2.
+a) kaj veš o sluèajnih spremenljivkah
+b) definiraj matematièno upanje (ter kdaj obstaja) in standarni odklon
+c) kaj veš o normalni porazdelitvi
+d) postopek standardizacije
+e) definiraj CLI
+
+3.
+a) definiraj Pearsonov koeficient relacije
+b) Kakšne vrednosti lahko zavzame koeficient relacije in kaj lahko poveš v primeru,
+ko doseže najveèjo oz najmanjšo možno vrednost.
+c) Kaj veš o prvi in drugi regresijski premici
+d) Kaj so èasovne vrste
+e) opiši metodo najmanjših kvadratov

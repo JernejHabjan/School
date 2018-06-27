@@ -1,0 +1,195 @@
+<html>
+<head>
+	<script id="vShader" type="vertex-shader">
+	attribute vec2 vertex;
+	
+	void main(){
+		gl_PointSize = 5.0;
+		gl_Position = vec4(vertex, 0.0, 2.5);
+	}
+	</script>
+
+	<script id="fShader" type="fragment-shader">
+	uniform mediump vec3 color;
+	
+	void main(){
+		gl_FragColor = vec4(color,1.0);
+	}
+	</script>
+
+	<script>
+		var gl =null;
+
+		function initContext(context){
+			try{
+				gl=context.getContext("webgl")
+			}catch(e){}//catch exception
+			//also other types of experimental webgl and warnings go here
+		}
+
+		function loadShaders(s){
+			var sString = document.getElementById(s);
+			//warning goes here
+			var sourceString ="";
+			var child =sString.firstChild;
+			while(child){
+				if(child.nodeType==3){
+					sourceString+=child.textContent;
+				}child =child.nextSibling;
+			}
+
+			var sh;
+			switch(sString.type){
+				case "fragment-shader" : sh = gl.createShader(gl.FRAGMENT_SHADER);
+				break;
+				case "vertex-shader" : sh = gl.createShader(gl.VERTEX_SHADER);
+				break;
+				default:alert("no shader type");
+				break;
+			}
+			gl.shaderSource(sh,sourceString);
+			gl.compileShader(sh);
+			//WARNING GO KILL YOURSELF FUCKING IDIOT
+			 if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+				alert(s + ": " + gl.getShaderInfoLog(sh)); // izpise alert
+				return null;
+			}return sh;
+		}
+		function loadProgram(){
+			var fShader=loadShaders("fShader");
+			var vShader=loadShaders("vShader");
+
+			program= gl.createProgram();
+			gl.attachShader(program,vShader);
+			gl.attachShader(program,fShader);
+			gl.linkProgram(program);
+			if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+				alert("Error loading shader");
+			}
+			//warning goes here
+		}
+		
+		function Ball(a, b){
+			this.alive = true;
+			this.x = a;
+			this.y = b;
+			this.checkAlive = function(){
+				if(this.y < -1.0) this.alive = false;
+			}
+		}
+
+		var NUM_ROWS = 26;
+		var ROW_SPACING = 3;
+		var COLUMN_SPACING = 3;
+		var BALL_SIZE = 2.0;
+		
+		var VBO;
+		var vertices = [];
+		
+		var bVBO;
+		var balls = [];
+		
+		function initBuffers(){
+			for(i = 0; i < NUM_ROWS; i++){
+				for( j = 0; j < i + 1; j++){
+					var a = j - i/2;
+					a /= NUM_ROWS;
+					a *= COLUMN_SPACING;
+					
+					var b = -i + NUM_ROWS / 2;
+					b /= NUM_ROWS;
+					b *= ROW_SPACING;
+					
+					vertices.push(a);
+					vertices.push(b);
+				}
+			}
+
+		VBO = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, VBO);
+		gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.STATIC_DRAW);
+		
+		bVBO = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, bVBO);
+		//gl.bufferData(gl.ARRAY_BUFFER, null, gl.STREAM_DRAW);
+		
+		gl.bindBuffer(gl.ARRAY_BUFFER, null);
+		}
+
+		
+		
+		var time;
+		function initWebGL(){
+			c=document.getElementById("context");
+			initContext(c);
+			loadProgram();
+			initBuffers();
+			//if gl goes here
+			gl.viewport(0,0,c.width,c.height);
+			gl.frontFace(gl.CW);
+			//gl.enable(gl.CULL_FACE);
+			gl.clearColor(0.0, 0.0, 0.0, 1.0);
+			
+			time = new Date().getTime();
+			draw(); 
+		}
+		
+		function updateBalls(){
+			for(i = 0; i < balls.length; i++){
+				balls[i].checkAlive();
+			}
+			if(balls.length > 0 && balls[0].alive == false){
+				balls.shift();
+			}
+			
+			var ballPositions = [];
+			for(i = balls.length - 1 ; i >= 0 ; i--){
+				balls[i].x = balls[i].x + (Math.random() > 0.5 ? 
+					(COLUMN_SPACING / NUM_ROWS) : -(COLUMN_SPACING / NUM_ROWS)); //TODO FIX
+				balls[i].y -= ROW_SPACING / NUM_ROWS;
+
+				ballPositions.push(balls[i].x);
+				ballPositions.push(balls[i].y);
+			}
+			
+			console.log(ballPositions.length);
+			gl.bindBuffer(gl.ARRAY_BUFFER, bVBO);
+			gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(ballPositions), gl.STREAM_DRAW);
+		}
+		
+		function draw(){
+			gl.clear(gl.COLOR_BUFFER_BIT);
+			gl.useProgram(program);
+			var vertex = gl.getAttribLocation(program,"vertex");
+			var color = gl.getUniformLocation(program, "color");
+			gl.enableVertexAttribArray(vertex);
+			
+			gl.uniform3f(color, 0.0, 1.0, 0.0);
+			gl.bindBuffer(gl.ARRAY_BUFFER,VBO);
+			gl.vertexAttribPointer(vertex, 2, gl.FLOAT, false, 0, 0);	
+			gl.drawArrays(gl.POINTS, 0, vertices.length / 2);
+			
+			t = new Date().getTime() - time;
+			if(t > 100){
+				updateBalls();
+				time = new Date().getTime();
+				balls.push(new Ball(0.0, 1.0));
+
+			} 
+			
+			gl.uniform3f(color, 1.0, 0.3, 0.1);
+			gl.bindBuffer(gl.ARRAY_BUFFER,bVBO);
+			gl.vertexAttribPointer(vertex, 2, gl.FLOAT, false, 0, 0);	
+			gl.drawArrays(gl.POINTS, 0, balls.length / 2);
+			
+		
+			setTimeout(function(){requestAnimationFrame(draw);}, 1000 / 30 ); 
+		}
+		
+	</script>
+	
+</head>
+<body onload="initWebGL()" style="background-color: #000000">
+<canvas id="context"width="700"height="700"></canvas>
+</body>
+</html>

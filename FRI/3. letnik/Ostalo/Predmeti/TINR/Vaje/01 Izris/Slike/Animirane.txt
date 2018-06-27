@@ -1,0 +1,20 @@
+Naloga
+
+Risanje statiènih slik lahko nadgradimo na animirane slike, pri katerih s èasom spreminjamo, katero sliko izrisujemo.
+
+Potrebno je izdelati ustrezno podatkovno strukturo, ki bo hranila zaporedje slik in èasov, ob katerih se pojavijo. Na drugi strani si je potrebno shraniti referenèno toèko v èasu, izhodišèe, glede na katerega se izvaja animacija. Vèasih lahko uporabimo direktno spremenljivko gameTime.totalGameTime, drugiè si moramo to vrednost shraniti kot izhodišèe za animacijo toèno doloèenega objekta na sceni. Lahko pa si tudi pomagamo z vrednostjo, koliko èasa je že preteklo od zaèetka animacije, ki mu v vsakem obhodu zanke prištejemo gameTime.elapsedGameTime.
+
+Za izhodišèe lahko uporabite razrede AnimatedSprite, AnimatedSpriteFrame.
+
+Pri izdelovanju animacij si lahko pomagate z orodji, kot je npr. Spriter (ki sicer ni zastonjsko), vendar pa olajša izdelavo animacij s pomoèjo skeletnega sistema animiranja 2D slièic.
+
+Navodilo
+
+Posnemite simulator iPhone/iPad, kjer teèe igra, v kateri so doloèene slike animirane. Naj poudarim, da se ne gre za premikanje statiènih slik po ekranu (to spada pod fiziko), temveè animiranje, kjer spreminjamo katero sliko (sprite) izrisujemo. Torej animacija po principu risanke/filma (zaporedje slik), kot smo videli animacijo eksplozije na vajah. Animacija naj vsebuje veè kot 2 sliki.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (.mov/.avi) in NE .zip/.rar z video datoteko.
+
+Poimenovanje: 63090000-priimek-izris-slike-animirane.mov 
+(primerno popravite vpisno številko in priimek)

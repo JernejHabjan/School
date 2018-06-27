@@ -1,0 +1,80 @@
+1. vaje - povzetek ukazov
+
+Za bolj podroben opis ukazov in njihovega delovanja si lahko preberite poglavje 1 v delu II knjige Koncepti operacijskih sistemov z Linuxovo lupino in programiranje v Bashu (http://lalg.fri.uni-lj.si/jurij/kosbash).
+
+ 
+
+Ukazi, ki jih bomo uporabljali: type, which, echo, printf, man, info, help, who
+
+Ukaz v lupini je v precej enostavni obliki sestavljen iz samega ukaza in argumentov, ki so loceni med seboj s presledki. Npr. ukaz echo a b c je torej sestavljen iz ukaza echo in treh argumetov a b c (echo le izpiše podane argumente na zaslon). Pogosto lahko delovanje ukaza spreminjamo s podajo posebnih argumentov, ki jim pravimo stikala; le-ta se pogosto zacnejo z znakom - in crko (npr. ukaz echo pozna med drugim stikalo -n, ki povzroci, da se po izpisu ostalih argumentov ne pomaknemo v novo vrstico) ali dvema -- in besedo (stikala so od programa do programa razlicna).
+
+Vgrajen in nevgrajen ukaz
+
+Kako bi poizvedeli, ali je nek ukaz vgrajen (angl. builtin) v lupino ali ne? Preizkusite na razlicnih ukazih, npr.: cd, pwd, echo, ls, tree, gcc, type ...
+
+type –a ime_ukaza
+
+S katerim ukazom poišcemo imenik, kjer se nahaja nek ukaz?
+
+which ime_ukaza
+
+Nekateri ukazi kot npr. echo, printf, pwd obstajajo v obeh razlicicah: vgrajeni in nevgrajeni. Prednost ima vgrajena razlicica.
+
+Razlicico, ki nima prednosti, izvedemo tako, da navedemo celotno pot.
+
+Uporaba pomoci in izpis podatkov
+
+a) Oglejte si razlicne pomoci, ki so na voljo za ukaz echo. Ne pozabite, da obstajata tako vgrajena kot nevgrajena razlicica ukaza. Kako pridemo do pomoci za vgrajeni ukaz?
+
+Pomoc za nevgrajeno razlicico
+man echo
+info echo
+
+Pomoc za vgrajeno
+help echo
+
+Na zacetku pomoci je tipicno napisana sintaksa uporabe ukaza (kakšne argumente sprejema). Npr. za ukaz echo imamo tako v pomoci napisano:
+echo [-neE] [arg ...]
+kar pomeni, da ukaz echo sprejme dva sklopa argumentov, prva so stikala (-n, -e, -E), potem pa nizi, ki jih želimo izpisati (tri pike pomenijo, da jih je lahko vec). Oglati oklepaji pomenijo izbiro (torej lahko pri tem ukazu dodamo katerokoli kombinacijo stakal ali pa tudi nobenega, kadar podamo vec stikal, ki so enocrkovna jih pogosto lahko združimo: namesto -n -e, lahko napišemo -ne). Prav tako so izbirni ostali argumenti [arg ...]. Oglati oklepaj oznacujejo izbiro in zato pri poganjanju ukaza ne pišemo, bodisi napišemo argumente (npr. echo -neE test) ali jih pa ne napišemo (npr. echo).
+
+Še en primer iz pomoci uporabe ukaza:
+cd [-L|[-P [-e]]] [dir]
+Ukaz cd (menjava imenika) lahko sprjme stikala  -L ali -P, ce pa izberemo -P pa lahko dodatno podamo še stikalo -e, ki dodatno spremeni delovanje stikala -P; stikala -e ne moremo podati brez stikala -P. Na koncu lahko podamo imenik, v katerega se želimo prestaviti.
+
+
+b) Napišite ukaz, ki izpiše naslednje sklope podatkov:
+
+ime predmeta,
+vpisna številka, ime in priimek,
+študijski program oz. smer.
+
+Vsak sklop podatkov naj bo v svoji vrstici, vpisna številka in ime pa naj bosta med seboj locena z znakom tab (tabulator). Celotno opravilo naj bo izvedeno z enim ukazom.
+
+echo -e "OS,\nst\time priimek,\nsmer."
+
+Rešite nalogo pod b) še s pomocjo ukaza printf.
+
+printf "OS,\nst\time priimek,\nsmer"
+
+Konzole
+
+V cem je razlika med navadno konzolo in psevdo konzolo?
+
+Naprave, katerih imena se zacenjajo z /dev/pts , so psevdoterminali, ki se uporabljajo, da ponudijo »terminal« oddaljenim prijavnim sejam in terminalskim sejav v graficnem okolju. Na primer, ce je vaš stroj na omrežju, bodo prihajajoce prijave z uporabo telnet uporabljale eno od naprav /dev/pts .
+
+Naprave, katerih imena so /dev/tty , ki mu sledi številka, se nanašajo na virtualne konzole vašega sistema, pa tudi na cisto prave terminale, prikljucene na zaporedna vrata. 
+/dev/tty1 se nanaša na prvo konzolo, /dev/tty2 na drugo in tako naprej.
+
+b) Kako preklapljamo med konzolami?
+
+Ctrl+Alt+F# v graficnem okolju, drugace Alt+F#
+
+Kdo in na kateri konzoli je prijavljen na sistemu lahko preverimo z ukazom:
+
+who
+
+ 
+
+Dodatna literatura, s pomocjo katere lahko nadgradite svoje znanje, je Bash Reference Manual, kjer si lahko preberete poglavje 1, poglavje 3.1, poglavje 4 (v tem poglavju si preberite uvod ter poglejte ukaze, ki smo jih omenili na prvih vajah, ostale bomo spoznavali postopoma), poglavje 6.11 (samo informativno).
+
+Zadnja sprememba: ponedeljek, 2. marec 2015, 11:58

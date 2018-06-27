@@ -1,0 +1,12 @@
+Navodilo
+
+Odigrajte in posnemite isti del igre na vsaki platformi, za katero ste igro razvili. Za vsako platformo naj bo video dolg do 30 sekund. Preden poženete igro, posnemite še razvojno okolje za posamezno platformo. V opombe na kratko opišite, za katere platforme ste razvijali.
+
+Èe razvijate za razliène naprave z operacijskim sistemom iOS, dobite 10 dodatnih toèk. Èe razvijate za iOS in še kakšno drugo platformo (odvisno od zapletenosti prenosa) dobite +20% toèk na celotni projekt (brez toèk izpita).
+
+Videi naj bodo èimkrajši, da še prikaže zahtevano, datoteke èimmanjše (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:
+63080000-priimek-meta-arhitektura-razvoj_za_vec_platform.mov

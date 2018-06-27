@@ -1,0 +1,23 @@
+Popravek za display datuma pridružitve:
+
+prvo bi spremenil podatkovno bazo:
+	Tabela User:
+		<pk>userId (int auto increment)
+		username (varchar)
+		dateJoined (date)
+	Tabela UsersMessages:
+		<fk> userId
+		<fk> messageId
+	Tabela Messages:
+		<pk> messageId (int auto increment)
+		messageDate (date)
+		message (varchar)
+Hotel bi prikazati datum prve prijave uporabnika
+samo takrat, ko bi prvič napisal sporočilo v
+tej "seji":
+	v datoteki chat-see.php bi na $(docment).ready
+	izpisal prvo uporabnikovo ime in njegov datum prve prijave
+
+	Za tem bi pa izpisal vsa sporočila, kar je isto kor je napisana koda zdaj
+	
+Seveda bi moral popraviti še vse inserte v bazo, ker je sedaj več tabel

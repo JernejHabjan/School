@@ -1,0 +1,52 @@
+NFS
+arbiter -nat
+		-intnet
+		
+student -intnet
+
+login arbiter tester tester
+login student root kaboom
+apt-get update
+apt-get install nfs-kernel-server samba
+mkdir srv/nfs/k0HR9oIG
+
+cd srv/nfs/k0HR9oIG
+chmod oug+w k0HR9oIG //da lah vsi berejo
+
+
+vim /etc/exports
+-dodaš
+	/srv/nfs *(rw)
+	in shranš
+	
+service nfs-kernel-server restart
+
+//SAMBA
+
+cd /etc/samba
+vim smb.conf
+	:syn on
+	
+	nekje pri home-> ((NAD PRINTERS))
+	
+	[zora-97]
+	comment = A shared directory
+	path = srv/nfs/k0HR9oIG
+	browseable = yes
+	guest ok = yes
+	
+	
+	nekje pri global -> pod workgroup->
+	netbios name = triton-63
+
+	shranš
+	
+apt-get install smbclient
+service smbd restart
+service nmbd restart
+smbclient -L localhost
+
+//v arbitra
+./testTask...
+pazi - vpiši taprav ip
+in dela..

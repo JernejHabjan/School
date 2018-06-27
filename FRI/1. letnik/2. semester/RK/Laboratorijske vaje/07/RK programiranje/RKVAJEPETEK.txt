@@ -1,0 +1,38 @@
+z zaklepanjem - da se ne prepiše... da se izvede v 1 kosu
+
+v pythonu:
+with "ime objekta" "tisto ki se sinhronizira"
+
+not se ne piše -beri iz omrežja ker lahko da ne dobi tega
+
+ip in port(id procesa)
+port number -> max 2^16 bit (torrent seederji)
+
+
+server odpre socket v listening statu:
+	ip A, port num: 1234
+	
+client za connect rabi socket:
+	ip pa socket(4321)
+	
+tcp connection
+potem server naredi ŠE EN SOCKET NA KERGA SE CONNECTA CLIENT
+	je definiran z ip pa port
+	MA IP OD SERVERJA PA PORT OD CLIENTA
+	(IP A, 4321)
+	2 imata lahko isti port number
+
+	
+trosmerno rokovanje
+source port 41445
+-zdravo
+strežnik odgovoril ZDRAVO
+
+cmd:
+netstat -an
+
+netstat -an -p tcp | findstr 1234 #(findstr ->grep)
+preverimo ali je kakšna povezava na 1234
+
+
+vedno try catch blok... ker lahko ni odgovora

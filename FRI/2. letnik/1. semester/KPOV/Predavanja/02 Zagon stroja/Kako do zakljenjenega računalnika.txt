@@ -1,0 +1,22 @@
+V primeru, da ste pozabili geslo na svojem linux sistemu oz. se je avtentikacija iz poljubnega razloga sesula, lahko sistem rešite tako, da ga namesto v obicajni init (oz. v upstart) zbudite v lupino (/bin/bash).
+
+Postopek:
+
+1. Racunalnik ponovno zaženete in ob zagonu grub poskrbite, da pridete v menu (obicajno je potrebno pritisniti tipko ESC).
+2. V vrstici, kjer se zaganja linux, se prestavite v "edit" nacin (pritisnete TAB)
+3. "linux   /vmlinuz-2.6.35-23-generic root=UUID=e7f1e48d-0015-485f-be7d-836217a31312 ro   quiet splash" spremenite v "linux   /vmlinuz-2.6.35-23-generic root=UUID=e7f1e48d-0015-485f-be7d-836217a31312 ro init=/bin/bash"
+Ko se sistem zažene, se boste znašli v shellu. Tu lahko pocnete bolj ali manj karkoli.
+
+Da bi lahko pisali po disku, je potrebno zagnati:
+
+mount -o remount,rw /
+Po remountu imate poln dostop do datotecnega sistema, tako da lahko izvedete:
+
+passwd uporabnik
+Lahko seveda tudi popravite / spremenite poljubne datoteke.
+
+Po opravljenem delu disk spet remountajte tako, da boste lahko z njega le brali, nakar zahtevajte od operacijskega sistema, da vse podatke, ki še cakajo v predpomnilnikih, takoj spravi na disk:
+
+mount -o remount,ro /
+sync
+Po zadnjem syncu lahko sistem resetirate oz. izklopite ter ponovno zaženete.

@@ -1,0 +1,28 @@
+PYTHON:
+
+	odbc gonilnik pa odbc vmesnik
+
+	odbc funkcija-stavek
+	nemoreš kreirat procedur iz pythona
+	lahko samo kličeš iz pythona
+	rabiš:
+	-python odbc ->pyodbc (p pyodbc?)
+	-mysql connector ->gonilnik
+		nastavi še dsn -> v control panelu
+		če ponudi dva daj tistega ki ima zadaj ANSI
+		
+		za server: za frijevsk ->PB.FRI.UNI-LJ.SI
+								seminarpb
+
+	DSN="neki k si določu"
+	NAPIŠI NATANČNO
+
+	comit -potrdiš da se zapiše v bazo(tu se avtomatsko po vsakmu stavku)
+	rollback - razveljaviš do zadnjega commita
+
+	kurzor:
+	x.execute.. primeri so
+
+	ko enkrat iteriraš čez cursor ga sprazniš
+
+potem še excel

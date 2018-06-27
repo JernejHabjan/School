@@ -1,0 +1,22 @@
+Naloga
+
+Vèasih vsega ni mogoèe izrisati zgolj s slikami, temveè moramo poseèi po najosnovnejših grafiènih primitivih, katerih izris omogoèa grafièni èip. To so èrte in trikotniki, s pomoèjo katerih lahko izrisujemo spreminjajoèe krivulje, posebne uèinke (dež, iskre), veèkotnike z dinamièno barvo oglišè itd.
+
+ 
+
+Za izris grafiènih primitivov si moramo pripraviti vsaj seznam oglišè, ki bodo sestavljali primitive, in senèilnik (BasicEffect) – z njim doloèimo transformiranje oglišè (preraèunavanje iz 3D koordinat sveta na 2D zaslon preko matrik world, view in projection) in izraèun barve posameznih pikslov (preko barve materiala in osvetlitve).
+
+ 
+
+Izdelamo si lahko tudi splošno komponento, ki deluje podobno kot SpriteBatch, le da namesto dodajanja trikotnikov za izris slik, pripravi potrebna oglišèa za izris èrt, pravokotnikov, krogov in podobnih pogosto uporabljanih likov. Primer tako izdelane komponente je PrimitiveBatch iz projekta Artificial I.
+
+Navodilo
+
+Posnemite iPhone simulator, kjer so vidni z grafiènimi primitivi izrisani objekti.
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-izris-primitivi.mov
+(primerno popravite vpisno številko in priimek)

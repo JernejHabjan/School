@@ -1,0 +1,36 @@
+a)
+	dolžina (dm) 1	2	3	4	5	6	7	8	9
+	cena (EUR)   2	4	7	9	10	11  12	19	22
+	dobiček (ri) 2	4	7	9	11	14	16	19	22
+	pozicija rez 1	2	3	4	1	3	1	8	9
+	
+	7: splača se jim razrezati palico 6 in vzeti palico 1 -> skupen dobiček = 16€
+	8: splača se jim kar prodati palico samo (dolžine 8)  -> skupni dobiček = 19€
+	9: splača se jim kar prodati palico samo (dolžine 9)  -> skupni dobiček = 22€
+
+b) 
+	V PRILOGI
+c)
+	najbolje da si zapomnimo rešitve od najmanjše dolžine proti največje kolikor gre
+	saj se te dolžine v rekurziji največkrat kličejo
+	torej si zapomnimo prvih K elementov in njihovih dobičkov
+	
+	ko primerjam v kodi:
+		prvi = maxPrice
+		drugi = value[j] + solution[i - (j+1)]
+	tu bi rabil preveriti ali solution[i - (j+1)] obstaja. če ne - se požene 
+	rekurzija nad to dolžino
+	
+	
+	zdaj je časovna kompleksnost O(n^2), pri tem primeru se n-k krat kliče
+	rekurzija, ki pa potuje v globino 2^(n-k) dolžine, saj je K elementov že izračunanih
+	
+	tako da je časovna kompleksnot -> n^2 * 2^(n-k)
+	
+	večji kot izberemo K, bolj se približamo n^2, za vsak večji K je treba izračunati
+	potenco števila 2 manj primerov saj jih imamo že shranjenih
+	
+	
+	
+	
+	

@@ -1,0 +1,162 @@
+T2: Povezavna plast
+Cilji naloge
+
+Z Wiresharkom analizirati okvir Ethernet II.
+Na zajetem prometu prepoznati razliko med delovanjem stikala in razdelilnika.
+Šifrirana in nešifrirana WiFi omrežja (okvirji IEEE 802.11)
+Protokol ARP in prakticna uporaba
+L2.1: Okvir Ethernet II
+
+Okvir Ethernet je dokaz, da dobro zamišljene in preproste rešitve problema lahko preživijo tudi (za racunalništvo neverjetnih) vec kot 40 let! Korenine namrec segajo v leto 1973, z zacetki komercialne uporabe od l. 1980 naprej. Zelo zanimiva casovnica tega trdoživega protokola je opisana na spletni strani http://timeline.ethernethistory.com/.
+
+Poglejmo, kako so narašcale hitrosti Etherneta (druga letnica je leto, ko je standard ratificiral IEEE):
+
+1973: zacetki v Xerox PARC, 2,94 Mbit/s
+1978: Xerox X-wire, 10 Mbit/s
+1980 - 1982: DIX Ethernet / Ethernet II, 10 Mbit/s
+1985: standard IEEE 802.3, 10 Mbit/s
+1992 - 1995: Fast Ethernet, 100 Mbit/s
+1995 - 1998: Gigabit Ethernet, 1 Gbit/s
+2002: 10 Gigabit Ethernet, 10 Gbit/s
+2008 - 2010: 40/100 Gigabit Ethernet, 40 Gbit/s, 100 Gbit/s
+~2017: 400GbE Study Group (deluje od 2013): od januarja 2016 so definirali tudi 200 Gbit/s); 2,5 in 5 Gbit/s (
+~2016: 25 Gbit/s
+Ceprav vidimo, da so hitrosti praviloma narašcale za faktor 10 (z nekaj izjemami), naslednji korak v hitrosti ni terabitni ethernet (TbE), ampak se je, mogoce malo presenetljivo, ravno v zadnjem obdobju pojavila potreba za nižjimi hitrostmi, recimo 25 Gbps (~september 2016) ter 2,5 in 5 Gbps (~avgust 2017).
+
+Poznate že strukturo Ethernet II okvirja.
+
+Za naslavljanje naprav Ethernet uporablja t.i. naslov Ethernet oz. strojni naslov ali MAC naslov (MAC address):
+
+48 bitov (6 bajtov), heksadecimalni zapis
+24 bitov (MSB): proizvajalec
+24 bitov (LSB): oznaka naprave
+Primer:
+00:50:56:C0:00:F1
+Posebni naslovi:
+Broadcast: FF:FF:FF:FF:FF:FF
+Neznan naslov: 00:00:00:00:00:00
+Pomembno je, da poznate Wiresharkove osnovne filtre za Ethernet protokol.
+
+Naloge
+
+S programom Wireshark odprite datoteko ethernet.cap. Odgovorite na spodnja vprašanja:
+
+Katera polja okvira Ethernet II vam prikaže Wireshark? Razmislite o razlogih, zakaj ne prikaže vsa polja?
+Kakšna je celotna dolžina okvira Ethernet II v prvem paketu? Kaj pa dolžina podatkov?
+Kakšen je prejemnikov naslov v prvem okvirju? Katero podjetje je izdelovalec prejemnikove mrežne kartice?
+
+V zadnjem casu so zaceli spet razvijati Ethernet nižjih hitrosti, to je 2,5 in 5 Gbit/s Ethernet. Kaj misliš, zakaj? Ali lahko najdeš kakšen prakticen primer uporabe, kjer so ravno te hitrosti najbolj primerne?
+
+L2.2 Razdelilnik in stikalo
+
+Omrežje s skupinskim medijem pomeni, da vse naprave vidijo celoten omrežni promet, ne glede na to, kdo ga pošilja. Privzeto naša mrežna kartica odfiltrira vse, kar ni namenjeno našem naslovu (ali pa na naslov broadcast). Ce kartico prestavimo v promiscious mode (to omogoca vecina mrežnih kartic), izklopimo ta filter in lahko vidimo celotni promet, ki prispe do naše mrežne kartice.
+
+Ce imamo omrežje z razdelilnikom (hub), torej lahko vidimo celotni promet na omrežju. Kaj pa omrežja s stikalom? “Filter” tukaj postane stikalo, saj posreduje promet le med racunalniki, ki dejansko komunicirajo med seboj.
+
+Za vajo L2.2 smo postavili omrežje, ki ga kaže spodnja slika:
+
+Omrežna topologija
+
+Scenarij pošiljanja in sprejemanja "pingov" je sledec:
+
+A pinga B, B odgovarja A
+A pošilja v omrežje t.i. broadcast ping (namenjen vsem napravam v omrežju, pošlje ga na broadcast naslov omrežja).
+Na "broadcast ping" odgovori samo strežnik DHCP (LinkSys dostopna tocka), B in C ga ignorirata.
+C ne dela nic (razen da ga uporabljamo za zajemanje prometa)
+Zakaj je ignoriranje broadcast pingov obicajno privzeta nastavitev naprav v omrežju?
+
+Najprej smo uporabili razdelilnik (hub) in na racunalnikih B in C zajeli promet s programom Wireshark. S programom Wireshark odprite spodnji datkoteki:
+
+ping_hub_B.cap: promet zajet na racunalniku B pri uporabi razdelilnika.
+ping_hub_C.cap: promet zajet na racunalniku C pri uporabi razdelilnika.
+Napišite filter, ki vam bo prikazal samo pakete ping (protokol ICMP) in odgovorite na spodnja vprašanja:
+
+Koliko racunalnikov je udeleženih v komunikaciji? Namig: Statistics, Conversations, vklopite tudi opcijo Limit to display filter.
+Kakšna strojna naslova imata prejemnika ICMP echo request sporocil?
+Koliko paketov ICMP je v datoteki ping_hub_B.cap? Koliko paketov ICMP je v datoteki ping_hub_C.cap? So paketi v obeh datotekah enaki ali se razlikujejo? Razloži, ali smo na racunalniku C uporabili promiscuous mode zajemanja?
+S programom Wireshark odprite še datoteki:
+
+ping_switch_B.cap: promet zajet na racunalniku B pri uporabi stikala.
+ping_switch_C.cap: promet zajet na racunalniku C pri uporabi stikala.
+Odgovorite še na spodnja vprašanja:
+
+Koliko racunalnikov je vkljucenih v komunikacijo v datoteki ping_switch_B.cap?
+Koliko racunalnikov je vkljucenih v komunikacijo v datoteki ping_switch_C.cap?
+Katerih paketov ne vidimo v datoteki ping_switch_B.cap, so pa v datoteki ping_hub_B.cap? Zakaj?
+L2.3: Brezžicna omrežja
+
+V brezžicnih omrežjih ne uporabljamo Ethernet okvirjev, temvec okvirje IEEE 802.11 (glej sliko spodaj [vir]). V primerjavi z Ethernet okvirjem je okvir 802.11 precej bolj kompleksen!
+
+802.11 frame format
+
+802.11 ima 3 tipe okvirjev:
+
+management frames: za vzpostavljanje in vzdrževanje povezav; sem sodi tudi spodaj omenjeni "beacon frame"
+control frames: se uporabljajo pri izmenjavi podatkovnih okvirjev; sem sodijo okvirji RTS, CTS, ACK
+data frames: podatkovni okvirji
+Na sliki ste pozorni bralci opazili, da ima 802.11 okvir kar 4 polja za MAC naslove (Address 1-4). Vecinoma se v obicajnih WiFi omrežjih uporabljajo le trije, vloga pa je odvisna od vrednosti zastavic ToDS in FromDS (torej ali gredo okvirji do AP ali pa jih pošilja AP (AP=dostopna tocka WiFi) - glej srednji dve vrstici v tej tabeli.
+
+Za to nalogo smo vzpostavili brezžicno omrežje, ki ga prikazuje spodnja slika. Racunalnik B je komuniciral s strežnikom, na racunalniku C pa smo s programom Wireshark zajeli promet na brezžicnem omrežju.
+
+brezžicno omrežje
+
+Promet smo najprej zajeli v nešifriranem brezžicnem omrežju. Promet se nahaja v datoteki nowep.cap. Datoteko odprite v programu Wireshark in odgovorite na spodnja vprašanja:
+
+Oglejte si okvir Beacon (Beacon frame). Katera polja se nahajajo v okvirju 802.11? Na kratko opišite njihov pomen.
+Kakšen je BSS ID omrežja? Kaj pa SSID (poglejte tudi parametre v 802.11 Wireless LAN Management frame)?
+Kako je nastavljen bit Privacy, ki je del Capability Information?
+V programu Wireshark napišite filter, ki vam bo prikazal samo okvirje, ki vsebujejo podatke (data frames). Kateri filter ste uporabili?
+Kako je nastavljena zastavica Protected, ki je del kontrolnih bitov okvira 802.11?
+V nekoliko drugacnem brezžicnem omrežju (torej ne takšnem, kot je na zgornji sliki) smo omogocili šifriranje WPA, s programom Wireshark pa smo zajeli promet, ki ga je eden od racunalnikov pošiljal v Internet. Odprite datoteko wpa.cap in odgovorite še na spodnja vprašanja:
+
+Kako je nastavljena zastavica Protected v okvirjih Beacon v datoteki wpa.cap?
+Kako je nastavljen bit Privacy, ki je del Capability Information?
+Uporabite filter, ki vam bo prikazal samo podatkovne okvire in poglejte zastavico Protected v polju Frame Control. Kako se razlikuje v primerjavi z datoteko nowep.cap?
+V programu Wireshark lahko tudi dekriptirate omrežni promet, ce seveda veste uporabljeno geslo. Datoteko wpa.cap najprej natancno poglejte brez dešifriranja (pomembni so podatkovni okvirji - data frames - nastavite si ustrezen filter). Nato izberite v meniju Edit, Preferences. Med protokoli poišcite IEEE 802.11, obkljukajte Enable Decryption, v polje Decryption Keys pa vnesite: wpa-pwd in vrednost Induction. Kaj opazite sedaj? (namig: najvec se dogaja tam nekje od 430. paketa naprej).
+
+[Težje, neobvezno vprašanje (ker še nismo obravnavali HTTP protokola): Ali lahko poišceš spletno stran, ki jo je obiskal uporabnik, katerega promet smo zajeli v tej datoteki?]
+
+Po vaji si dekripcijski filter izkljucite (Edit, Preferences, med protokoli poišcite IEEE 802.11, Enable Decryption naj ne bo oznacen!)
+
+L2.4: Protokol ARP
+
+Protokol ARP ste spoznali že na predavanjih. Tu si bomo podrobno ogledali struktoro polj protokola ARP [vir slike]:
+
+arp frame format
+
+S programom Wireshark odprite datoteko arp.cap in odgovorite na spodnja vprašanja:
+
+Kakšen je strojni naslov prejemnika zahteve ARP (ARP request)?
+Kakšen je strojni naslov pošiljatelja odgovora ARP (ARP reply)?
+Kakšna je vsebina polj pri protokolu ARP v prvem paketu?
+Oglejte si zahtevo ARP. Ali je v njej kakšen neznan naslov? Zakaj?
+Lahko morda najdete kakšen neznan naslov pri odgovoru ARP? Zakaj?
+ARP tabela
+
+Za Windows:
+
+# Windows
+# Izpis tabele ARP
+C:\>arp -a
+Interface: 192.168.1.2 --- 0x10006
+  Internet Address      Physical Address      Type
+  192.168.1.1           00-01-38-12-34-56     dynamic
+# Brisanje vseh zapisov iz tabele ARP
+C:\>arp -d *
+Za Linux:
+
+# Linux
+# Izpis tabele ARP
+[root@pc02 ~]# arp -a
+pc01.tralala.si (192.168.1.2) at 00:04:76:12:34:57 [ether] on eth0
+gw.tralala.si (192.168.1.2) at 00:01:38:12:34:56 [ether] on eth0
+# Brisanje zapisa iz tabele ARP
+[root@pc02 ~]# arp -d pc01.tralala.si
+# Alternativni izpis tabele
+[root@pc02 ~]# ip neigh show
+Odprite ukazno vrstico na vašem racunalniku in odgovorite na spodnja vprašanja:
+
+Kateri ukaz morate na vašem operacijskem sistemu uporabiti za izpis tabele ARP?
+Kako bi na operacijskem sistemu, ki ga trenutno uporabljate, v tabelo ARP dodali vnos za racunalnik z IP-jem 192.168.254.10 in strojnim naslovom 12:34:56:aa:bb:aa?
+Kako bi na operacijskem sistemu, ki ga trenutno uporabljate, pobrisali vsebino tabele ARP?
+Vprašajte kolega, ki sedi na sosednjem racunalniku po njegovem naslovu IP in MAC. Ta racunalnik mora biti v istem segmentu, kot je vaš racunalnik. (Zakaj?) Poglejte, ali je ta vnos IP in MAC v vaši ARP tabeli. Sosedu pošljite ping in nato ponovno poglejte svojo ARP tabelo. Pokukajte še k sosedu in si oglejte njegovo ARP tabelo...

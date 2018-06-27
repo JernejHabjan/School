@@ -1,0 +1,16 @@
+https://ucilnica1516.fri.uni-lj.si/course/view.php?id=32
+
+2. programerska
+	Na sistemu marmoset sprogramirajte razpršilno tabelo z veriženjem in z odprtim naslavljanjem.
+
+3. programerska S SLIKAM:
+	https://ucilnica1516.fri.uni-lj.si/mod/assign/view.php?id=13961
+	
+4. Naloga 4.4 (programerska)
+	Na sistemu marmoset sprogramirajte drevo PATRICIA.
+
+5. Naloga 5.4 (programerska)
+	Na sistemu marmoset sprogramirajte Primov algoritem za gradnjo najmanjšega vpetega drevesa.
+
+6. Naloga 6.4 (programerska)
+	Na sistemu marmoset sprogramirajte deterministični in približnostni algoritem za polnjenje košev.

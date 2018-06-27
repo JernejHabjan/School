@@ -1,0 +1,51 @@
+?indukcije ni na izpitu
+
+kviz 1:
+	nedvoumen mehanièen
+	
+	preštevalen -prešeje
+	optimiacijski -best 
+	
+	na kakšen naèin opišemo al -kakršenkoli (javascript, slo, krogi v itu, morsejeva abeceda, še neki)
+	praštevil -1
+	
+	sito -iskanje praštevil (izloèimo vse veèkratnike)
+		izloèimo veèkratnike št 2
+		
+	urejanje raè. problem?
+		ne
+	
+	ali je sled 
+		da
+		
+	indukcija
+		èe deluje za n deluje za n+1 -ind korak
+		èe - mid potem se nekaj zgodi... - ind predpostavka
+		èe veèji right ... premajhna tabela- osnovni primer
+		binary search deluje pravilno -hipoteza
+		èe left -right - ind korak
+		èe middle - ind korak
+		èe right - ind korak
+		
+	koliko èasa bi trajalo celo testiranje (8 bit št)
+		
+		00000000 ->0
+		00000001 ->1
+		10101010 ->4
+		
+		štejemo enke po stolpcih -polovico nièel pol enk -> 2**8 = 256 - pol tega = 128
+			8x 128 = 1024..... 8 stolpcev po polovico enk
+		
+	koliko je razliènih , èe št razlièna
+		[100][99][98][97]
+		100*99*98*97
+	
+	zanèna invarianta
+		vnesi besedo "najmanjši"
+		
+	fib števila
+		ne
+	
+	dobro testiranje
+		obvezno pogleda stvari ki so na robu -> da
+		

@@ -1,0 +1,44 @@
+body {
+	font-family: Calibri;
+}
+
+#header {
+	background-color: #B60000;
+	color: yellow;
+	text-align: center;
+	margin: auto;
+	border-style: solid;
+	border-color: blue;
+}
+#content1 {
+	background-color: #EBE8CC;
+	margin: auto;
+}
+#content2 {
+	background-color: yellow;
+	border-style: solid;
+	border-color: #ff00ff;
+	margin: auto;
+	height: 200px;
+}
+#footer {
+	color: green;
+	border-style: dotted;
+	border-color: #ff0000;
+	margin: auto;
+	text-align: center;
+}
+
+#left {
+	float: left;
+	width: 20%;
+	height: 200px;
+	background-color: blue;
+}
+#right {
+	float: left;
+	width: 80%;
+	height: 200px;
+	background-color: yellow;
+}
+

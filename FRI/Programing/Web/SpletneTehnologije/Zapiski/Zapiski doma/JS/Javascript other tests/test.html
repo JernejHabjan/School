@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+<body>
+
+<form id="frm1" action="form_action.asp">
+  First name: <input type="text" name="fname" value="Donald"><br>
+  Last name: <input type="text" name="lname" value="Duck"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<p>Click "Try it" to display the value of each element in the form.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+
+
+//da dobiš usak value iz forma
+
+
+<?php;
+ if (!empty($_POST)) {
+  // set the cookie with the submitted user data
+  setcookie('color',$_POST['color']);
+  setcookie('name', $_POST['name']);
+  // redirect the user to final landing page so cookie info is available
+  header("Location:form_data.php");
+ } else {
+  echo; "<b>fav color:</b>".$_COOKIE['color'];
+  echo; "<b>name:</b>".$_COOKIE['name'];
+ }
+?>
+
+function myFunction() {
+    var x = document.getElementById("frm1");
+    var text = "";
+    var i;
+    for (i = 0; i < x.length ;i++) {
+        text += x.elements[i].value + "<br>";
+    }
+    document.getElementById("demo").innerHTML = text;
+}
+</script>
+
+</body>
+</html>

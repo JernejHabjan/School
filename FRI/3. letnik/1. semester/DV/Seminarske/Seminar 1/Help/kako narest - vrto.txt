@@ -1,0 +1,19 @@
+Da shiftas
+In checkas cej kera od cifr u registrih vecja od 4
+
+
+Shiftas pa 3x na zacetku ja k rabs 3bit da sploh dobis 5
+Shiftas pa tokrat kokr mas cifr obv
+In ceu prenos
+Na desetice
+Pol bos mu en bit vec
+
+
+
+
+a si shift svoj napisu
+
+Yus
+Sj je sam unrollan for loop
+Za 6 - 4 iteracij
+4 zato k so 4bitni registri 6 pa zato k tok output variablu rabs

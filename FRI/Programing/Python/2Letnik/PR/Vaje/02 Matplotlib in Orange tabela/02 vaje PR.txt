@@ -1,0 +1,9 @@
+how does distribution of movie ratins look like -> use histogram
+
+py lib za csv brat
+
+"the programing will not be the most important thing"
+
+problems in data if u average -> empty shit?
+
+report is more important than the code!!!

@@ -1,0 +1,51 @@
+﻿
+naloge (1)
+
+1. Poiščite vse imenike, ki imajo lepljivi bit in pravico pisanja za ostale uporabnike.
+
+2. V domačem imeniku uporabnika student in vseh podimenikih (s potrjevanjem) pobrišite vse datoteke s končnico txt. 
+
+3. Poiščite vse trde povezave na določeno datoteko. Namig pomagajte si z ukazom stat. Kako bi jih zbrisali?
+
+naloge (2)
+
+Kako delujejo naslednje preusmeritve?
+1. pwd <vhod.txt (predhodno ustvarite datoteko vhod.txt, ki vsebuje niz /etc/)
+2. pwd >izhod.txt
+3. ls -l <vhod.txt
+4. ls -l >izhod.txt
+5. ls -l 1>izhod.txt
+6. ls -l 2>izhod.txt
+7. ls -l vhod.txt >izhod.txt
+8. ls -l 2>>izhod.txt
+9. ls -l  2>izhod.txt 1>&2
+10. ls -l  2>izhod.txt 1>2
+11. ls -l 1>&2 2>izhod.txt
+12. ls -l &>izhod.txt
+13. cat <vhod.txt
+14. cat <<konec 
+15. cat >izhod.txt
+16. cat vhod.txt
+17. cat vhod.txt vhod2.txt vhod3.txt >izhod.txt
+18. cat <vhod.txt >izhod.txt
+19. cat <izhod.txt >>izhod.txt
+20. Ukazi pogosto izpisujejo v konzolo. Kako bi pognali ukaz, da bi preprečili te izpise?
+
+
+naloge (3)
+
+1. V dveh konzolah poženite:
+   cat >a.txt
+   cat <a.txt
+
+2. Ustvarite imenovan cevovod testpipe in poženite:
+   cat >testpipe
+   cat <testpipe
+
+3. Kako delujejo naslednji ukazi in preusmeritve?
+   more /etc/passwd 
+   cat /etc/passwd | sort | more
+   tree / | less
+
+4. Poiščite 5 največjih datotek v imeniku in njegovih vseh podimenikih.
+

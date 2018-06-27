@@ -1,0 +1,31 @@
+Jernej Habjan 63150106
+
+1. Zgradba omrežja:
+	Da lahko govorim o ustvarjanju CA, podpisovanju in certifikatih, moram prvo opisati zgradbo omrežja (več je vidno iz vektorske slike).
+	Kot mnogi, sem se pridružil omrežju, kjer je bil glavni root strežnik Metod Medja in v času pisanja znaša približno 65 ljudi.
+	Omrežje je tako zgrajeno, da imamo 2 korenska strežnika, ki sta javno dostopna (Metod Medja in Žiga Strgar). Tadva urejata
+	routing med 2 omrežjima in med nami.
+	Oba, ki sta skrbnika, imata strežnik in CA, s katerim sta podpisovala certifikate vsem CA pod sabo.
+	Podpisovala sta pa samo certifikate od CA, saj je omrežje zgrajeno hierarhično in je namenjeno, da CA v podomrežjih podpisujejo
+	certifikate njihovim strežnikom in klientom teh strežnikov. Tako da korenski strežnik nima toliko dela.
+	To smo naredili z verigo certifikatov (vsak certifikat vsebuje podatke kdo ga je vse podpisal).
+
+2. Zgradba CA
+	Kot sem že omenil, je v vsakem podomrežju po 1 CA in korenska strežnika imata svoj CA.
+	Moram še omeniti, da sem jaz imel vlogo CA, tako da lahko vem o tem povedati več iz prve roke.
+	Prvo je moral zgraditi CA seveda skrbnik moje skupine (skupine A1), ki je Metod Medja.
+	
+3. Gradnja mojega CA:
+	Seveda se moram ponovno zahvaliti Metodu, saj je pripravil lepo poročilo, ampak seveda, da obrazložim iz mojega pogleda.
+	Prvo poženem skripto, da se zgradi CA (podobno ./build-ca)
+	V /usr/share/easy-rsa/ se nahaja datoteka "vars", katero sem (je skripta) spremenila podatke o:
+		skupini -> A1
+		vpisna_St -> 63150106 (preko vpisnih številk je potekal routing, zato je moralo biti enolično)
+		mail -> jernej.habjan96@gmail.com
+	Ta skripta je še zgenerirala določene stvari.
+	Zgeneriral se mi je privatni ključ in csr datoteka.
+	Potem sem za certifikat zaprosil glavni člen (svojo korensko CA), da mi ga podpiše.
+	Ko sem prejel njegov podpisan certifikat (cert.crt) sem ga premaknil v svojo mapo.
+	Za tem sem podpisal certifikat svojem "lokalnemu" strežniku in njegovemu klientu. (strežniku sem nazaj potem poslal 2 certifikata,
+	clientu pa enega).
+	In sem se še povezal na omrežje (več v datoteki VPN.txt)

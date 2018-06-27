@@ -1,0 +1,70 @@
+Sistem za prijavo:
+	Prvo sem za osebje podjetja Avtek pripravil sistem za prijavo, kjer se lahko osebje logira z uporabniškim imenom in geslom.
+	Ti so shranjeni v txt datoteki, vendar je geslo hashirano s SHA1.
+	
+	Prav tako se lahko osebje registrira, kjer se uporabniški ime in geslo dodata v "bazo" to se pravi txt datoteko.
+	To okno vsebuje tudi gumb počisti ki počisti polja in gumb izhod, ki prej praša osebje, ali res želi program zapustiti.
+	
+	Gumbi so različnih velikosti, tako da je gumb "Prijavi se" najbižje in je tudi največi, med tem ko je gumb izhod najdlje.
+	
+	Ko se uspešno prijavimo z veljavnim geslom in uporabniškim imenom, se odpre nova forma Avtek, kjer osebje vnaša podatke.
+Avtek:
+	Avtek ima navigacijsko vrstico z možnostmi datoteka, orodja in pomoč
+	
+	pod orodja spada naloži podatke, ki služi kot hitri vnos za že vnešene stranke. Če je stranki ime "Ana" in ima priimek "Kondič"
+	in je že najela avtomobil, to se pravi jo imamo zabeleženo v bazi, jo lahko uporabnik s tem gumbom poišče in se mu izpišejo podatki
+	o tej osebi v vnosna polja.
+	Če uporabnik ne ve kako ravnati s tem, lahko gre pod Pomoč -> pomoč, kjer si lahko nahitro prebere navodilo.
+	Če stranka ne obstaja, to tudi opozori osebje. Prav tako če vnese napačne podatke (naprimer ne vnese imena).
+	
+	Prav tako je tu gumb "Shrani podatke", ki shrani vnosna polja v bazo pod ključ, ki je sestavljen iz imena in priimka.
+	Ta baza je prav tako tekstovna datoteka, kjer vsaka vrstica predstavlja enega uporabnika.
+	Osebje vpraša če želi shraniti vse podatke. Če pri tem odgovori z "Da", potem obarva vsa neizpolnjena polja z rdečo barvo.
+	Če pa odgovori z "Ne" pa obarva samo polje z imenom in priimkom, saj morata biti izpolnjena vsaj tedva, da lahko shranimo datoteko.
+	Moram omeniti še, da so na vsa vnosna polja nastavljeni actionListenerji, ki preverjajo, če je osebje v njih kaj napisalo.
+	Če je in je to polje obarvano na rdečo, ga obarva spet nazaj na belo.
+	
+	
+	Tu je tudi gumb odjava, ki osebje odjavi, pokaže ponovno sistem za prijavo, in v vnosno vrstico za uporabniško ime vpiše njegovo ime.
+	
+	Tu je tudi gumb izhod, ki pred izhodom vpraša osebje o potrditvi izhoda.
+	
+	Pod orodja, imamo gumb počisti polja, ki vse vrednosti da na privzete, počisti vnosna polja in počisti povzeti pogled na desni strani.
+	
+	Pod pomoč imamo pa informacije o avtorju in kratka pomoč, kako naložiti podatke o že obstoječi stranki.
+	
+	
+	Glavni del forme:
+	Formo sem razdelil na 2 dela. Levi del kjer osebje vnaša podatke, in desni del kjer vidi povzetek podatkov.
+	Levi del, kjer osebje vnaša podatke, sem razdelil na Izposoja, Izposojevalec in plačilo.
+	
+	Pri zavihku izposoja ima osebje dva date pickerja, ki sta najbolj primerna za izbiro datuma,
+	Ima seznam možnik prevzemališč in oddajališč.
+	Pri izbiru velikosti, se hrkrati še spremeni polje "Na voljo", ki pove kateri avtomobili so na voljo.
+	Tu je tudi radio button za izbiro menjalnika in spustni meni za bencin.
+	
+	Pri zavihku izposojevalec so povečini samo vnosna polja.
+	Vnosno polje poštna številka je posebno, saj ko vpišemo številko npr 4220 -> vrne v vnosno polje Kraj tekst "Škofja Loka".
+	Kraje in poštne številke preberem iz csv datoteke ki je priložena.
+	
+	
+	Potem je pa tu še zazvihek plačilo, kjer lahko izberemo dodatko zavarovanje z check boxom.
+	Tu je spustni meni način plačila, pri katerem ob izbiri plačila Kreditne kartice, se pokaže panel z
+	številko kartice in CSV.
+	Ko je številk kartice več kot 16, uporabniku osebju pobarva polje z rumeno barvo, saj polje vsebuje preveč znakov.
+	Tu je še gumb potrdi plačilo, ki posodobi povzetek na desni strani.
+	Pokaže vse skrite labele in v primeru da je stranka izbrala kot tip plačila kreditna kartica, se pokaže tudi
+	labela za to in šifra kartice, ki pa je šifrirana in ločena z "-".
+	
+	Prav tako sta na povzetku še cena izposoje na dan, ki je odvisna od avtomobila in tega, ali smo vzeli dodatko zavarovanje 
+	in seveda skupna vsota izposojila, ki je pa odvisna tudi še od števila dni.
+	
+	
+	Imamo tudi navigacijsko vrstico, kjer se izpiše kaj osebje naredi (pobriše polja, naloži podatke, shrani podatke).
+	
+	
+Izbiral sem nevtralne barve in fonte. Nekatere velikosti pisave sem naredil večje kot druge (naprimer Skupna vsota in naslove zavihkov)
+	
+	
+Jernej Habjan 63150106
+17.april.2017

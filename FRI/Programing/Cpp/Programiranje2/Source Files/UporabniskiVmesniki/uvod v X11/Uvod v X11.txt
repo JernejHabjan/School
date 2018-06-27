@@ -1,0 +1,5 @@
+Uvod v X11
+
+Testirajte program hello.c, ki je bil predstavljen na predavanjih. Testirajte tudi njegovi dopolnitvi hello1.c in hello2.c.
+Poleg tega testirajte tudi program palete.c za prikaz vseh barv graficnega prikazovalnika. Poleg tega testirajte tudi naslednje programe,
+tipicne za okensko okolje X, ki se nahajajo v direktoriju /usr/bin: bitmap, editres, xfontsel, xwd, xwud, xwininfo, xcalc, xeyes, xlogo, xclock, xfig, xdvi, xev.

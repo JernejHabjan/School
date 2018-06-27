@@ -1,0 +1,46 @@
+///THEORY///
+	mvn.rvs -> random variable sample
+	mvn.pdf -> probability distribution function (funkcija 1/sqrt....)
+
+	student distrib:
+		studentova porazdelitev je bolj odporna na outlierje
+
+		some movies have small number of ratings -> student distribution
+
+	beta distrib: (limited in interval) - ratings in movies go from 1 to 5 (average ratings are limited)
+		med 0 in 1
+		2 parameters
+			alpha -number of coins landed head
+			beta - number of coints landed tails
+			če sta alpha in beta večje št- pol je bol confident kje bo average
+			
+	parameters fiting procedure
+		student.fit(sample)
+		
+///JESTER///
+podobno filmom (jokes from 1 to 10 ocenjene)
+
+-print(X[:10, :10) - first 10 rows, first 10 coluimns
+-nan values ne uporabiš v calculationsih
+-joksi z manj ratingi dajo isti vpliv na graf kot tisti z velkmu
+	rabmo agregirat
+		(np.isnan(X)==FALSE).sum(axis=0) -> agregiramo
+	naredimo 2 novi naključni sprem.
+		just take the valid numbers not the ratings and the movies dont have
+		i have a list for average ratings for a joke
+	now just sort the list and display the data
+	
+	outliers:
+		its an outlier coz it doesnt fit our model
+		fitting the parameters to see if it fits
+			for normal distrib:
+				mu = np.mean(data)
+				sigma = (n-1)/n*no.var(data)
+		how unusial is the measurement
+			= the probability of getting that value or less -> v primeru teh ratingsov 
+			= p value
+				
+		
+				
+				
+				

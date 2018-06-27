@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{chaslot2006monte}
+GMJB Chaslot, Jahn-Takeshi Saito, Bruno Bouzy, JWHM Uiterwijk, and H~Jaap Van
+  Den~Herik.
+\newblock Monte-carlo strategies for computer go.
+\newblock In {\em Proceedings of the 18th BeNeLux Conference on Artificial
+  Intelligence, Namur, Belgium}, pages 83--91, 2006.
+
+\bibitem{guid2011using}
+Matej Guid and Ivan Bratko.
+\newblock Using heuristic-search based engines for estimating human skill at
+  chess.
+\newblock {\em ICGA Journal}, 34(2):71--81, 2011.
+
+\bibitem{kocsis2006bandit}
+Levente Kocsis and Csaba Szepesv{\'a}ri.
+\newblock Bandit based monte-carlo planning.
+\newblock In {\em ECML}, volume~6, pages 282--293. Springer, 2006.
+
+\bibitem{kubat1998review}
+Miroslav Kubat, Ivan Bratko, and Ryszard Michalski.
+\newblock A review of machine learning methods.
+\newblock 1998.
+
+\bibitem{mozina2008fighting}
+Martin Mozina, Matej Guid, Jana Krivec, Aleksander Sadikov, and Ivan Bratko.
+\newblock Fighting knowledge acquisition bottleneck with argument based machine
+  learning.
+\newblock In {\em ECAI}, pages 234--238, 2008.
+
+\end{thebibliography}

@@ -1,0 +1,205 @@
+	
+	KLASIFIKACIJE ,BINARNE KLASIFIKACIJE, BRIER
+	
+
+
+file->change dir --> grafièno izbereš working directory
+
+
+zadnjiè-readtable
+	players <- read.table("players.txt", header = T, sep = ",")
+	summary(players)
+	
+atributi ki slikajo 1-1 nimajo napovedovalne vrednosti (1 id doloèa 1 pozicijo)
+	-zato je tak atribut foul
+	-zato ga zbrišemo
+		players$id <- NULL
+
+
+podatke razdelimo na 2 dela (uèna množica in testna množica)
+	v uèni množici imamo ciljno spremenljivko (npr obrambni igralec, napadalec..)
+	model zgradimo z uèno množico
+	testne pošljemo modelu in ko dobimo odgovore, jih primerjamo s tistim k bi mogl bit
+	- dobimo oceno kvalitete s to primerjavo
+	
+kako izberemo uèno množico in testno 
+	-lahko nakljuèno
+	-tukaj smo po obdobju (èas)
+		vsi starejši bodo za uèno množico, novejši za testno
+		
+zgradimo testno in uèno množico
+	learn <- players[players$lastseason <= 1999,]
+	test <- players[players$firstseason > 1999,]
+	-- za to smo uporabili atributa lastseason in firstseason
+	
+nrow(learn) -- koliko je vrstic 
+table(learn$position) -- pove koliko je ciljnih, koliko obrambnih
+
+
+nrow(test) --- testna množica mora imeti enake lastnosti kot uèna (skor enaka)
+table(test$position)
+
+
+
+
+veèinski klasifikator - vzame razred ki se max ponavlja in vse da notr
+	na naši testni - 38%
+	veèinski klasifikator je spodnja meja sprejemljivosti.
+
+
+
+
+funkcije:
+	ime <- function(argumenti){
+	
+		telo funkcije
+		
+		return (y)
+		//ÈE NE PIŠE RETURNA, SE RETURNA ZADNJI IZRAÈUNAN REZULTAT
+	}
+	
+	PRIMER:
+		CA <- function(prave, napovedane)
+		{
+			t <- table(prave, napovedane)
+
+
+			sum(diag(t)) / sum(t)
+		}
+		CA(observed, predicted) ---tako klièeš
+
+
+	
+ODLOÈITVENA DREVESA:
+	load knjižnice: library(rpart)
+	KNJIŽNICA rpart
+	model <- rpart(formula, uèni podatki)
+		formula je: definira kaj je odvnisna spremenljivka in kaj neodvisne
+			y ~ x1 -> želim modelirat y s pomoèjo x1
+			y ~ x1+x2+x2..+xn  -- da jih veè
+			y ~ . -- to ti vse da
+	y		
+	dt <- rpart(position ~ ., data = learn)
+
+
+	plot(dt) --- nariše drevo
+	text(dt, pretty = 0) - napiše stuff na vozlišèa plota
+	
+	-zdaj imamo drevesa
+	
+	-zdaj testiramo kako dobro deluje
+		napovedi <- predict(model(kamor je shranjeno drevo), testni podatki, oblika odgovora)
+			oblika odgovora:1. ali me zanima najbolj verjeten razred ("CLASS")
+							2. ali me nzanimajo verjetnosti po vseh razredih(za vsako možno pozicijo verjetnost)
+						pri 2. je matrika 
+_________________________________
+	CLASS!!!!!!!!!!!!!
+		primer1. 
+			predicted <- predict(dt, test, type = "class")
+	-mi pa imamo prave odgovore
+		observed <-test$position
+	
+	-primerjava
+		t <- table(observed, predicted)
+		matrika je matrika zmot (pravilni odgovori so po diagonali)
+	
+	-KLASIFIKACIJSKA TOÈKA - predstavlja delež pravilno napovedanih
+	sum(diag(t))/sum(t) ------ugotovimo koliko dobro je drevo
+		diag -pobere diagonalne elemente
+		
+_________________________________
+	BRIER!!!!
+	primer2. -verjetnosti vseh možnih izzidov kje je lahko igralec -> kao matrika 
+		predMat <- predict(dt, test, type = "prob") //matrika predicta...
+		
+		ocenjevanje ali je dobri model ali slab
+			-SREDNJA KVADRATIÈNA NAPAKA - BRIERS SCORE (med napovedanimi in dejanskimi)
+			obsMat <- model.matrix( ~ position-1, test) //test je testna množica, position-1 pomeni da vse stolpce
+				OBSMAT je dejanska napoved
+		-RAÈUNANJE NAPAKE
+			-BRIER SCORE -MANJŠA JE BOLJŠA JE!!!!!!!!!!!!!!!!!!!!!!!!!!
+		brier.score <- function(observedMatrix, predictedMatrix){
+			sum((observedMatrix - predictedMatrix) ^ 2) / nrow(predictedMatrix)
+			//mejbi tudi mean((obsMat-predMat)^2)
+		}
+		brier.score(obsMat, predMat) -- izpis  
+_________________________________
+	BINARNA KLASIFIKACIJA
+	DVORAZREDNI PROBLEM (da, ne)
+		
+	bin.players <- players[players$fta > 0,] -- vsi ki so vsaj 1x prosto metali
+	rate <- bin.players$ftm / bin.players$fta
+		hist(rate)
+		
+	-mi reèemo daj ekspert tisti ki vsaj 80% zadane
+	
+	ftexpert <- vector()
+	
+	-pol nafilamo z yes in no polja
+	ftexpert[rate >= 0.8] <- "YES"
+	ftexpert[rate < 0.8] <- "NO"
+	
+	naredimo
+	bin.players$ftexpert <- as.factor(ftexpert)
+	
+	//zbrišemo free throws attempts in free throws made... da ni naloga trivialna
+	bin.players$fta <- NULL
+	bin.players$ftm <- NULL
+	
+	summary(bin.players)
+
+
+	_____
+	razdelimo na 2 dela na testno in uèno
+		bin.learn <- bin.players[1:1500,] //kar številka - do 1500
+		bin.test <- bin.players[-(1:1500),]
+		
+	naredimo odloèitveno drevo
+	dt2 <- rpart(ftexpert ~ ., data = bin.learn)
+	plot(dt2)
+	text(dt2, pretty = 0)
+	
+	bin.observed <- bin.test$ftexpert
+	bin.predicted <- predict(dt2, bin.test, type="class")
+	table(bin.observed, bin.predicted)  --- in dobimo toènost 82% 
+			-- èe primerjamo z veèinskim klasifikatorjem je to shit
+
+
+	KADARKOLI OVREDNOTIŠ MODEL POGLEJ KAKŠEN JE VEÈINSKI KLASIFIKATOR
+	
+	_________________________________
+	KLASIFIKACIJSKA TOÈNOST:!!!!!!!!!!!!!!!!!!!!!!!!! FORMULA PREDAVANJE
+		CA = (TP+TN)/(POS+NEG)
+		SENZITIVNOST = TP/POS
+		SPECIFIÈNOST = TN/NEG
+	
+	
+	FORMULI ZA SPECIFIÈNOST IN SENZITIVNOST
+		Sensitivity <- function(observed, predicted, pos.class)
+		{
+			t <- table(observed, predicted)
+
+
+			t[pos.class, pos.class] / sum(t[pos.class,])
+		}
+
+
+		# Funkcija za izracun specificnosti modela
+		Specificity <- function(observed, predicted, pos.class)
+		{
+			t <- table(observed, predicted)
+
+
+			# identify the negative class name
+			neg.class <- which(row.names(t) != pos.class)
+
+
+			t[neg.class, neg.class] / sum(t[neg.class,])
+		}
+	
+		UPORABIMO FORMULI
+			Sensitivity(bin.observed, bin.predicted, "YES")
+			Specificity(bin.observed, bin.predicted, "YES")
+			
+
+

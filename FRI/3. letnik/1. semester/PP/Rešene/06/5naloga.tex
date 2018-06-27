@@ -1,0 +1,82 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}   % omogoča uporabo slovenskih črk kodiranih v formatu UTF-8
+\usepackage[slovene]{babel}    % naloži, med drugim, slovenske delilne vzorce
+
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+
+
+\title{Uporaba in analiza Monte-Carlo drevesnega preiskovanja na strateški igri}
+\author{Jernej Habjan\\
+jh0228@student.uni-lj.si\\
+\ \\
+predvideni MENTOR: doc. dr. Matej Guid \\
+Fakulteta za računalništvo in informatiko Univerze v Ljubljani
+\date{\today}         
+}
+
+
+
+\begin{document}
+\maketitle
+
+\section{Najbolj relevantna publikacija mojega predvidenega mentorja v zvezi z mojo predvideno diplomsko nalogo}
+
+Realno-strateške igre so pri algoritmiki predvsem znane po zelo velikem razvejanju, saj so igre veliko daljše in prisotnih je več figur.
+Tako da je abstrakcija pri takih igrah obvezna, saj ne moremo preiskati celega preiskovalnega drevesa, vendar le del.
+Abstrakcija lahko poteka na način, da združimo posamezne enote v skupine, in potem ukazujemo skupinam in ne posameznim enotam.
+Prav tako lahko posamezne akcije nadgradimo v več nivojske.
+Primer za to bi bil gradnja hiše.
+Pri gradnji hiše mora oseba priti na določeno lokacijo, vzeti surovine, graditi hišo in vmes opravljati še druge ukaze.
+To zaporedje ukazov lahko posplošimo na večnivojskega in obravnavamo skupek ukazov kot enega samega.\\
+V konferenčnem papirju, pri katerem je sodeloval mentor doc. Matej Guid je pa opisan drugačen način izboljšanja iskanja rešitve v preiskovalnem drevesu~\cite{stoiljkovikj2015computational}.
+K problemu pristopi na način človeškega razmišljanja, saj eksperti šaha (papir je predvsem osredotočen na šah)  na podlagi predznanja in izkušenj izgradijo t.i. \textit{smiselna drevesa}.\\
+Smiselna drevesa so veliko manjša od splošnih preiskovalnih dreves, saj omejimo akcije, ki jih izvedemo na majhno podmožico.
+Akcija je smiselna, če je njena ocen večja kot pričakovana, ali pa če je napaka pri izvedbi akcije manjša kot nasprotnikova pričakovana napaka.
+
+
+\section{Katere so tri najbolj citirane publikacije mojega predvidenega mentorja}
+
+\subsection{V sistemu COBISS oziroma SICRIS}
+V COBISS oziroma SICRIS so najbolj citirana naslednja dela:
+\begin{description}
+\item Computer analysis of world chess champions, kjer ima publikacija WoS 12,
+\item How trustworthy is CRAFTY'S analysis of world chess champions?, kjer ima publikacija WOS 7,
+\item Using heuristic-search based engines for estimating human skill at chess, kjer ima publikacija WOS 6.
+
+\end{description}
+
+\subsection{V Google učenjaku}
+Najbolj citiranje mentorjeve publikacije v Google učenjaku:
+\begin{description}
+	\item Computer analysis of world chess champions ima 37 citatov,
+	\item Fighting Knowledge Acquisition Bottleneck with Argument Based Machine Learning ima 25 citatov,
+	\item How trustworthy is Crafty’s analysis of world chess champions ima 22 citatov.
+\end{description}
+
+\section{Kakšen je h-indeks mojega predvidenega mentorja}
+
+\subsection{V sistemu SICRIS}
+V Google učenjaku ima doc. Matej Guid h-index 5.
+\subsection{V Google učenjaku}
+V Google učenjaku ima doc. Matej Guid h-index 10.
+
+\section{Strani mentorja na Google učenjaku, na Research gate in v  Academiji}
+Docenta Mateja Guida najdemo na naslednjih povezavah:
+\begin{description}
+\item[Google učenjak:] \url{https://goo.gl/grjYCF}
+\item[Research gate:] \url{https://www.researchgate.net/profile/Matej_Guid}
+\item[Academia:] \url{http://independent.academia.edu/MatejGuid}
+
+\end{description}
+
+\bibliographystyle{plain}
+\bibliography{literatura}
+
+\end{document}  
+
+
+
+

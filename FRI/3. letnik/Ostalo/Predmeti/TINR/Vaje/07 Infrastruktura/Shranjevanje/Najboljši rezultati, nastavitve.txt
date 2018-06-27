@@ -1,0 +1,17 @@
+Naloga
+
+Najenostavnejši del shranjevanja je serializacija že obstojeèih podatkovnih tipov, kot so NSMutableDictionary ali NSMutableArray. Tako si lahko najboljše rezultate shranimo v podatkovno strukturo slovarja in za vsako ime (NSString) shranimo dosežen rezultat (NSNumber). Podobno lahko pod vnaprej definirane kljuèe (besede) shranimo vrednosti nastavitev, recimo, ali imamo vklopljen zvok ali ne (pod kljuè @"SoundOn" shranimo BOOL vrednost v objektu NSNumber).
+
+Ko imamo tako pripravljeno podatkovno strukturo uporabimo NSKeyedArchiver in NSKeyedUnarchiver, da v datoteko (pot dobimo s pomoèjo NSSearchPathForDirectoriesInDomains) shranimo in na drugi strani iz nje naložimo podatke. Tako dosežemo, da se rezultati ali nastavitve ohranijo tudi po tem, ko zapremo aplikacijo.
+
+Navodilo
+
+Posnemite simulator, kjer pokažete, da se po zaprtju aplikacije poljubni (prej spremenjeni) podatki ohranijo. To demonstrirate tako, da pokažete neko stanje, nato aplikacijo zaprete s klikom na gumb iPhone ter ustavite proces aplikacije z dvoklikom na gumb iPhone ter držanjem na ikoni pognanega progama spodaj  (ker sicer zaradi veèopravilnega opercijskega sistema aplikacija ostane odprta v ozadju). Nato še enkrat poženite aplikacijo in pokažite, da so se izbrani podatki ohranili.
+
+
+Posnemite le del ekrana, v katerem je viden simulator. Video naj bo èimkrajši, da še prikaže zahtevano, datoteka èimmanjša (uporabite kompresijo).
+
+Oddate nastalo video datoteko (mov/avi) in NE zip/rar z video datoteko.
+
+Poimenovanje:63080000-priimek-infrastruktura-shranjevanje-naboljsi_rezultati_nastavitve.mov
+(primerno popravite vpisno številko in priimek)
