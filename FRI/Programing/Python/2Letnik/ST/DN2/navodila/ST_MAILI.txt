@@ -1,0 +1,45 @@
+Težave imam pri dodajanju zapisa v bazo in sicer, ko želim poslati response na socket po POST zahtevku izgleda, kot da se nekako server cikla v neskončni zanki oz. response sploh ne pride do clienta.
+
+	
+Glede zahteve:
+
+Preveri da pravilno interpretiraš dolžino.
+Če delaš z transfer-encoding: chunked so velikosti podane kot hex vrednosti
+Če imaš Cloud9, odpri issue z njimi*
+Poskusi brati po 1 byte in sproti izpisuj vsebino, dodatno izpiši ko nehaš brat zahtevo
+Glede odgovora:
+
+Preveri kaj točno pošlješ.
+Poskrbi, da do odgovora dejansko pride in se program ne zalomi nekje vmes.
+*Ker niso dovolj popularni, očitno nimajo dovolj denarja, da bi nahranili vse svoje razvijalce in so bili ti zato 
+prisiljeni jesti natisnjene kopije HTTP spektifikacije. Zlasti RFC 7230 poglavje 3.3.2. Saj so pozabili kako se 
+pravilno preveri dolžina zahteve. Content-Length je namreč navadno večji od dejanske dolžine. V mojih poskusih je bil 
+7, lahko pa da se spreminja. Če uporabjaš makefile predlagam, da testiraš preko nečesa drugega ali pa poskusiš (ne vem
+ če dela) naložiti kakšen proxy, ga dati na vrata 8080 in strežnik pognati na npr. vratih 9000. Z malo sreče bo proxy 
+ popravil zahtevo. Če hočeš rešitev realizirati sam: Bereš preko non-blocking socketa z zelo majhnim timeout. Ko dobiš nekaj, 
+ kar je lahko smiselna zahteva (vredu vsebina .. to npr. lahko vidiš pri multipart/form-data, in pribljižno dovolj dolg 
+ content-length) in nekaj milisekund ni čisto nič nove vsebine, sklepaš da je to vse in obdelaš zahtevo. Če je vse vred
+ u ne pošlješ 400 napake. To ni po spektifikaciji, je primerljivo z obnašanjem ostalih strežnikov.
+ 
+ 
+ 
+ 
+ 
+ 	
+Metod, odlični predlogi. Takšno sodelovanje študentov je izrednega pomena, zato bi želel k sodelovanju povabiti še ostale.
+
+Sam bi dodal še naslednje. Marko, če ste socket spremenili v datoteko (tj. poklicali ste funkcijo makefile()), sedaj pa skušate telo zahtevka (tj. parametre) prebrati s funkcijo readline(), morate vedeti, da bo ta funkcija skušala brati s socketa toliko časa, dokler ne bo uspela prebrati znaka za novo vrstico (angl. newline character: \r\n). Če znaka ne bo, bo čakala in z njo tudi vaš program.
+
+In mimogrede, tega znaka skoraj zagotovo ne bo, saj se bo telo zahtevka končalo "v isti vrstici", razen če bosta -- po čudnem naključju -- ravno zadnja bajta telesa nastavljena na 0x0Din 0x0A. (Malo verjetno.)
+
+Kot je dejal Metod, preverite, da pri branju telesa zahtevka preberete toliko bajtov, ko je zapisano v zaglavju zahtevka v polju content-length.
+
+
+
+
+
+
+Sem poskusil, vendar če hočem pravilno poslati request, moram nastaviti še header_response_200, kateremu na koncu pripnem string datoteke.read(), ki smo jo prebrali. Problem pa je, da nemorem kar tako dodati byte, brez da bi jih castal v string.
+
+EDIT: Mi je uspelo, sedaj nekako strežnik pravilno handla requeste drugih datotek (jpg, mp4, pdf), vendar so vse corruptanje, tako da moram ugotoviti kaj je sedaj s tem
+EDIT2: prav ste imeli, poslal sem samo raw byte kodo od sllike in sedaj deluje, hvala !
