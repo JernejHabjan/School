@@ -2,6 +2,12 @@
 **Matic Vrtačnik  
 Jernej Habjan**  
 
+## Avaliability:
+Avaliable on:
+https://dataminingmaticjernej.azurewebsites.net/
+```
+Example -> New York - Asheville
+```
 ### 1.1 Airbnb večdnevna izbira prenočišč:
 Ko potujemo za dlje časa se moramo vnaprej pozanimati kje so bencinske črpalke, kje so trgovine in znamenitosti, ki nas zanimajo. Prav tako potrebujemo rezervirati prenočišča. Ampak kako narediti to?
 		
