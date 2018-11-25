@@ -1,0 +1,25 @@
+1. ugotov zaključek rezultatu k zdj še ne veš...
+2. napiš zaključke rezultatov
+
+
+OK VMESN CONCLUSION 
+    ker sm učiv tist model 96 ur - je overfitu na drawe zarad tiste formule https://github.com/suragnair/alpha-zero-general/issues/88#issuecomment-441431258
+    pa napišeš da je blo treba 2x formulo popravt - pokažeš obe rešitvi
+
+    in pol da si še enkrat dav buildat to za 100 iteracij, stran dav check za idle iz arraya akcij pa disablu vse 4 akcije za heal da je much faster
+
+
+
+
+
+3. zmeč vse v tabele tist kj treba
+4. dodj slike
+
+
+
+
+Pr Definiranje pravil igre še enkrat napiš kko bi svoj game hotu d zgleda
+    napiš da se zgleduješ po aoe2 pa sc1
+    pa kva hočeš da ma pa da nima
+
+    pa dj includi kšn graf al pa diagram recmo kko nj bi akcije potekale
