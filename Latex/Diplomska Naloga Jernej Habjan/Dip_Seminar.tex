@@ -66,10 +66,6 @@
 \hypersetup{pdfauthor={\tauthor, jh0228@student.uni-lj.si}}
 \hypersetup{pdfkeywords=\tkeywordsEn}
 
-
- 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % postavitev strani
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
@@ -428,55 +424,53 @@ Primer RTS igre sta igra Age of Empires II(Ensemble Studios) in StarCraft(Blizza
 		\includegraphics[width=0.7\textwidth]{photos/rts_sc1.pdf}
 		\includegraphics[width=0.7\textwidth]{photos/rts_aoe2.pdf}
 	\end{center}
-	\caption{Na zgornjih slikah sta predstavljeni igra StarCraft (zgoraj) in Age of Empires II (spodaj).}
+	\caption{Na zgornjih dveh slikah sta predstavljeni igra StarCraft (zgoraj) in Age of Empires II (spodaj). Obe igri sta prikazani še v začetnem stanju, kjer sta na obeh slikah vidni glavni hiši, delavci, viri surovin(minerali, rude zlata, drevesa ipd.). Pri igri Age of Empires II je viden zemljevid, kjer zasenčenost predstavlja neraziskan del. Izvajanje določenih akcij poteka več časa, saj na primer delavci pri igri StarCraft vračajo minerale več časovnih enot, pri igri Age of Empiress II pa se gradi delavec več časovnih enot.}
 	\label{picRtsGames}
 \end{figure}
 
 
-
-Izzivi realno-časovnih iger so naslednji:
+Razlike realno-časovnih iger v primerjavi s tradicionalnimi namiznimi igrami je dobro opisal Santiago Ontañon v raziskovalnem delu Pregled učenja umetne inteligence na realno-časovnih strateških igrah in tekmovanja v igri StarCraft~\cite{survey_real_time_strategy_ai_research_starcraft}.
+Te razlike pa so naslednje:
 \begin{itemize}
-	\item Upravljanje z viri,
-	\item izbira akcij ob nevednosti,
-	\item prostorsko in časovno razmišljanje,
-	\item sodelovanje med več agenti,
-	\item modeliranje nasprotnika in učenje,
-	\item nesporno načrtovanje v realnem času.
+	\item izvajanje akcij v istem časovnem intervalu, ki pa lahko trajajo več časovnih intervalov,
+	\item odločitev akcij v krajšem časovnem obdobju, saj za razliko od šaha, kjer ima igralec na voljo več minut za izbiro poteze, se v igri kot npr. StarCraft stanje igre zamenja 24-krat na sekundo,
+	\item igre so lahko le vidne na področjih kjer je igralec že raziskal in imajo vpogled igralčeve figure,
+	\item večina iger ni determinističnih, kjer imajo akcije možnost uspeha,
+	\item kompleksnost raziskovalnega prostora je veliko večji.
+
 \end{itemize}
 
-Zdajšnji izzivi:
+Zaradi teh razlik so nastopili razni izzivi:
+
 \begin{itemize}
-	\item planiranje: V realno-časovni igri je vidno kot več nivojev abstrahiranega stanja igre. 
+	\item planiranje: Realno-časovne strateške igre imajo običajno večji raziskovalni prostor, kar pa prepreči globje raziskovanje stanja iger. Kot bomo pozneje pregledali, se igre zato abstrahirajo na več nivojev.
 	Višji kot je nivo, bolj dolgoročni so cilji, kot na primer gradnja ekonomije, na nižjem nivoju je pa premik posamezne figure ipd.,
-	\item učenje: Predhodno učenje, ki uporablja posnetke že odigranih iger, učenje v igri, ki uporablja po večini spodbujevalno učenje in modeliranje nasprotnika, učenje med igrami,
-	\item negotovost: Negotovost nastane zaradi nevidnosti nasprotnika in njegovih potez v vsakem trenutku. 
-	Prav tako pa ne vemo akcij, ki jih bo nasprotnik izvedel, zato zgradimo drevo, ki nam pove kaj je najverjetneje da bo nasprotnik naredil,
+	\item učenje: Učenje igranja igre lahko poteka na način predhodnega učenja, ki uporablja posnetke že odigranih iger in na način učenja v igri, ki uporablja po večini spodbujevalno učenje in modeliranje nasprotnika,
+	\item negotovost: Negotovost nastane zaradi nevidnosti nasprotnikovih figur in njegovih potez v vsakem trenutku. 
+	Prav tako pa v danem trenutku ne moremo določiti, katero akcijo bo nasprotnik izvedel, zato zgradimo drevo, ki nam pove največjo verjetnost izbrane akcije,
 	\item prostorsko in časovno razumevanje:
-	Prostorsko razumevanje je usmerjeno k postavljanju stavb in pozicijo vojske za obrambo in napad,
-	Časovno razumevanje je pa usmerjeno k ugotavljanju, kdaj je primerna izdelava hiš za ekonomijo in kdaj pa za napad,
-	\item izkoriščanje znanja domen:
-	Izkoriščanje znanje botov. 
-	StarCraft je kompleksen, in to ostaja še odprt problem,
+	Prostorsko razumevanje je usmerjeno k postavljanju stavb in pozicijo vojske za obrambo in napad, med tem ko je časovno razumenvanje usmernjeno k ugotavljanju časovne primernosti izdelave določenih figur, ki so primerne za izboljšavo igralčeve ekonomije, tehnološkega drevesa ali čas napada ipd.
+
+	\item izkoriščanje znanja domen: V tradicionalnih igrah kot npr. šah se lahko zanašamo na dobre ovrednotenske funkcije kot na primer algoritem alpha-beta rezanje in tabele za opis stanja konca igre, v realno-časovnih strateških igrah pa še ni jasno kako lahko računalniški nasprotniki uporabijo domenska znanja iz posnetkov iger, zato se razvijalci tovrstnih iger bolj osredotočajo na izgradnjo več taktik, med katerimi se računalniški nasprotnik odloča.
 	\item razdelitev nalog~\ref{picRazdelitevNalog}:
-	Strategija, ki je najvišja abstrakcija (3 min planiranje),
-	Taktika, ki je implementacija trenutne strategije (pozicija vojske, hiš - 30 sekundno planiranje),
-	Reakcijska kontrola, ki je implementacija taktike, ki je osredotočena na posamezno figuro,
-	Analiza terena, ki se osredotoča na strnjena območja in na višinsko prednost,
-	Pridobivanje znanja, s katerim pridobivamo informacije o taktiki nasprotnika~\cite{survey_real_time_strategy_ai_research_starcraft}.
-	
+	Večje in zahtevnejše naloge so razdeljene na manjše, ki pa jih uvrščamo v več nivojev glede na abstrakcijo.
+	\begin{itemize}
+		\item strategija je najvišji nivo abstrakcije, ki zajema okrog 3 minutna planiranja in vse figure ki jih igralec nadzoruje, 
+		\item taktika, ki je implementacija trenutne strategije (pozicija vojske, hiš - 30 sekundno planiranje),
+		\item reakcijska kontrola, ki je implementacija taktike, ki je osredotočena na posamezno figuro,
+		\item analiza terena, ki se osredotoča na strnjena območja in na višinsko prednost,
+		\item pridobivanje znanja, s katerim pridobivamo informacije o taktiki nasprotnika.
+
+	\end{itemize}
+
 	\begin{figure}[h]
 		\begin{center}
 			\includegraphics[width=0.8\textwidth]{photos/RazdelitevNalog.pdf}
 		\end{center}
-		\caption{Razdelitev nalog glede na čas reakcije in abstrakcije nalog.}
+		\caption{Slika prikazuje razdelitev nalog glede na čas reakcije in abstrakcije nalog. Prikazani so nivoji odločanja glede na časovni razpon, kjer se negotovost akcij povečuje s povečevanjem ciljnega časa, za kar moramo igro pravilno abstrahirati na različne taktike in strategije.  }
 		\label{picRazdelitevNalog}
 	\end{figure}
-	
-	Pogosto razdelimo odločanje na dva dela:
-	\begin{itemize}
-		\item micro, kjer kontroliramo figure posamezno,
-		\item macro, kjer se osredotočimo na ekonomijo in izdelavo figur.
-	\end{itemize}
+
 \end{itemize}
 
 \section{Strategija}
@@ -488,38 +482,73 @@ Taktika spada pod neposrednejši nadzor figur kakor strategija in je bolj osredo
 Taktika temelji na analizi terena, ki ga lahko razbijemo na kompozicijo ožin.
 
 \section{Abstrakcija prostora}
+
 Razbiranje strategije in taktike je za algoritme umetne inteligence težji, saj potrebuje višji nivo abstrakcije prostora, figur in akcij, kot za izbiro posameznih nizkonivojskih akcij.
 
-Prav tako problem nastane zaradi negotovosti, kjer ne vidimo nasprotnikovih figur in potez v vsakem trenutku. 
+Za primer abstrakcije prostora vzemimo računalniško realno-časovno igro, kjer bi lahko premik figure spremljali vsak prikazan piksel na prikazovalniku, vendar je primerneje da gledamo na premik figur kot izid na višjih ravneh~\cite{uriarte2015automatic}.
+Posamezne figure vojaških enot lahko združujemo v večje skupine, katero potem obravnavamo in upravljamo kot en osebek.
+Te skupine vojaških enot je pa potrebno pravilno postavljene na razne strateške točke, ki nam zagotavljajo znatno prednost pred sovražnikom.
+V ta namen lahko razgradimo zemljevid igre glede na ožine prestope iz višjega na nižji del terena.
+Na ta način lahko postavimo enote glede na ta razbiti teren~\cite{uriarte2014game}.
+V našem delu smo zemljevid razbili kar na kvadratno mrežo 8x8 ali 6x6, saj ne vsebuje nobenih ožin in nedostopnih mest.
+Imamo pa majhno število posameznih enot, ki pa lahko v računalniško igro preslikamo kot skupek enot, kot smo to opisali zgoraj.
+
+Abstrakcija prostora poteka težje če igra vsebuje dejavnike negotovosti, kot na primer prekrivanje zemljevida z meglo (ang. Fog of war) kjer ne vidimo nasprotnikovih figur in potez v vsakem trenutku. 
 Napoved nasprotnikovih potez je tako veliko težja, tako da vsi algoritmi s tako negotovostjo ne delujejo.
 Mi smo se za diplomsko nalogo odločili, da imata oba računalniška agenta popoln vpogled na stanje igre in nasprotnikove akcije.
 
+Prav tako lahko v igri kot npr StarCraft posamezno vojaško enoto premaknemo na poljubno koordinato na zemljevidu, pod pogojem da je ta koordinata dosegljiva z vidika algoritma za iskanje poti.
+Te koordinate premika lahko segajo tudi v neznane dele zemljevida, ki pa so lahko že zasedene z nasprotnikovo arhitekturo, zato lahko premikanje poenostavimo na sosednja polja.
+Za napad sovražnikovih enot, nabiranje zlatnikov ipd lahko omejimo na izvajanje akcij znotraj določenega polja na najbližjo figuro.
+Na primer vojaška enota lahko napade najbližjo nasprotnikovo enoto znotraj polja, v katerem je ta naša vojaška enota.
+V našem primeru, kot bomo pojasnili pri poglavju opis pravil igre~\ref{chpravilaigre}, ne moremo postaviti več figur na isto polje, zato so akcije kot napad, nabiranje zlatnikov omejene na sosednja polja.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \chapter{Predstavitev algoritma Alpha Zero}
 \label{alphazero}
 \section{Zgodovina}
 
-Igranje iger je popularno področje znotraj vede o umetni inteligenci. Eden izmed prvih programov je bil programski pogon Checkers (Samuel 2000), ki se je naučil igranja z metodami samo-igranja in strojnega učenja in ne npr. na metodah ki temeljijo na pravilih.
-Leta 2002 je Deep Blue premagal človeškega profesionalnega igralca šaha z nadčloveško sposobnostjo igranja. Pri teh igrah je faktor vejanja akcij še relativno majhen in je lažje oceniti končno pozicijo iz danega stanja.
+Igranje iger je popularno področje znotraj vede o umetni inteligenci. 
+Desetletja je bil za raziskovalce s področja umetne inteligence razviti program za igranje šaha, dandanes pa so najboljši algoritmi za igranje šaha nepremagljivi za celo svetovnega prvaka.
+Ti algoritmi temeljijo na preiskovanju prostora več milijonov šahovskih pozicij in metodah, ki temeljijo na pravilih.
+Za razliko od teh programov je bil eden izmed prvih programov programski pogon Checkers (Samuel 2000), ki se je naučil igranja z metodami samo-igranja in strojnega učenja in ne npr. na metodah ki temeljijo na pravilih.
+
+ Pri teh igrah je faktor vejanja akcij še relativno majhen in je lažje oceniti končno pozicijo iz danega stanja~\cite{wiki:AlphaGo}.
 Rečeno je bilo, da igre kot npr. Go, ki imajo toliko večji faktor vejanja $10^{171}$ v primerjavi s šahom, ki pa ima $10^{47}$, ne bo možno ugotoviti vrednost končnega stanja še nekaj desetletij.
 
 Ampak algoritem AlphaGo~\cite{silver2016mastering} je naredil preboj,s tem da uporablja metodo globokega spodbujevalnega učenja in algoritem drevesno preiskovanje Monte Carlo. Oktobra 2016 je premagal profesionalnega Go igralca na podlagi učenja na domenskem znanju iger, ki so bile odigrane od ekspertov.Te sistemi so temeljili na predznanju ekspertov za učenje in evaluacijo modela.
 
-Leto za tem, je bil razvit algoritem AlphaGo Zero~\cite{silver2017mastering}, ki opisuje pristop k učenju brez domenskega znanja ekspertov, ampak uporablja metodo samo-igranja. Novi model je prav tako premagal AlphaGo algoritem, kar predstavlja odlične rezultate z vidika, da AlphaGo Zero ne potrebuje človeško usmerjanje pri učenju.
+Njegovo delovanje pa lahko opišemo v naslednjih korakih~\cite{guid}:
+\begin{itemize}
+	\item miselno odigraj igro z raziskovanjem neodkritega, pri čemer upoštevaj nasprotnikove akcije,
+	\item pri soočenju z neznano pozicijo, oceni njeno vrednost in popravi ocene pozicij ki so vodile do trenutne pozicije,
+	\item po prenehanju razmišlajnja odigraj potezo ki je najbolj obetavna,
+	\item po koncu igre preglej vse pozicije kjer si se za pozicije narobe odločil in jih popravi.
+\end{itemize}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{photos/go.pdf}
+	\end{center}
+	\caption{Predstavitev igranja iger z naučenim algoritmom Alpha Zero z 700,000 iteracijami in čas za napoved akcije je 1 sekunda. Na levi sliki je prikaz igranja šaha proti programu Stockfish iz leta 2016, na srednji sliki igranje proti programu Elmo iz leta 2017 v igri Shogi, na desni pa igranje igre Go proti proramoma AlphaGo Lee in AlphaGo Zero. }
+	\label{picCompareGo}
+\end{figure}
+
+
+Leto za tem, je bil razvit algoritem AlphaGo Zero~\cite{silver2017mastering}, ki opisuje pristop k učenju brez domenskega znanja ekspertov, ampak uporablja metodo samo-igranja~\ref{picCompareGo}. 
+Novi model je prav tako premagal AlphaGo algoritem, kar predstavlja odlične rezultate z vidika, da AlphaGo Zero ne potrebuje človeško usmerjanje pri učenju.
 
 Računalniki se lahko tako naučijo reševanje problema brez človeških ekspertov, ki delajo napake in nimajo takojšnega vpogleda na celotno učno množico, kot to imajo računalniki.
 
 Za tem je bil razvit algoritem Alpha Zero, ki vzame ideje AlphaGo Zero kot temelj, ampak je model generaliziran za poljubne igre, kot na primer šah, Shogi, Go, kjer algoritem potrebuje samo pravila igre, ta pa se uči z globokimi nevronskimi mrežami in tabula rasa algoritmom za spodbujevalno učenje.
 Zaradi te generalizacije algoritma, lahko algoritem apliciramo na našo RTS igro, kjer moramo opisati pravila igre.
-AlphaZero je drugačen od AlphaGo Zero tako, da AlphaZero vrača rezultate, ki so lahko drugačni od zguba, poraz, kot tudi neodločeno.
-Prav tako se razlika pojavi v tem, da so se igre pri algoritmu AlphaGo Zero zgenerirale iz vsej prejšnih iteracij, in se je potem moč modela izračunala proti najboljšim igralcem, medtem ko AlphaZero samo hrani eno nevronsko mrežo, ki se stalno posodablja, namesto da čaka iteracijo da se konča.
+Alpha Zero je drugačen od AlphaGo Zero tako, da AlphaZero vrača rezultate, ki so lahko drugačni od zguba, poraz, kot tudi neodločeno.
+Prav tako se razlika pojavi v tem, da so igre pri algoritmu AlphaGo Zero nastale z igranjem vseh posameznih modelov prejšnjih iteracij, in se je potem moč modela izračunala proti najboljšim igralcem, medtem ko Alpha Zero samo hrani eno nevronsko mrežo, ki se stalno posodablja, namesto da čaka iteracijo da se konča.
 \section{Potek učenja}
 
 Alpha Zero se uči verjetnosti in ocenitve končnega stanja izključno z igranjem proti samemu sebi. 
@@ -528,25 +557,38 @@ Drevo preišče prostor in vrne verjetnost zmage pri izbiri določene akcije iz 
 Alpha Zero izvede več serij igranja iger proti svojim nasprotnikom, ki predstavlja zdajšnji najboljši model igranja.
 Rezultat igranja igre je lahko -1 za poraz, +1 za zmago in 0 za neodločeno.
 Po vsaki seriji učenja, se izvede proces igranja Arena, kjer oba naučena modela igrata drug proti drugemu nekaj iger, in se na to določi zmagovalen model, ki sedaj postane najboljši model, če je razlika v številu zmag večja za nek faktor. V našem primeru je bil ta faktor 60\%.
-Parametri nevronske mreže so za tem popravljeni, da minimizirajo napako med napoved stanja nevronske mreže in dejanskim rezultatom igre in da maksimizirajo podobnost predikcijo potez nevronske mreže z dejanskimi vrednostnimi akcij, ki jih je vrnil MCTS. 
-Oziroma parametri se nastavijo z gradientnim spustom na funkcijo izgube, ki sešteje napako srednjega korena (mean-squared error) in prečne entropije (cross entropy).Nevronska mreža sprejme učne množice stanja iger in vrne ravni vektor napovedi akcij v trenutnem stanju in napoved zmage.
+Parametri nevronske mreže so za tem popravljeni, da minimizirajo napako med napoved stanja nevronske mreže in dejanskim rezultatom igre in da maksimizirajo podobnost napovedjo potez nevronske mreže z dejanskimi vrednostnimi akcij, ki jih je vrnil MCTS. 
+Oziroma parametri se nastavijo z gradientnim spustom na funkcijo izgube, ki sešteje napako srednjega korena (mean-squared error) in prečne entropije (cross entropy).
+Nevronska mreža sprejme učne množice stanja iger in vrne ravni vektor napovedi akcij v trenutnem stanju in napoved zmage.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{photos/modifiedMCTS.pdf}
+	\end{center}
+	\caption{ Prikazano je delovanje algoritma MCTS pri tej izvedbi algoritma Alpha Zero. Ta MCTS ne uporablja postopka odigravanja stanj do konca igre. }
+	\label{modifiedMCTS}
+\end{figure}
+
+
+
+
 
 Uporaba algoritma MCTS je v tem algoritmu drugačna kakor v splošni uporabi.
 Število iteracij je namenjeno biti veliko manjši, kakor v njegovi klasični uporabi, kjer je število iteracij več sto tisoč. 
 MCTS pripomore k izboljšavi napovedi stanja, ki ga vrne nevronska mreža z raziskovanjem prostora.
 Algoritem ne uporablja simulacij za pridobitev končnega stanja igre, napoved stanja, ki ga vrne nevronska mreža samo izboljša.
 
-Vozlišče, ki še ni bilo obiskano, se vzpostavi s napovedjo nevronske mreže in za tem vzvratno propagira napoved stanja
+Vozlišče, ki še ni bilo obiskano, se vzpostavi s napovedjo nevronske mreže in za tem vzvratno propagira napoved stanja.
 Če je vozlišče končno stanje igre, vzvratno propagira končno stanje.
 MCTS v tem primeru prejme par sto iteracij (v našem primeru 30 - 50) in ne več tisoč, kot jih izvajajo drugi algoritmi.
-V sklopu diplomske naloge govorimo o MCTS iskanjih in ne simulacijah.
+V sklopu diplomske naloge govorimo o MCTS iskanjih in ne odigravanjem, saj jih ta ne vpeljuje~\ref{modifiedMCTS}.
 
 
 \begin{izrek}
 	\label{iz:1}
-	formula po kateri računa verjetnost zmage pri določeni akciji v algoritmu MCTS
+	formula po kateri računa verjetnost zmage pri določeni akciji v algoritmu MCTS. Pričakovana vrednost akcije je določena z Q(s, a), ki predstavlja  pričakovano nagrado ob izbiri akcije v danem stanju igre, kateri je prišteta napoved nagrade P(s, a) ob izbiri akcije v danem stanju, ki ga vrne nevronska mreža, pomnoženo s raziskovalnim faktorjem in korenom števila vseh obiskov stanja igre v primerjavi s števili obiskov v danem vozlišču.
 	\begin{equation}
-	R(s,a) = Q(s,a) + cpuctP(s, a)\sqrt{\dfrac{\sum{b}*N(s,b)}{N(s,a)}}
+	U(s, a) = Q(s, a) + c_{puct}P(s, a)\sqrt{\dfrac{\sum{N(s)}}{1+N(s, a)}}
 	\label{eq:mctsFormula}
 	\end{equation}
 \end{izrek}
@@ -582,6 +624,7 @@ Algoritem je na voljo na naslednjem repozitoriju:\\
 https://github.com/JernejHabjan/TD2020-Object-AlphaZero.
 
 \section{Stanje igre}
+\label{stanjeigre}
 V tem razdelku bomo opisali zapis posamezne figure, njihove akcije in kaj naredijo in tip kodiranja stanja igre, ki ga potem sprejme nevronska mreža.
 
 Igro smo opisali tako, da je čim bolj skladna s samim algoritmom Alpha Zero, kot tudi da je njena aplikacija dovolj primerljiva z obstoječimi strateškimi igrami kot npr. StarCraft.
@@ -669,7 +712,7 @@ Prav tako se pri izgradnji nove stavbe ali urjenju figure število zlatnikov zma
 
 \begin{figure}[h]
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{photos/prikazAkcij.pdf}
+		\includegraphics[width=0.6\textwidth]{photos/prikazAkcij.pdf}
 	\end{center}
 	\caption{TODOOOOOOOOOOOOOOOOO.}
 	\label{picActions}
@@ -721,23 +764,25 @@ Naslednje akcije so se izvajale po zaporedju~\ref{pickorakiPreverjanja}:
 	\item zdravi.
 \end{itemize}
 \begin{verbatim}
-coords = [(x - 1, y + 1),
-          (x, y + 1),
-          (x + 1, y + 1),
-          (x - 1, y),
-          (x + 1, y),
-          (x - 1, y - 1),
-          (x, y - 1),
-          (x + 1, y - 1)]
-for n_x, n_y in coords:
-    # check action condition or execute action
+koordinate = [(x - 1, y + 1),
+              (x, y + 1),
+              (x + 1, y + 1),
+              (x - 1, y),
+              (x + 1, y),
+              (x - 1, y - 1),
+              (x, y - 1),
+              (x + 1, y - 1)]
+for sosednji_x, sosednji_y in koordinate:
+    # preveri pogoj akcije
+    if (pogoj == ok):
+        return
 \end{verbatim}
 
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[width=0.6\textwidth]{photos/korakiPreverjanja.pdf}
 	\end{center}
-	\caption{Na sliki je s številkami označeno zaporedje, v katerem se izvedejo zgoraj navedene akcije.}
+	\caption{Na sliki je s številkami označeno zaporedje, v katerem se izvedejo zgoraj navedene akcije. Sprva se inicializirajo sosednje koordinate, za tem pa se po zaporedju od prve do zadnje koordinate preverja veljavnost polj. Ko je doseženo prvo veljavno polje, se izbere to polje kot primerno. }
 	\label{pickorakiPreverjanja}
 \end{figure}
 
@@ -984,12 +1029,12 @@ Za izhod Pi se nastavi funkcija izgube kategorična prečna entropija, za izhod 
 		\begin{tabular}{p{0.2\linewidth}|p{0.2\linewidth}|p{0.6\linewidth}}
 			Ime parametra                             & {\tt Privzeta vrednost} & {\tt Opis} \\ \hline
 			{\tt Cpuct}                               & 1 						& parameter drevesnega raziskovanja \\
-			{\tt Število iteracij}                    & /						& predstavlja število učenj algoritma na odigranih igrah in število izbire boljšega modela\\
-			{\tt Število epizod}                      & / 						& nam zagotovi pridobitev dovolj velikega nabora odigranih iger, nad katerimi se potem algoritem uči \\
-			{\tt Število MCTS iskanj}                 & / 						& predstavlja število raziskanih vozlišč v iteraciji igre. 
+			{\tt Število iteracij}                    & 30 - 60					& predstavlja število učenj algoritma na odigranih igrah in število izbire boljšega modela\\
+			{\tt Število epizod}                      & 8 						& nam zagotovi pridobitev dovolj velikega nabora odigranih iger, nad katerimi se potem algoritem uči \\
+			{\tt Število MCTS iskanj}                 & 30 - 50					& predstavlja število raziskanih vozlišč v iteraciji igre. 
 														 						  MCTS iskanja se ne izvršijo do konca igre, ampak do neraziskanega vozlišča oziroma če je raziskano vozlišče konec igre.\\
-			{\tt Število primerjanj modelov}  		  & / 						& Kolikokrat se bosta trenutni model k se uči in njegova prejšna različica pomerila med sabo, da se ohrani boljši \\
-			{\tt Število ohranjenih učnih primerov}   & / 						& nam zagotavlja, da ohranjamo novejše učne primere in starejše zavržemo. 
+			{\tt Število primerjanj modelov}  		  & 10 						& kolikokrat se bosta trenutni model k se uči in njegova prejšna različica pomerila med sabo, da se ohrani boljši \\
+			{\tt Število ohranjenih učnih primerov}   & 8 						& nam zagotavlja, da ohranjamo novejše učne primere in starejše zavržemo. 
 																			      V našem primeru je bil nastavljen na manjšo vrednost (8), saj same igre zasedejo veliko pomnilnika \\
 		\end{tabular}
 	\end{center}
@@ -1056,7 +1101,7 @@ Kompleksnejši uporabniški vmesnik nam pa zagotavlja več funkcionalnosti kakor
 Z njim lahko izbiramo več figur ter jih grupiramo v skupine.
 Figuram postavljamo več zaporednih akcij, ki jih ta izvršuje v tem vrstnem redu.
 Človeški igralec ima tudi vpogled na manjši zemljevid, prikazan v levem spodnjem kotu, na katerem vidi sovražne in svoje figure.
-Nekaj je pa tudi kozmetičnih funkcij kot na primer (fog of war), dnevno-nočni cikel, animacije za vojskovanje, premikanje, nastavitve hitrosti časa ipd.
+Nekaj je pa tudi kozmetičnih funkcij kot na primer prekrivanje zemljevida z meglo (ang. Fog of war), dnevno-nočni cikel, animacije za vojskovanje, premikanje, nastavitve hitrosti časa ipd.
 Igra ima tudi implementirana izvajalna drevesa, kjer na primer agentu naročimo nabiranje zlatnikov, ta pa jih sam vrača v najbližje odlagališče zlatnikov.
 Prav tako so ta drevesa za napadanje, tudi ko je agent nedejaven, da se prosto premika okrog, išče stavbe itd.
 Igra ima implementirane tudi razne zvočne efekte, učinke delcev za prikaz zmanjšanja življenjskih točk sovražnim enotam.
@@ -1069,7 +1114,7 @@ Igra je zasnovana tudi tako, da se lahko dva igralca med sabo pomerita preko mre
 Oba igralca v tem primeru na svoji lokalnem računalniku poganjata naučena modela in od njega zahtevata priporočila akcij.
 Ker pa lahko igralca izbereta več različnih map, na katerih bosta igrala, bi bilo potrebno za vsako izmed teh map izgraditi svoj model, saj imajo lahko mape drugačne dimenzije v širini in višini.
 Prav tako z zdajšnim algoritmom niso prokriti primeri, da določeno polje ne bi bilo dosegljivo (voda, skalovje), tako da mape morajo biti kvadratne in vsa polja so dosegljiva.
-Nekatere izmed zgoraj navedenih funkcij je izdelal Nick Pruehs v vtičniku ue4-rts (https://github.com/npruehs/ue4-rts), kot recimo nekej izvajalnih dreves, zemljevid, (fog of war).
+Nekatere izmed zgoraj navedenih funkcij je izdelal Nick Pruehs v vtičniku ue4-rts (https://github.com/npruehs/ue4-rts), kot recimo nekej izvajalnih dreves, zemljevid, prekrivanje zemljevida z meglo.
 
 Potrebno je bilo preslikati akcije in figure v urejevalnik Unreal Engine, da se tam figure primerno premikajo in izvajajo akcije.
 Potrebno je bilo (mapirati) animacije, efekte, da premikanje in napadanje zgleda dokaj realistično.
@@ -1091,13 +1136,13 @@ Ta predstavitev omogoča tudi igranje dveh človeških igralcev enega proti drug
 Lahko si pa ogledamo dva računalniška igralca igrati drug proti drugemu.
 
 \subsection{Prenos stanja igre}
-Za vsakega od igralcev, se vzpostavi svoja komponenta za pridobivanje akcij, ki naloži model da je pripravljen na pridobivanje predikcij.
-V trenutku lahko samo eden od igralcev pridobi predikcijo, saj pride do konfliktov, če se na primer oba igralca odločita figuro premakniti na isto polje.
-Ko igralec pošlje prošnjo za predikcijo, zraven še pošlje svoje stanje igre, in kateri igralec je tisti, ki pošilja prošnjo.
+Za vsakega od igralcev, se vzpostavi svoja komponenta za pridobivanje akcij, ki naloži model da je pripravljen na pridobivanje napovedi.
+V trenutku lahko samo eden od igralcev pridobi napoved, saj pride do konfliktov, če se na primer oba igralca odločita figuro premakniti na isto polje.
+Ko igralec pošlje prošnjo za napoved, zraven še pošlje svoje stanje igre, in kateri igralec je tisti, ki pošilja prošnjo.
 Na to algoritem nastavi trenutno igro na poslano in izbere najprimernejšo akcijo.
 Po izvedbi izbrane akcije, igra počaka še določen čas, da se akcija izvede do konca, za tem pa lahko ta postopek ponovi še drugi igralec.
 
-Človeški igralec lahko akcijo pridobi kadarkoli, a mora počakati da se trenutna prošnja za predikcijo konča. Za njim se postavi v čakalno vrsto tudi računalniški nasprotnik.
+Človeški igralec lahko akcijo pridobi kadarkoli, a mora počakati da se trenutna prošnja za napoved konča. Za njim se postavi v čakalno vrsto tudi računalniški nasprotnik.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

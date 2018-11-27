@@ -1,0 +1,11 @@
+uvod - šahovski zbornik referenci
+
+strategija, taktika todo reference, bolš obrazložit glede kodiranja igre pa razvijanja igre
+
+
+alpha zero - zgodovina:
+    šahovski zbornik pa bolš obrazlož pa da je berljivo
+
+    https://fri.uni-lj.si/upload/Novice/SM2018_Sah_in_znanost.pdf
+
+    - nared njegovo širšo obnovo
