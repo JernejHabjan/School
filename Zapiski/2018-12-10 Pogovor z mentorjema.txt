@@ -1,0 +1,24 @@
+predstavitev rezultatov glede na čas učenja,
+parametrov, primerjava proti drugimi nasprotniki(svoja hevristika...)
+
+
+predstavitev z grafi (5 recimo)
+
+point je da evaluataš prot neki začetni točki prot recmo random al pa greedy kok kdo skoz čas nabere zlatnikov
+
+pa recimo sprememba pozicije polja zlata
+
+point je numerična predstavitev napredka (da to res deluje)
+
+izpisuj recmo akcije kere se dogajajo pa prkaž v grafu kdaj se kera kj dogaja
+
+da boš recmo do takga conclusiona pršu:
+    uči se uspešno.
+    Taki so rezultati:
+    ...
+    iz rezultatu lahko izberemo da dela to pa to...
+
+pa recmo k nabere 1 zlatnik si zih reče "meh sj sm že zmagu... mn se neda vč še nabirat..."
+
+grafe ter rezultate, loge pošl v powerpointu do konca tedna
+
