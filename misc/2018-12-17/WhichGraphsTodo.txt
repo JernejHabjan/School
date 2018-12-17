@@ -1,0 +1,17 @@
+1. Does learning even work?
+    Evaluation vs greedy and random
+        http://prntscr.com/lt7nmw
+        (x - num actions executed, y - score)
+
+2. Pitting action comparison (5 eps, 20 eps) - same example can be used for one-hot vs numeric encoders (3.)
+    http://prntscr.com/lt7qzp
+    (or some other type of plots)
+
+4. Learning through iterations:
+    How many of which actions are outputed at each training iteration/episode
+    This type of visualization would be nice to have:
+        https://static01.nyt.com/newsgraphics/2014/11/28/atus/df3c486d61d1a9a5ba36f44da8017e029f8af42d/screenshots/lede-full.png
+
+5. Directions of action executions for player 1 and -1 through learning iterations
+    To see if directions for actions for some reason change when learning time is increased - maybe more attacking on opposite side, building buildings on this players side..
+    http://prntscr.com/lt80tl

@@ -1,0 +1,4 @@
+fixi pr rezultatih dve slike k mata navrh gor črto od backgrounda
+
+opiš latest changes ker so spremembe nove pr model choosing v coach ter nnet changes   
+    "Latest Changes 2018-12-17" v alphazero repo

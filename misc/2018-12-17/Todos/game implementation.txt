@@ -1,0 +1,8 @@
+
+Druga zadeva, ki bi bila zelo zanimiva v vašem diplomskem delu, 
+pa bi bilo opisati postopek kako ste se lotili implementacije AlphaZero za svojo igro.
+ Npr. če bi se nekdo lotil implementacije AlphaZero pristopa za svojo igro, 
+ ali bi si lahko pomagal z opisi in izkušnjami v vašem diplomskem delu? 
+ To bi bilo nadvse dobro. Ker prav gotovo ste v tem času dobili 
+ veliko koristnih in zanimivih izkušenj, 
+hkrati pa je vaša programska koda dostopna na GitHubu...
