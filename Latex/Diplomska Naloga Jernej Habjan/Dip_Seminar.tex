@@ -500,7 +500,7 @@ Oktobra 2016 je premagal profesionalnega Go igralca na podlagi učenja na domens
 Te sistemi so temeljili na predznanju ekspertov za učenje in ocenitev modela, kar pomeni, da ob igranju novih iger posnemajo katere akcije so eksperti izvajali ob določenem primeru.
 
 Leto za tem, je bil razvit algoritem AlphaGo Zero~\cite{silver2017mastering}, ki opisuje pristop k učenju brez domenskega znanja ekspertov, ampak uporablja metodo samo-igranja~\ref{picCompareGo}. 
-Novi model je tudi premagal AlphaGo algoritem, kar predstavlja odlične rezultate z vidika, da AlphaGo Zero ne potrebuje človeško usmerjanje pri učenju.
+Novi model je tudi premagal algoritem AlphaGo, kar predstavlja odlične rezultate z vidika, da AlphaGo Zero ne potrebuje človeško usmerjanje pri učenju.
 Računalniki se lahko tako naučijo reševanje problema brez človeških ekspertov, ki pogostejše delajo napake zaradi utrujenosti ali površnosti in nimajo takojšnega vpogleda na celotno zbirko iger, kot na to imajo računalniki.
 
 \begin{figure}[h]
@@ -532,7 +532,7 @@ AlphaZero izvede več serij igranja iger proti svojim nasprotnikom, ki predstavl
 Rezultat igranja igre je lahko -1 za poraz, +1 za zmago in 0 za neodločeno.
 Po vsaki seriji učenja, se izvede proces igranja iger dveh naučenih modelov, kjer oba igrata drug proti drugemu nekaj iger, in se na to določi zmagovalen model, ki sedaj postane najboljši model, če je razlika v številu zmag večja za nek faktor. V našem primeru je bil ta faktor 60\%.
 
-Ta pogoj izbiranja modelov smo morali izboljšati, saj ob upoštevanju samo števila zmag in porazov se lahko algoritem prekomerno prilagodi na izenačevanje iger.
+Ta pogoj izbiranja modelov smo morali izboljšati, saj ob upoštevanju samo števila zmag in porazov se lahko model prekomerno prilagodi na izenačevanje iger.
 Ravno to se nam je pripetilo pri učenju na konfiguraciji igre, kjer smo razporedili polja zlata na robove šahovnice~\ref{resultThird}.
 Da smo ta problem odpravili, smo pri upoštevanju izbire novega modela dodali tudi neodločene izide kakor slabe rezultate.
 \begin{verbatim}
@@ -899,24 +899,33 @@ Vendar imajo figure običajno veliko več življenjskih točk kolikor so vredne 
 \label{chucenjemodela}
 Ena izmed glavnih komponent učnega postopka je seveda nevronska mreža, ki hrani moči povezav določenih akcij ob določenem stanju igre.
 V tem poglavju bomo sprva predstavili zgradbo nevronske mreže iz tehničnega vidika, nato se bomo posvetili prestavitvi parametrov, ki so nastavljivi pri postopku učenja in od njih je odvisno, koliko časa in na kakšen način se bo naš model učil ob nastavljeni konfiguraciji igre.
-Proti koncu poglavja se bomo poglobili v možno tehniko postopnega učenja modela, kjer inkrementalno dodajamo zahtevnejše konfiguracije in pravila igre.
+Proti koncu poglavja se bomo poglobili v možno tehniko postopnega učenja modela, kjer postopno dodajamo zahtevnejše konfiguracije in pravila igre.
+
 
 \section{Zgradba nevronske mreže}
 
-V sklopu te diplomske naloge se nismo podajali v spreminjanje zgradbe nevronske mreže, temveč smo vzeli že izgrajeno nevronsko mrežo, primerno za učenje igre Othello.
-To ni najprimernejši pristop, kar je mogoče tudi poslabšal zmožnost in hitrost učenja modela, o čemer smo več prediskutirali v poglavju~\ref{chdiskusija}.
+Implementirali smo štiri vrste igralcev, ki lahko strateško igro igrajo.
+Prva vrsta je človeški igralec, za katerega smo morali implementirati uporabniški vmesnik, preko katerega izvršuje akcije na prikazani šahovnici.
+Druga je naključni igralec, ki naključno izvaja akcije, ki so v trenutnem stanju igre možne in njegova izboljšava je igralec, ki temelji na požrešni metodi.
+Ta igralec strmi k čim hitrejšem povečanju točk, ki temeljijo na enem izmed ustavitvenih pogojev.
+O četrti implementaciji igralca pa govori jedro diplomske naloge, in sicer ga predstavlja nevronska mreža z naučenimi utežmi.
 
-Uporabili smo modul Keras znotraj TensorFlow knjižnice, za implementacijo modela nevronske mreže.
+
+%V sklopu te diplomske naloge se nismo podajali v spreminjanje zgradbe nevronske mreže, temveč smo vzeli že izgrajeno nevronsko mrežo, primerno za učenje igre Othello.
+%To ni najprimernejši pristop, kar je mogoče tudi poslabšal zmožnost in hitrost učenja modela, o čemer smo več prediskutirali v poglavju~\ref{chdiskusija}.
+
+Za implementacijo nevronske mreže smo uporabili modul Keras znotraj knjižnice TensorFlow.
 Programska koda za izgradnjo modela je lažje berljiva v modulu Keras kakor v TensorFlow, zato smo se zanj tudi odločili.
-Ker je Keras impementiran znotraj TensorFlow knjižnice od verzije 1.9 izdani leta 2017, ni bilo večjih težav z inštalacijo te knjižnice na odjemalčevem računalniku z vtičnikomm tensorflow-ue4.
+Ker je modul Keras od verzije 1.9 izdani leta 2017 impementiran znotraj knjižnice TensorFlow, ni bilo večjih težav z namestitvijo te knjižnice na odjemalčevem računalniku z vtičnikomm tensorflow-ue4~\cite{ue4tf}.
 
-Model za vhod vzame učne množice stanja iger dimenzij širina x višina x število kodirnikov, kar je v našem primeru 8 x 8 x 6.
-Potem gre ta učna množica skozi 4 konvolucijske nivoje, kjer je velikost filtra 3.
-Prva dva konvolicijska nivoja imata oblogo ničel okrog matrike, tako da se velikost konvolucijskega nivoja ne zmanjša, druga dva tega obloge nimata, kar zniža velikost nivoja iz 8 na 4.
-tako da je izhod zadnjega konvolucijskega nivoja dimenzije velikost serije  x (širina - 4) x (višina - 4) x število kanalov
-Vsak izhod konvolucijskih nivojev se s postopkom normalizacijo serije (ang. batch normalization) normalizira aktivacijo prejšnjega nivoja ob vsaki seriji, izhodi tega se preuredijo z relu aktivacijsko funkcijo, ki za vsa negativna števila vzame vrednost 0.
+Model za vhod vzame učne množice stanja iger dimenzij širina x višina x število kodirnikov, kar je v primeru numeričnega kodirnika 8 x 8 x 6 in v primeru onehot kodirnika 8 x 8 x 30.
+Potem gre ta učna množica skozi 4 konvolucijske nivoje, kjer je velikost filtra 3 in nastavljiva globina, ki je v našem primeru 128.
+Prva dva konvolicijska nivoja imata oblogo ničel okrog matrike, tako da se velikost konvolucijskega nivoja ne zmanjša, druga dva tega obloge nimata, kar zniža velikost nivoja iz 8 x 8 na 4 x 4.
+tako da je izhod zadnjega konvolucijskega nivoja dimenzije velikost serije  x (širina - 4) x (višina - 4) x število kanalov.
+Vsak izhod konvolucijskih nivojev se s postopkom normalizacijo serije (ang. batch normalization) normalizira aktivacijo prejšnjega nivoja ob vsaki seriji.
+Izhodi tega se preuredijo z relu aktivacijsko funkcijo, ki za vsa negativna števila vzame vrednost 0.
 Za tem se izhod zadnjega nivoja normalizirane konvolucije izravna v 1-dimenzionalni vektor in se poda dvema polno povezanima nivojema, ki sta ponovno normalizirana z normalizacijo serije.
-Tedva nivoja sta potem ponovno spuščena skozi aktivacijsko funkcijo relu podana v  Dropout funkcijo, ki prepreči prekomerno prileganje.
+Tedva nivoja sta potem ponovno preoblikovana z aktivacijsko funkcijo relu in podana v izpadno funkcijo (ang. dropout), ki prepreči prekomerno prileganje.
 
 Za tem je izgrajen polno povezan nivo Pi, ki ima toliko število izhodov, koliko je možno število akcij v igri za vsako celico, ki ima aktivacijsko funkcijo softmax,
 Izgrajen je tudi polno povezan nivo V, ki ima en izhod, ki predstavlja zmago ali poraz z tanh aktivacijsko funkcijo.
@@ -926,7 +935,8 @@ Za izhod Pi se nastavi funkcija izgube kategorična prečna entropija, za izhod 
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/model_using_deepcognition.pdf}
 	\end{center}
-	\caption{Model nevronske mreže, uporabljen za učenje igre. Izgrajen je iz štirih konvolucijskih nivojev, med katerimi je izhod normaliziran in spuščen skozi relu aktivacijsko funkcijo. Nato se poda izhod zadnjega konvolucijskega nivoja v dva polno povezana nivoja, za katerima se določi izhod V in Pi, ki predstavljata napoved zmage (V) in napovedi verjetnosti akcij (Pi).
+	\caption{Model nevronske mreže, uporabljen za učenje igre. Izgrajen je iz štirih konvolucijskih nivojev, med katerimi je izhod normaliziran in preoblikovan z relu aktivacijsko funkcijo. 
+		Nato se poda izhod zadnjega konvolucijskega nivoja v dva polno povezana nivoja, za katerima se določi izhod V in Pi, ki predstavljata napoved zmage (V) in napovedi verjetnosti akcij (Pi).
 		Slika je bila izdelana z uporabo aplikacije Deep Learning Studio~\cite{deepcognition}.}
 	\label{vizualzacijaModela}
 \end{figure}
@@ -935,8 +945,8 @@ Za izhod Pi se nastavi funkcija izgube kategorična prečna entropija, za izhod 
 
 \section{Predstavitev parametrov}
 \label{parametri}
-Učni algoritem uporablja množico parametrov za učenje.
-Ti predstavljajo različno število iteracij igranja iger (iteracije in epizode igranja), kot tudi iteracij učenja nevronske mreže (epohi).
+Učni algoritem uporablja množico parametrov za učenje, ki zelo vplivajo na hitrost in moč učenja.
+Ti predstavljajo različno število iteracij igranja iger (iteracije in epizode igranja), kot tudi iteracij učenja nevronske mreže (ang. epohi).
 Predstavljajo tudi same nastavitve raziskovanja algoritma MCTS (C\textsubscript{puct}) in število primerjav, kateri naučen model je boljši.
 
 V tabeli opisa parametrov~\ref{tableParameters1} so predstavljeni najpomembnejši parametri, ki smo jih spreminjali ob učenju modela na naši RTS igri.
@@ -945,15 +955,16 @@ V tabeli opisa parametrov~\ref{tableParameters1} so predstavljeni najpomembnejš
 	\begin{center}
 		\begin{tabular}{p{0.15\linewidth}|p{0.15\linewidth}|p{0.7\linewidth}}
 			Ime parametra                             & {\tt Privzeta vrednost} & {\tt Opis} \\ \hline
-			{\tt C\textsubscript{puct}}               & 1 						& parameter drevesnega raziskovanja, ki vpliva direktno na raziskovanje MCTS algoritma. 
-																				  Večja kot je vrednost parametra, bolj bo MCTS dajal prednost neraziskanim vozlišči. V našem primeru smo izbrali vrednost 1 in s tem nismo prispevali k dodatni uteži k raziskovanju.\\
-			{\tt število iteracij}                    & 30 - 60					& predstavlja število učenj algoritma na odigranih igrah in število izbire boljšega modela.
-																				  Parameter tudi predstavlja, kolikokrat se bo igra odigrala v celoti, kjer bo konec predstavljal končni pogoj oziroma eliminacija nasprotnika.\\
-			{\tt število epizod}                      & 8 						& nam zagotovi pridobitev dovolj velikega nabora odigranih iger, nad katerimi se potem algoritem uči.
-																				  Vsako epizodo se odigra število iger, kolikor je nastavljeno s parametrom število iteracij.\\
+			{\tt C\textsubscript{puct}}               & 1 						& parameter drevesnega raziskovanja, ki neposredno vpliva na raziskovanje algoritma MCTS . 
+																				  Večja kot je vrednost parametra, bolj bo MCTS dajal prednost neraziskanim vozlišči. 
+																				  V našem primeru smo izbrali vrednost 1 in s tem nismo prispevali k dodatni uteži k raziskovanju.\\
+			{\tt število iteracij}                    & 30 - 100					& predstavlja število učenj algoritma na odigranih igrah in število izbire boljšega modela.
+																				  Parameter tudi predstavlja, kolikokrat se bo igra odigrala v celoti, kjer bo konec predstavljal končni pogoj oziroma poraz nasprotnika.\\
+			{\tt število epizod}                      & 4 - 8 						& Število epizod nam zagotovi pridobitev dovolj velikega nabora odigranih iger, nad katerimi se potem model uči.
+																				  Vsako iteracijo se odigra število iger, kolikor je nastavljeno s tem parametrom.\\
 			{\tt število MCTS iskanj}                 & 30 - 50					& predstavlja število raziskanih vozlišč v iteraciji igre. 
-														 						  MCTS iskanja se ne izvršijo do konca igre, ampak do neraziskanega vozlišča oziroma če je raziskano vozlišče konec igre.
-														 						  Bodimo pozorni na majhno število MCTS iskanj (30 - 50), za razliko od tradicionalnih MCTS algoritmov, ki na primer v igri šah odigrajo več 10-tisoč iteracij~\cite{kohne}.\\
+														 						  MCTS iskanja se ne izvršijo do konca igre, ampak do neraziskanega vozlišča oziroma če je raziskano vozlišče konec igre~\cite{silver2018general}.
+														 						  Bodimo pozorni na majhno število MCTS iskanj (30 - 50), za razliko od tradicionalnih algoritmov MCTS, ki na primer v igri šah odigrajo več 10-tisoč iteracij~\cite{kohne}.\\
 		
 		\end{tabular}
 	\end{center}
@@ -972,7 +983,7 @@ V tabeli opisa parametrov~\ref{tableParameters1} so predstavljeni najpomembnejš
 																				  Vsako epizodo se doda nova zbirka iger ter odstrani najstarejša, če število shranjenih epizod presega ta parameter.
 																				  To nam zagotavlja dovolj svežo učno množico, nad katero se nevronska mreža uči.
 																				  V našem primeru je bil nastavljen na manjšo vrednost (8), saj kodiranja stanj naše igre zasedejo veliko pomnilnika.\\
-			{\tt epohi}     						  & 100 					& Število iteracij učenja nevronske mreže skozi učne primere.\\
+			{\tt epohi}     						  & 30 - 100 					& Število iteracij učenja nevronske mreže skozi učne primere.\\
 		\end{tabular}
 	\end{center}
 	\caption{Tabela 2/2 o opisu najpomembnejših učnih parametrov, uporabljenih pri učenju algoritma AlphaZero. Pri parametrih so zapisane tudi njihove okvirne oziroma največkrat uporabljene konfiguracijska števila.}
@@ -1109,122 +1120,15 @@ Po izvedbi izbrane akcije, igra počaka določen čas, da se akcija izvede do ko
 \chapter{Rezultati}
 \label{chrezultati}
 
-V temu poglavju bomo predstavili več konfiguracij učenja in njihovih rezultatov v vizualizaciji Pygame.
-Naučene modele, ki so med seboj kompatibilni, bomo med seboj primerjali in izpostavili, zakaj je zmagovalna konfiguracija boljša od poražene.
-Za tem bomo naučen model povezali z pogonom Unreal Engine, kjer bosta dva računalniška nasprotnika igrala igro drug proti drugemu ter primer, kjer človeški igralec igra proti računalniškem igralcu ki uporablja naučen model za izbiro akcij.
+Za uspešno učenje modela moramo sprva ugotoviti primerno konfiguracijo učnih parametrov, ki znatno vplivajo na hitrost učenja in primerna pravila igre, ki bodo dale algoritmu dovolj velik začetni vzgon, da se bo pričel uspešno učiti in izboljševati svoje rezultate.
+Med konfiguracijo učnih parametrov spada tudi izbira kodirnika, kjer bomo testirali na isti učni konfiguraciji kateri kodirnik deluje boljše in tega uporabljali v nadaljnjih učenjih.
+Naučen model bomo povezali z pogonom Unreal Engine, kjer bosta dva računalniška nasprotnika igrala igro drug proti drugemu ter primer, kjer človeški igralec igra proti računalniškem igralcu ki uporablja naučen model za izbiro akcij.
 
-Pri samem učenju smo uporabili  TensorFlow 1.9.0, Python 3.6 ter za vizualizacijo Pygame 1.9.4 in Unreal Engine 4.20.
-
-
-\begin{table}
-	
-	\begin{center}
-		
-		\begin{tabular}{p{0.4\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}}
-			Tip konfiguracije                          & {\tt \ref{resultFirst}} & {\tt \ref{resultSecond}} & {\tt \ref{resultThird}} & {\tt \ref{resultFourth}}\\ \hline
-			{\tt časovna omejitev}                     & 100                     & 200                      & 200                     & 200 / fn                \\
-			{\tt iteracije}                            & 40                      & 20                       & 30 + 30                 & 20                      \\
-			{\tt epizod}                               & 8                       & 8                        & 8                       & 8                       \\
-			{\tt MCTS iskanj}                          & 50                      & 50                       & 30                      & 50                      \\
-			{\tt primerjave}                           & 20                      & 20                       & 20                      & 20                      \\
-			{\tt zgodovina učnih primerov}             & 8                       & 8                        & 8                       & 8                       \\
-			{\tt epohi}                                & 100                     & 100                      & 100                     & 100                     \\
-			{\tt začetni zlatniki}                     & 20                      & 20                       & 1                       & 1                       \\
-			{\tt povečevanje zlatnikov}                & 5                       & 5                        & 1                       & 1                       \\
-			{\tt zmanjšanje življenjskih točk}         & 20                      & 20                       & 20                      & 20                      \\
-			{\tt količina zdravljenja}                 & 20                      & 20                       & 20                      & 20                      \\
-			{\tt stroški zdravljenja}                  & 5                       & 5                        & 5                       & 5                       \\
-			{\tt število polj}                         & 8 x 8                   & 8 x 8                    & 8 x 8                   & 6 x 6                   \\
-
-		\end{tabular}
-	\end{center}
-	\caption{V tej tabeli so napisane konfiguracije definicij igre in učenja za spodaj opisane primere učenja modela.}
-	\label{tabelLearnConfig}
-\end{table}
-
+Pri samem učenju smo uporabili knjižnico TensorFlow 1.9.0, programski jezik Python 3.6 ter za vizualizacijo knjižnico Pygame 1.9.4 in celostni pogon Unreal Engine 4.20.
 Za učenje smo na voljo podali vse možne akcije.
+\section{Definiranje pravilne konfiguracije igre}
 
-\section{Učenje z ustavitveno funkcijo s časovno omejitvijo}
-\label{resultFirst}
-V prvi fazi smo poskusili učenje modela z manjšo časovno omejitvijo (100 potez) ter dovolj velikim številom iteracij tako da algoritem potrebuje kar nekaj časa, da dokonča z izvajanjem učenja.
-
-
-\subsection{Numerično}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=0.9\textwidth]{photos/first-numeric.pdf}
-	\end{center}
-	\caption{Vizualizacija naučenega modela dveh računalniških nasprotnikov po izteku časovne omejitve v Pygame. Igralca sta se najbolj osredotočila na nabiranje zlatnikov in množični izgradnji cenejših figur.
-		Uporabljen model je naučen z numeričnim kodirnikom. Učenje je potekalo 1 dan in 4 ure.}
-	\label{vizualizacijaRezultatovNumericniKodirnik100Timeout}
-\end{figure}
-
-
-Numerični kodirnik se je bolj osredotočil na izdelavo delavcev, ki so najcenejše figure. 
-Kar pomeni, da takoj ko je igralec imel dovolj denarja za izdelavo figure, jo je izdelal.
-Igralca sta s svojimi figurami dobro nabirala zlatnike, s tem da sta glavna hiša in polje zlata neposredno drug ob drugem.
-
-\subsection{Kodiranje z enico v zapisu vsakega stanja}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=0.9\textwidth]{photos/first-onehot.pdf}
-	\end{center}
-	\caption{Vizualizacija naučenega modela dveh računalniških nasprotnikov po izteku časovne omejitve v Pygame. Igralca sta se bolj osredotočala na izgradnjo vojaških figur ter napadanju sovražnih enot.
-		Uporabljen model je naučen z one-hot kodirnikom. Učenje je potekalo 1 dan in 8 ur.}
-	\label{vizualizacijaRezultatovOneHotKodirnik100Timeout}
-\end{figure}
-
-Z numeričnim kodiranjem se je algoritem osredotočil bolj na izdelavo vojaških figur in nabiranju samih zlatnikov.
-Delavca sta stalno nabirala zlatnike in jih vračala v glavno hišo. 
-Nabiranje in vračanje zlatnikov je v tem primeru veliko bolj konsistentno kakor z uporabno numeričnega kodirnika.
-Igralca sta pozornost tudi deloma posvečala napadanju sovražnik figur, vendar ne do točke, kjer bi z napadanjem sovražnega igralca eliminirali.
-
-\subsection{Primerjava}
-
-Primerjali smo numerično kodiranje proti one-hot kodiranju na enakih konfiguracijah modelov ter igre.
-
-Algoritem, naučen z one-hot kodiranjem ne more delovati pri primerjanju dveh modelov z numeričnim kodirnikom in obratno. 
-Model učen z one-hot kodiranjem se lahko običajno pomerja samo proti drugemu modelu, ki je bil naučen z isto konfiguracijo.
-Enako velja za numerični kodirnik.
-
-Modele z različnimi konfiguracijami je med sabo težko primerjati, ne moreta igralca imeti različnih nastavitev za model, razen če jih eksplicitno prepišemo.
-Primerjanje modelov smo prilagodili tako, da vsak izmed igralcev lahko uporablja drugačno konfiguracijo učnih parametrov~\ref{parametri}.
-Za popolno primerjanje dveh različno naučenih modelov bi potrebovali tudi spremembe parametrov konfiguracije igre~\ref{chpravilaigre}, da bi lahko vsak izmed modelov deloval s poljubno konfiguracijo pravil igre, kot tudi tip ustavitvene funkcije ipd.
-Ta sprememba bi preveč posegla v Surag Nairjevo različico algoritma AlphaZero, kar hočemo čim bolj ohraniti.
-
-Izkazalo se je da one-hot kodiranje prinaša boljše rezultate po ocenitvi modelov z igranjem 20 iger drug proti drugemu, kjer je bil rezultat 20:0 za model zakodiran z one-hot načinom.
-
-Algoritem je potrebno še predelati, tako da se lahko posameznem igralcu doda konfiguracijo pravil igre in učnih konfiguracij, kot tudi tip ustavitvene funkcije ipd.
-S tem bi lahko primerjali dva popolnoma različna modela na isti konfiguraciji igre (npr šahovnica 8 x 8).
-
-\section{Povečevanje časovne omejitve}
-\label{resultSecond}
-V tem koraku smo izbral kodirnih one-hot, ker se je v primerjavi pri prejšnji konfiguraciji obnesel boljše.
-
-V tem primeru smo povečali časovno omejitev na 200 in znižali število iteracij na 20.
-Povečali smo časovno omejitev, saj so se pri prejšni nastavitvi 100 igre prehitro zaključevale.
-Znižali smo število iteracija na 20, saj bodo posamezne igre trajale dlje, in smo želeli približno isto časovno dolžino učenja, kot pri prejšnjem primeru, da lahko modela vsaj vizualno primerjamo.
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=0.9\textwidth]{photos/second-2018-11-12.pdf}
-	\end{center}
-	\caption{Vizualizacija naučenega modela v Pygame z povečano časovno omejitvijo  na 200 in znižano število iteracij na 20.}
-	\label{vizualizacijaRezultatov200timeout20Iters}
-\end{figure}
-
-Algoritem se je bolj osredotočil na izdelavo vojaških figur in vojskovanja kot v prvi iteraciji učenja z manjšo časovno omejitvijo
-
-
-\section{Sprememba konfiguracij zlata}
-\label{resultThird}
-
-Polji zlata smo pomaknil iz sredine na levi in desni rob, tako da se morajo delavci pomakniti do roba, nabrati zlatnike in jih vrniti nazaj v glavno hišo, ki je vedno na sredini mreže.
-Spremenili smo nastavitev, koliko začetnih zlatnikov imata igralca iz 20 na 1, kar dovoli izgradnjo enega delavca na začetku igre.
-Zmanjšali smo količino vrnjenega denarja iz 5 na 1, kar bi zagotavljalo, da morata igralca izbrati mnogo pravih sekvenc pomikanja do polja zlata, pridobiti zlatnike in jih vrniti v glavno hišo, preden bi lahko izgradili novo enoto.
-
+Sprva si oglejmo slabo naučen model, pri katerem lahko izpostavimo napake in morebitne vzroke za njih~\ref{vizualizacijaRezultatovSpremembaZlata}.
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[width=0.9\textwidth]{photos/third-2018-11-14.pdf}
@@ -1233,39 +1137,63 @@ Zmanjšali smo količino vrnjenega denarja iz 5 na 1, kar bi zagotavljalo, da mo
 	\label{vizualizacijaRezultatovSpremembaZlata}
 \end{figure}
 
-Model smo gradili 48 ur v dveh delih po 30 iteracij.
-Prvi del učenja je potekal 24 ur in ni vračala nobenih koristnih rezultatov, saj sta se izurjena delavca samo sprehajala po šahovnici, brez da bi nabirala zlatnike.
-Po nadaljevanju učenja obstoječega modela, ki je tudi potekal 24 ur smo pridobili boljše rezutate, ki vedno niso dobri.
-Izurjena delavca sta tako kot prej skoraj naključno hodila po šahovnici, s tem da je kdo izmed njiju izvedel akcijo naberi zlatnike.
-Zlatnikov potem ni vrnil do skoraj konca igre s časovno omejitvijo 200. Po vrnitvi zlatnikov je igralec takoj za tem izdelal dodatno enoto, kar je prineslo dovolj prednosti za zmago.
-Zlatnike vrne v glavno hišo proti koncu iteracije igre. Mogoče algoritem čaka na konec igre, da preseneti nasprotnika, vendar bolj verjetno je da proti koncu igre MCTS začne bolj delovati, saj vrača prave vrednosti stanja igre, ki so končna stanja.
-V tem primeru se je iz delovanja jasno razbralo, da MCTS ne vrača primernih rezultatov oziroma ne izboljša uteži modela dovolj dobro.
-Dober primer je ta, da delavec hodi okrog glavne hiše z nabranimi zlatniki, vendar jih ne vrne v glavno hišo, kar bi povečalo njegov seštevek točk in se s tem postavil v prednost pred nasprotnikom.
+Določili smo konfiguracijo igre~\ref{tabelLearnConfig}, kjer sta igralca začela s samo glavnima hišama in enim zlatnikom, s katerim sta lahko izgradila po enega začetnega delavca.
+Polja zlatnikov sta bila pomaknjena na rob šahovnice, kar bi zagotavljalo, da morata igralca izbrati mnogo pravih sekvenc pomikanja do polja zlata, pridobiti zlatnike in jih vrniti v glavno hišo, preden bi lahko izgradili novo enoto.
 
-S tem inkrementalnim učenjem modela v večih korakih smo prikazali, koliko počasi učenje te igre poteka in hkrati dokazali da se model izboljšuje.
-Počasnost učenja je predvsem zaradi velikega števila akcij, ki se lahko na šahovnici pripetijo na vsakem polju.
-Vseh možnih akcij je 30, kar privede v 8 x 8 x 30 = 1920 števil, ki jih prejme nevronska mreža kot vhodni nivo.
-Zaradi števila akcij je počasno preverjanje katere izmed njih so veljavne, kar upočasni iteriranje stanj iger.
+Naloga, čeprav se zdi zelo preprosta, ni bila uspešno naučena, saj po skupno 48 ur učenja na Nvidia gtx 1070 grafični kartici in Intel i7 4770 procesorju igralca nista uspešno nabirala zlatnike in jih vračala v glavno hišo.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{p{0.5\linewidth}|p{0.5\linewidth}}
+			Tip konfiguracije                          & {\tt Nastavitev parametra} \\ \hline
+			{\tt časovna omejitev}                     & 200                     \\
+			{\tt iteracije}                            & 30 + 30                 \\
+			{\tt epizod}                               & 8                       \\
+			{\tt MCTS iskanj}                          & 30                      \\
+			{\tt primerjave}                           & 20                      \\
+			{\tt zgodovina učnih primerov}             & 8                       \\
+			{\tt epohi}                                & 100                     \\
+			{\tt začetni zlatniki}                     & 1                       \\
+			{\tt povečevanje zlatnikov}                & 1                       \\
+			{\tt zmanjšanje življenjskih točk}         & 20                      \\
+			{\tt količina zdravljenja}                 & 20                      \\
+			{\tt stroški zdravljenja}                  & 5                       \\
+			{\tt število polj}                         & 8 x 8                   \\
+			
+		\end{tabular}
+	\end{center}
+	\caption{Nastavitve konfiguracij igre in učnih parametrov pri neuspešnem učenju modela.}
+	\label{tabelLearnConfig}
+\end{table}
+
+Izdelana delavca sta se prosto sprehajala po šahovnici, kjer sta občasno, vendar naključno nabrala zlatnike z polja zlatnikov.
+Nabranih zlatnikov do izteka časa v skoraj nobeni izmed iger nista igralca vrnila v glavno hišo, kar je prinašalo igralcema večino neodločenih izidov.
+Čeprav sta delavca hodila z nabranimi zlatniki okrog glavne hiše in bi z njihovo vrnitvijo povečala število igralčevih točk, tega nista storila, kar privede do pomislekov o primernosti implementacije MCTS algoritma.
+Uteži stanja v raziskovalnem drevesu so bila v tem primeru skoraj naključna, saj se samega učenja ni zgodilo skoraj nič, vendar sam MCTS ni teh uteži stanj igre pravilno popravil.
+Za to bi bila možna rešitev nastavitev začetnih stanj igre v nevronski mreži na enaka in ne na naključna, kakor je implementirano v trenutni različici algoritma.
+
+Učenje je potekalo inkrementalno, in sicer 2x po 30 iteracij, kjer je igralec po prvi seriji tridesetih iteracij akcije izvajal zelo naključno, kjer so skoraj vse akcije predstavljale naključne premike delavcev po šahovnici.
+Po nadaljnjem učenju druge serije sta igralca občasno nabrala zlatnike in jih tudi včasih vrnila v glavno hišo.
+To razbitje učenja nam pokaže, da učenje poteka zelo počasi, vendar uspešno.
 
 Tako kot smo opisali v sekciji poteku učenja~\ref{potekUcenja}, smo v tem primeru naleteli na težavo prekomernega prileganja, saj algoritem ni pravilno prepoznaval neodločene izide.
 Neodločeni izidi niso bili kaznovani s strani primerjanja dveh modelov, pri katerih so se primerjale samo zmage in porazi novejšega modela proti starejšem.
 Izidov je bilo skozi učenje vedno več neodločenih, pri katerem je pri 40. iteraciji učenja ostali samo neodločeni izidi, z redko zmago katerega izmed modelov in rezulta tega je bilo naključna hoja delavcev, s čimer so dosegli nov neodločen izid.
 Popravek izbire modela je prinašal boljše rezultate, vendar je izbira novejšega modela veliko težja, saj dobra algoritma velikokrat dosežeta neodločen izid, posebej v začetnih stopnjah igre, kjer imata oba igralca malo zlatnikov in figur.
-\section{Zmanjševanje velikosti šahovnice}
-\label{resultFourth}
 
-V tej konfiguraciji učenja smo zmanjšali velikost šahovnice iz 8 x 8 na 6 x 6.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Ker je učenje potekalo dokaj neuspešno, smo se odločili zmanjšati velikost šahovnice iz 8 x 8 na 6 x 6, kar bi zmanjšalo število možnih stanj igre in poenostavilo nevronsko mrežo, ki bi s to konfiguracijo imela manj končnih uteži, ki jih mora pravilno naučiti.
 Zmanjšali smo tudi število iteracij iz 30 na 20, saj bi teoretično bilo potrebnih manj iteracij za učenje manjše šahovnice.
 
 Zmanjševanje šahovnice je privedlo do pričakovanih rezultatov.
 Igralca sta občasno nabirala zlatnike, saj je polje zlatnikov v bližini glavne hiše, tako da se delavec postavi med glavno hišo in zlatnike in jih nabira brez da bi se moral premakniti.
-Zaradi nabranih zlatnikov potem igralca izdelata nove delavce.
+Zaradi nabranih zlatnikov potem igralca izdelata nove delavce in s tem povečata število igralčevih točk.
+Število nabranih zlatnikov in izdelanih delavcev je še vedno majhno.
+Glaven razlog večjega uspeha te konfiguracije proti prejšnji je bilo postavitev zlatnikov bližje glavni hiši in ne znižanje števila uteži nevronske mreže.
 
-Število nabranih zlatnikov in izdelanih delavcev je vedno majhno.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Ustavitvena funkcija zmanjšanja življenjskih točk}
-
-V tem primeru smo uporabili ustavitveno funkcijo, ki zmanjšuje število življenjskih točk figuram, opisano v sekciji~\ref{sKillFunction}.
+Poskusili smo še spremembo ustavitvene funkcije na konfiguracijo, ki zmanjšuje število življenjskih točk figuram, opisano v sekciji~\ref{sKillFunction}.
 Po določenem številu potez (v našem primeru 90) funkcija prične izmenično zmanjševati življenjske točke igralčevih enot.
 
 Uporaba funkcije v primerjavi z ustavitvenim časom je proizvedla slabše rezultate.
@@ -1283,19 +1211,197 @@ Igralca nabereta manj zlatnikov in posledično izdelata manj figur.
 Ta način učenja modela ni primeren, saj ni popolnoma kompatibilen z običajnimi RTS igrami, saj se igralčevim enotam življenjske točke ne odštevajo zaradi neznanega razloga.
 Možno bi bilo ta način učenja aplicirati v igre, kjer nekatere izmed figur lahko prejmejo znižanje življenjskih točk zaradi naravnih dejavnikov, kot npr. mraz, strupen plin ipd.
 
-\section{Vizualizacija rezultatov v pogonu Unreal Engine}
-Proti koncu smo rezultate vizualizirali v pogonu Unreal Engine 4, ki ga je izdelalo podjetje Epic Games.
-Izbiranje potez deluje izmenjujoče z zamikom pol sekunde, da se akcije končajo, preden se pošlje nov zahtevek z novim kodiranjem stanja igre.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Sedaj lahko povzamemo zakaj učenje pri zgoraj navedenih konfiguracijah ni potekal uspešno:
+\begin{itemize}
+	\item polja zlatnikov sta bila preveč oddaljena od glavnih hiš, kar je privedlo v ogromno naključnih premikov, saj igralca nista bila naučena preproste sekvence nabiranja in vračanja zlatnikov, s čimer bi si povečala število točk.
+	To je privedlo v veliko neodločenih izidov, iz katerih se igralca nista premaknila, saj primerjava novejšega in starejšega modela ni potekalo uspešno,
+	\item v konfiguraciji je nastavljeno relativno majhno število iteracij (npr. 60), kjer na koncu vsake iteracije poteka primerjava in učenje, in veliko število epizod (npr. 8), ki generirajo učno množico.
+	Zaradi povečane učne množice učenje poteka počasnejše kar privede v daljši čas učenja. Učno množico lahko povečamo tudi na ta način, da ohranimo več iteracij učnih primerov, ki pa je v tem primeru nastavljena samo na 8.	
+	\item najpomembnejši nastavitveni parameter pri učenju pa je število začetnih zlatnikov.
+	Zaradi majhnega števila začetnih zlatnikov (1) sta igralca lahko na začetku igre izdelala samo 1 delavca, s katerim sta zatem morala nabirati in vračati zlatnike.
+	Če pa število začetnih zlatnikov povečamo na npr. 10, da igralcema dovolj veliko število kombinacij začetnih postavitev in izgradnje figur dokler jima ne zmanjka zlatnikov.
+	S tem se naučita pravil, da jima povečevanje števila figur prinaša večje število točk in posledično zmago proti nasprotniku.
+	Igralca se zaradi večjega števila kombinacij med sabo na koncu igre tudi večkrat razlikujeta, kar privede do uspešne primerjave novejšega modela proti starejšemu, kjer je manj neodločenih rezultatov.
+	
+\end{itemize}
+
+\section{Primerjava kodirnikov}
+
+Določiti moramo še primerni kodirnik, ki bo pohitril učenje in ne bo dajal prednosti določenim poljem šahovnice oziroma igralcem.
+Uporabili smo vse prejšnje ugotovitve iz neuspešnih učenj na tej novi konfiguraciji, ki primerja rezultate desetiškega z one-hot kodirnikom.
+Za njuno primerjavo smo morali pognati dve identični učenji, s seveda drugačnima kodirnikoma~\ref{tableCompareOneHotNumeric}.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{p{0.5\linewidth}|p{0.5\linewidth}}
+			Tip konfiguracije                          & {\tt Nastavitev parametra} \\ \hline
+			{\tt časovna omejitev}                     & 200                     \\
+			{\tt iteracije}                            & 20                      \\
+			{\tt epizod}                               & 4                       \\
+			{\tt MCTS iskanj}                          & 5                        \\
+			{\tt primerjave}                           & 7                        \\
+			{\tt zgodovina učnih primerov}             & 5                       \\
+			{\tt epohi}                                & 30                      \\
+			{\tt začetni zlatniki}                     & 10                       \\
+			{\tt povečevanje zlatnikov}                & 1                       \\
+			{\tt zmanjšanje življenjskih točk}         & 20                      \\
+			{\tt količina zdravljenja}                 & 20                      \\
+			{\tt stroški zdravljenja}                  & 5                       \\
+			{\tt število polj}                         & 8 x 8                   \\
+			
+		\end{tabular}
+	\end{center}
+	\caption{Nastavitve konfiguracij igre in učnih parametrov pri učenjih z one-hot in numeričnem kodirnikom.}
+	\label{tableCompareOneHotNumeric}
+\end{table}
+
+Rezultati, prikazani z grafi~\ref{onehot_numeric_score} in~\ref{onehotPrimerjavaAkcij} , je vidno da učenje uspešno poteka z one-hot kodirnikom tudi pri majhnem številu iteracij (20) z zelo majhnim številom MCTS iskanj in epizod.
+
+Izkazalo se je da one-hot kodiranje prinaša boljše rezultate po ocenitvi modelov z igranjem 100 iger drug proti drugemu, kjer je bil rezultat 72:15:13 (zmaga one-hot igralca: zmaga desetiškega igralca: neodločeni izidi).
+Zaradi izjemnih rezultatov one-hot kodiranja smo ga uporabljali še pri nadaljnjih učenjih.
+Za vse akcije smo prikazali še razmerja med one-hot in desetiškim kodirnikom v tabeli~\ref{tableencoders}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+	
+	\begin{center}
+		
+		\begin{tabular}{p{0.3\linewidth}|p{0.2\linewidth}|p{0.2\linewidth}|p{0.2\linewidth}}
+			Akcije             & {\tt Število akcij desetiški kodirnik} & {\tt Število akcij one-hot kodirnik} & {\tt razlika v procentih}\\ \hline
+			{\tt Premik}       & 49561                   & 43327                      & 12,57\%                                           \\
+			{\tt Nabiranje}    & 3026                    & 5638                       & -46,32\%                                          \\
+			{\tt Vračanje}     & 2654                    & 5243                        & -49,38\%                                         \\
+			{\tt Napad}        & 160                     & 62                       & 61,25\%                                             \\
+			{\tt Delavec}      & 2685                    & 3823                       & -29,76\%                                          \\
+			{\tt Vojak}        & 666                     & 307                        &53,9\%                                             \\
+			{\tt Vojašnica}    & 1052                    & 1215                      & -13,41\%                                           \\
+			{\tt Glavna hiša}  & 179                     & 367                       & -51,22\%                                           \\
+			{\tt Zdravljenje}  & 9                       & 10                        & -10\%                                              \\
+		\end{tabular}
+	\end{center}
+	\caption{Iz tabele je razvidno da je one-hot kodirnik dal večji poudarek na nabiranje zlatnikov in posledično lahko gradil dodatne figure.
+	Numerični kodirnik pa je dal večji poudarek na izgradnjo vojaških enot in napadanju.}
+	\label{tableencoders}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{figure}[h]
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{photos/visualization_ue4.pdf}
+		\includegraphics[width=1\textwidth]{photos/onehot_numeric_score.pdf}
 	\end{center}
-	\caption{Zgornja slika predstavlja igranje igre dveh računalniških nasprotnikov enega proti drugemu. V sredini vidimo glavni hiši in polja zlata, okrog vojašnice in delavce. }
+	\caption{Graf predstavlja razmerje števila točk z iteracijo igre med učenjem obeh kodirnikov.
+		Igralec kodiran z načinom one-hot je dosegal veliko večje število točk skozi učni postopek kakor igralec kodiran desetiško, pri katerem učenje ni potekalo uspešno.}
+	\label{onehot_numeric_score}
+\end{figure}
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{photos/onehot_numeric_primerjava_akcij.pdf}
+	\end{center}
+	\caption{Na grafu so prikazane 4 krivulje, ki predstavljajo število posameznih akcij za oba igralca. Na grafu so prikazane samo določeni akciji, in sicer premiki in vračanje, ostale akcije pa so zaradi preglednosti izpuščene.
+		Na grafu je prikazana primerjava obeh kodirnikov in njuno izvajanje akcij skozi učni postopek.
+		Pri modelu, kodiranem z one-hot je razvidno, da je skozi učni postopek začel zniževati število premikov (rdeča) in hkrati povečeval število vračanj zlatnikov (roza), kar mu je privedlo večje število točk v ocenitveni funkciji.
+		Igralec je pričel zniževati število premikov, saj so bili na začetku učenja premiki predvsem naključni. Z učenjem pa je igralec dobil idejo, da mu nabiranje zlatnikov prinaša večje število točk.
+	Igralec kodiran desetiško pa skozi učenje ni izboljšal izbiranja akcij in še vedno večino akcij posvečal premikanju delavcev in vojaških enot. }
+	\label{onehotPrimerjavaAkcij}
+\end{figure}
+
+
+\section{Učenje igranja igre}
+Z one-hot kodirnikom in določenimi pravili igre in učnimi nastavitvami lahko sedaj dokončno naučimo model, da se bo naučil igrati RTS igro.
+
+Konfiguracija se razlikuje od konfiguracije med primerjanjem kodirnikov~\ref{tableencoders} samo s številom iteracij in zgodovine učnih primerov, ki sta povečana na 100 in 30.
+Pomembno je da se pri učenju dovolj velikokrat izvede učenje nevronske mreže in primerjanja trenutnega modela s prejšnjim.
+Število ohranjenih iteracij zgodovine učnih primerov je nastavljenih na 30, kar zagotavlja dovolj močno učenje z veliko učnimi primeri, vendar posamezno učenje poteka zelo dolgo, tudi na grafični kartici.
+
+Učenje je potekalo 2 dni in 20 ur.
+S to konfiguracijo se je model uspešno naučil igranja igre~\ref{learn_plot}, s tem da zelo pogosto nabira zlatnike in občasno napada nasprotnikove enote~\ref{all_acts_playerminus1}.
+Pri tem učenju je kakor pri primerjavi kodirnikov vidna povezava med izvajanjem akcij premikov in vračanjem zlatnikov, ki največ vpliva na izboljšavo točk~\ref{return_move_learn}.
+Igralca napadata nasprotnikove enote, ko so postavljene poleg vojaške enote, vendar se taktično lovljenje nasprotnikovih figur z vojaškimi enotami ne zgodi.
+Igralca pa še vedno ne zaključita igre z eliminacijo nasprotnika, saj to ni njuna glavna prioriteta, ker sta bolj osredotočena na povečevanje svojih točk in ne znižanje nasprotnikovih z napadanjem.
+To privede v šahovnico, ki ima veliko polj zasedenih z novimi figurami~\ref{pit_100_game1}.
+
+Igralec naučen s to konfiguracijo tudi prepozna polja zlatnikov na oddaljenem polju na šahovnici brez posebnega učenja~\ref{pit_minerals_apart_100}.
+Te zlatnike igralec pobere in jih vrne v glavno hišo ko delavec pride zraven nje, vendar igralec ne izvaja namernih premikov delavca do polja zlatnikov, da bi jih nabral in vrnil v glavno hišo.
+Z naknadno konfiguracijo, kjer so polja zlatnikov na robovih šahovnice, igralec ne pridobi tako dobrih rezultatov, saj nevronska mreža ni naučena na pozicijsko neodvisnost.
+To bi bilo možno popraviti, tako da bi vsako iteracijo igre spremenil začetno konfiguracijo pozicij glavnih hiš in polj zlata na šahovnici.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{photos/learn_plot.pdf}
+	\end{center}
+	\caption{Na grafu je predstavljeno preverjanje trenutnega igralca(-1) proti prejšnjemu igralcu(1) med izvajanjem učnega postopka.
+	Razvidno je da je učenje igralca -1 potekalo uspešno, saj se je z iteracijami igre povečevalo število točk.}
+	\label{learn_plot}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{photos/return_move_learn.pdf}
+	\end{center}
+	\caption{Tudi tu je kot pri primerjavi akcij kodirnikov~\ref{onehotPrimerjavaAkcij} razvidno uspešno učenje s tem da se je zmanjšalo število premikov in povečalo vračanje zlatnikov.
+		Poseben poudarek na to se izkaže pri iteracijah 68 in 76, kjer igralec 1 drastično poveča število vračanj zlatnikov in zmanjša število premikov.}
+	\label{return_move_learn}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{photos/all_acts_playerminus1.pdf}
+	\end{center}
+	\caption{Na grafu so predstavljene vse akcije igralca -1 med učnim postopkom.
+		Vidno je da se število premikov zniža in poveča število nabiranj in vračanj zlatnikov, medtem ko število urjenj delavca ostane enako, poveča pa se tudi število izgrajenih vojašnic, ki pa igralcu doprinese več točk kakor urjenje delavca.
+	Akcije, kot naprimer napad ostaja zelo nizko, saj ji igralca ne dajeta prednost, akcija zdravljenje je pa koristna šele če je katera od igralčevih enot poškodovana. }
+	\label{all_acts_playerminus1}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{photos/pit_100_game1.pdf}
+	\end{center}
+	\caption{Primerjanje naučenega modela v Pygame. Vidno je da sta igralca izdelala veliko število figur, in redno nabirala zlatnike. 
+		V levem spodnjem kotu je razvidno koliko zlatnikov imata igralca v banki, ki jih lahko zapravita za urjenje enot in gradnjo infrastrukture.
+		Igralec 1 (zelena) ima ogromno število zlatnikov, ki mu doprinašajo dodatne točke z ocenitveno funkcijo.
+		Vsak izmed igralcev ima vsako igro na voljo 100 potez, pri katerih porabi 2 potezi za nabiranje in vračanje zlatnikov, če je delavec postavljen zraven polja zlatnikov in glavne hiše, na kar po posameznem vračilu igralec pridobi 3 zlatnike. Največje možno število zlatnikov za igralca je tako 147, saj prvo potezo mora igralec izgraditi delavca, vse ostale pa lahko nabere po 3 zlatnike vsako drugo potezo.
+		Igralec je pridobil 75 zlatnikov, s tem da je izdelal še dodatnega delavca (1 zlatnik in 1 poteza) in dve vojašnici (8 zlatnikov in 2 potezi).
+	Igralec je tako veliko število potez efektivno porabil za nabiranje in vračanje zlatnikov.	Medtem ko se je igralec -1 (rdeča) bolj osredotočil na urjenje delavcev in izgradnji dodatnih glavnih hiš, ki mu doprinesejo veliko število točk, ampak ima zato manj zlatnikov v banki.}
+	\label{pit_100_game1}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{photos/pit_minerals_apart_100.pdf}
+	\end{center}
+	\caption{Primerjava naučenega modela z drugačno postavitvijo šahovnice, da so polja zlatnikov na robovih.
+		Igralca uspešno nabereta zlatnike ko se približata polju zlata in jih vrneta ko se približata glavni hiši.
+		Napadi vojaških enot so pri tej konfiguraciji bolj očitni, saj ni velikega števila delavcev in drugih figur kot v prejšnem primeru~\ref{all_acts_playerminus1}.}
+	\label{pit_minerals_apart_100}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Vizualizacija rezultatov v pogonu Unreal Engine}
+Rezultate smo vizualizirali v pogonu Unreal Engine 4, ki ga je izdelalo podjetje Epic Games.
+Izbiranje potez deluje izmenjujoče z zamikom pol sekunde, da se akcije končajo, preden se pošlje nov zahtevek z novim kodiranjem stanja igre.
+Če so v UE4 nastavljena enaka pravila, kot na primer stroški enot, število začetnih zlatnikov, kot v Python skripti, igralca igrata igro identično kot v Pygame.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{photos/ue4attack.pdf}
+	\end{center}
+	\caption{Igranje dveh računalniških nasprotnikov enega proti drugemu v UE4. V sredini vidimo glavni hiši in polja zlata, okrog pa vojašnice, delavce, glavne hiše in vojaške enote.
+		Na sliki je vidnen napad vojaške enote na enega izmed delavcev. }
 	\label{visualization_ue4}
 \end{figure}
 
-Igranje proti računalniškem nasprotniku je z uporabo tega algoritma možno, vendar je nasprotnik prelahek, da bi bil primeren za njegovo aplikacijo v modernejše strateške igre.
+Igranje proti računalniškem nasprotniku je z uporabo tega algoritma možno, vendar računalniški nasprotnik ne igra dovolj inteligentno, da bi bil primeren za njegovo aplikacijo v modernejše strateške igre, kjer bi ga lahko implementirali kot glavnega računalniškega nasprotnika.
+Naučen model bi bil primeren samo za določen zemljevid, če ga seveda ne bi učili na različnih postavitvah šahovnice, kjer bi dodajali zasedena polja ipd.
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1306,15 +1412,15 @@ Igranje proti računalniškem nasprotniku je z uporabo tega algoritma možno, ve
 \chapter{Diskusija}
 \label{chdiskusija}
 
-Kot smo v poglavju~\ref{chrezultati} ugotovili, učenje modela poteka zelo počasi, vendar se model uspešno uči.
+Kot smo v poglavju~\ref{chrezultati} ugotovili, učenje modela poteka počasi, vendar se model uspešno uči.
 Zasnova opisa igre in njenega kodiranja je prava, ker učenje poteka uspešno.
 Poteka počasi zaradi ustavitvenega pogoja in ocenitvenih funkcij, ki ugotovi zmagovalca ob tem ustavitvenem pogoju, ki mogoče ni pravi zmagovalec ob koncu igre.
 MCTS naredi zelo majhno število iskanj in ne simulira igre do konca oziroma določene globine, kjer bi ugotovil stanje igre ter to stanje vrnil nazaj, ampak stanje igre pridobi od naučenega modela, ki velikokrat ni pravo.
 
 
 
-V sklopu te diplomske naloge se nismo podajali v spreminjanje zgradbe nevronske mreže, temveč smo vzeli že izgrajeno nevronsko mrežo, primerno za učenje igre Othello.
-Mogoče bi ravno sprememba strukture nevronske mreže privedla do boljših rezultatov, saj je matrika stanja igre veliko globja, kakor pri igri Othello.
+% V sklopu te diplomske naloge se nismo podajali v spreminjanje zgradbe nevronske mreže, temveč smo vzeli že izgrajeno nevronsko mrežo, primerno za učenje igre Othello.
+% Mogoče bi ravno sprememba strukture nevronske mreže privedla do boljših rezultatov, saj je matrika stanja igre veliko globja, kakor pri igri Othello.
 
 Pri opisu igre je veliko problemov povzročalo uravnovešanje parametrov igre, kot na primer število vrnjenih zlatnikov, količina in cena zdravljenja ipd.
 Dober primer neuravnovešene konfiguracije igre sta bila prav količina in cena zdravljenja, kjer je stalno samo nabiral zlatnike in zdravil svoje figure, tako da je dosegal vedno daljše število narejenih potez.
@@ -1362,11 +1468,12 @@ V pogonu Unreal Engine 4 smo pripravili bolj kompleksno strateško igro, ki je b
 V tej igri pošiljamo zahtevke za akcije preko vtičnika v Python skripto, v katero podamo trenutno stanje igre, nazaj dobimo priporočeno akcijo.
 Zahtevke lahko pošilja računalniški nasprotnik ali človeški igralec, ko v najboljšo akcijo ni prepričan.
 Za tem smo se posvetili predvsem učenju modelov z različnimi konfiguracijami ter jih vizualizirali v Pygame in Unreal Engine.
-Ugotovili smo, da je učenje počasnejše zaradi kompleksnosti igre in načina zgradbe nevronske mreže, vendar poteka uspešno, s tem da ne daje večjo prednost igralcu 1 kot -1 ipd.
+Ugotovili smo, da je učenje počasnejše zaradi kompleksnosti igre in načina zgradbe nevronske mreže, vendar poteka uspešno, s tem da zaradi izbire one-hot kodirnika ne daje večjo prednost igralcu 1 kot -1.
+Model smo uspešno naučili osnovnega igranja igre, s tem da je igralec nabiral zlatnike, ustvarjal nove figure in občasno napadal nasprotnikove enote.
 Diplomska naloga je dober prispeve k Surag-Nairjevim igram za AlphaZero, ki razširi preproste igre črno-belih figur v figure večih atributov.
 V to igro smo pripeljali tudi časovne kompleksnosti in jo razširili z vizualizacijo v Pygame in Unreal Engine 4.
 
-Igro, izdelano v UE4~\cite{td2020} in AlphaZero General algoritem s Pygame igro~\cite{pygameAlphaZeroGeneral} smo dodali na spletno gostovanje GitHub pod odprto licenco.
+Igro, izdelano v UE4~\cite{td2020} in AlphaZero General algoritem s Pygame igro~\cite{pygameAlphaZeroGeneral} in njenimi izdajami smo dodali na spletno gostovanje GitHub pod odprto licenco.
 
 \newpage %dodaj po potrebi, da bo številka strani za Literaturo v Kazalu pravilna!
 \ \\

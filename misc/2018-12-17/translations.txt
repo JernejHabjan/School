@@ -9,7 +9,8 @@ situacija - primer
 instantno - takojšne izvajanje
 apliciramo -
 kompatibilna - 
-
+inkrementalno - postopno
+generirajo - 
 
 
 
