@@ -396,7 +396,7 @@ Realno-časovne strateške igre so žanr strateških iger, kjer igralec nadzoruj
 Igre se odvijajo v realnem času, kar pomeni da se stanje igre lahko spremeni večkrat na sekundo in s tem igralca prisili k stalnem fokusu na igro.
 Primer RTS igre sta igra Age of Empires II (Ensemble Studios) in igra StarCraft (Blizzard Entertainment, THQ)~\ref{picRtsGames}. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{photos/horizontal_rts.pdf}
 	\end{center}
@@ -436,7 +436,7 @@ Zaradi teh razlik so nastopili razni izzivi:
 		\item pridobivanje znanja, s katerim pridobivamo informacije o taktiki nasprotnika.
 	\end{itemize}
 
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\begin{center}
 			\includegraphics[width=0.8\textwidth]{photos/RazdelitevNalog.pdf}
 		\end{center}
@@ -503,7 +503,7 @@ Leto za tem, je bil razvit algoritem AlphaGo Zero~\cite{silver2017mastering}, ki
 Novi model je tudi premagal algoritem AlphaGo, kar predstavlja odlične rezultate z vidika, da AlphaGo Zero ne potrebuje človeško usmerjanje pri učenju.
 Računalniki se lahko tako naučijo reševanje problema brez človeških ekspertov, ki pogostejše delajo napake zaradi utrujenosti ali površnosti in nimajo takojšnega vpogleda na celotno zbirko iger, kot na to imajo računalniki.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/go.pdf}
 	\end{center}
@@ -546,7 +546,7 @@ Parametri nevronske mreže so za tem popravljeni, da minimizirajo napako med nap
 Oziroma parametri se nastavijo z gradientnim spustom na funkcijo izgube, ki sešteje napako srednjega korena (mean-squared error) in prečne entropije (cross entropy).
 Nevronska mreža sprejme učne množice stanja iger in vrne ravni vektor napovedi akcij v trenutnem stanju in napoved zmage.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/modifiedMCTS.pdf}
 	\end{center}
@@ -617,7 +617,7 @@ S tem v mislih, smo opisali nekaj preprostih pravil, ki jih ta igra upošteva:
 
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/horizontal_health.pdf}
 	\end{center}
@@ -682,7 +682,7 @@ Pri izgradnji nove stavbe ali urjenju figure število zlatnikov zmanjša za vse 
 
 \section{Akcije}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/prikazAkcij.pdf}
 	\end{center}
@@ -739,7 +739,7 @@ for sosednji_x, sosednji_y in koordinate:
         return sosednji_x, sosednji_y
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.6\textwidth]{photos/korakiPreverjanja.pdf}
 	\end{center}
@@ -830,7 +830,7 @@ S tem smo povišali prednost aktivnim igralcem, ki nabirajo zlatnike in imajo ve
 Za to smo razvili funkcijo, ki prisili model k izvajanju akcij v zgodnem času igre, drugače se figuram preveč začnejo zmanjševati življenjske točne in so zato eliminirane s šahovnice.
 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/destroy_formula_2018_11_17.pdf}
 	\end{center}
@@ -931,7 +931,7 @@ Za tem je izgrajen polno povezan nivo Pi, ki ima toliko število izhodov, koliko
 Izgrajen je tudi polno povezan nivo V, ki ima en izhod, ki predstavlja zmago ali poraz z tanh aktivacijsko funkcijo.
 Za izhod Pi se nastavi funkcija izgube kategorična prečna entropija, za izhod V  srednja napaka korena (mean-squared error).
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/model_using_deepcognition.pdf}
 	\end{center}
@@ -1040,7 +1040,7 @@ Uporabnik lahko spremeni figuro, tako da jo odznači s klikom desnega miškinega
 
 Igralec lahko igro igra tudi s pisanjem akcij v Python konzolo.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/visualization_pygame.pdf}
 	\end{center}
@@ -1055,7 +1055,7 @@ Celostni pogon Unreal Engine 4 (ang. game engine Unreal Engine 4; UE4) je odprto
 Obstajajo drugi celostni pogoni kot je na primer Unity.\\
 Unreal Engine 4 omogoča hitro ustvarjanje iger s pomočjo posebnih diagramov (ang. blueprint) in hkrati podpira programski jezik C++, ki ga uporabimo za hitro izvedbo velikega števila matematičnih izrazov~\cite{diploma2}.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/ue4-widget.pdf}
 	\end{center}
@@ -1129,7 +1129,7 @@ Za učenje smo na voljo podali vse možne akcije.
 \section{Definiranje pravilne konfiguracije igre}
 
 Sprva si oglejmo slabo naučen model, pri katerem lahko izpostavimo napake in morebitne vzroke za njih~\ref{vizualizacijaRezultatovSpremembaZlata}.
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.9\textwidth]{photos/third-2018-11-14.pdf}
 	\end{center}
@@ -1199,7 +1199,7 @@ Po določenem številu potez (v našem primeru 90) funkcija prične izmenično z
 Uporaba funkcije v primerjavi z ustavitvenim časom je proizvedla slabše rezultate.
 Igralca nabereta manj zlatnikov in posledično izdelata manj figur.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/killFunction.pdf}
 	\end{center}
@@ -1287,7 +1287,7 @@ Za vse akcije smo prikazali še razmerja med one-hot in desetiškim kodirnikom v
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/onehot_numeric_score.pdf}
 	\end{center}
@@ -1297,7 +1297,7 @@ Za vse akcije smo prikazali še razmerja med one-hot in desetiškim kodirnikom v
 \end{figure}
 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/onehot_numeric_primerjava_akcij.pdf}
 	\end{center}
@@ -1329,7 +1329,7 @@ Te zlatnike igralec pobere in jih vrne v glavno hišo ko delavec pride zraven nj
 Z naknadno konfiguracijo, kjer so polja zlatnikov na robovih šahovnice, igralec ne pridobi tako dobrih rezultatov, saj nevronska mreža ni naučena na pozicijsko neodvisnost.
 To bi bilo možno popraviti, tako da bi vsako iteracijo igre spremenil začetno konfiguracijo pozicij glavnih hiš in polj zlata na šahovnici.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/learn_plot.pdf}
 	\end{center}
@@ -1338,7 +1338,7 @@ To bi bilo možno popraviti, tako da bi vsako iteracijo igre spremenil začetno 
 	\label{learn_plot}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/return_move_learn.pdf}
 	\end{center}
@@ -1347,7 +1347,7 @@ To bi bilo možno popraviti, tako da bi vsako iteracijo igre spremenil začetno 
 	\label{return_move_learn}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/all_acts_playerminus1.pdf}
 	\end{center}
@@ -1357,7 +1357,7 @@ To bi bilo možno popraviti, tako da bi vsako iteracijo igre spremenil začetno 
 	\label{all_acts_playerminus1}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/pit_100_game1.pdf}
 	\end{center}
@@ -1370,7 +1370,7 @@ To bi bilo možno popraviti, tako da bi vsako iteracijo igre spremenil začetno 
 	\label{pit_100_game1}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/pit_minerals_apart_100.pdf}
 	\end{center}
@@ -1388,7 +1388,7 @@ Rezultate smo vizualizirali v pogonu Unreal Engine 4, ki ga je izdelalo podjetje
 Izbiranje potez deluje izmenjujoče z zamikom pol sekunde, da se akcije končajo, preden se pošlje nov zahtevek z novim kodiranjem stanja igre.
 Če so v UE4 nastavljena enaka pravila, kot na primer stroški enot, število začetnih zlatnikov, kot v Python skripti, igralca igrata igro identično kot v Pygame.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/ue4attack.pdf}
 	\end{center}
