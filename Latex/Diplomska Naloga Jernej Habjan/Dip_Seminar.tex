@@ -361,7 +361,7 @@ V takšnih primerih se je bolje odločiti za drevesno preiskovanje Monte Carlo~\
 Ta ima pomanjkljivost, da si stanj igre ne zapomni skozi iteracij več iger, kjer bi lahko to vrednost stanja uporabil za bolj natančen izračun naslednjih stanj.
 
 Za pomnjenje stanj so primerne globoke nevronske mreže, ki si skozi mnogo iteracij učenja izboljšujejo napoved izbire akcije v določenem stanju igre, oziroma izboljšajo svojo napoved določenega izhoda ob določenem vhodu.
-Ravno to pa potrebuje drevesno preiskovanje Monte Carlo kot začetno stanje, iz katerega lažje izberemo primerno akcijo.
+Ravno to potrebuje drevesno preiskovanje Monte Carlo kot začetno stanje, iz katerega lažje izberemo primerno akcijo.
 Da nevronska mreža dobi dovolj podatkov za učenje, moramo te podatke nekje pridobiti.
 Lahko bi povprašali prijatelje da nam pomagajo odigrati vrsto iger, nad katerimi bi se potem model nevronske mreže učil.
 V našem primeru bo lažje, če te igre odigra algoritem z igranjem proti drugem računalniškem nasprotniku.
@@ -456,13 +456,17 @@ Taktika temelji na analizi terena, ki ga lahko razbijemo na kompozicijo ožin.
 Razbiranje strategije in taktike je za algoritme umetne inteligence težja naloga od nadzorovanja posameznih figur, saj potrebuje višji nivo abstrakcije prostora, figur in akcij, kot za izbiro posameznih nizkonivojskih akcij, zato smo se v sklopu diplomske naloge odločili za nadzorovanje figur na nižjem nivoju abstrakcije (nivo reakcijske kontrole).
 
 \section{Abstrakcija prostora}
-Za primer abstrakcije prostora vzemimo računalniško realno-časovno igro, kjer bi lahko premik figure spremljali vsaka prikazana točka na prikazovalniku, vendar je primernejše da gledamo na premik figur kot izid na višjih ravneh abstrakcije igre~\cite{uriarte2015automatic}.
+Za primer abstrakcije prostora vzemimo strateško realno-časovno  video igro, kjer figuro spremlja vsaka prikazana točka na prikazovalniku.
+V tem primeru bi bilo že prepoznavanje figure za algoritem zahtevno. 
+Še zahtevnejši bi pa bil zapis akcij, kot npr. premik, saj se lahko ta figura premakne na poljubno dovoljeno mesto, ki je opisana z zapisom točk na prikazovalniku.
+Zato je primernejše da figure in na njihove premike obravnavamo na višjih ravneh abstrakcije igre~\cite{uriarte2015automatic}.
+Figuro lahko predstavimo na lažji način, kjer nas zanima le majhna množica atributov.
 Posamezne figure vojaških enot lahko združujemo v večje skupine, katere potem obravnavamo in upravljamo kot en osebek.
 Te skupine vojaških enot je potrebno pravilno razporediti na razne strateške točke, ki nam zagotavljajo prednost pred nasprotnikom.
 V ta namen lahko razgradimo zemljevid igre glede na ožine in prestope iz višjega na nižji del terena.
 Z zgrajenim zemljevidom lahko postavimo figure na razne strateške točke~\cite{uriarte2014game}.
 V našem delu smo zemljevid razbili kar na kvadratno mrežo 8x8 ali 6x6, saj ne vsebuje nobenih ožin in nedostopnih mest.
-Imamo majhno število posameznih enot (npr. vojaška enota), ki lahko v računalniško igro apliciramo kot skupek enot, kot smo to opisali zgoraj (npr. skupina vojaških enot).
+Imamo majhno število posameznih enot (npr. vojaška enota), ki lahko v video igro apliciramo kot skupek enot, kot smo to opisali zgoraj (npr. skupina vojaških enot).
 
 Abstrakcija prostora poteka težje če igra vsebuje dejavnike negotovosti, kot na primer prekrivanje zemljevida z meglo (ang. Fog of war) kjer igralec nima podatka o lokaciji, številu in tipih nasprotnikovih figur in njihovih potez v vsakem trenutku. 
 Napoved nasprotnikovih potez je tako veliko težja, tako da vsi algoritmi s tako negotovostjo ne delujejo.
@@ -501,13 +505,13 @@ Te sistemi so temeljili na predznanju ekspertov za učenje in ocenitev modela, k
 
 Leto za tem, je bil razvit algoritem AlphaGo Zero~\cite{silver2017mastering}, ki opisuje pristop k učenju brez domenskega znanja ekspertov, ampak uporablja metodo samo-igranja~\ref{picCompareGo}. 
 Novi model je premagal algoritem AlphaGo, kar predstavlja odlične rezultate z vidika, da AlphaGo Zero ne potrebuje človeško usmerjanje pri učenju.
-Računalniški agenti se lahko tako naučijo reševanje problema brez človeških ekspertov, ki pogostejše delajo napake zaradi utrujenosti ali površnosti in nimajo takojšnega vpogleda na celotno zbirko iger, kot na to imajo računalniki.
+Računalniški agenti se lahko tako naučijo reševanje problema brez človeških ekspertov, ki pogostejše delajo napake zaradi utrujenosti ali površnosti in nimajo takojšnega vpogleda na celotno zbirko učne množice.
 
 \begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/go.pdf}
 	\end{center}
-	\caption{Predstavitev igranja iger z naučenim algoritmom AlphaZero z 700,000 iteracijami, kjer je čas za napoved akcije je 1 sekunda. Na levi sliki je prikaz igranja šaha proti programu Stockfish iz leta 2016, na srednji sliki igranje proti programu Elmo iz leta 2017 v igri Shogi, na desni igranje igre Go proti proramoma AlphaGo Lee in AlphaGo Zero. }
+	\caption{Predstavitev igranja iger z naučenim algoritmom AlphaZero z 700,000 iteracijami, kjer je čas za napoved akcije je 1 sekunda. Na levi sliki je prikaz igranja šaha proti programu Stockfish iz leta 2016, na srednji sliki igranje proti programu Elmo iz leta 2017 v igri Shogi, na desni igranje igre Go proti programoma AlphaGo Lee in AlphaGo Zero. }
 	\label{picCompareGo}
 \end{figure}
 
@@ -520,9 +524,9 @@ Delovanje algoritma AlphaGo Zero lahko opišemo v naslednjih korakih~\cite{guid}
 \end{itemize}
 
 
-Za tem je bil razvit algoritem AlphaZero, ki vzame ideje AlphaGo Zero kot temelj, ampak je model posplošen za poljubne igre, kot na primer šah, Shogi, Go.
-Algoritem potrebuje samo pravila igre, na podlagi katerih se uči igranja z globokimi nevronskimi mrežami in tabula rasa algoritmom za spodbujevalno učenje.
-Zaradi te posplošitve algoritma ga lahko presliikamo na našo RTS igro.
+Za tem je bil razvit algoritem AlphaZero, ki kot temelj vzame ideje AlphaGo Zero in posploši model za poljubne igre, kot na primer šah, Shogi, Go.
+Algoritem za delovanje potrebuje samo pravila igre, na podlagi katerih se uči igranja z globokimi nevronskimi mrežami in tabula rasa algoritmom za spodbujevalno učenje.
+Zaradi te posplošitve algoritma ga lahko preslikamo na našo RTS igro.
 Algoritem AlphaZero je drugačen od AlphaGo Zero v tem, da igre pri AlphaGo Zero nastanejo z igranjem vseh posameznih modelov prejšnjih iteracij, na kar se je moč modela izračunala proti najboljšim igralcem, medtem ko AlphaZero samo hrani eno nevronsko mrežo, ki se stalno posodablja, namesto da čaka iteracijo da se konča.
 
 \section{Potek učenja}
@@ -545,14 +549,15 @@ Po vsaki seriji učenja, se izvede proces igranja iger dveh naučenih modelov, k
 % \end{verbatim}
 
 Parametri nevronske mreže so za tem popravljeni, da minimizirajo napako med napoved stanja nevronske mreže in dejanskim rezultatom igre in maksimizirajo podobnost napovedi potez nevronske mreže z dejanskimi vrednostnimi akcij, ki je rezultat drevesnega preiskovanja Monte Carlo (ang. Monte Carlo tree search; MCTS). 
-Parametri se nastavijo z gradientnim spustom na funkcijo izgube, ki sešteje napako srednjega korena (mean-squared error) in prečne entropije (cross entropy).
-Nevronska mreža sprejme učne množice stanja iger in vrne izravnan vektor napovedi akcij v trenutnem stanju (Pi) in napoved zmage (V).
+Parametri se nastavijo z gradientnim spustom na funkcijo izgube, ki sešteje napako srednjega korena (ang. mean-squared error) in prečne entropije (ang. cross entropy).
+Nevronska mreža sprejme učne množice stanja iger in vrne izravnan vektor napovedi akcij v trenutnem stanju označeno s Pi in napoved zmage označeno z V.
 
 \begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/modifiedMCTS.pdf}
 	\end{center}
-	\caption{Na sliki je prikazano delovanje algoritma MCTS pri izvedbi algoritma AlphaZero, ki ga uporabljamo v diplomski nalogi. Ta MCTS ne uporablja postopka odigravanja stanj do konca igre, ampak izvede določeno število iteracij iskanja z raziskovalno funkcijo~\ref{iz:1}. }
+	\caption{Na sliki je prikazano delovanje algoritma MCTS pri izvedbi algoritma AlphaZero, ki ga uporabljamo v diplomski nalogi. 
+		MCTS ne uporablja postopka odigravanja stanj do konca igre, ampak izvede določeno število iteracij iskanja z raziskovalno funkcijo~\ref{iz:1}. }
 	\label{modifiedMCTS}
 \end{figure}
 
@@ -563,8 +568,8 @@ Algoritem ne uporablja simulacij za pridobitev končnega stanja igre, napoved st
 
 Vozlišče, ki ni bilo obiskano, se vzpostavi s napovedjo nevronske mreže in za tem vzvratno propagira napoved stanja.
 Če je vozlišče končno stanje igre, vzvratno propagira končno stanje.
-MCTS v tem primeru prejme par sto iteracij (v našem primeru 30 - 50) in ne več tisoč, kot jih izvajajo drugi algoritmi.
-V sklopu diplomske naloge govorimo o MCTS iskanjih in ne odigravanjem, saj jih ta ne vpeljuje~\ref{modifiedMCTS}.
+MCTS v tem primeru izvede par sto iteracij (v našem primeru 30 - 50) in ne več tisoč, kot jih izvajajo drugi algoritmi.
+V sklopu diplomske naloge govorimo o MCTS iskanjih in ne odigravanjih, saj jih ta ne vpeljuje~\ref{modifiedMCTS}.
 
 \begin{izrek}
 	\label{iz:1}
@@ -576,7 +581,7 @@ V sklopu diplomske naloge govorimo o MCTS iskanjih in ne odigravanjem, saj jih t
 	\end{equation}
 \end{izrek}
 
-Glavno učenje algoritma poteka z igranjem iger, ki se za razliko od MCTS-ja odigrajo do konca in se dodajo v seznam učnih primerov.
+Glavno učenje algoritma poteka z igranjem iger, ki se za razliko od algoritma MCTS odigrajo do konca in se dodajo v seznam učnih primerov.
 Konec vsake iteracije igranja epizod iger se nevronska mreža uči na podlagi teh učnih primerov.
 Za tem preveri moč novo naučenega modela z igranjem proti starejši različici modela in se shrani novi model samo če je boljši od starejšega za določen odstotek.
 
@@ -594,29 +599,29 @@ Strateško igro smo dodali kot modul, ki mora vsebovati definicijo igre in njena
 
 Igra je določena s kvadratno mrežo 8 x 8, kjer polje lahko vsebuje največ eno figuro.
 Ostale igre, ki so napisane za to različico AlphaZero izvedbe, kot na primer štiri v vrsto, Gobang, Othello, tri v vrsto, vsebujejo črno-bele figure.
-Zakodirane so lahko z eno številko: -1 za igralca -1, +1 za igralca 1 ali 0, če je polje prazno.
-Pri teh igrah je dimenzija kodiranja 2-dimenzionalna, kjer dimenzije predstavljajo višino in širino igralne plošče.
-Pri RTS igrah moramo vedeti poleg igralca, komur ta figura pripada, tudi stanje te figure, na primer trenutno zdravje in njen tip.
-Zato je prostor kodiranja 3-dimenzionalen, kjer je tretja dimenzija zakodirano stanje figure.
+Zakodirane so lahko z eno številko: -1 za igralca -1, +1 za igralca 1 in 0, če je polje prazno.
+Pri teh igrah je dimenzija kodiranja 2-dimenzionalna, kjer dimenzije predstavljajo višino in širino igralne plošče, zapis v polju pa je številka igralca.
+Pri RTS igrah moramo poleg igralca vedeti komu ta figura pripada in stanje te figure (npr. trenutno število življenjskih točk in njen tip).
+Zato je prostor kodiranja 3-dimenzionalen, kjer je tretja dimenzija vektor stanja figure na polju.
 Če bi dovolili, da na posamezno polje spada več figur, se dimenzija ponovno poveča za 1.
 
-Naš prvi poskus opisa igre je zelo spremenil Surag-Nairjevo implementacijo algoritma AlphaZero, saj smo stanja igre skozi algoritem prenašali nenumerično~\cite{objectAlphaZero}.
-Hoteli smo ohraniti združljivost z ovojnico algoritma, za katerega implementiramo svojo igro kot modul, kar je nenumerični zapis igre to preprečil.
-Kompleksnejša implementacija igre je povzročila počasnejše igranje in učenje iger, saj je bilo preverjanje akcij počasnejše.
+Naš prvi poskus opisa igre je zelo spremenil Surag-Nairjevo implementacijo algoritma AlphaZero, saj smo stanja igre skozi algoritem prenašali ne-numerično~\cite{objectAlphaZero}.
+Hoteli smo ohraniti združljivost z ovojnico algoritma, za katerega implementiramo svojo igro kot modul, kar je ne-numerični zapis igre to preprečil.
+Kompleksnejša implementacija igre je povzročila počasnejše igranje in učenje iger, saj je bilo preverjanje akcij počasnejše, zato smo igro morali napisati ponovno.
 
 \section{Stanje igre}
 \label{stanjeigre}
-V tem razdelku bomo opisali zapis posamezne figure, njihove akcije in kaj naredijo in tip kodiranja stanja igre, ki ga potem sprejme nevronska mreža.
+V tem razdelku bomo opisali zapis posamezne figure, njihove akcije in kaj naredijo ter tip kodiranja stanja igre, ki ga potem sprejme nevronska mreža.
 
-Igro smo opisali tako, da je čim bolj skladna s samim algoritmom AlphaZero, kot tudi da je njena aplikacija v računalniško igro dovolj primerljiva z obstoječimi strateškimi igrami kot npr. StarCraft.
-S tem v mislih, smo opisali nekaj preprostih pravil, ki jih ta igra upošteva:
+Igro smo opisali na način, da je čim bolj skladen z algoritmom AlphaZero, kot tudi da je njena aplikacija v video igro dovolj primerljiva z obstoječimi strateškimi video igrami kot npr. StarCraft.
+S tem v mislimi, smo opisali nekaj preprostih pravil, ki jih ta igra upošteva:
 \begin{itemize}
-	\item figure se ne požirajo: vojaške figure ne napadejo drugih figur tako, da če je akcija napad možna, se postavijo na polje nasprotnikove figure in s tem prepišejo nasprotnikovikovo figuro in s tem jo uniči~\ref{picPoziranjeFigur}. 
-	Vse figure imajo določeno zdravje, ki ga vojaške figure v večih korakih zmanjšajo z napadom,
-	\item ena figura na polje: S tem ni možno blokiranje figur, s tem da se figura postavi na polje zlata in blokira nasprotnikovo figuro da jih nabere,
-	\item igralec zgubi, če zgubi vse figure - več o ustavitvenih pogojih spodaj v razdelku~\ref{sKonecIgre},
-	\item nabiranje zlatnikov je enkratna operacija, ki poteka podobno kot pri igri StarCraft, kjer mora figura pristopiti do polja zlata, zlatnike pobrati in jih za tem vrniti v glavno hišo.
-	Nabiranje zlatnikov v tem primeru ne poteka tako, da se figura pomakne do polja zlata in s tem prične avtomatično pridobivati zlatnike, brez da bi jih vračal na odlagališče.
+	\item figure se ne požirajo: vojaške figure ne napadejo drugih figur tako, da se ob akciji napada figura postavi na polje nasprotnikove figure in s tem prepišejo nasprotnikovo figuro in s tem jo uniči~\ref{picPoziranjeFigur}. 
+	Vse figure imajo določeno število življenjskih točk, ki ga vojaške figure v večih korakih zmanjšajo z napadom,
+	\item ena figura na polje: S tem pravilom ni možno blokiranje figur na način, da se figura postavi na polje zlata in blokira nasprotnikovo figuro da jih nabere,
+	\item igralec izgubi igro, če izgubi vse figure - več o ustavitvenih pogojih spodaj v razdelku~\ref{sKonecIgre},
+	\item nabiranje zlatnikov je enkratna operacija, ki poteka podobno kot pri igri StarCraft, kjer mora figura pristopiti do polja zlata, zlatnike pobrati, se ponovno premakniti po šahovnici do glavne hiše in vanjo vrniti nabrane zlatnike.
+	Nabiranje zlatnikov v tem primeru ne poteka tako, da se figura pomakne do polja zlata in s tem igralec avtomatično prične pridobivati zlatnike, brez da bi jih figura vračala v glavno hišo.
 \end{itemize}
 
 \begin{figure}[h!]
@@ -624,11 +629,12 @@ S tem v mislih, smo opisali nekaj preprostih pravil, ki jih ta igra upošteva:
 		\includegraphics[width=1\textwidth]{photos/horizontal_health.pdf}
 	\end{center}
 	\caption{Na levi sliki je prikaz požiranja figur v igri šah, kjer se figura kmet lahko premakne na eno izmed dveh diagonalnih polj in s tem uniči trenutno nasprotnikovo figuro na tem polju. 
-		Na desni sliki je prikaz vojskovanja delavca z volkom v igri Age of Empires II, kjer se figurama odšteva število življenjskih točk med napadanjem.}
+		Na desni sliki je prikaz vojskovanja delavca z volkom v igri Age of Empires II, kjer se figurama odšteva število življenjskih točk med napadanjem, ki pa lahko traja več časovnih enot. }
 	\label{picPoziranjeFigur}
 \end{figure}
 
-Sprva moramo opisati figure, ki bodo imele določeno vlogo v igri. Nabor figur je majhen, saj nočemo, da preiskovalni prostor postane prehitro prevelik.
+Sprva moramo opisati figure, ki bodo imele določeno vlogo v igri. 
+Nabor figur je majhen, saj nočemo, da preiskovalni prostor prehitro postane prevelik.
 
 \begin{table}
 	\begin{center}
@@ -636,49 +642,46 @@ Sprva moramo opisati figure, ki bodo imele določeno vlogo v igri. Nabor figur j
 			Ime figure        & {\tt Opis} \\ \hline
 			{\tt polje zlata} & vir surovin, ki predstavljajo denar v igri, s katerim lahko igralec gradi nove stavbe in uri nove figure. 
 								Vir zlata je neomejen in ne mora biti uničen \\
-			{\tt delavec}     & figura namenjena gradnji stavb in nabiranju zlata \\
+			{\tt delavec}     & figura namenjena gradnji stavb in nabiranju zlatnikov \\
 			{\tt vojašnica}   & stavba namenjena urjenju vojaških figur \\
 			{\tt vojak}       & figura namenjena napadanju nasprotnikovih figur \\
-			{\tt glavna hiša} & stavba namenjena urjenju delavcev in vračanju surovin zlata \\
+			{\tt glavna hiša} & stavba namenjena urjenju delavcev in odložišče zlatnikov \\
 		\end{tabular}
 	\end{center}
 	\caption{Določitev figur in njihovih namenov v igri. Definirali smo samo 5 figur, med katerimi je polje zlata nevtralna, saj je igralec ne more nadzorovati. }
 	\label{tableFiguresDescription}
 \end{table}
 
-Na posameznem polju je lahko največ ena figura, tako da igralec ne more blokirati surovin zlata nasprotnemu igralcu, če to surovino ne obkoli v celoti.
-
 Realizirali smo atribute figur. 
 Pomembno je, da so te atributi numerični, da lahko podamo stanje igre kot N-dimenzionalen vektor, ki ga nevronska mreža lahko sprejme in se iz teh numeričnih podatkov uči.
 Pomembno je, da ima vsako polje na šahovnici enako število atributov, tudi če je to polje prazno.
-Vsako prazno polje ima vanj vpisan atribut čas igranja, ki je splošen za celo igro, vsa ostala polja imajo vrednost 0.
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{p{0.2\linewidth}|p{0.7\linewidth}}
-			Ime kodirnega polja    & {\tt Opis} \\ \hline
-			{\tt ime igralca}      & določa igralca, h kateremu ta figura pripada. 
-									 Igralec lahko nadzoruje samo svoje figure, izvaja akcije na svojih figurah in napada nasprotnikovikove figure \\
-			{\tt tip figure}       & atribut predstavlja numerično predstavitev tifigure kot na primer polje zlata, delavec ipd.
-									 Stanje igre potrebuje zapise tipov figur na poljih, da program ve, katere akcije tem figuram pripadajo\\
-			{\tt trenutno zdravje} & koliko zdravja ima trenutna figura. 
-									 Zdravje se lahko povečuje do nekega maksimuma z akcijo zdravi in znižuje z napadom figure \\
-			{\tt nosi zlatnike}    & poseben atribut za delavce, ki predstavlja vrednost 1, če figura nosi zlatnike in 0, če ga ne nosi. 
-									 To se upošteva pri nabiranju in vračanju zlata, kjer se ti dve akcije ne zgodita v roku ene poteze, ampak se mora stanje prenašati skozi več potez \\
-			{\tt denar}            & trenutna količina zbranega denarja za posameznega igralca. 
-									 To polje se ob spremembi količine denarja spremeni v vseh figurah tega igralca \\
-			{\tt čas igranja}      & to polje predstavlja koliko potez se je v trenutni igri že izvedlo. 
-									 Atribut je prisoten v vseh poljih in se spremeni v vseh poljih šahovnice, ko se izvede nova akcija \\
+			Ime kodirnega polja                      & {\tt Opis} \\ \hline
+			{\tt ime igralca}                        & določa igralca, h kateremu ta figura pripada. 
+			 										Igralec lahko nadzoruje samo svoje figure, izvaja akcije na svojih figurah in napada nasprotnikove figure \\
+			{\tt tip figure}                         & atribut predstavlja numerično predstavitev tipa figure kot na primer polje zlata, delavec ipd.
+													Stanje igre potrebuje zapise tipov figur na poljih, da program ve, katere akcije tem figuram pripadajo, koliko je strošek izdelave nove figure tega tipa in njenih življenjskih točk\\
+			{\tt število življenjskih točk}         & zapisuje trenutno število življenjskih točk.
+													Število se lahko povečuje do določene zgornje meje z akcijo zdravi in znižuje z napadom nasprotnikove figure \\
+			{\tt nosi zlatnike}                      & poseben atribut za figuro delavec, ki predstavlja vrednost 1, če figura nosi zlatnike in 0, če ga ne nosi.
+													Upošteva se pri nabiranju in vračanju zlatnikov, kjer se ti dve akcije ne zgodita v roku ene poteze, ampak se mora stanje prenašati skozi več potez \\
+			{\tt denar}                              & trenutna količina zbranega denarja za posameznega igralca.
+													To polje se ob spremembi količine denarja spremeni v vseh figurah tega igralca \\
+			{\tt čas igranja}                        & to polje predstavlja koliko potez se je v trenutni igri že izvedlo.
+													Atribut je prisoten v vseh poljih in se spremeni v vseh poljih šahovnice, ko se izvede nova akcija \\
 		\end{tabular}
 	\end{center}
-	\caption{Definicija on opis kodirnikov stanja igre, s katerimi je predstavljeno vsako polje na šahovnici. Več o kodiranju teh polj si bomo pogledali v sekciji kodiranja~\ref{kodiranja}.}
+	\caption{Definicija in opis kodirnikov stanja igre, s katerimi je predstavljeno vsako polje na šahovnici. Več o kodiranju teh polj si bomo pogledali v sekciji kodiranja~\ref{kodiranja}.}
 	\label{tableEncoders}
 \end{table}
 
 Poseben primer je figura polje zlata, ki ne pripada nobenemu igralcu v večini RTS igrah. 
-V tem primeru smo podali vsakemu igralcu svoje polje zlata, da je igra simetrična in nevronska mreža ne interpretira prazno polje igralca kot prazno polje.
+V tem primeru smo podali vsakemu igralcu svoje polje zlata, da je igra simetrična in nevronska mreža ne interpretira to polje kot prazno.
 Figuri polje zlata se ne spreminja atribut zdravja, saj jo ne moremo poškodovati. 
-Zlata je neomejeno in ko igralec odloži zlatnike v glavno hišo, se vsem figuram tega igralca nastavijo zlatniki na novo dobljeno vrednost. 
+Zlatnikov je neomejeno in ko igralec odloži zlatnike v glavno hišo, se vsem figuram tega igralca nastavi atribut zlatnikiov na novo dobljeno vrednost, kar poveča število zlatnikov za tega igralca. 
 Pri izgradnji nove stavbe ali urjenju figure število zlatnikov zmanjša za vse figure tega igralca.
 
 \section{Akcije}
@@ -692,16 +695,19 @@ Pri izgradnji nove stavbe ali urjenju figure število zlatnikov zmanjša za vse 
 \end{figure}
 
 Pri opisu pravil igre smo tudi določili akcije~\ref{picActions}, ki jih igralčeve figure lahko izvajajo. 
-Vsaka figura ne more izvajati vseh akcij, kot na primer stavbe se ne morejo premikati, same figure kot delavec in vojak ne morejo uriti novih figur~\ref{tabelfigures}.
+Vsaka figura ne more izvajati vseh akcij (npr. stavbe se ne morejo premikati, figure kot delavec in vojak pa ne morejo uriti novih figur)~\ref{tabelfigures}.
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{p{0.28\linewidth}|p{0.62\linewidth}}
 			Ime akcije                          & {\tt Opis} \\ \hline
-			{\tt premiki (4~smeri)}             & figuri vojak in delavec se lahko premakneta na sosednje polje na šahovnici, če je to mesto prazno \\
-			{\tt naberi zlatnike}               & delavec lahko nabere zlatnike če je v neposredni bližini figure polje zlata. Zlatnike za tem drži pri sebi, pri katerem se nastavi zastavica nosi zlatnike\\
-			{\tt vrni zlatnike}                 & delavec vrne zlatnike, ki jih drži pri sebi v glavno hišo, na kar se igralcu prišteje denar \\
-			{\tt napadi (4~smeri)}              & vojak lahko napade nasprotnikovo figuro, če je ta v neposredni bližini in jo rani za določen faktor. Če figuri ne preostane več življenjskih točk je eliminirana s šahovnice, kot je tudi igralec, če je bila eliminirana njegova zadnja figura \\
+			{\tt premiki (4~smeri)}             & figuri vojak in delavec se lahko premakneta na sosednje polje na šahovnici, če je to mesto prazno.
+												Premiki se lahko izvajajo samo v štirih smereh. \\
+			{\tt naberi zlatnike (8~smeri)}     & delavec lahko nabere zlatnike če je v neposredni bližini figure polje zlata.
+												Zlatnike za tem drži pri sebi, pri katerem se nastavi zastavica nošenja zlatnikov na 1\\
+			{\tt vrni zlatnike (8~smeri)}       & delavec vrne zlatnike, ki jih drži pri sebi v glavno hišo, na kar se igralcu prišteje denar, delavcu pa ponastavi zastavica nošenja zlatnikov\\
+			{\tt napadi (4~smeri)}              & vojak lahko napade nasprotnikovo figuro, če je ta v neposredni bližini in jo rani za določen faktor. 
+												Če figuri ne preostane več življenjskih točk je odstranjena s šahovnice. Če je bila uničena igralčeva zadnja figura, je igralec poražen \\
 			{\tt izuri delavca (4~smeri)}       & glavna hiša lahko izuri novo figuro delavec, če ima dovolj denarja, na kar se igralcu odšteje denar\\
 			{\tt izuri vojaka (4~smeri)}        & vojašnica lahko izuri novo figuro vojak, če ima dovolj denarja, na kar se igralcu odšteje denar \\
 			{\tt izgradi vojašnico (4~smeri)}   & delavec lahko izgradi vojašnico na prazno mesto zraven njega, na kar se igralcu odšteje denar \\
@@ -709,9 +715,16 @@ Vsaka figura ne more izvajati vseh akcij, kot na primer stavbe se ne morejo prem
 			{\tt zdravi (4~smeri)}              & figura lahko zdravi sosednjo prijateljsko figuro, če ta nima polnega življenja, na kar se igralcu odšteje denar\\
 		\end{tabular}
 	\end{center}
-	\caption{Opis akcij, njihovih dejanj in pogojev, ki morajo biti izpolnjeni, da se akcija lahko izvrši. Nekatere akcije imajo 4 smeri izvajanja, kar pomeni, da bo akcija npr. izuri delavca dol povzročila, da se izuri delavec na južni strani glavne hiše.}
+	\caption{Opis akcij, njihovih dejanj in pogojev, ki morajo biti izpolnjeni da se akcija lahko izvrši. Nekatere akcije imajo 4 smeri izvajanja, kar pomeni, da bo akcija npr. izuri delavca dol povzročila, da se izuri delavec na južni strani glavne hiše.}
 	\label{tableActions}
 \end{table}
+
+Vredno je izpostaviti akcijo nedejavnosti, ki v igri ni prisotna.
+Izvedba te akcije konča potezo za trenutnega igralca in ne spremeni stanja igre.
+Vpeljava te akcije bi bila smiselna pri nadzorovanju več figur v eni potezi, kjer lahko določene figure stojijo na mestu in s tem stražijo strateško točko ali pa varčujejo z zlatniki, s tem da vsakič ne izgradijo novo vojaško enoto.
+V naši igri nadzorujemo samo eno figuro na potezo, tako da je ta akcija odvečna, saj podaljša čas učenja, saj se stanje igre spreminja počasneje.
+
+
 
 Sprva smo določili nekatere izmed zgornjih akcij, na način izbire prvega mesta med sosednjimi polji, ki ustreza akciji. 
 Naslednje akcije so se izvajale po zaporedju~\ref{pickorakiPreverjanja}:
@@ -719,10 +732,10 @@ Naslednje akcije so se izvajale po zaporedju~\ref{pickorakiPreverjanja}:
 	\item naberi zlatnike,
 	\item vrni zlatnike,
 	\item napadi,
-	\item delavec,
-	\item vojak, 
-	\item vojašnica,
-	\item glavna hiša,
+	\item izuri delavca,
+	\item izuri vojaka, 
+	\item izgradi vojašnico,
+	\item izgradi glavno hišo,
 	\item zdravi.
 \end{itemize}
 \begin{verbatim}
@@ -744,13 +757,15 @@ for sosednji_x, sosednji_y in koordinate:
 	\begin{center}
 		\includegraphics[width=0.6\textwidth]{photos/korakiPreverjanja.pdf}
 	\end{center}
-	\caption{Na sliki je s številkami označeno zaporedje, v katerem se izvedejo zgoraj navedene akcije. Sprva se vzpostavijo sosednje koordinate, za tem se po zaporedju od prve do zadnje koordinate preverja veljavnost polj. Ko je doseženo prvo veljavno polje, se izbere to polje kot primerno. }
+	\caption{Na sliki je s številkami označeno zaporedje, v katerem se izvedejo zgoraj navedene akcije. 
+		Sprva se vzpostavijo sosednje koordinate, za tem se po zaporedju od prve do zadnje koordinate preverja veljavnost polj. 
+		Ko je doseženo prvo veljavno polje, se izbere to polje kot primerno. }
 	\label{pickorakiPreverjanja}
 \end{figure}
 
 Ko je doseženo prvo prazno polje v tem zaporedju, se tam izgradi nova stavba ali izuri nova figura.
 Ko je prva nasprotnikova figura izbrana v tem zaporedju, je napadena.
-Rezultat tega je gradnja stavb in urjenja figur v spodnji levi kot šahovnice, saj so izbrana prva polja v zaporedju, kot na primer x-1, y+1, in širjenje proti zgornjim desnim kotom, ko so vsa ostala polja zasedena, oziroma tam ni nasprotnikovih figur.
+Rezultat tega je gradnja stavb in urjenja figur v spodnji levi kot šahovnice, saj so izbrana prva polja v zaporedju, kot na primer x - 1, y + 1, in širjenje proti zgornjim desnim kotom, ko so vsa ostala polja zasedena, oziroma tam ni nasprotnikovih figur.
 
 Algoritem smo popravili tako, da smo spremenili te akcije (razen naberi zlatnike in vrni zlatnike), da so posamezne akcije za vsako izmed štirih sosednjih polj.
 Za vpeljavo posameznih akcij smo se odločili, ker ne moramo izbrati polja po zgornjem zaporedju tako, da bi bilo za oba igralca enako.
@@ -758,11 +773,9 @@ Za vpeljavo posameznih akcij smo se odločili, ker ne moramo izbrati polja po zg
 \section{Kodiranja}
 \label{kodiranja}
 \begin{table}
-
 	\begin{center}
-		
-	\begin{tabular}{p{0.2\linewidth}|p{0.3\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}}
-		Ime figure          & {\tt Akcije}                                                              & {\tt Zdravje} & {\tt Strošek izdelave} \\ \hline
+	\begin{tabular}{p{0.15\linewidth}|p{0.3\linewidth}|p{0.18\linewidth}|p{0.17\linewidth}}
+		Ime figure          & {\tt Akcije}                                                              & {\tt Življenjske točke} & {\tt Strošek izdelave} \\ \hline
 		{\tt polje zlata}   & /                                                                         & 10            & 0 \\
 		{\tt delavec}       & smeri premikanja, vojašnica, glavna hiša, naberi in vrni zlatnike, zdravi & 10            & 1 \\
 		{\tt vojašnica}     & vojak, zdravi                                                             & 10            & 4 \\
@@ -774,14 +787,14 @@ Za vpeljavo posameznih akcij smo se odločili, ker ne moramo izbrati polja po zg
 	\label{tabelfigures}
 \end{table}
 
-Določili smo začetno stanje vsake igre, kjer sta igralca postavljena v sredino mreže z njihovima glavnima hišama, zraven njiju ima vsak igralec svoje polje zlata. 
+Določili smo začetno stanje vsake igre, kjer sta glavni hiši igralcev postavljeni v sredino mreže, zraven njiju pa ima vsak igralec svoje polje zlata. 
 Vsakemu igralcu se doda na začetku določena količina denarja za izgradnjo začetnih delavcev. V našem primeru je bilo to 1, tako da je lahko izgradil samo enega delavca.
 
 Sedaj smo potrebovali zakodirati to stanje igre, v numerični prikaz, ki ga bo nevronska mreža lahko interpretirala. 
 To stanje lahko zakodiramo z desetiškim kodiranjem, vendar obstaja možnost, da nevronska mreža sloni proti boljšim obravnavanjem pozitivnih števil za igralca +1, kot za igralca -1. 
 Ravno iz tega razloga obstaja kodiranje z enico v zapisu vsakega stanja (ang. one-hot encoding), ki spremeni desetiška števila v binarni vektor~\ref{oneHotEncoder}.
 
-Akciji naberi in vrni zlatnike, ostaneta vedno po 1 akcijo, ker za delavca ni razlika, iz katerega sosednjega polja zlata vzame zlatnike, kot ni razlike pri vračanju njih.
+Akciji naberi in vrni zlatnike, ostaneta vedno po 1 akcijo, ker za figuro delavec ni razlika, iz katerega sosednjega polja zlata vzame zlatnike, kot tudi ni razlike pri njihovem vračanju.
 
 \subsection{Desetiško}
 Pri desetiškim kodiranjem, predstavimo vsak atribut figure z eno desetiško številko.
@@ -793,23 +806,23 @@ Igralec predstavlja številko -1 za igralca -1, 1 za igralca 1 in 0 za prazno po
 \begin{table}
 	\begin{center}
 		\begin{tabular}{p{0.19\linewidth}|p{0.13\linewidth}|p{0.58\linewidth}}
-			Ime kodirnega polja      & {\tt št kodirnih bitov} & {\tt Opis} \\ \hline
-			{\tt ime igralca}        & 2                       & figura na polju je lahko predstavljena s 2 biti zaradi treh različnih možnosti: 00 predstavlja prazno polje, 01 predstavlja igralca 1 in 10 igralca -1 \\
-			{\tt tip figure}         & 3                       & predstaviti moramo 5 različnih figur, kar lahko zakodiramo z najmanj 3 biti\\
-			{\tt trenutno zdravje}   & 5                       & nekatere figure imajo veliko življenjskih točk (npr. glavna hiša 30), za kar moramo uporabiti 5 bitov. 
-																 Uporabili smo večje število življenjskih točk, tako da lahko uspešno deluje ranjujoča funkcija~\ref{destroy_formula_2018_11_17}, da figure ne eliminira prehitro \\
-			{\tt nosi zlatnike}      & 1                       & zastavica ki se postavi na 1, ko figura delavec nosi zlatnike, drugače je postavljena na 0 \\
-			{\tt denar}              & 5                       & za ta kodirnik smo uporabili večje število, saj pustimo da igralec gradi ekonomijo in shranjuje denar, da ga potem lahko na hitro zapravi na figurah, ko ga ima dovolj za njihovo izgradnjo.
-																 To lahko privede v zanimive taktike hranjenja denarja in za tem hitro izgradnjo vojaških enot za napad nasprotnikovih figur \\
-			{\tt čas igranja}        & 11                      & Atribut predstavljen z 11 biti ($2^{11}$ = 2048) dovoljuje igralcu dovolj časa da odkriva nove poteze, ampak ga dovolj hitro omeji, da se konča igra in začne nova \\
+			Ime kodirnega polja                        & {\tt št kodirnih bitov} & {\tt Opis} \\ \hline
+			{\tt ime igralca}                          & 2                       & figura na polju je lahko predstavljena s 2 biti zaradi treh različnih možnosti: 00 predstavlja prazno polje, 01 predstavlja igralca 1 in 10 igralca -1 \\
+			{\tt tip figure}                           & 3                       & predstaviti moramo 5 različnih figur, kar lahko zakodiramo z najmanj 3 biti\\
+			{\tt število življenjskih točk}            & 5                       & nekatere figure imajo veliko življenjskih točk (npr. glavna hiša 30), za kar moramo uporabiti 5 bitov. 
+																                   Uporabili smo večje število življenjskih točk, tako da lahko uspešno deluje ranjujoča funkcija~\ref{destroy_formula_2018_11_17}, da se število življenjskih točk figuram ne zmanjša prehitro \\
+			{\tt nosi zlatnike}                        & 1                       & zastavica ki se postavi na 1, ko figura delavec nosi zlatnike, drugače je postavljena na 0 \\
+			{\tt denar}                                & 5                       & za ta kodirnik smo uporabili večje število, saj pustimo da igralec gradi ekonomijo in shranjuje denar, da ga potem lahko na hitro zapravi na figurah, ko ga ima dovolj za njihovo izgradnjo.
+																                   To lahko privede v zanimive taktike hranjenja denarja in za tem hitro izgradnjo vojaških enot za napad nasprotnikovih figur \\
+			{\tt čas igranja}                          & 11                      & atribut predstavljen z 11 biti ($2^{11}$ = 2048) in dovoljuje igralcu dovolj časa da odkriva nove poteze, ampak ga dovolj hitro omeji, da se konča igra in začne nova \\
 		\end{tabular}
 	\end{center}
 	\caption{Predstavitev število kodirnih atributov za posamezni kodirnik in pojasnitev odločitve za število kodirnih bitov. }
 	\label{tableEncodersOneHot}
 \end{table}
 
-Dimenzija zakodiranega prostora je tako 8 x 8 x 22, kar je 3.6-krat števil, ki kodira posamezno stanje igre.
-To zna otežiti učenje nevronske mreže, ker ima s tem kodiranjem več števil, pri katerih mora ugotoviti primernost posameznega števila.
+Dimenzija zakodiranega prostora je tako širina x višina x 22, kar je 3.6-krat števil, ki kodira posamezno stanje igre z desetiškim kodirnikov.
+To zna otežiti učenje nevronske mreže, ker se s tem kodiranjem poveča velikost izhodnega vektorja Pi, ki predstavlja napoved posamezne akcije.
 
 \section{Konec igre}
 \label{sKonecIgre}
@@ -819,38 +832,35 @@ Konec igre se izvede pod določenimi pogoji:
 	\item vse figure igralca so uničene,
 	\item ko se izteče čas.
 \end{itemize}
+Zaradi primera, kjer se igra nikoli ne zaključi, saj se na primer delavci premikajo v ciklu in se tako igra nikoli ne konča, smo morali določiti umeten konec igre.
+S tem smo odstranili neskončne cikle igranja igre in prisilili igralca k hitrejšem izvajanju akcij.
 
-Določiti smo morali umeten konec igre, zaradi primera, kjer se igra nikoli ne zaključi, da se na primer delavci premikajo v ciklu in se tako igra nikoli ne konča.
-S tem smo povišali prednost aktivnim igralcem, ki nabirajo zlatnike in imajo več enot kakor nasprotni igralec.
-
-\subsection{Reševanje problema neskončnega števila potez}
+\subsection{Ranjujoča funkcija}
 \label{sKillFunction}
-Čakanje, da se čas igre izteče, je problematično, saj učenje modela poteka zelo počasi, posebej ko MCTS raziskuje prostor.
-Za to smo razvili funkcijo, ki prisili model k izvajanju akcij v zgodnem času igre, drugače se figuram preveč začnejo zmanjševati življenjske točne in so zato eliminirane s šahovnice.
+Čakanje, da se čas igre izteče, je problematično, saj učenje modela poteka zelo počasi, posebej ko algoritem MCTS raziskuje preiskovalni prostor akcij.
+Za to smo razvili funkcijo, ki prisili model k izvajanju akcij v zgodnem času igre, drugače se figuram preveč začnejo zmanjševati življenjske točne in so zato odstranjene s šahovnice.
+Figure lahko uporabijo akcijo zdravljenja, s čimer povečajo trenutno število življenjskih točk določene figure do največ njene zgornje meje.
+
 
 \begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{photos/destroy_formula_2018_11_17.pdf}
 	\end{center}
-	\caption{Na grafu sta narisani dve funkciji, ki določata zmanjšanje življenjskih točk se obravnava v določeni figuri v danem času igre(modra) in koliko igralcev je bilo poškodovanih v trenutnem časovnem okviru(rdeča).}
+	\caption{Na grafu sta narisani dve funkciji, ki določata zmanjšanje življenjskih točk se obravnava v določeni figuri v danem času igre(modra) in koliko igralcev je bilo poškodovanih v trenutnem časovnem okviru(rdeča).
+	Vidimo, da je krivulja zmanjšanja življenjskih točk veliko bolj stroga in se v igri začenja že zelo zgodaj. 
+	To je zato, ker želimo hitro odpraviti nedejavnih igralcev in tiste, ki zbirajo zlatnike in pridobivajo nove figure.
+	Vidimo tudi y osi od 0 do 64, kar je največje število igralcev za enega igralca, tako da bo pri približno 2000 korakih vsaka figura dobil smrtno poškodbo, zato časovni potek nikoli ni dosežen.}
 	\label{destroy_formula_2018_11_17}
 \end{figure}
 
-
-Vidimo, da je krivulja zmanjšanja življenjskih točk veliko bolj stroga in se v igri začenja že zelo zgodaj. 
-To je zato, ker želimo hitro odpraviti nedejavnih igralcev in tiste, ki zbirajo zlatnike in pridobivajo nove figure.
-Vidimo tudi y osi od 0 do 64, kar je največje število igralcev za enega igralca, tako da bo pri približno 2000 korakih vsaka figura dobil smrtno poškodbo, zato časovni potek nikoli ni dosežen.
-
-Figure lahko tudi uporabijo akcijo zdravljenja, s čimer povečajo trenutno zdravje določene figure do največ njenega maksimuma.
-	
-Z zgoraj določeno funkcijo je bil problem določiti pravšnjo stopnjo količine zmanjšanja življenjskih točk figur in izločevanje neaktivnih igralcev dovolj zgodaj v igri, in sicer problem z balansiranjem količine in stroškom zdravljenja. 
-Če so bili stroški dovolj nizki, so igralci stalno samo zdravili figure in končali igro pri približno tisoč potezah, kar je pregloboko za normalno igro.
-Za to je bilo potrebno povišati strošek zdravljenja, kar je privedlo do hitrejšega nenadnega umiranja figur, saj igralci niso imeli dovolj kovancev za zdravljenje, na kar je bilo potrebno povišati količino vrnjenih kovancev iz figure zlato.
+Z ranjujočo funkcijo je bil problem določiti pravšnjo stopnjo količine zmanjšanja življenjskih točk figur in izločevanje neaktivnih igralcev dovolj zgodaj v igri, in sicer problem z balansiranjem količine in stroškom zdravljenja. 
+Če so bili stroški dovolj nizki, so igralci stalno zdravili figure in končali igro pri vedno več izvedenimi potezami (npr. tisoč), kar je privedlo do vedo daljših iger in daljšega postopka igranja.
+Za to je bilo potrebno povišati strošek zdravljenja, kar je privedlo do hitrejšega nenadnega umiranja figur, saj igralci niso imeli dovolj zlatnikov za zdravljenje, na kar je bilo potrebno povišati količino vrnjenih zlatnikov iz figure zlata.
 
 \subsection{Ustavitveni pogoj}
 Ustavitveni pogoj deluje tako, da se na številu določenih potez igra preprosto prekini in oceni zmagovalca po eni izmed spodaj navedenih formul.
 Igra se prekine po 100 - 200 potezah, če si do takrat igralca med sabo nista uničila figur.
-V spodnjih treh enačbah sta označena igralec 1 z oznako p1 in igralec 2 z oznako p2.
+V spodnjih treh izrekih sta igralec 1 in 2 označena s p1 in p2.
 
 \begin{izrek}
 	\label{ustavitvenipogoj1}
@@ -896,25 +906,26 @@ Vendar imajo figure običajno veliko več življenjskih točk kolikor so vredne 
 \chapter{Učenje modela}
 \label{chucenjemodela}
 Ena izmed glavnih komponent učnega postopka je seveda nevronska mreža, ki hrani moči povezav določenih akcij ob določenem stanju igre.
-V tem poglavju bomo sprva predstavili zgradbo nevronske mreže iz tehničnega vidika, nato se bomo posvetili prestavitvi parametrov, ki so nastavljivi pri postopku učenja in od njih je odvisno, koliko časa in na kakšen način se bo naš model učil ob nastavljeni konfiguraciji igre.
+V tem poglavju bomo sprva predstavili zgradbo nevronske mreže iz tehničnega vidika, nato se bomo posvetili prestavitvi parametrov, ki so nastavljivi pri postopku učenja.
+Od njih je odvisno, koliko časa in na kakšen način se bo naš model učil ob nastavljeni konfiguraciji igre.
 Proti koncu poglavja se bomo poglobili v možno tehniko postopnega učenja modela, kjer postopno dodajamo zahtevnejše konfiguracije in pravila igre.
 
 \section{Zgradba nevronske mreže}
 Implementirali smo štiri vrste igralcev, ki lahko strateško igro igrajo.
 Prva vrsta je človeški igralec, za katerega smo morali implementirati uporabniški vmesnik, preko katerega izvršuje akcije na prikazani šahovnici.
 Druga je naključni igralec, ki naključno izvaja akcije, ki so v trenutnem stanju igre možne in njegova izboljšava je igralec, ki temelji na požrešni metodi.
-Ta igralec strmi k čim hitrejšem povečanju točk, ki temeljijo na enem izmed ustavitvenih pogojev.
+Ta strmi k čim hitrejšem povečanju točk, ki temeljijo na enem izmed ustavitvenih pogojev.
 O četrti implementaciji igralca pa govori jedro diplomske naloge, in sicer ga predstavlja nevronska mreža z naučenimi utežmi.
 
 %V sklopu te diplomske naloge se nismo podajali v spreminjanje zgradbe nevronske mreže, temveč smo vzeli že izgrajeno nevronsko mrežo, primerno za učenje igre Othello.
 %To ni najprimernejši pristop, kar je mogoče tudi poslabšal zmožnost in hitrost učenja modela, o čemer smo več prediskutirali v poglavju~\ref{chdiskusija}.
 Za implementacijo nevronske mreže smo uporabili modul Keras znotraj knjižnice TensorFlow.
-Programska koda za izgradnjo modela je lažje berljiva v modulu Keras kakor v TensorFlow, zato smo se zanj tudi odločili.
-Ker je modul Keras od verzije 1.9 izdani leta 2017 impementiran znotraj knjižnice TensorFlow, ni bilo večjih težav z namestitvijo te knjižnice na odjemalčevem računalniku z vtičnikomm tensorflow-ue4~\cite{ue4tf}.
+Programska koda za izgradnjo modela je lažje berljiva v modulu Keras kakor TensorFlow, zato smo se zanj tudi odločili.
+Ker je modul Keras od verzije 1.9 izdani leta 2017 impementiran znotraj knjižnice TensorFlow, ni bilo večjih težav z njeno namestitvijo na odjemalčevem računalniku z vtičnikomm tensorflow-ue4~\cite{ue4tf}.
 
-Model za vhod vzame učne množice stanja iger dimenzij širina x višina x število kodirnikov, kar je v primeru numeričnega kodirnika 8 x 8 x 6 in v primeru onehot kodirnika 8 x 8 x 30.
+Model za vhod vzame učne množice stanja iger dimenzij širina x višina x število kodirnikov, kar je v primeru numeričnega kodirnika 8 x 8 x 6 in v primeru one hot kodirnika 8 x 8 x 30.
 Potem gre ta učna množica skozi 4 konvolucijske nivoje, kjer je velikost filtra 3 in nastavljiva globina, ki je v našem primeru 128.
-Prva dva konvolicijska nivoja imata oblogo ničel okrog matrike, tako da se velikost konvolucijskega nivoja ne zmanjša, druga dva tega obloge nimata, kar zniža velikost nivoja iz 8 x 8 na 4 x 4.
+Prva dva konvolucijska nivoja imata oblogo ničel okrog matrike, tako da se velikost nivoja ne zmanjša, druga dva tega obloge nimata, kar zniža velikost nivoja iz 8 x 8 na 4 x 4.
 tako da je izhod zadnjega konvolucijskega nivoja dimenzije velikost serije x (širina - 4) x (višina - 4) x število kanalov.
 Vsak izhod konvolucijskih nivojev se s postopkom normalizacijo serije (ang. batch normalization) normalizira aktivacijo prejšnjega nivoja ob vsaki seriji.
 Izhodi tega se preuredijo z relu aktivacijsko funkcijo, ki za vsa negativna števila vzame vrednost 0.
@@ -938,7 +949,7 @@ Za izhod Pi se nastavi funkcija izgube kategorična prečna entropija, za izhod 
 \section{Predstavitev parametrov}
 \label{parametri}
 Učni algoritem uporablja množico parametrov za učenje, ki zelo vplivajo na hitrost in moč učenja.
-Ti predstavljajo različno število iteracij igranja iger (iteracije in epizode igranja), kot tudi iteracij učenja nevronske mreže (ang. epohi).
+Ti predstavljajo različno število iteracij igranja iger (iteracije in epizode igranja), kot tudi iteracij učenja nevronske mreže oziroma epohov (ang. epoch).
 Predstavljajo tudi same nastavitve raziskovanja algoritma MCTS (C\textsubscript{puct}) in število primerjav, kateri naučen model je boljši.
 
 V tabeli opisa parametrov~\ref{tableParameters1} so predstavljeni najpomembnejši parametri, ki smo jih spreminjali ob učenju modela na naši RTS igri.
@@ -949,24 +960,21 @@ V tabeli opisa parametrov~\ref{tableParameters1} so predstavljeni najpomembnejš
 			{\tt C\textsubscript{puct}}               & 1 						& parameter drevesnega raziskovanja, ki neposredno vpliva na raziskovanje algoritma MCTS . 
 																				  Večja kot je vrednost parametra, bolj bo MCTS dajal prednost neraziskanim vozlišči. 
 																				  V našem primeru smo izbrali vrednost 1 in s tem nismo prispevali k dodatni uteži k raziskovanju.\\
-			{\tt število iteracij}                    & 30 - 100					& predstavlja število učenj algoritma na odigranih igrah in število izbire boljšega modela.
+			{\tt število iteracij}                    & 30 - 100				& predstavlja število učenj algoritma na odigranih igrah in število izbire boljšega modela.
 																				  Parameter tudi predstavlja, kolikokrat se bo igra odigrala v celoti, kjer bo konec predstavljal končni pogoj oziroma poraz nasprotnika.\\
-			{\tt število epizod}                      & 4 - 8 						& Število epizod nam zagotovi pridobitev dovolj velikega nabora odigranih iger, nad katerimi se potem model uči.
+			{\tt število epizod}                      & 4 - 8 					& Število epizod nam zagotovi pridobitev dovolj velikega nabora odigranih iger, nad katerimi se potem model uči.
 																				  Vsako iteracijo se odigra število iger, kolikor je nastavljeno s tem parametrom.\\
 			{\tt število MCTS iskanj}                 & 30 - 50					& predstavlja število raziskanih vozlišč v iteraciji igre. 
 														 						  MCTS iskanja se ne izvršijo do konca igre, ampak do neraziskanega vozlišča oziroma če je raziskano vozlišče konec igre~\cite{silver2018general}.
-														 						  Bodimo pozorni na majhno število MCTS iskanj (30 - 50), za razliko od tradicionalnih algoritmov MCTS, ki na primer v igri šah odigrajo več 10-tisoč iteracij~\cite{kohne}.\\
-		
+														 						  Bodimo pozorni na majhno število MCTS iskanj (30 - 50), za razliko od tradicionalnih algoritmov MCTS, ki na primer v igri šah odigrajo več 10-tisoč iteracij~\cite{kohne}.\\ 
 		\end{tabular}
 	\end{center}
-	\caption{Tabela 1/2 o opisu parametrov.}
 	\label{tableParameters1}
 \end{table}
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{p{0.16\linewidth}|p{0.13\linewidth}|p{0.61\linewidth}}
-			Ime parametra                             & {\tt Privzeta vrednost} & {\tt Opis} \\ \hline
 
 			{\tt število primerjanj modelov}  		  & 10 						& kolikokrat se bosta trenutni model k se uči in njegova prejšna različica pomerila med sabo, da se ohrani boljši.
 																				  Naučena modela se med sabo pomerita z igranjem iger od začetka do konca, kjer je rezultat zmaga nekoga izmed modelov, oziroma neodločeno.\\
@@ -974,10 +982,10 @@ V tabeli opisa parametrov~\ref{tableParameters1} so predstavljeni najpomembnejš
 																				  Vsako epizodo se doda nova zbirka iger ter odstrani najstarejša, če število shranjenih epizod presega ta parameter.
 																				  To nam zagotavlja dovolj svežo učno množico, nad katero se nevronska mreža uči.
 																				  V našem primeru je bil nastavljen na manjšo vrednost (8), saj kodiranja stanj naše igre zasedejo veliko pomnilnika.\\
-			{\tt epohi}     						  & 30 - 100 					& Število iteracij učenja nevronske mreže skozi učne primere.\\
+			{\tt epohi}     						  & 30 - 100 				& število iteracij učenja nevronske mreže skozi učne primere.\\
 		\end{tabular}
 	\end{center}
-	\caption{Tabela 2/2 o opisu najpomembnejših učnih parametrov, uporabljenih pri učenju algoritma AlphaZero. Pri parametrih so zapisane tudi njihove okvirne oziroma največkrat uporabljene konfiguracijska števila.}
+	\caption{Opis najpomembnejših učnih parametrov, uporabljenih pri učenju algoritma AlphaZero. Pri parametrih so zapisane tudi njihove okvirne oziroma največkrat uporabljene konfiguracijska števila.}
 	\label{tableParameters2}
 \end{table}
 
@@ -987,7 +995,7 @@ Algoritem izvaja igranje igre dokler ne doleti do ustavitvenega pogoja, ta pri R
 Cikel akcij se lahko reši z uporabo časovnih omejitev, kjer se igranje igre ustavi ko se izteče čas, vendar to povzroča površnejši približek ocene stanja igre, ki vpliva na učenje nevronske mreže.
 Zaradi kompleksnejšega ustavitvenega pogoja lahko model hitro prekomerno prilagodi na napačno igranje igre.
 Dober primer je ustavitveni pogoj z vsoto zdravja igralčevih enot in njegovih trenutnih zlatnikov~\ref{eq:ustavitvenipogoj3}, kjer se igralca ne naučita pravilno napadati nasprotnikovih enot, da znižujeta nasprotnikove življenjske točke, ampak konstantno nabirata nove zlatnike in gradita in urita nove enote.
-Ker igralca nista naučena zaključiti igro z eliminacijo nasprotnikovih enot.
+Ker igralca nista naučena zaključiti igro z uničevanjem nasprotnikovih enot.
 
 Iz tega razloga, se nam je porodila učna ideja s postopnim učenjem modela. 
 Ideja govori o spreminjanju pravil iger in nastavitev parametrov med učenjem.
@@ -1013,7 +1021,7 @@ MCTS pri tem iskanju ne pripomore veliko, saj so neraziskana stanja igre vzposta
 \section{Pygame}
 S Python knjižnico Pygame smo izdelali vizualizacijo, ki je primerna za pregled igre med samim razvijanjem. 
 Šahovnica je označena s črtami, med katerimi so s krogi izrisane figure, kjer njihove barve predstavljajo svoj tip figure in obroba krogca igralca -1 ali +1.
-V krogcih je tudi napisano zdravje za to figuro in zastavica, ali delavec prenaša zlato.
+V krogcih je tudi napisano število življenjskih točk za to figuro in zastavica, ali delavec prenaša zlatnike.
 Zgoraj je izpisano, koliko denarja ima posamezen igralec in koliko potez sta igralca že odigrala, vse možne akcije, ki jih igralec lahko izvrši z določeno figuro.
 
 Igralec lahko nadzoruje svoje figure s tipkovnico in miško.
@@ -1057,11 +1065,11 @@ V temu programu smo oblikovali vizualizacijo igre, ki nam je omogočilo bolj mod
 
 V igri lahko izvajamo akcije preko uporabniškega vmesnika, kot tudi z bližnjicami na tipkovnici.
 Kompleksnejši uporabniški vmesnik nam zagotavlja več funkcionalnosti kakor igra izdelana v Pygame.
-Z njim lahko izbiramo več figur ter jih grupiramo v skupine.
+Z njim lahko izbiramo več figur ter jih združujemo v skupine.
 Figuram postavljamo več zaporednih akcij, ki jih ta izvršuje v tem vrstnem redu.
 Človeški igralec ima tudi vpogled na manjši zemljevid, prikazan v levem spodnjem kotu, na katerem vidi nasprotnikove in svoje figure.
 Nekaj je tudi kozmetičnih funkcij kot na primer prekrivanje zemljevida z meglo (ang. Fog of war), dnevno-nočni cikel, animacije za vojskovanje, premikanje, nastavitve hitrosti časa ipd.
-Igra ima tudi implementirana izvajalna drevesa, kjer na primer agentu naročimo nabiranje zlatnikov, ta jih sam vrača v najbližje odlagališče zlatnikov.
+Igra ima tudi implementirana izvajalna drevesa, kjer na primer agentu naročimo nabiranje zlatnikov, ta jih sam vrača na najbližje odlagališče zlatnikov.
 Izvajalna drevesa so implementirana tudi za napadanje, agentovo nedejavnost, kjer se agent prosto premika okrog, išče stavbe itd.
 Igra ima implementirane tudi razne zvočne efekte, učinke delcev za prikaz zmanjšanja življenjskih točk nasprotnikovim enotam.
 V igri lahko tudi stanje igre shranimo na disk in ga pozneje naložimo, da igro lahko igramo naprej.
@@ -1069,22 +1077,22 @@ Ob tem zapisovanju igre smo ugotovili pravi postopek, kako zajeti igro v Unreal 
 To nam je koristilo tudi pri kodiranju igre v notacijo za označevanje JavaScript objektov (ang. JavaScript Object Notation; JSON), da smo jo lahko poslali kot parameter v zahtevku Python modulu.
 Igra podpira tudi preprosto analitiko za primerjavo denarja med igralci, tipi figur ipd.
 
-Igra je zasnovana tudi tako, da se lahko dva igralca med sabo pomerita preko mreže s spletnim podsistemom Steam ali preko lokalne mreže, preko katerega se lahko tudi komunicirata.
+Igra je zasnovana tako, da se lahko dva igralca med sabo pomerita preko mreže s spletnim podsistemom Steam ali preko lokalne mreže, preko katerega se lahko tudi komunicirata.
 Oba igralca v tem primeru na svoji lokalnem računalniku poganjata naučena modela in od njega zahtevata priporočila akcij.
 Ker lahko igralca izbereta več različnih map, na katerih bosta igrala, je potrebno za vsako izmed teh map naučiti svoj model, saj imajo lahko mape drugačne dimenzije v širini in višini.
-Z zdajšnim algoritmom niso prokriti primeri, da določeno polje ni dosegljivo (voda, skalovje), tako da mape morajo biti kvadratne in vsa polja so dosegljiva.
-Nekatere izmed zgoraj navedenih funkcij je izdelal Nick Pruehs v vtičniku ue4-rts~\cite{rtsUe4}, kot recimo nekej izvajalnih dreves, zemljevid, prekrivanje zemljevida z meglo.
+Z zdajšnim algoritmom niso pokriti primeri, da določeno polje na šahovnici ni dosegljivo (voda, skalovje), tako da mape morajo biti kvadratne in vsa polja dosegljiva.
+Nekatere izmed zgoraj navedenih funkcij je izdelal Nick Pruehs v vtičniku ue4-rts~\cite{rtsUe4}, kot recimo nekatera izvajalna drevesa, zemljevid in prekrivanje zemljevida z meglo.
 
 Potrebno je bilo preslikati akcije in figure v urejevalnik Unreal Engine, da se tam figure primerno premikajo in izvajajo akcije.
-Potrebno je bilo (mapirati) animacije, efekte, da premikanje in napadanje zgleda dokaj realistično.
+To je blo potrebno storiti tudi za animacije in efekte, da premikanje in napadanje zgleda dokaj realistično.
 Ko igralca pričneta z igranjem igre, se naloži TensorFlow model, katerega bosta igralca uporabljala za pridobivanje akcij.
-Za lažjo komunikacijo z Python modulom in vračanje povratnih klicov v engine smo uporabili vtičnik tensorflow-ue4~\cite{ue4tf}, ki nadgradi vtičnik UnrealEnginePython~\cite{ue4python} s TensorFlow komponento. 
-Ta komponenta se avtomatično naloži na odjemalčevem računalniku in zagotavlja, da lahko ta uporablja vse funkcionalnosti TensorFlowa.
+Za lažjo komunikacijo z Python modulom in vračanje povratnih klicov v celostni pogon smo uporabili vtičnik tensorflow-ue4~\cite{ue4tf}, ki nadgradi vtičnik UnrealEnginePython~\cite{ue4python} s TensorFlow komponento. 
+Ta komponenta se avtomatično naloži na odjemalčevem računalniku in zagotavlja, da lahko ta uporablja vse funkcionalnosti knjižnice TensorFlow.
  
-Ko igralec ali računalniški nasprotnik poda zahtevo za pridobitev akcije, se prvo pridobi vse podatke o igri in se jih mapira v JSON zapis, da se ga potem pošlje Python skripti.
-V tem JSON zapisu so zapisane figure s kodirniki (x, y, igralec ,tip figure, zdravje, nosi zlatnike ,zlatniki ,preostal čas).
-Potem se seveda asinhrono pošlje Python skripti ta JSON zapis, ta izgradi novo šahovnico s figurami na podlagi prejetih zakodiranih figur.
-Skripti se poda tudi ime igralca, ki zahteva akcijo.
+Ko igralec ali računalniški nasprotnik poda zahtevo za pridobitev akcije, se prvo izvede poizvedba o trenutnem stanju igre, ki se jo preslika v JSON zapis, da se ga potem posreduje Python skripti.
+V tem JSON zapisu so zapisane figure s kodirniki (x, y, igralec, tip figure, število življenjskih točk, nosi zlatnike, zlatniki, preostal čas).
+Potem se JSON zapis asinhrono pošlje Python skripti, da ta izgradi novo šahovnico s figurami na podlagi prejetih zakodiranih figur.
+Skripta prejme tudi ime igralca, ki je poslal zahtevek za pridobitev akcije.
 Skripta za tem pokliče funkcijo za pridobitev verjetnosti akcij, ki izvede določeno število MCTS iteracij in izbere tisto z največjo verjetnostjo.
 Python skripta vrne koordinati x in y ter akcijo, ki se potem ta izvede v celostnem pogonu s preslikanimi svojimi akcijami za gor, dol, napad, naberi ipd.
 Potrebno je bilo tudi paziti z orientacijo koordinatnega sistema, saj je bil v Python igri drugače orientiran kot v pogonu Unreal Engine. 
