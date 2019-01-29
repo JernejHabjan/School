@@ -188,7 +188,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -197,7 +198,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+\usepackage{amssymb}
 \usepackage{color,soulutf8}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -206,21 +207,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -331,6 +335,8 @@ Zahvaljujem se mentorju doc.\ dr. Mateju Guidu in somentorju prof.\ dr. Branku �
 	{\bf RTS} & real-time strategy & realno-časovna strateška\\
 	{\bf One hot} & one hot encoding & kodiranje z eno enico v zapisu vsakega stanja  \\
 	{\bf JSON} & JavaScript Object Notation & notacija za označevanje JavaScript objektov \\
+	{\bf MSE} & \hl{mean-squared error} & srednja kvadratna napaka \\
+	
 \end{tabular}
 
 
@@ -420,7 +426,7 @@ Seveda pa moramo upoštevati, da algoritem Alpha-Beta rezanje deluje dobro samo 
 V takšnih primerih se je bolje odločiti za drevesno preiskovanje Monte Carlo~\cite{chaslot2008monte}.
 Ta ima pomanjkljivost, da si stanj igre ne zapomni skozi iteracij več iger, kjer bi lahko to vrednost stanja uporabil za bolj natančen izračun naslednjih stanj.
 
-Za pomnjenje stanj so primerne globoke nevronske mreže, ki si skozi mnogo iteracij učenja izboljšujejo napoved izbire akcije v določenem stanju igre, oziroma izboljšajo svojo napoved določenega izhoda ob določenem vhodu.
+Za \hl{pomnjenje vrednosti stanj} so primerne globoke nevronske mreže, ki si skozi mnogo iteracij učenja izboljšujejo napoved izbire akcije v določenem stanju igre, oziroma izboljšajo svojo napoved določenega izhoda ob določenem vhodu.
 Ravno to potrebuje drevesno preiskovanje Monte Carlo kot začetno stanje, iz katerega lažje izberemo primerno akcijo.
 Da nevronska mreža dobi dovolj podatkov za učenje, moramo te podatke nekje pridobiti.
 Lahko bi povprašali prijatelje da nam pomagajo odigrati vrsto iger, nad katerimi bi se potem model nevronske mreže učil.
@@ -506,7 +512,7 @@ Zaradi teh razlik so nastopili razni izzivi:
 \end{itemize}
 
 \section{Strategija}
-V strateških igrah je velikokrat uporabljen pristop direktnega kodiranja strategije, ki uporabljajo avtomate končnih stanj, kjer lahko razbijemo delovanje na več stanj kot so napadanje, nabiranje surovin, popravilo itd. in hitro menjavanje med njimi. 
+V strateških igrah je velikokrat uporabljen pristop direktnega kodiranja strategije, ki uporabljajo \hl{končne avtomate}, kjer lahko razbijemo delovanje na več stanj kot so napadanje, nabiranje surovin, popravilo itd. in hitro menjavanje med njimi. 
 Direktno kodiranje prinese dobre pričakovane rezultate, vendar se lahko človeški igralec nauči te strategije in tako računalniškega agenta hitro porazi.
 Planirani pristopi ponujajo večjo prilagodljivost kot direktno kodirani.
 \section{Taktika}
@@ -557,7 +563,7 @@ Dandanes so najboljši algoritmi za igranje šaha nepremagljivi za celo svetovne
 Ti algoritmi temeljijo na preiskovanju prostora več milijonov šahovskih pozicij in metodah, ki temeljijo na pravilih.
 Za razliko od teh programov je bil eden izmed prvih programov \hl{programski pogon Checkers za igranje igre dama (ang. checkers) (Samuel 2000~{\cite{samuel2000some}})}, ki se je naučil igranja z metodami samo-igranja in strojnega učenja in ne npr. na metodah ki temeljijo na pravilih.
 
-Pri tradicionalnih namiznih igrah je faktor vejanja akcij relativno majhen in je lažje oceniti končno pozicijo iz danega stanja~\cite{wiki:AlphaGo}.
+Pri tradicionalnih namiznih igrah je \hl{vejitveni faktor} akcij relativno majhen in je lažje oceniti končno pozicijo iz danega stanja~\cite{wiki:AlphaGo}.
 Rečeno je bilo, da igre kot npr. Go, ki imajo \hl{znatno večje število možnih pozicij $10^{171}$ v primerjavi s šahom, ki ima med $10^{40}$ in $10^{46}$}, ne bo možno ugotoviti vrednost končnega stanja še nekaj desetletij.
 Algoritem AlphaGo~\cite{silver2016mastering} je naredil preboj s tem da uporablja metodo globokega spodbujevalnega učenja in algoritem drevesno preiskovanje Monte Carlo. 
 Oktobra 2016 je premagal profesionalnega Go igralca na podlagi učenja na domenskem znanju iger, ki so jih odigrali eksperti.
@@ -571,7 +577,8 @@ Računalniški agenti se lahko tako naučijo reševanje problema brez človeški
 	\begin{center}
 		\includegraphics[width=1\textwidth]{photos/go.pdf}
 	\end{center}
-	\caption{Predstavitev igranja iger z naučenim algoritmom AlphaZero z 700,000 iteracijami, kjer je čas za napoved akcije je 1 sekunda. Na levi sliki je prikaz igranja šaha proti programu Stockfish iz leta 2016, na srednji sliki igranje proti programu Elmo iz leta 2017 v igri Shogi, na desni igranje igre Go proti programoma AlphaGo Lee in AlphaGo Zero. }
+	\caption{Predstavitev igranja iger z naučenim algoritmom AlphaZero z 700,000 iteracijami, kjer je čas za napoved akcije je 1 sekunda. Na levi sliki je prikaz igranja šaha proti programu Stockfish iz leta 2016, na srednji sliki igranje proti programu Elmo iz leta 2017 v igri Shogi, na desni igranje igre Go proti programoma \hl{AlphaGo Lee in AlphaGo Zero~{\cite{silver2017mastering}}}.
+ }
 	\label{picCompareGo}
 \end{figure}
 
@@ -593,13 +600,13 @@ Algoritem AlphaZero je drugačen od AlphaGo Zero v tem, da igre pri AlphaGo Zero
 \label{potekUcenja}
 AlphaZero se uči verjetnosti in ocenitve končnega stanja izključno z igranjem proti samemu sebi. 
 Te potem uporabi pri preiskovanju z glavno namensko metodo drevesnim preiskovanjem Monte Carlo, da razišče drevo stanj za akcijo.
-Drevo preišče prostor in vrne verjetnost zmage pri izbiri določene akcije iz trenutnega stanja imenovano Pi in oceno končnega stanja iz trenutnega stanja imenovanim V, ki zavzema vrednosti -1 ali 1 (poraz, zmaga).
+Drevo preišče prostor in vrne verjetnost zmage pri izbiri določene akcije iz trenutnega stanja imenovano Pi in oceno končnega stanja iz trenutnega stanja imenovanim \hl{V $\mathbb{R}[-1, 1]$ (poraz, zmaga)}.
 AlphaZero izvede več serij igranja iger proti svojim nasprotnikom, ki predstavlja zdajšnji najboljši model igranja.
 Rezultat igranja igre je lahko -1 za poraz, +1 za zmago in 0 za neodločeno.
 Po vsaki seriji učenja, se izvede proces igranja iger dveh naučenih modelov, kjer oba igrata drug proti drugemu nekaj iger, na to pa se določi zmagovalen model, ki sedaj postane najboljši model, če je razlika v številu zmag večja za nek faktor. V našem primeru je bil ta faktor 60\%.
 
 Parametri nevronske mreže so za tem popravljeni, da minimizirajo napako med napoved stanja nevronske mreže in dejanskim rezultatom igre in maksimizirajo podobnost napovedi potez nevronske mreže z dejanskimi vrednostnimi akcij, ki je rezultat drevesnega preiskovanja Monte Carlo (ang. Monte Carlo tree search; MCTS). 
-Parametri se nastavijo z gradientnim spustom na funkcijo izgube, ki sešteje napako srednjega korena (ang. mean-squared error) in prečne entropije (ang. cross entropy).
+Parametri se nastavijo z gradientnim spustom na funkcijo izgube, \hl{ki sešteje srednjo kvadratno napako (ang. mean-squared error; MSE)} in prečne entropije (ang. cross entropy).
 Nevronska mreža sprejme učne množice stanja iger in vrne izravnan vektor napovedi akcij v trenutnem stanju označeno s Pi in napoved zmage označeno z V.
 
 \begin{figure}[h!]
@@ -816,7 +823,7 @@ for sosednji_x, sosednji_y in koordinate:
 
 \noindent
 Ko je doseženo prvo prazno polje v tem zaporedju, se tam izgradi nova stavba ali izuri nova figura.
-Ko je prva nasprotnikova figura izbrana v tem zaporedju, je napadena.
+Ko je izbrana prva nasprotnikova figura v tem zaporedju, je napadena.
 Rezultat tega je gradnja stavb in urjenja figur v spodnji levi kot šahovnice, saj so izbrana prva polja v zaporedju, kot na primer x - 1, y + 1, in širjenje proti zgornjim desnim kotom, ko so vsa ostala polja zasedena, oziroma tam ni nasprotnikovih figur.
 
 Algoritem smo popravili tako, da smo spremenili te akcije (razen naberi zlatnike in vrni zlatnike), da so posamezne akcije za vsako izmed štirih sosednjih polj.
@@ -840,11 +847,11 @@ Za vpeljavo posameznih akcij smo se odločili, ker ne moramo izbrati polja po zg
 \end{table}
 
 Določili smo začetno stanje vsake igre, kjer sta glavni hiši igralcev postavljeni v sredino mreže, zraven njiju pa ima vsak igralec svoje polje zlata. 
-Vsakemu igralcu se doda na začetku določena količina denarja za izgradnjo začetnih delavcev. V našem primeru je bilo to 1, tako da je lahko izgradil samo enega delavca.
+Vsakemu igralcu se na začetku doda določena količina denarja za izgradnjo začetnih delavcev. V našem primeru je bilo to 1, tako da je lahko izgradil samo enega delavca.
 
 Sedaj smo potrebovali zakodirati to stanje igre, v numerični prikaz, ki ga bo nevronska mreža lahko interpretirala. 
 To stanje lahko zakodiramo z desetiškim kodiranjem, vendar obstaja možnost, da nevronska mreža sloni proti boljšim obravnavanjem pozitivnih števil za igralca +1, kot za igralca -1. 
-Ravno iz tega razloga obstaja kodiranje z enico v zapisu vsakega stanja (ang. one-hot encoding), ki spremeni desetiška števila v binarni vektor (tabela ~\ref{oneHotEncoder}).
+Ravno iz tega razloga obstaja kodiranje z enico v zapisu vsakega stanja (ang. one-hot encoding), ki spremeni desetiška števila v binarni vektor (glej tabelo ~\ref{oneHotEncoder}).
 
 Akciji naberi in vrni zlatnike, ostaneta vedno po 1 akcijo, ker za figuro delavec ni razlika, iz katerega sosednjega polja zlata vzame zlatnike, kot tudi ni razlike pri njihovem vračanju.
 
@@ -890,10 +897,9 @@ S tem smo odstranili neskončne cikle igranja igre in prisilili igralca k hitrej
 
 \subsection{Ranjujoča funkcija}
 \label{sKillFunction}
-Čakanje, da se čas igre izteče, je problematično, saj učenje modela poteka zelo počasi, posebej ko algoritem MCTS raziskuje preiskovalni prostor akcij.
+Čakanje, da se čas igre izteče je problematično, saj učenje modela poteka zelo počasi, posebej ko algoritem MCTS raziskuje preiskovalni prostor akcij.
 Za to smo razvili funkcijo, ki prisili model k izvajanju akcij v zgodnem času igre, drugače se figuram preveč začnejo zmanjševati življenjske točne in so zato odstranjene s šahovnice.
 Figure lahko uporabijo akcijo zdravljenja, s čimer povečajo trenutno število življenjskih točk določene figure do največ njene zgornje meje.
-
 
 \begin{figure}[h!]
 	\begin{center}
@@ -906,9 +912,9 @@ Figure lahko uporabijo akcijo zdravljenja, s čimer povečajo trenutno število 
 	\label{destroy_formula_2018_11_17}
 \end{figure}
 
-Z ranjujočo funkcijo je bil problem določiti pravšnjo stopnjo količine zmanjšanja življenjskih točk figur in izločevanje neaktivnih igralcev dovolj zgodaj v igri, in sicer problem z balansiranjem količine in stroškom zdravljenja. 
+Z ranjujočo funkcijo je bil problem določiti pravšnjo stopnjo količine zmanjšanja življenjskih točk figur in izločevanje neaktivnih igralcev dovolj zgodaj v igri, in sicer problem z uravnovešanjem količine in stroškom zdravljenja. 
 Če so bili stroški dovolj nizki, so igralci stalno zdravili figure in končali igro pri vedno več izvedenimi potezami (npr. tisoč), kar je privedlo do vedo daljših iger in daljšega postopka igranja.
-Za to je bilo potrebno povišati strošek zdravljenja, kar je privedlo do hitrejšega nenadnega umiranja figur, saj igralci niso imeli dovolj zlatnikov za zdravljenje, na kar je bilo potrebno povišati količino vrnjenih zlatnikov iz figure zlata.
+Za to je bilo potrebno povišati strošek zdravljenja, kar je privedlo do hitrejšega nenadnega izločevanja figur, saj igralci niso imeli dovolj zlatnikov za zdravljenje, na kar je bilo potrebno povišati količino vrnjenih zlatnikov iz figure zlata.
 
 \subsection{Ustavitveni pogoj}
 Ustavitveni pogoj deluje tako, da se na številu določenih potez igra preprosto prekini in oceni zmagovalca po eni izmed spodaj navedenih formul.
@@ -981,11 +987,11 @@ tako da je izhod zadnjega konvolucijskega nivoja dimenzije velikost serije x (š
 Vsak izhod konvolucijskih nivojev se s postopkom normalizacijo serije (ang. batch normalization) normalizira aktivacijo prejšnjega nivoja ob vsaki seriji.
 Izhodi tega se preuredijo z relu aktivacijsko funkcijo, ki za vsa negativna števila vzame vrednost 0.
 Za tem se izhod zadnjega nivoja normalizirane konvolucije izravna v 1-dimenzionalni vektor in se poda dvema polno povezanima nivojema, ki sta ponovno normalizirana z normalizacijo serije.
-Tedva nivoja sta potem ponovno preoblikovana z aktivacijsko funkcijo relu in podana v izpadno funkcijo (ang. dropout), ki prepreči prekomerno prileganje.
+Tedva nivoja sta potem ponovno preoblikovana z relu aktivacijsko funkcijo in podana v izpadno funkcijo (ang. dropout), ki prepreči prekomerno prileganje.
 
-Za tem je izgrajen polno povezan nivo Pi, ki ima toliko število izhodov, koliko je možno število akcij v igri za vsako celico, ki ima aktivacijsko funkcijo softmax,
+Za tem je izgrajen polno povezan nivo Pi, ki ima toliko število izhodov, koliko je možno število akcij v igri za vsako celico, ki ima aktivacijsko funkcijo softmax.
 Izgrajen je tudi polno povezan nivo V, ki ima en izhod, ki predstavlja zmago ali poraz z tanh aktivacijsko funkcijo.
-Za izhod Pi se nastavi funkcija izgube kategorična prečna entropija, za izhod V srednja napaka korena (mean-squared error).
+Za izhod Pi se nastavi funkcija izgube kategorična prečna \hl{entropija, in MSE za izhod V}.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -1011,7 +1017,7 @@ V tabeli opisa parametrov~\ref{tableParameters1} so predstavljeni najpomembnejš
 			{\tt C\textsubscript{puct}}               & 1 						& parameter drevesnega raziskovanja, ki neposredno vpliva na raziskovanje algoritma MCTS . 
 																				  Večja kot je vrednost parametra, bolj bo MCTS dajal prednost neraziskanim vozlišči. 
 																				  V našem primeru smo izbrali vrednost 1 in s tem nismo prispevali k dodatni uteži k raziskovanju.\\
-			{\tt število iteracij}                    & 30 - 100				& predstavlja število učenj algoritma na odigranih igrah in število izbire boljšega modela.
+			{\tt število iteracij}                    & 30 - 100				& predstavlja število učenj algoritma na odigranih igrah in število izbir boljšega modela.
 																				  Parameter tudi predstavlja, kolikokrat se bo igra odigrala v celoti, kjer bo konec predstavljal končni pogoj oziroma poraz nasprotnika.\\
 			{\tt število epizod}                      & 4 - 8 					& Število epizod nam zagotovi pridobitev dovolj velikega nabora odigranih iger, nad katerimi se potem model uči.
 																				  Vsako iteracijo se odigra število iger, kolikor je nastavljeno s tem parametrom.\\
@@ -1125,7 +1131,7 @@ Izvajalna drevesa so implementirana tudi za napadanje, agentovo nedejavnost, kje
 Igra ima implementirane tudi razne zvočne efekte, učinke delcev za prikaz zmanjšanja življenjskih točk nasprotnikovim enotam.
 V igri lahko tudi stanje igre shranimo na disk in ga pozneje naložimo, da igro lahko igramo naprej.
 Ob tem zapisovanju igre smo ugotovili pravi postopek, kako zajeti igro v Unreal Engine in ga zapisati v določen format, ki ga potem lahko lažje prenašamo.
-To nam je koristilo tudi pri kodiranju igre v notacijo za označevanje JavaScript objektov (ang. JavaScript Object Notation; JSON), da smo jo lahko poslali kot parameter v zahtevku Python modulu.
+To nam je koristilo tudi pri kodiranju igre v notacijo za označevanje JavaScript objektov (ang. JavaScript Object Notation; JSON), da smo jo lahko poslali Python modula kot parameter v zahtevku.
 Igra podpira tudi preprosto analitiko za primerjavo denarja med igralci, tipi figur ipd.
 
 Igra je zasnovana tako, da se lahko dva igralca med sabo pomerita preko mreže s spletnim podsistemom Steam ali preko lokalne mreže, preko katerega se lahko tudi komunicirata.
