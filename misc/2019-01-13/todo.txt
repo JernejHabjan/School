@@ -1,7 +1,0 @@
-add 100 learnt in official release for td2020
-     download release from git
-
-spremen "numerični" v "desetiški"
-
-nared comparison prot random playerju pa greedy playerju
-pit_100_game1 - predovg caption
