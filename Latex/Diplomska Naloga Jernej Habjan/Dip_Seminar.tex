@@ -293,7 +293,7 @@ Zahvaljujem se mentorju doc.\ dr. Mateju Guidu in somentorju prof.\ dr. Branku �
 \noindent 
 Z algoritmom AlphaZero smo implementirali učenje in priporočanje akcij v realno-časovni strateški igri.
 Pregledali smo krajšo zgodovino globokega spodbujevalnega učenja na igrah in povzeli, zakaj je pristop samostojnega učenja najprimernejši.
-Za strateško igro smo določili stanja igre in ga s kodirnikom preoblikovali v format, primeren za učenje nevronske mreže.
+Za strateško igro smo določili stanja igre in stanje s kodirnikom preoblikovali v format, primeren za učenje nevronske mreže.
 Določili smo ustavitveni pogoj z iztekom števila preostalih potez za posameznega igralca.
 Utemeljili smo različne konfiguracije učnih parametrov in izpostavili tisto, ki računalniškega agenta na naši igri najuspešnejše uči.
 Rezultate smo prikazali s Python knjižnico Pygame in v celostnem pogonu Unreal Engine 4. 
@@ -318,11 +318,11 @@ V obeh vizualizacijah lahko igramo proti naučenemu modelu ali opazujemo, kako s
 
 %\noindent\textbf{Abstract:} 
 \noindent With algorithm AlphaZero we have implemented the learning and recommendation of actions in a real-time strategy game.
-We examined the shorter history of deep reinforcement learning in games and summarized why the self-learning approach is best suited.
+We examined a short history of deep reinforcement learning in games and summarized why the self-learning approach is best suited.
 For a strategic game, we determined the state of the game and transformed it with the encoder into a format suitable for learning a neural network.
 We determined a stopping condition with the expiry of the number of remaining moves for each player.
 We substantiated different configurations of learning parameters and exposed the most successful configuration for learning our game.
-The results were displayed with the Python Pygame module and the integrated drive of the Unreal Engine 4.
+The results were displayed with the Python Pygame module and the game engine Unreal Engine 4.
 In both visualizations we can play against the learned model, or we can observe two computer opponents fighting against each other.
 \bigskip
 
@@ -348,16 +348,16 @@ In both visualizations we can play against the learned model, or we can observe 
 Razvijanje inteligentnega agenta je problem, s katerim se mora soočiti večina razvijalcev realno-časovnih strateških iger. 
 Agentove akcije so v večini primerov vnaprej kodirane in zato pogosto predvidljive, saj se človeški igralec nauči načinov delovanja računalniških igralcev in jih tako lažje porazi.
 Če pustimo agentu, da sam opravlja akcije nenadzorovano, bo te akcije izvajal naključno in bodo večino časa slabše kot vnaprej opisana taktika.
-Agentu lahko podamo hevristiko, ki predstavlja pravilo po katerem mora delovati da doseže boljše delovanje.
+Agentu lahko podamo hevristiko, ki predstavlja pravilo, po katerem mora delovati da doseže boljše delovanje.
 Ta se po njej ravna in z njeno pomočjo poskuša izvesti akcijo, ki mu doprinese največjo nagrado, vendar bo za njen izračun porabil dolgo časa, saj ima na voljo veliko število kombinacij izbire akcij, ki je pri realno-časovnih strateških igrah velikokrat preveliko.
 Za primer vzemimo igro, ki vsebuje 10 figur, kjer ima vsaka 5 možnih potez.
-Prostor akcij se razveji na možen faktor $5^{10}$, kar znaša približno 10 milijonov možnih stanj igre.
+Prostor akcij se razveji na možen faktor $5^{10}$, kar znaša približno 10 milijonov možnih akcij.
 Za realno-časovno strateško igro StarCraft je ocenjenih možnih vsaj $10^{1685}$ stanj igre, za šah je običajno ocenjeno med $10^{40}$ in $10^{46}$~{\cite{chinchalkar1996upper}}~{\cite{steinerberger2015number}} ter $10^{171}$ pri igro Go~\cite{ontanon2017combinatorial}.
 Za primerjavo lahko kot zanimivost vzamemo število atomov v opazovanem vesolju, ki obsega med $10^{78}$ in $10^{82}$~\cite{atoms}.
 
 Preiskovanje prostora z grobo silo torej odpade. 
 Ostanejo nam hevristični algoritmi, kot na primer algoritem minimaks (ang. mini-max) z rezanjem alpha-beta~{\cite{knuth1975analysis}} ali drevesno preiskovanje Monte Carlo (ang. Monte Carlo tree search; MCTS)~{\cite{kocsis2006bandit}}~{\cite{coulom2006efficient}}. 
-Seveda pa moramo upoštevati, da algoritem Alpha-Beta rezanje deluje dobro samo pod pogoji, da obstaja zanesljiva ocenjevalna funkcija in da ima igra majhen vejitveni faktor, kar pa je v nasprotju z veliko klasičnimi namiznimi igrami, kot so npr. igra Go in video igre. 
+Seveda pa moramo upoštevati, da algoritem rezanje Alpha-Beta deluje dobro samo pod pogoji, da obstaja zanesljiva ocenjevalna funkcija in da ima igra majhen vejitveni faktor, kar pa je v nasprotju z veliko klasičnimi namiznimi igrami, kot so npr. igra Go in video igre. 
 V takšnih primerih se je bolje odločiti za drevesno preiskovanje Monte Carlo~\cite{chaslot2008monte}.
 Ta ima pomanjkljivost, da si stanj igre ne zapomni skozi iteracij več iger, kjer bi lahko to vrednost stanja uporabil za bolj natančen izračun naslednjih stanj.
 
@@ -404,7 +404,7 @@ Primer RTS iger sta Age of Empires II (Ensemble Studios) in StarCraft (Blizzard 
 	\caption{Na zgornjih dveh slikah sta predstavljeni igra StarCraft (levo) in Age of Empires II (desno). 
 		Obe igri sta prikazani v začetku igre, kjer sta na slikah vidni glavni hiši, delavci, viri surovin (minerali, rude zlata, drevesa ipd.).
 		Pri igri Age of Empires II je viden zemljevid, kjer zasenčenost predstavlja neraziskani del. 
-		Bodimo pozorni, da izvajanje določenih akcij poteka več časa, saj na primer delavci pri igri StarCraft vračajo mineralno rudo več časovnih enot, pri igri Age of Empiress II pa se več časovnih enot urijo delavci.}
+		Bodimo pozorni, da izvajanje določenih akcij poteka več časa, saj na primer delavci pri igri StarCraft vračajo mineralno rudo več časovnih enot, pri igri Age of Empires II pa se več časovnih enot urijo delavci.}
 	\label{picRtsGames}
 \end{figure}
 
@@ -413,7 +413,7 @@ Te razlike so naslednje:
 \begin{itemize}
 	\item izvajanje akcij v istem časovnem intervalu, ki lahko trajajo več časovnih intervalov;
 	\item odločitev akcij v krajšem časovnem obdobju, saj se za razliko od šaha, kjer ima igralec na voljo več minut za izbiro poteze, v igri, kot je npr. StarCraft, stanje igre zamenja 24-krat na sekundo;
-	\item igre so lahko vidne le na področjih kjer je igralec že raziskal določeno področje in imajo nanj vpogled igralčeve figure;
+	\item igre so lahko vidne le na področjih, kjer je igralec že raziskal določeno področje in imajo nanj vpogled igralčeve figure;
 	\item večina iger ni determinističnih, ampak imajo akcije verjetnost uspeha;
 	\item kompleksnost raziskovalnega prostora je veliko večja.
 \end{itemize}
@@ -426,13 +426,13 @@ Zaradi teh razlik so nastopili razni izzivi:
 	\item učenje: Učenje igranja igre lahko poteka na način predhodnega učenja, ki uporablja posnetke že odigranih iger, in na način učenja v igri, ki uporablja spodbujevalno učenje in modeliranje nasprotnika.
 	\item negotovost: Negotovost nastane zaradi nevidnosti nasprotnikovih figur in njegovih potez v vsakem trenutku. 
 	Ne moremo določiti, katero akcijo bo nasprotnik izvedel, zato je potrebna izgradnja drevesa, ki nam pove največjo verjetnost izbrane nasprotnikove akcije v določenem stanju igre.
-	\item prostorsko in časovno razumevanje: Prostorsko razumevanje je usmerjeno k postavljanju stavb in pozicije vojske za obrambo in napad, med tem ko je časovno razumevanje usmerjeno k ugotavljanju časovne primernosti izdelave določenih figur, ki so primerne za izboljšavo igralčeve ekonomije, tehnološkega drevesa ali časa napada ipd.
+	\item prostorsko in časovno razumevanje: Prostorsko razumevanje je usmerjeno k postavljanju stavb in pozicije vojske za obrambo in napad, medtem ko je časovno razumevanje usmerjeno k ugotavljanju časovne primernosti izdelave določenih figur, ki so primerne za izboljšavo igralčeve ekonomije, tehnološkega drevesa ali časa napada ipd.
 	\item izkoriščanje znanja domen: V tradicionalnih igrah, kot je npr. šah, se lahko zanašamo na dobre ocenjevalne funkcije in na algoritem alpha-beta ter tabele s popolno informacijo o končnicah z malo figurami (ang. tablebases).
-	V realno-časovnih strateških igrah ni jasno kako lahko računalniški nasprotniki uporabijo domenska znanja iz posnetkov iger, zato se razvijalci tovrstnih iger bolj osredotočajo na izgradnjo več različnih taktik, med katerimi se odloča računalniški nasprotnik na podlagi hevristike.
+	V realno-časovnih strateških igrah ni jasno, kako lahko računalniški nasprotniki uporabijo domenska znanja iz posnetkov iger, zato se razvijalci tovrstnih iger bolj osredotočajo na izgradnjo več različnih taktik, med katerimi se odloča računalniški nasprotnik na podlagi hevristike.
 	\item razdelitev nalog (prikazano na Sliki~\ref{picRazdelitevNalog}): Večje in zahtevnejše naloge so razdeljene na manjše, ki jih uvrščamo v več nivojev glede na abstrakcijo.
 	\begin{itemize}
-		\item Strategija je najvišji nivo abstrakcije, ki zajema okrog 3 minutna planiranja in vse figure ki jih igralec nadzoruje.
-		\item Taktika je implementacija trenutne strategije (pozicija vojaških enot, stavb. 30 sekundno planiranje).
+		\item Strategija je najvišji nivo abstrakcije, ki zajema okrog 3-minutna planiranja in vse figure ki jih igralec nadzoruje.
+		\item Taktika je implementacija trenutne strategije (pozicija vojaških enot, stavb. 30-sekundno planiranje).
 		\item Reakcijska kontrola je implementacija taktike, ki je osredotočena na posamezno figuro.
 		\item Analiza terena se osredotoča na strnjena območja in na višinsko prednost.
 		%\item Pridobivanje znanja je naloga s katero pridobivamo informacije o taktiki nasprotnika.
@@ -480,7 +480,7 @@ Mi smo se za diplomsko nalogo odločili, da imata oba računalniška agenta popo
 V igri, kot je npr. StarCraft, lahko posamezno vojaško enoto premaknemo na poljubno koordinato na zemljevidu pod pogojem, da je ta koordinata dosegljiva z vidika algoritma za iskanje poti.
 Te koordinate premika lahko segajo tudi v neznane dele zemljevida, ki so lahko že zasedene z nasprotnikovo arhitekturo, zato lahko premikanje poenostavimo na sosednja polja.
 Napad nasprotnikovih enot, nabiranje zlatnikov ipd. lahko omejimo na izvajanje akcij znotraj določenega polja na najbližjo figuro.
-Na primer vojaška enota lahko napade najbližjo nasprotnikovo enoto znotraj polja, v katerem je ta naša vojaška enota.
+Na primer, vojaška enota lahko napade najbližjo nasprotnikovo enoto znotraj polja, v katerem je ta naša vojaška enota.
 V našem primeru, kot bomo pojasnili pri poglavju opis pravil igre~\ref{chpravilaigre}, ne moremo postaviti več figur na isto polje, zato so akcije, kot so napad ali nabiranje zlatnikov, omejene na sosednja polja.
 
 Prav tako smo poenostavili izvajanje akcij, saj smo privzeli izmenjujoče izvajanje potez dveh igralcev.
@@ -501,11 +501,11 @@ Igranje iger je popularno področje znotraj vede o umetni inteligenci.
 Desetletja je bil za raziskovalce s področja umetne inteligence podvig razviti program za igranje šaha.
 Danes so najboljši algoritmi za igranje šaha nepremagljivi celo za svetovnega prvaka.
 Ti algoritmi temeljijo na preiskovanju prostora več milijonov šahovskih pozicij in metodah, ki temeljijo na pravilih.
-Za razliko od teh programov je bil eden izmed prvih programov programski pogon Checkers za igranje igre dama (ang. checkers) (Samuel 2000~{\cite{samuel2000some}}), ki se je naučil igranja z metodami samo-igranja in strojnega učenja in ne npr. na metodah ki temeljijo na pravilih.
+Za razliko od teh programov je bil eden izmed prvih programov Checkers za igranje igre dama (ang. checkers) (Samuel 2000~{\cite{samuel2000some}}), ki se je naučil igranja z metodami samo-igranja in strojnega učenja in ne npr. na metodah, ki temeljijo na pravilih.
 
 Pri tradicionalnih namiznih igrah je vejitveni faktor akcij relativno majhen in je lažje oceniti končno pozicijo iz danega stanja~\cite{wiki:AlphaGo}.
 Rečeno je bilo, da za igre, kot je npr. Go, ki ima znatno večje število možnih pozicij ($10^{171}$) v primerjavi s šahom (ki ima med $10^{40}$ in $10^{46}$ pozicij~\cite{chinchalkar1996upper}~\cite{steinerberger2015number}), ne bo možno ugotoviti vrednosti končnega stanja še nekaj desetletij.
-Algoritem AlphaGo~\cite{silver2016mastering} je naredil preboj s tem da uporablja metodo globokega spodbujevalnega učenja in algoritem drevesno preiskovanje Monte Carlo. 
+Algoritem AlphaGo~\cite{silver2016mastering} je naredil preboj s tem, da uporablja metodo globokega spodbujevalnega učenja in algoritem drevesno preiskovanje Monte Carlo. 
 Oktobra 2016 je premagal profesionalnega Go igralca na podlagi učenja na domenskem znanju iger, ki so jih odigrali eksperti.
 Ti sistemi so temeljili na predznanju ekspertov za učenje in ocenitev modela, kar pomeni, da ob igranju novih iger posnemajo ekspertovo igranje igre.
 
@@ -574,7 +574,7 @@ V sklopu diplomske naloge govorimo o MCTS iskanjih in ne odigravanjih, saj jih t
 	\label{iz:1}
 	Pričakovana vrednost akcije v določenem stanju igre U($s$,~$a$) predstavlja pričakovano nagrado ob izbiri akcije ($a$) v danem stanju igre ($s$) Q($s$,~$a$), kateri je prišteta napoved nagrade v tem stanju P($s$,~$a$) ob izbiri akcije v danem stanju, ki ga vrne nevronska mreža, pomnoženo s raziskovalnim faktorjem in korenom števila vseh obiskov stanja igre v primerjavi s števili obiskov danega vozlišča.
 	\begin{equation}
-	U(s, a) = Q(s, a) + c_{p,uct}P(s, a)\sqrt{\dfrac{\sum{N(s)}}{1+N(s, a)}}
+	U(s, a) = Q(s, a) + c_{p,uct}P(s, a)\dfrac{\sqrt{\sum{N(s)}}}{1+N(s, a)}
 	\label{eq:mctsFormula}
 	\end{equation}
 \end{izrek}
@@ -673,7 +673,7 @@ Pomembno je, da ima vsako polje na šahovnici enako število atributov, tudi če
 													   Atribut je prisoten v vseh poljih in se spremeni v vseh poljih šahovnice, ko se izvede nova akcija. \\
 		\end{tabular}
 	\end{center}
-	\caption{Definicija in opis kodirnikov stanja igre, s katerimi je predstavljeno vsako polje na šahovnici. Več o kodiranju teh polj si bomo pogledali v sekciji kodiranja~\ref{kodiranja}.}
+	\caption{Definicija in opis kodirnikov stanja igre, s katerimi je predstavljeno vsako polje na šahovnici. Več o kodiranju teh polj si bomo pogledali v sekciji kodiranje~\ref{kodiranja}.}
 	\label{tableEncoders}
 \end{table}
 
@@ -770,7 +770,7 @@ Rezultat tega je gradnja stavb in urjenje figur v spodnji levi kot šahovnice, s
 Algoritem smo popravili tako, da smo spremenili te akcije (razen naberi zlatnike in vrni zlatnike), da so posamezne akcije za vsako izmed štirih sosednjih polj.
 Za vpeljavo posameznih akcij smo se odločili, ker ne moramo izbrati polja po zgornjem zaporedju tako, da bi bilo za oba igralca enako.\\
 
-\section{Kodiranja}
+\section{Kodiranje}
 \label{kodiranja}
 \begin{table}
 	\begin{center}
