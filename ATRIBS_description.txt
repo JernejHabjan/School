@@ -1,0 +1,72 @@
+attribute name					|domain						             |description
+_____________________________________________________________________________________________________________________________________________________________________________
+													LISTINGS.CSV
+_____________________________________________________________________________________________________________________________________________________________________________
+id								|int								     |
+accommodates					|float                                   |
+amenities						|list(strings)                           |  
+bathrooms						|float                                   |
+bed_type						|string                                  |
+bedrooms						|float                                   |
+beds						    |float                                   |
+cancellation_policy				|float		                             |
+cleaning_fee					|float				                     |price to pay        
+description						|string                                  |
+extra_people                    |float				                     |          
+first_review                    |string date <format- '%Y-%m-%d'>        |                        
+guests_included                 |float                                   |
+host_about                      |float                                   |
+host_acceptance_rate            |float                                   |
+host_identity_verified          |float                                   |1 = yes, 0 = no
+host_response_rate              |float                          		 |     
+host_response_time              |float                                   |how soon -> the greater the number, the sooner. Possible:["N/A", "a few days or more", "within a day", "within a few hours", "within an hour"]
+host_since                      |float                 					 |value = 1 - 1 / (now().replace(tzinfo=None) - datetime_object).days  ##decimalke
+host_total_listings_count       |float                      			 |float(value) / 100          
+host_verifications              |float									 |how many vertifications of possible ('email', 'phone', 'reviews', 'google', 'jumio', 'facebook', 'kba', 'amex', 'linkedin', 'manual_offline')                               
+instant_bookable                |float                                   |1 = yes, 0 = no
+is_location_exact               |float                                   |1 = yes, 0 = no
+latitude                        |float                                   |
+listing_url                     |string                                  |
+longitude                       |float                                   |
+maximum_nights                  |float                                   |
+minimum_nights                  |float                                   |
+name                            |string                                  |
+neighborhood_overview           |float									 |compound score                           
+notes                           |float									 |compound score                             
+number_of_reviews               |float									 |float(value) / 1000                               
+price                           |float	                     			 |per night
+property_type                   |string                                  |
+review_scores_accuracy          |float                                   |
+review_scores_checkin           |float                                   |
+review_scores_cleanliness       |float                                   |
+review_scores_communication     |float                                   |
+review_scores_location          |float                                   |
+review_scores_rating            |float                                   |
+review_scores_value             |float                                   |
+reviews_per_month               |float                                   |
+room_type                       |string                                  |
+security_deposit                |float                        			 |       
+space							|float                                   |
+square_feet               		|float                                   |
+summary                         |float                                   |
+transit                         |float									 |compound score                               
+picture_url                     |string                                  |
+thumbnail_url                   |string                                  |
+description_score               |float									 |compound score                               
+avg_comment_score               |float                                   |
+comments_scores_5               |dict(date<string>:score<float>)         |                  
+comments_scores_though_time     |float                                   |
+SCORE							|float                                   |
+_____________________________________________________________________________________________________________________________________________________________________________
+													REVIEWS.CSV
+_____________________________________________________________________________________________________________________________________________________________________________
+id                              |int                                     |
+date                            |string date <format- '%Y-%m-%d'>        |
+comments                        |float                                   |
+_____________________________________________________________________________________________________________________________________________________________________________
+													CALENDAR.CSV
+_____________________________________________________________________________________________________________________________________________________________________________
+listing_id						|int                                     |
+date                            |string date <format- '%Y-%m-%d'>        |
+available                       |string <f>                              |
+price                           |string <$10.00>                         |
