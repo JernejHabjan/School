@@ -1,1 +1,1 @@
-# School
+# Diploma-Thesis

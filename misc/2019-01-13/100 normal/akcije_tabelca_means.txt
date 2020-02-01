@@ -1,0 +1,6 @@
+akcije
+('Premik', 'Nabiranje', 'Vračanje', 'Napad', 'Delavec', 'Vojak', 'Vojašnica', 'Glavna hiša', 'Zdravljenje')
+red:
+(49561, 3026, 2654, 160, 2685, 666, 1052, 179, 9)
+blue:
+(43327, 5638, 5243, 62, 3823, 307, 1215, 367, 10)

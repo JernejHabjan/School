@@ -1,0 +1,22 @@
+za pridobivanje rezultatov moramo definirati pravilen configuration
+ - poveš keri configurationsi so taglavni pa poveš da je postavitev polja zelo pomembna
+ - pa rečeš da bomo prvo pogledal en failed example kjer learning traja zelo dolgo pa niso bli dobri rezultati
+ - opišeš da more bit mineralsu dost na začetk da se naredi dovolj velika razlika med igralcema pa da vesta da če constructaš dobre enote se izboljša score - začetni vzgon
+ - čene ga overfittata na drawe - pokažeš en example un tastr k sta 2 mineralsa na robovih  
+ - vmes explainaš where did go wrong
+
+Tle potem odpravš te napake z mineralsi začetnimi 
+ - tle je main poudark na ugotovitvi ostalih parametru kot npr kodirnikov
+ - pa poveš recmo config num-history-learn-examples daj ful pomembn ker pol se model pač dle uči ampak ni treba tok gamov generirat... sam morš mav gledat da jih ne vzame preveč kjer bi vzemal še une tastare kj slabo igral
+ - pa rečeš da si primerjal onehot vs desetiški
+ - pa pokažeš grafe pa obrazložiš zaka je en boljši od druzga
+ 
+
+Pol pa pokažeš legit model k se je učil
+ - rečeš "v prejšnih napakah smo se naučili da je fail blo to... zdj pa djmo te napake odpravt"
+ - pa uporabš bolši encoder pa s temu poženeš learn
+ - pokažeš te svoje final rezultate pa pr vsakmu grafu obrazložiš zka so taki rezultati
+ - recmo pr akcijah obrazložiš daj največ premikov ker ma ta akcija najmn requirementsu... ampak je najbl useless zato se z učenjem zmanjšuje akcija premikanja
+
+ 
+Nakonc še pokažeš da se akcije preslikajo v Ue4 kr najs

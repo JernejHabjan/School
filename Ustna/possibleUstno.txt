@@ -1,0 +1,10 @@
+stran 1 - Naslov
+stran 2 - Opis problema - kompleksnost RTS iger (slika rts igre)
+stran 3 - Idejna rešitev - algoritem samoučenja
+stran 4 - algoritem AlphaZero - način delovanja
+stran 5 - algoritem AlphaZero - detajli NNet ipd
+stran 6 - RTS - abstrakcija/ kodirniki/ glavni parametri
+stran 7 - Rezultati PyGame
+stran 8 - Rezultati UE4
+stran 9 - Sklep/ ugotovitve/ diskusija
+stran 10 - Hvala za pozornost/ vprašanja
