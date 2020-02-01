@@ -1,1 +1,1 @@
-# School
+# OpenGL Projects

@@ -1,0 +1,19 @@
+class GlObject{
+private:
+    idEnum ObjId;
+    //other identifiers
+public:
+    void move_obj(); //the movements are the same for all the objects (nextpos = pos + vel)
+    void rotate_obj(); //rotations are the same for every objects too
+    virtual Polygon generate_mesh() = 0; // the polygons are different
+}
+and I have 4 different objects in my game: plane, obstacle, player, bullet and I designed them like this:
+
+class Player : public GlObject{ 
+private:
+    std::string name;
+public:
+    Player();
+    Bullet fire() const; //this method is unique to the class player
+    void generate_mesh();
+}

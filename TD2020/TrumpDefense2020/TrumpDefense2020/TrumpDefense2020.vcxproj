@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{E2C8BFE2-6851-46C5-A080-ACB3DD271E1F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TrumpDefense2020</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Sources\Code\Controller.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\Camera.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\FixedCamera.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\PlayerFollowCamera.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\RTSCamera.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\ScriptedCamera.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\walkingCamera.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Component.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Light\DirLight.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Light\Light.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Light\PointLight.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Light\SpotLight.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Map\Map.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Mesh.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\MeshShell.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cube.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cylinder.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Plane.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Primitive.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Sphere.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\Music.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SDL_Sound.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SFX.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SoundManager.cpp" />
+    <ClCompile Include="Sources\Code\Entity\Entity.cpp" />
+    <ClCompile Include="Sources\Code\FileManager\File.cpp" />
+    <ClCompile Include="Sources\Code\FileManager\FileManager.cpp" />
+    <ClCompile Include="Sources\Code\FileManager\FileReader.cpp" />
+    <ClCompile Include="Sources\Code\FileManager\FileWriter.cpp" />
+    <ClCompile Include="Sources\Code\Engine.cpp" />
+    <ClCompile Include="Sources\Code\freeTypeFont.cpp" />
+    <ClCompile Include="Sources\Code\Loader\Loader.cpp" />
+    <ClCompile Include="Sources\Code\Main.cpp" />
+    <ClCompile Include="Sources\Code\Material.cpp" />
+    <ClCompile Include="Sources\Code\Matrix.cpp" />
+    <ClCompile Include="Sources\Code\Model.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\GL_API.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Renderer.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\GameMenu.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\GameScene.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\GUI.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\LoadDisplay.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\MainMenu.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\Menu.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\Scene.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\Button.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\Label.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\ProgressBar.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\SceneItems.cpp" />
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\Text.cpp" />
+    <ClCompile Include="Sources\Code\RequirementsChecker.cpp" />
+    <ClCompile Include="Sources\Code\ResourceManager.cpp" />
+    <ClCompile Include="Sources\Code\SceneUpdater\InputManager.cpp" />
+    <ClCompile Include="Sources\Code\Shader.cpp" />
+    <ClCompile Include="Sources\Code\skybox.cpp" />
+    <ClCompile Include="Sources\Code\StaticGeometry.cpp" />
+    <ClCompile Include="Sources\Code\Texture.cpp" />
+    <ClCompile Include="Sources\Code\VertexBufferObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sources\Code\Controller.hpp" />
+    <ClInclude Include="Sources\Code\Defines.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\Camera.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\DebugCamera.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\FixedCamera.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\PlayerFollowCamera.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\RTSCamera.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\ScriptedCamera.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\walkingCamera.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Component.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Light\DirLight.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Light\Light.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Light\PointLight.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Light\SpotLight.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Map\Map.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Mesh.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\MeshShell.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cube.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cylinder.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Plane.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Primitive.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Sphere.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Tetrahedron.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\Music.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SDL_Sound.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SFX.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SoundManager.hpp" />
+    <ClInclude Include="Sources\Code\Entity\Entity.hpp" />
+    <ClInclude Include="Sources\Code\FileManager\File.hpp" />
+    <ClInclude Include="Sources\Code\FileManager\FileManager.hpp" />
+    <ClInclude Include="Sources\Code\FileManager\FileReader.hpp" />
+    <ClInclude Include="Sources\Code\FileManager\FileWriter.hpp" />
+    <ClInclude Include="Sources\Code\Engine.hpp" />
+    <ClInclude Include="Sources\Code\freeTypeFont.hpp" />
+    <ClInclude Include="Sources\Code\Geometry.hpp" />
+    <ClInclude Include="Sources\Code\Loader\Loader.hpp" />
+    <ClInclude Include="Sources\Code\Material.hpp" />
+    <ClInclude Include="Sources\Code\Matrix.hpp" />
+    <ClInclude Include="Sources\Code\Model.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\GL_API.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Renderer.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\GameMenu.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\GameScene.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\GUI.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\LoadDisplay.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\MainMenu.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\Menu.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\Scene.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\Button.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\Label.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\ProgressBar.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\SceneItems.hpp" />
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\Text.hpp" />
+    <ClInclude Include="Sources\Code\RequirementsChecker.hpp" />
+    <ClInclude Include="Sources\Code\ResourceManager.hpp" />
+    <ClInclude Include="Sources\Code\SceneUpdater\InputManager.hpp" />
+    <ClInclude Include="Sources\Code\Shader.hpp" />
+    <ClInclude Include="Sources\Code\skybox.h" />
+    <ClInclude Include="Sources\Code\StaticGeometry.hpp" />
+    <ClInclude Include="Sources\Code\Texture.hpp" />
+    <ClInclude Include="Sources\Code\VertexBufferObject.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\Code\Shaders\Fragment.frag" />
+    <None Include="Sources\Code\Shaders\SkyBox.frag" />
+    <None Include="Sources\Code\Shaders\SkyBox.vs" />
+    <None Include="Sources\Code\Shaders\Vertex.vs" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

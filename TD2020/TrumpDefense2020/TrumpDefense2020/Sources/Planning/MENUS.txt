@@ -1,0 +1,6 @@
+When the game (application) starts, push the main menu onto the stack.
+When a sub-menu is selected, push it onto the stack.
+When a "back" button is pressed, pop the top menu from the stack.
+When the actual game begins (scene is loaded), pop all menus.
+If the stack is not empty, render its top menu after you render your current scene (if there is one). Of course, if the top menu is opaque, you can skip drawing the current scene to save time, but having a pause menu with a transparent/translucent background can be nice.
+If the menu stack is empty, dispatch input events to the current scene, otherwise, dispatch them to the top menu in the stack.

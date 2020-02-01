@@ -1,0 +1,521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Renderer">
+      <UniqueIdentifier>{8846c7de-bf33-4cf0-98a8-ce6f973d8c70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Renderer">
+      <UniqueIdentifier>{9f6c665b-8646-48bc-9dd9-8b66db73ec37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Renderer\Scene">
+      <UniqueIdentifier>{2db4bd21-ddda-4bf4-bf24-ac13b3339513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Scene">
+      <UniqueIdentifier>{379c5c14-5c43-4491-a5ea-75231198f716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Scene\SceneItems">
+      <UniqueIdentifier>{79e124e5-1e78-4838-b985-8afa13f31c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Renderer\Scene\SceneItems">
+      <UniqueIdentifier>{3b05db14-49ec-40e6-bfee-72aa0abe10f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Loader">
+      <UniqueIdentifier>{226a3800-2260-4334-b17b-17cea29d257b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{9332fd3a-10b1-4baf-abd4-7071d0348edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SceneUpdater">
+      <UniqueIdentifier>{3e7c355b-2a49-4151-a010-fd096943930c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Loader">
+      <UniqueIdentifier>{36c3827c-d5d1-466e-ac6c-e01999e5ad59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{2b2a99d5-8f69-4a3e-9fcb-dfd02eeb6ed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SceneUpdater">
+      <UniqueIdentifier>{5e47e475-e08f-423f-93b7-a5e5e8c327d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component">
+      <UniqueIdentifier>{3a6716fe-1ec0-4666-8bcc-89c822ba59dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component">
+      <UniqueIdentifier>{bfaacb7b-447f-4977-844f-8965f1329499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FileManager">
+      <UniqueIdentifier>{82f5ea83-92f4-4fa5-abcd-40a5e66703c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FileManager">
+      <UniqueIdentifier>{81fb0db9-724a-448f-b464-7558f9b79827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Light">
+      <UniqueIdentifier>{51af1c7b-eee0-4d2c-9be4-757772e6a1bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Sound">
+      <UniqueIdentifier>{49ec37c7-f4e6-4589-9be6-5be9bb489645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Light">
+      <UniqueIdentifier>{7f9a6ed2-3cba-4cc0-878d-f3bcb1c1cbba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Sound">
+      <UniqueIdentifier>{3eab0fa3-268b-483b-a1b2-79e52e5d268b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Camera">
+      <UniqueIdentifier>{383ddeb7-4ae7-4c53-a67a-8eea27302bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Camera">
+      <UniqueIdentifier>{34172511-0e10-4740-a2cd-28830f2c18d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering">
+      <UniqueIdentifier>{e2319360-3816-449b-ad8c-eff28f7b335c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering\MeshShell">
+      <UniqueIdentifier>{a8a7412a-36d4-466f-a8e4-16ad6c31a320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering\MeshShell\Meshes">
+      <UniqueIdentifier>{0be2a744-6d78-42fc-8b74-487b556da06d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering\MeshShell\Primitives">
+      <UniqueIdentifier>{4f27bc42-0882-4df4-9521-87b5de2d0155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering\MeshShell\Meshes\Map">
+      <UniqueIdentifier>{7dcd0a10-cb85-4009-a233-f89ec4ae0187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering\MeshShell\Meshes\Player">
+      <UniqueIdentifier>{72c60ffb-5c2d-4388-ba64-c458c5225214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering\SceneItems">
+      <UniqueIdentifier>{cb70d817-eda4-407d-bd38-43be602c4787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Rendering\SkyBox">
+      <UniqueIdentifier>{a5d44fa1-3ddb-4b9c-b3b4-ff90f42f9100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering">
+      <UniqueIdentifier>{240fdd6b-a162-47c7-8542-3aa9179d3195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering\MeshShell">
+      <UniqueIdentifier>{d0fbd2be-66e5-4d20-a141-9c06e440c73f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering\MeshShell\Meshes">
+      <UniqueIdentifier>{361df89a-793a-4958-9fb0-b706f2755aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering\MeshShell\Meshes\Map">
+      <UniqueIdentifier>{57d02798-2530-452d-95cf-498dc8436914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering\MeshShell\Meshes\Player">
+      <UniqueIdentifier>{f34f9732-e1ae-48ea-905b-f52454a0035c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering\MeshShell\Primitives">
+      <UniqueIdentifier>{3c8307e6-1666-45e9-a374-853725e4d373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering\SceneItems">
+      <UniqueIdentifier>{a0c3f07d-852c-40d7-abf8-02eeb0b552f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Rendering\SkyBox">
+      <UniqueIdentifier>{14258f3f-e5c2-408f-b42d-fdd082ee50ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{aa2bd2c1-7757-4fdb-8655-c6251791879e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Component\Sound\SDL_Mixer">
+      <UniqueIdentifier>{ece2a27e-1ded-4e29-82d4-33bd0d9256ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Component\Sound\SDL_Mixer">
+      <UniqueIdentifier>{e98d2274-3833-48f2-9431-4cbd15c02dfd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sources\Code\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\RequirementsChecker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\GL_API.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Renderer.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\Scene.cpp">
+      <Filter>Source Files\Renderer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\GUI.cpp">
+      <Filter>Source Files\Renderer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\LoadDisplay.cpp">
+      <Filter>Source Files\Renderer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\GameScene.cpp">
+      <Filter>Source Files\Renderer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\Menu.cpp">
+      <Filter>Source Files\Renderer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\MainMenu.cpp">
+      <Filter>Source Files\Renderer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\GameMenu.cpp">
+      <Filter>Source Files\Renderer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\SceneItems.cpp">
+      <Filter>Source Files\Renderer\Scene\SceneItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\Button.cpp">
+      <Filter>Source Files\Renderer\Scene\SceneItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\Text.cpp">
+      <Filter>Source Files\Renderer\Scene\SceneItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\ProgressBar.cpp">
+      <Filter>Source Files\Renderer\Scene\SceneItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Renderer\Scene\SceneItems\Label.cpp">
+      <Filter>Source Files\Renderer\Scene\SceneItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Entity.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Component.cpp">
+      <Filter>Source Files\Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Loader\Loader.cpp">
+      <Filter>Source Files\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\SceneUpdater\InputManager.cpp">
+      <Filter>Source Files\SceneUpdater</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\FileManager\FileWriter.cpp">
+      <Filter>Source Files\FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\FileManager\FileReader.cpp">
+      <Filter>Source Files\FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\FileManager\FileManager.cpp">
+      <Filter>Source Files\FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\Camera.cpp">
+      <Filter>Source Files\Entity\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\DebugCamera.cpp">
+      <Filter>Source Files\Entity\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\FixedCamera.cpp">
+      <Filter>Source Files\Entity\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\PlayerFollowCamera.cpp">
+      <Filter>Source Files\Entity\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\RTSCamera.cpp">
+      <Filter>Source Files\Entity\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\ScriptedCamera.cpp">
+      <Filter>Source Files\Entity\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Map\Map.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Meshes\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Mesh.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\MeshShell.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Primitive.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Light\Light.cpp">
+      <Filter>Source Files\Entity\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Sphere.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Tetrahedron.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cube.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cylinder.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Plane.cpp">
+      <Filter>Source Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Light\SpotLight.cpp">
+      <Filter>Source Files\Entity\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Light\DirLight.cpp">
+      <Filter>Source Files\Entity\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Light\PointLight.cpp">
+      <Filter>Source Files\Entity\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SFX.cpp">
+      <Filter>Source Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SoundManager.cpp">
+      <Filter>Source Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\Music.cpp">
+      <Filter>Source Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SDL_Sound.cpp">
+      <Filter>Source Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\FileManager\File.cpp">
+      <Filter>Source Files\FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\VertexBufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\Entity\Component\Camera\walkingCamera.cpp">
+      <Filter>Source Files\Entity\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\StaticGeometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\freeTypeFont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Code\skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sources\Code\Defines.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\RequirementsChecker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\GL_API.hpp">
+      <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Renderer.hpp">
+      <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\Scene.hpp">
+      <Filter>Header Files\Renderer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\GUI.hpp">
+      <Filter>Header Files\Renderer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\LoadDisplay.hpp">
+      <Filter>Header Files\Renderer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\GameScene.hpp">
+      <Filter>Header Files\Renderer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\Menu.hpp">
+      <Filter>Header Files\Renderer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\MainMenu.hpp">
+      <Filter>Header Files\Renderer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\GameMenu.hpp">
+      <Filter>Header Files\Renderer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\Button.hpp">
+      <Filter>Header Files\Renderer\Scene\SceneItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\SceneItems.hpp">
+      <Filter>Header Files\Renderer\Scene\SceneItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\Text.hpp">
+      <Filter>Header Files\Renderer\Scene\SceneItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\ProgressBar.hpp">
+      <Filter>Header Files\Renderer\Scene\SceneItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Renderer\Scene\SceneItems\Label.hpp">
+      <Filter>Header Files\Renderer\Scene\SceneItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Matrix.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Entity.hpp">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Component.hpp">
+      <Filter>Header Files\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Loader\Loader.hpp">
+      <Filter>Header Files\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\ResourceManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Model.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Texture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Material.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\SceneUpdater\InputManager.hpp">
+      <Filter>Header Files\SceneUpdater</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\FileManager\FileReader.hpp">
+      <Filter>Header Files\FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\FileManager\FileWriter.hpp">
+      <Filter>Header Files\FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\FileManager\FileManager.hpp">
+      <Filter>Header Files\FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\RTSCamera.hpp">
+      <Filter>Header Files\Entity\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\ScriptedCamera.hpp">
+      <Filter>Header Files\Entity\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\Camera.hpp">
+      <Filter>Header Files\Entity\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\DebugCamera.hpp">
+      <Filter>Header Files\Entity\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\FixedCamera.hpp">
+      <Filter>Header Files\Entity\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\PlayerFollowCamera.hpp">
+      <Filter>Header Files\Entity\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Map\Map.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Meshes\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Meshes\Mesh.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\MeshShell.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Primitive.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Light\Light.hpp">
+      <Filter>Header Files\Entity\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Sphere.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Tetrahedron.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cube.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Cylinder.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Rendering\MeshShell\Primitives\Plane.hpp">
+      <Filter>Header Files\Entity\Component\Rendering\MeshShell\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Light\DirLight.hpp">
+      <Filter>Header Files\Entity\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Light\PointLight.hpp">
+      <Filter>Header Files\Entity\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Light\SpotLight.hpp">
+      <Filter>Header Files\Entity\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\Music.hpp">
+      <Filter>Header Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SFX.hpp">
+      <Filter>Header Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SoundManager.hpp">
+      <Filter>Header Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Sound\SDL_Mixer\SDL_Sound.hpp">
+      <Filter>Header Files\Entity\Component\Sound\SDL_Mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Engine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\FileManager\File.hpp">
+      <Filter>Header Files\FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\VertexBufferObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\StaticGeometry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Controller.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Entity\Component\Camera\walkingCamera.hpp">
+      <Filter>Header Files\Entity\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\Geometry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\freeTypeFont.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Code\skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\Code\Shaders\Fragment.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Sources\Code\Shaders\Vertex.vs">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Sources\Code\Shaders\SkyBox.vs">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Sources\Code\Shaders\SkyBox.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
