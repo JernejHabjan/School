@@ -1,0 +1,7 @@
+*.pyc
+.DS_Store
+
+/temp/
+/.project
+/.pydevproject
+/_Files/models/*
