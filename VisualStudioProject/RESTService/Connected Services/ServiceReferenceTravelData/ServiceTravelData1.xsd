@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1794/ServiceTravelData.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RESTService" />
+  <xs:element name="ReturnTravels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="googleID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnTravelsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RESTService" minOccurs="0" name="ReturnTravelsResult" nillable="true" type="q1:ArrayOfTravelSendInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddTravel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RESTService" minOccurs="0" name="info" nillable="true" type="q2:TravelReceiveInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddTravelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTravel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="googleID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTravelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnPassengers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnPassengersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RESTService" minOccurs="0" name="ReturnPassengersResult" nillable="true" type="q3:ArrayOfPassenger" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

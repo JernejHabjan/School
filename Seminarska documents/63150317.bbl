@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{autocomplete}
+Google autocomplete for android.
+\newblock Dosegljivo:
+  \url{https://developers.google.com/places/android-api/autocomplete}, 2010.
+\newblock [Dostopano: 6. 1. 2018].
+
+\bibitem{signIn}
+Google sign-in for android.
+\newblock Dosegljivo:
+  \url{https://developers.google.com/identity/sign-in/android/start-integrating},
+  2010.
+\newblock [Dostopano: 6. 1. 2018].
+
+\bibitem{loginSample}
+Google sign-in sample.
+\newblock Dosegljivo:
+  \url{https://github.com/googlesamples/google-services/tree/master/android/signin},
+  2010.
+\newblock [Dostopano: 6. 1. 2018].
+
+\bibitem{stack}
+Stack overflow - za iskanje rešitev pri napakah.
+\newblock Dosegljivo: \url{https://stackoverflow.com/}, 2010.
+\newblock [Dostopano: 6. 1. 2018].
+
+\end{thebibliography}
