@@ -1,0 +1,43 @@
+#content {
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
+canvas {
+	display: inline;
+	border: 1px solid black;
+}
+h1 {
+	text-align: left
+}
+h2 {
+	text-align: left
+}
+ul {
+	text-align: left
+}
+td {
+	width: 20px;
+}
+
+#timeCoins {
+	position: absolute;
+    left: 900px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-family: monospace;
+    padding: 1em;
+    border-radius: 1em;
+    border: 5px solid #f00;
+	text-shadow: 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white;
+	text-align: left;
+}
+
+#loadingtext {
+	position: absolute;
+	top:250px;
+	left: 550px;
+	font-size: 2em;
+	color: white;
+}
